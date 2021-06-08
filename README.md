@@ -1,10 +1,5 @@
 # crm-bootcamp
 
-
-
-
-
-
 ### Pre docker
 Please make sure you have created a `data/mysql` folder at your directory.
 `mkdir -p data/mysql`
