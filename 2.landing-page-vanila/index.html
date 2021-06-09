@@ -30,22 +30,22 @@
 
             <div id=customDetailMsg>fill out your details<br> and join the gaming family!</div>
             
-            <form id=customDetailsForm action="submit">
+            <form id=customDetailsForm onsubmit="validateForm()">
                
                 <div id=customDetailsInputs>
-                <input type="text"  class=formItem placeholder="Full name">
+                <input name=fullName type="text"  class=formItem placeholder="Full name">
                
-                <input type="text"  class=formItem placeholder="Email">
+                <input name= email type="text"  class=formItem placeholder="Email">
                 
-                <input type="text"  class=formItem placeholder="Phone number">
+                <input name= phoneNumber type="text"  class=formItem placeholder="Phone number">
             </div>
                 <button id=submitButton>Submit</button>
             </form>
 
         </div>
+        
 
     </body>
-
-     <script src="scripts/test.js"></script>
-
+    <script src="scripts/test.js"></script>
+     
      </html>
