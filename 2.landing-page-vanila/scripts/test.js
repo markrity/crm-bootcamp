@@ -1,6 +1,5 @@
-var testfunction = function() {
+function validateForm() {
 
-    var selector = document.querySelector('body');
-    selector.style.backgroundColor = '#'+Math.random().toString(16).substr(-6);
-
-}
+    var fullName = document.forms["myForm"]["fname"].value;
+    alert("the form was submitted");
+    }
