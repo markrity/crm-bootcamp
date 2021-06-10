@@ -1,29 +1,39 @@
 function validation(){
-
-    var name = document.getElementById('name').value;
-    var error = document.getElementById('error-name');
-    if (!validateName(name)){
-        error.textContent = "Please enter valid name";
-        errorMsg(error);
+    if(!isValidateField('name', 'error-name')){
         return false;
     }
 
-    var mail = document.getElementById('mail').value;
-    var error = document.getElementById('error-mail');
-    if (!validateMail(mail)){
-        error.textContent = "Please enter valid mail";
-        errorMsg(error);
+    if(!isValidateField('mail', 'error-mail')){
         return false;
     }
-
-    var error = document.getElementById('error-phone');
-    var phone = document.getElementById('phone').value;
-    if (!validatePhone(phone)){
-        error.textContent = "Please enter valid phone";
-        errorMsg(error);
+    
+    if(!isValidateField('phone', 'error-phone')){
         return false;
     }
+    return true;
+}
 
+function isValidateField(elementName, error){
+    var error = document.getElementById(error);
+    var content = document.getElementById(elementName).value;
+    var text;
+    var isValid;
+    if(elementName == 'name'){
+        text = "Please enter valid name";
+        isValid = validateName(content);
+    } else if(elementName == 'mail'){
+        text = "Please enter valid mail";
+        isValid = validateMail(content);
+    } else if(elementName == 'phone'){
+        text = "Please enter valid phone";
+        isValid = validatePhone(content);
+    }
+    if (!isValid){
+        error.textContent = text;
+        error.style.display = 'inline';
+        error.style.color = "red";
+        return false;
+    }
     return true;
 }
 
@@ -54,10 +64,4 @@ function cancelError(element){
         error  = document.getElementById('error-phone');
     }
     error.style.display = 'none';
-}
-
-function errorMsg(error){
-    error.style.display = 'inline';
-    error.style.color = "red";
-    return error;
 }
