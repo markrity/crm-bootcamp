@@ -6,6 +6,7 @@ body {
     padding: 0;
 }
 
+
 #backgroundImg
 {
     
@@ -17,10 +18,6 @@ body {
     opacity: 0.4;
     z-index: -1;
 }
-
-
-
-
 
 #topNavbar{
     height: 2.5em;
@@ -40,8 +37,8 @@ body {
     font-weight: bold;
     display: flex;
 
-}
 
+}
 
 @media (max-width: 750px){
     #topNavbar{
@@ -71,14 +68,13 @@ body {
 }
 #titleMsg{
 
-   
+   display: flex;
     font-size: 2.8em;
 
 
 }
 
 #MsgContent{
-
 
     font-size: 1.2em;
     margin-top: 1.5em;
@@ -95,8 +91,7 @@ background-color: #232733;
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    justify-content: space-between;
+    justify-content: space-between; 
 }
 
 #customDetailsForm
@@ -106,7 +101,7 @@ background-color: #232733;
     height: 100%;
     display: flex;
     align-items: center;
-
+    flex-shrink: 0;
 }
 #customDetailsInputs{
 
@@ -123,8 +118,10 @@ background-color: #232733;
 
 }
 .formItem{
-width: 70%;
-height: 20%;
+
+    width: 18em;
+    height: 2.5em;
+
 border-radius: 20px;
 border: none;
 }
@@ -143,11 +140,11 @@ border: none;
 
 #customDetailMsg{
 
-    position: relative;
+
     font-family: 'Roboto Mono', monospace;
-    font-size: 2.4em;
+    font-size: 2.2em;
     margin: 1em;
-    
+    flex-shrink: 4;
     color: white;
 }
 
@@ -159,8 +156,8 @@ border: none;
 
         font-size: 80%; 
     }
-    #customDetailMsg{
+    /* #customDetailMsg{
         
-        display: none;
-    }    
+        font-size: 80%; 
+    }     */
 }
