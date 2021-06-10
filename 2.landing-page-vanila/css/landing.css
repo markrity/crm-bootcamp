@@ -190,6 +190,7 @@ form input[type="text"] {
   width: 299px;
   background: transparent;
   border-bottom: 1px solid black;
+  margin-bottom: 5px;
 }
 
 form {

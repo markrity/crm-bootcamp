@@ -50,20 +50,22 @@
                 <form id="form" action="" onsubmit="return(validation());">
                     <div>
                         <!--                     <label for="name">Full name:</label> -->
-                        <input type="text" id="name" placeholder="Full Name" name="name">
+                        <input type="text" id="name" placeholder="Full Name" name="name" onclick="cancelError(this)">
                     </div>
+                    <span id="error-name"></span>
                     <div>
                         <!--                     <label for="mail">Mail:</label> -->
-                        <input type="text" id="mail" name="mail" placeholder="Mail">
+                        <input type="text" id="mail" name="mail" placeholder="Mail" onclick="cancelError(this)"> 
                     </div>
+                    <span id="error-mail"></span>
                     <div>
                         <!--                     <label for="phone">Phone:</label> -->
-                        <input type="text" id="phone" name="phone" placeholder="Phone">
+                        <input type="text" id="phone" name="phone" placeholder="Phone" onclick="cancelError(this)">
                     </div>
+                    <span id="error-phone"></span>
                     <div class="button-container">
                         <input class="submit-button" type="submit" value="Send Details">
                     </div>
-
                 </form>
             </div>
         </div>
