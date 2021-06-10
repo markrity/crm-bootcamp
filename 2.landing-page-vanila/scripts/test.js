@@ -10,24 +10,30 @@ function validateForm() {
     var errorMsg="";
     if(result==false)
     {
-        errorMsg+="-The name input is not match,please insert it again.\n";
+        errorMsg+="*The name input is invalid,please insert it again.<br><br>";
+       
     }
     result=emailRegex.test(email);
     if(result==false)
     {
-        errorMsg+="-The email input is not match,please insert it again.\n";
+        errorMsg+="*The email input is invalid,please insert it again.<br><br>";
     }
     result=phoneRegex.test(phoneNumber);
     if(result==false)
     {
-        errorMsg+="-The phone number input is not match,please insert it again.\n";
+        errorMsg+="*The phone number input is invalid,please insert it again.";
     }
     if(errorMsg=="")
     {
-        alert("Submit successfully");
+        document.getElementById("errorMsg").innerHTML="Submit successfully";
+        document.getElementById("errorMsg").style.color ="green"; 
     }
     
     else{
-        alert(errorMsg);
+        document.getElementById("errorMsg").style.color ="red"; 
+        document.getElementById("errorMsg").innerHTML=errorMsg;
+        
     }
+        
+
 }
