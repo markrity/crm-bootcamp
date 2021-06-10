@@ -10,27 +10,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet"> 
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Shadows+Into+Light&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="app.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/gallery.css">
+    <link rel="stylesheet" href="css/middle.css">
     <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Shadows+Into+Light&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Acme&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
 <main>
-<div class="header"> 
-    <h1>MAYA ADIV</h1>
+<div class="header">
+    <h1>KEREN DEKEL</h1>
     <h2>Advanced Skin Care</h2>
 </div>
 
 <div class="body-file"> 
     
-    <div class="column side" id="para"> 
-
+    <div class="column-side" id="para"> 
         <ul class="check-list">
-          <li>facial treatment</li>
-          <li>facial treatment</li>
-          <li>facial treatment</li>
+          <li id="first"> Anti aging</li>
+          <li id ="second"> Acne treatment</li>
+          <li>Product</li>
          
         </ul>
     </div>
@@ -38,7 +46,7 @@
     <div class="column middle">
         <div class= "upper-img">
         <div class="mySlides">
-          <img id="pic1" src="https://images.pexels.com/photos/5938596/pexels-photo-5938596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" >
+          <img id="pic1" src="https://images.pexels.com/photos/7581074/pexels-photo-7581074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" >
         </div>
       
         <div class="mySlides">
@@ -50,7 +58,7 @@
         </div>
           
         <div class="mySlides">
-          <img id="pic4" src="https://images.pexels.com/photos/7581074/pexels-photo-7581074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" >
+          <img id="pic4" src="https://images.pexels.com/photos/5938596/pexels-photo-5938596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" >
         </div>
       
         <div class="mySlides">
@@ -67,7 +75,7 @@
         <div class= "lower-img">
             <div class="image-gallery"> 
           <div class="column1">
-            <img class="demo cursor" src="https://images.pexels.com/photos/5938596/pexels-photo-5938596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  onclick="currentSlide(1)" >
+            <img id="pict1" class="demo cursor" src="https://images.pexels.com/photos/7581074/pexels-photo-7581074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  onclick="currentSlide(1)" >
           </div>
           <div class="column1">
             <img class="demo cursor" src="https://images.pexels.com/photos/6621367/pexels-photo-6621367.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260" onclick="currentSlide(2)" >
@@ -76,7 +84,7 @@
             <img class="demo cursor" src="Images/background .jpg"  onclick="currentSlide(3)" alt="Mountains and fjords">
           </div>
           <div class="column1">
-            <img class="demo cursor" src="https://images.pexels.com/photos/7581074/pexels-photo-7581074.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  onclick="currentSlide(4)" >
+            <img class="demo cursor" src="https://images.pexels.com/photos/5938596/pexels-photo-5938596.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"  onclick="currentSlide(4)" >
           </div>
           <div class="column1">
             <img class="demo cursor" src="https://images.pexels.com/photos/3771830/pexels-photo-3771830.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260"  onclick="currentSlide(5)" >
@@ -89,10 +97,9 @@
       </div>
     </div>
 
-      <div class="column side"> 
-        <div class="form">
-            <div class="title">Welcome</div>
-            
+      <div class="column-side"> 
+        <form class="form" onsubmit="return validateform()" action="">
+            <div class="title">Leave details...</div>
             <div class="input-container ic1">
               <input id="firstname" class="input" type="text" placeholder=" " />
               <div class="cut"></div>
@@ -108,48 +115,27 @@
               <div class="cut cut-short"></div>
               <label for="phone" class="placeholder">Phone</label>
             </div>
+
             <button type="text" class="submit">send</button>
-          </div>
+            <span id="error"></span>
+          </form>
         </div>
 </div>
 
 <div class="footer">
     <img class="img1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png">
     <img class="img1" src= "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png">
+    <div class="footer-text">
+    <h3 id="footer-phone"> 03-9230502</h3>
+    <h4 id="footer-adress">Hazeitim 35, Tel Aviv</h4>
+  </div>
   </div> 
 
   </main>
 </body>
 
-<script>
-var slideIndex = 1;
-showSlides(slideIndex);
-
-function plusSlides(n) {
-    showSlides(slideIndex += n);
-}
-
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
-
-function showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("demo");
-    var captionText = document.getElementById("caption");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "flex";
-    dots[slideIndex-1].className += " active";
-    captionText.innerHTML = dots[slideIndex-1].alt;
-}
+<script src="scripts/test.js">
+  
 </script>
         
 </html>
