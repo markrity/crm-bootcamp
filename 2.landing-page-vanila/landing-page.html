@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/landing.css">
 
     <title>Gradiz</title>
+    <script type="text/javascript" src="scripts/landing-page.js"></script>
 </head>
 
 <body>
@@ -46,18 +47,18 @@
             </div>
             <div class="form-box">
                 <h4 class="leave-heading">Leave your details and we'll get back to you!</h4>
-                <form action="">
+                <form id="form" action="" onsubmit="return(validation());">
                     <div>
                         <!--                     <label for="name">Full name:</label> -->
-                        <input type="text" id="name" placeholder="Full Name" name="name" required="">
+                        <input type="text" id="name" placeholder="Full Name" name="name">
                     </div>
                     <div>
                         <!--                     <label for="mail">Mail:</label> -->
-                        <input type="text" id="mail" name="mail" placeholder="Mail" required="">
+                        <input type="text" id="mail" name="mail" placeholder="Mail">
                     </div>
                     <div>
                         <!--                     <label for="phone">Phone:</label> -->
-                        <input type="text" id="phone" name="phone" placeholder="Phone" required="">
+                        <input type="text" id="phone" name="phone" placeholder="Phone">
                     </div>
                     <div class="button-container">
                         <input class="submit-button" type="submit" value="Send Details">
@@ -90,5 +91,4 @@
 
 
 </body>
-
 </html>
