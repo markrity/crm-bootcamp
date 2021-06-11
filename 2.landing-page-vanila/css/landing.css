@@ -213,4 +213,38 @@ form div input{
     font-family: 'Montserrat';
     font-size: 17px; 
     font-weight: bold;  
+
+
 }
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px) {
+    
+    .content-container {
+        flex-direction: column;
+        height: 61em;
+    }
+
+    .landing-header {
+      flex-direction: column;
+    }
+
+    #logo {
+      font-size: 70px;
+      margin-top: 30px
+    }
+
+    .landing-header a {
+      font-size: 25px;
+    }
+}
+
+
+input:-webkit-autofill,
+ textarea:-webkit-autofill,
+ select:-webkit-autofill { 
+     background-image: none !important;
+     font-family: 'Montserrat';
+     box-shadow: 0 0 0 1000px #c8dfe3 inset !important;
+ }
