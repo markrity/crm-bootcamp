@@ -12,6 +12,11 @@ app.listen(process.env.PORT || 8080, () => {
 });
 
 app.get('/', function(req, res) {
+
+  var params = req.query;
+  if(params.name){
+    console.log("yuval");
+  }
   const data = {
     logo: "Gradiz",
     circles: createCircles(10),
@@ -24,6 +29,9 @@ app.get('/', function(req, res) {
     maintitle:[ {text: "Professional Graphic"} ,{text:"Design Service"}],
     subtitle: "Design anything you need",
     form: {
+      details: {
+        name: params.name ? "We got your details, " + params.name + "!" : ""
+      },
       title: "Leave your details and we'll get back to you!",
       inputs: [
         makeInput("text", "name", "Full Name", "error-name"),

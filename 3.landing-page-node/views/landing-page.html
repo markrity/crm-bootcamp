@@ -44,6 +44,11 @@
             </div>
             <div class="form-box">
                 {{#form}}
+                {{#details.name}}
+                <img class="from-tick" src="assets/tick.png" alt="">
+                <h4 class="leave-heading">{{details.name}}</h4>
+                {{/details.name}}
+                {{^details.name}}
                 <h4 class="leave-heading">{{title}}</h4>
                 <form id="form" action="" onsubmit="return(validation());">
                     {{#inputs}}
@@ -58,6 +63,7 @@
                     </div>
                     {{/button}}
                 </form>
+                {{/details.name}}
                 {{/form}}
             </div>
         </div>

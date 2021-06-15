@@ -132,6 +132,13 @@ form {
     text-align: center;
 }
 
+.from-tick {
+    width: 60px;
+    height: 60px;
+    margin: 4%;
+    padding-bottom: 5%;
+}
+
 .answers .answer{
     background-color: white;
     border-radius: 50%;
