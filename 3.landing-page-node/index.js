@@ -14,9 +14,6 @@ app.listen(process.env.PORT || 8080, () => {
 app.get('/', function(req, res) {
 
   var params = req.query;
-  if(params.name){
-    console.log("yuval");
-  }
   const data = {
     logo: "Gradiz",
     circles: createCircles(10),
