@@ -16,11 +16,13 @@
        <div  id=backgroundImg style="background-image: url({{img}});"></div>
 
         <nav id=topNavbar>
-
-            <div class=topNavItem>About</div>
+            {{#topNavs}}
+            <div class= topNavItem>{{navItem}}</div>
+            {{/topNavs}}
+            <!-- <div class=topNavItem>About</div>
             <div class=topNavItem>Store</div>
             <div class=topNavItem>Customer service</div>
-            <div class=topNavItem>Contact us</div>
+            <div class=topNavItem>Contact us</div> -->
             
         </nav>
     
@@ -37,19 +39,17 @@
 
             <div id=customDetailMsg>Fill in your details<br> and join the gaming family!</div>
 
-            <!-- <form id=customDetailsForm onsubmit="validateForm(event);" action="thankYouPage.html"> -->
+           
 
             <form id=customDetailsForm>
                     <div id=customDetailsInputs>
-                    
-                        <input name=fullName type="text"  class=formItem placeholder="Full name">
-                    
-                        <input name= email type="text"  class=formItem placeholder="Email">
-                    
-                        <input name= phoneNumber type="text"  class=formItem placeholder="Phone number">
+                        {{#inputs}}
+                            <input name={{name}} class=formItem placeholder={{name}} type="text">
+                            {{/inputs}}
+
                      </div>
 
-                    <button id=submitButton>Submit</button>
+                    <button id=submitButton type="button" onclick="validateForm();">Submit</button>
 
             </form>
 
@@ -59,7 +59,12 @@
 
     </body>
     <script src="validateInput.js"></script>
-  
+
+    <script src=https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js></script>
+
+    <script>
+   
+    </script>
 
      
      </html>

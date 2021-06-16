@@ -20,7 +20,24 @@ app.get('/', function(req, res) {
 
 
   const data={ img:'css/background.jpg',
-                time: returnTime()              
+                time: returnTime(),
+                topNavs:[
+                  {navItem:'About'},
+                  {navItem:'Store'},
+                  {navItem:'Custome service'},
+                  {navItem:'Contact us'}
+                ],
+                inputs: [
+                  {
+                    name:"fullName"
+                  },
+                  {
+                    name:"email"
+                  },
+                  {
+                    name:"phoneNumber"
+                  }
+                ]             
           };
   
 

@@ -1,7 +1,8 @@
 
-    let form=document.querySelector('#customDetailsForm');
-    console.dir(form);
     
+    let form=document.querySelector('#customDetailsForm');
+    let submitButton=document.querySelector('#submitButton')
+   
     const validateForm= function(){
         var fullName = document.forms["customDetailsForm"]["fullName"].value;
         var email= document.forms["customDetailsForm"]["email"].value;
@@ -30,20 +31,25 @@
         {
             document.getElementById("errorMsg").innerHTML="Submit successfully";
             document.getElementById("errorMsg").style.color ="green"; 
-            form.action='thanksPage';
+
+            axios.post('http://localhost:8004',{fullName,email,phoneNumber})
+            .then(function (response) {
+              console.log(response.data);
+            })
+            .catch(function (error) {
+              console.log(error);
+            });
+            
+            
             
         }
         
         else{
             document.getElementById("errorMsg").style.color ="red"; 
             document.getElementById("errorMsg").innerHTML=errorMsg;
-     
         
         
         }
         
           
     }
-
-    form.addEventListener('submit',validateForm);
-
