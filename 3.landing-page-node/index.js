@@ -31,9 +31,12 @@ app.get('/', function(req, res) {
       },
       title: "Leave your details and we'll get back to you!",
       inputs: [
+        // makeInput("text", "name", "Full Name", "error-name"),
+        // makeInput("email", "mail", "Mail", "error-mail"),
+        // makeInput("tel", "phone", "Phone", "error-phone")
         makeInput("text", "name", "Full Name", "error-name"),
-        makeInput("email", "mail", "Mail", "error-mail"),
-        makeInput("tel", "phone", "Phone", "error-phone")
+        makeInput("text", "mail", "Mail", "error-mail"),
+        makeInput("text", "phone", "Phone", "error-phone")
       ],
       button: {
         text: "Send Details",

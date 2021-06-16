@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="css/animation.css">
 
     <title>{{logo}}</title>
-    <script type="text/javascript" src="scripts/landing-page.js"></script>
 </head>
 
 <body>
@@ -50,7 +49,8 @@
                 {{/details.name}}
                 {{^details.name}}
                 <h4 class="leave-heading">{{title}}</h4>
-                <form id="form" action="" onsubmit="return(validation());">
+                <!-- <form id="form" action="" onsubmit="return(validation());"> -->
+                <form id="form" action="">
                     {{#inputs}}
                     <div>
                         <input type="{{type}}" id="{{id}}" placeholder="{{placeholder}}" name="{{id}}" onfocus="cancelError(this)">
@@ -63,6 +63,7 @@
                     </div>
                     {{/button}}
                 </form>
+                <span id="error-server"></span>
                 {{/details.name}}
                 {{/form}}
             </div>
@@ -93,4 +94,35 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="scripts/landing-page.js"></script>
+<script>
+    // const form = document.querySelector('#form');
+    // form.addEventListener('submit', function(e){
+    //     e.preventDefault();
+    //     const name = form.elements.name.value;
+    //     const mail = form.elements.mail.value;
+    //     const phone = form.elements.phone.value;
+
+    //     axios.post('http://rgb.com:8004', {
+    //     fullName: name,
+    //     email: mail,
+    //     phone: phone
+    //     },)
+    //     .then(function (response) {
+    //         console.log(response);
+    //         console.log("success");
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     });
+    // });
+
+</script>
 </html>
+
+<!-- {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+} -->
