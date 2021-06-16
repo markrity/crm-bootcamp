@@ -11,8 +11,10 @@ app.listen(process.env.PORT || 8080, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}/`);
 });
 
+/**
+ * Rendering of the landing page
+ */
 app.get('/', function(req, res) {
-
   var params = req.query;
   const data = {
     logo: "Gradiz",
@@ -64,27 +66,27 @@ function createCircles(num){
   return circlesArray;
 }
 
-function makeInput(type_value, id_value, placeholder_value, error_id_value){
+function makeInput(typeValue, idValue, placeholderValue, errorIdValue){
   return {
-    type: type_value,
-    id: id_value,
-    placeholder: placeholder_value,
-    error_id: error_id_value,
+    type: typeValue,
+    id: idValue,
+    placeholder: placeholderValue,
+    error_id: errorIdValue,
   }
 }
 
-function makeNav(title_value, url="#"){
+function makeNav(titleValue, url="#"){
   return {
-    title: title_value, 
+    title: titleValue, 
     link: url
   }
 }
 
 
-function makeAnswer(title_val, img_src='', text_val=''){
+function makeAnswer(titleVal, imgSrc='', textVal=''){
   return {
-    title: title_val,
-    img: img_src,
-    text: text_val
+    title: titleVal,
+    img: imgSrc,
+    text: textVal
   }
 }
