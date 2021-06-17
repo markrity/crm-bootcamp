@@ -1,0 +1,66 @@
+body {
+    font-family: 'lato', sans-serif;
+  }
+div {
+    display: flex;
+    flex-direction: column;
+}
+.container {
+max-width: 1000px;
+margin-left: auto;
+margin-right: auto;
+padding-left: 10px;
+padding-right: 10px;
+}
+
+h2 {
+    font-size: 26px;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.responsive-table li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+}
+
+.responsive-table .table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+.responsive-table .table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+}
+
+#sort_dec {
+    background-image: url('https://cdn4.iconfinder.com/data/icons/arrows-set-1-1/100/arrow1-512.png');
+    background-size: 100%;
+    height: 5mm;
+    width: 5mm;
+}
+
+#sort_inc {
+    background-image: url('https://cdn4.iconfinder.com/data/icons/arrows-set-1-1/100/arrow3-512.png');
+    background-size: 100%;
+    height: 5mm;
+    width: 5mm;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2mm;
+    
+}
+
+.col_sort {
+    desplay: flex;
+    flex-direction: row;
+}
