@@ -16,13 +16,14 @@
           <h1>{{title}}</h1>
           <div class="options">
                 <div class="sort">
-                    <label for="cars">sort by:</label>
-                    <select name="cars" id="cars" onchange="return changeOrder(this);"> 
+                    <label for="sorting">Order By:</label>
+                    <select name="sorting" id="sorting" onchange="return changeOrder(this);"> 
+                        <option value="" disabled selected hidden>choose order</option>
                         <option value="ascending">ascending</option>
                         <option value="descending">descending</option>
-                </select>
+                    </select>
                 </div>
-                <form class="search_lead" action="">
+                <form class="search_lead" id="search" action="">
                     <input type="text" placeholder="Search" name="search_field" id="search_field">
                     <button type="submit"  id="search_button" name="search_button"><i class="material-icons">search</i></button>
                 </form>
@@ -39,75 +40,5 @@
     </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script>
-
-        
-
-        function getLeads(orderType=null){
-            
-            axios.get('http://rgb.com:8004/leads', {
-                params: {
-                    order: orderType
-                }
-            })
-            .then(function (response) {
-                console.log(response.data);
-                if(orderType){
-                    insertLeads(response.data.leads, true);
-                } else {
-                    insertLeads(response.data.leads);
-                }
-                
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
-        }
-
-
-
-        function insertLeads(leads, isSorting=false){
-            var table = document.getElementById("leads_table");
-            console.log("!!!!!!!!!!!!!" + table.children.length);
-            while (table.children.length > 1) {
-                table.removeChild(table.lastChild);
-            }
-            // table.innerHTML = "";
-            for(let l of leads){
-                createRow(l);
-            }
-        }
-
-        function createRow(lead){
-           var newTr = document.createElement('tr');
-           newTr.classList.add('card');
-           for(let field in lead){
-               var newLink = document.createElement('td');
-                var newTd = document.createElement('td');
-                // newTd.innerText = lead[field];
-                if(field == "user_mail"){
-                    var newLink = document.createElement('a');
-                    newLink.setAttribute('href', 'mailto:' + lead[field]);
-                    newLink.innerText = lead[field];
-                    newTd.appendChild(newLink);
-                } else if(field == "user_phone") {
-                    var newLink = document.createElement('a');
-                    newLink.setAttribute('href', 'tel:' + lead[field])
-                    newLink.innerText = lead[field];
-                    newTd.appendChild(newLink);
-                } else {
-                    newTd.innerText = lead[field];
-                }
-                newTr.appendChild(newTd);
-           }
-           var table = document.getElementById("leads_table");
-           table.appendChild(newTr);
-        }
-
-        function changeOrder(ele){
-            getLeads(ele.value);
-        }
-
-        getLeads();
-</script>
+<script type="text/javascript" src="scripts/leads.js"></script>
 </html>
