@@ -16,12 +16,15 @@
           <h1>{{title}}</h1>
           <div class="options">
                 <div class="sort">
-                    <label for="sorting">Order By:</label>
+                    {{#sort}}
+                    <label for="sorting">{{order}}</label>
                     <select name="sorting" id="sorting" onchange="return changeOrder(this);"> 
-                        <option value="" disabled selected hidden>choose order</option>
-                        <option value="ascending">ascending</option>
-                        <option value="descending">descending</option>
+                        <option value="" disabled selected hidden>{{placeholderOrder}}</option>
+                        {{#options}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{/options}}
                     </select>
+                    {{/sort}}
                 </div>
                 <form class="search_lead" id="search" action="">
                     <input type="text" placeholder="Search" name="search_field" id="search_field">

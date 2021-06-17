@@ -23,6 +23,11 @@ app.listen(process.env.PORT || 8080, () => {
     logo:"RGB",
     business: "Gradiz",
     headers: ["Full Name", "Email", "Phone"],
+    sort: {
+      order: "Order By:",
+      placeholderOrder: "choose order",
+      options: ["ascending", "descending"]
+    }
   }
   res.render('leads', data);
 });

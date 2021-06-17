@@ -1,4 +1,8 @@
-
+/**
+ * Sends a request for the leads to the db 
+ * @param {string} orderType 
+ * @param {string} searchVal 
+ */
 function getLeads(orderType=null, searchVal=null){
     
     axios.get('http://rgb.com:8004/leads', {
@@ -22,25 +26,28 @@ function getLeads(orderType=null, searchVal=null){
 }
 
 
-
+/**
+ * Creates rows in the table according to the leads
+ */
 function insertLeads(leads){
     var table = document.getElementById("leads_table");
-    console.log("!!!!!!!!!!!!!" + table.children.length);
     while (table.children.length > 1) {
         table.removeChild(table.lastChild);
     }
-    // table.innerHTML = "";
     for(let l of leads){
         createRow(l);
     }
 }
 
+/**
+ * Creates row in the table from the lead.
+ */
 function createRow(lead){
     var newTr = document.createElement('tr');
     newTr.classList.add('card');
     for(let field in lead){
         var newTd = document.createElement('td');
-        // newTd.innerText = lead[field];
+
         if(field == "user_mail"){
             var newLink = document.createElement('a');
             newLink.setAttribute('href', 'mailto:' + lead[field]);
@@ -54,6 +61,7 @@ function createRow(lead){
         } else {
             newTd.innerText = lead[field];
         }
+
         newTr.appendChild(newTd);
     }
     var table = document.getElementById("leads_table");
@@ -64,7 +72,9 @@ function changeOrder(ele){
     getLeads(ele.value);
 }
 
-        
+/**
+ * Add event to the search form
+ */
 function searchLeads(){
     const form = document.querySelector('#search');
     form.addEventListener('submit', function(e){
