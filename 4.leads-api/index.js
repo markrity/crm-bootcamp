@@ -103,24 +103,31 @@ function validateMail(mail){
 
 
 var orderMap = {"ascending": "ASC", "descending": "DESC"};
+
+/**
+ * Returns all leads from db according to the order in the params.
+ */
 app.get('/leads', function(req, res) {
-  const order = req.query.order;
-  console.log(req);
   var resData = {};
-  var orderBy = "";
+  
   if(!connectionValid){
     resData.valid = false;
     resData.errors.push( "error-server");
   } else {
-      console.log("Connected!");
+      const order = req.query.order;
+      var orderBy = "";
       if(order) {
           orderBy = " ORDER BY user_name " + orderMap[order];
       }
-      var sql = 'SELECT user_name, user_mail, user_phone FROM leads' + orderBy +";";
+      const searchValue = req.query.search;
+      var where = "";
+      if(searchValue){
+          where = ` WHERE user_name REGEXP '^${searchValue}'`;
+      }
+      var sql = 'SELECT user_name, user_mail, user_phone FROM leads' + where + orderBy +";";
       console.log(sql);
       connection.query(sql, function (err, results) {
         if (err){
-          console.log("error :( !!!!!!!!");
           res.send("error");
         } else {
           console.log(orderMap[order]);
