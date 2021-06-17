@@ -64,7 +64,8 @@
     </div>
 
       <div class="column-side"> 
-        <form class="form" method="post" >
+        <form id="form" method="post" >
+          <div id="form_inside">
             <div class="title">Leave details...</div>
             <div class="input-container ic1">
               <input id="firstname" class="input" type="text" placeholder=" " />
@@ -83,9 +84,16 @@
             </div>
 
             <button type="text" class="submit" >send</button>
+          </div>
             <span id="error"></span>
+            
           </form>
+
         </div>
+        <div class="column-side">
+
+        </div >
+
 </div>
 
 <div class="footer">
@@ -104,7 +112,7 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
-  const form = document.querySelector('.form');
+  const form = document.querySelector('#form');
   
   console.log(firstname);
   form.addEventListener('submit', function(e) {
@@ -129,9 +137,11 @@
           error.textContent = response.data.reason;
           error.style.color = "red"
         }
+
         if (response.data.status==true) {
-          error.textContent = ""
-          error.style.display="none"
+          error.textContent = "details submitted!"
+          error.style.color="blue"
+          document.getElementById("form_inside").style.display="none"
         }
     })
     .catch(function (error) {
