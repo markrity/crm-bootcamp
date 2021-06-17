@@ -13,7 +13,6 @@ app.set('views', __dirname + '/views');
 
 app.get('/admin', async function(req, res) {
   let leadsArr=await getLeads();
-  console.log(leadsArr);
   const data= {leadsArr};
   res.render('adminPage',data);
 });

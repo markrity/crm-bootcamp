@@ -15,16 +15,18 @@
             <th>Phone number</th>
             {{#leadsArr}}
         </tr>
-    </td>
+
+        <tr id=lead>
+    
             <td>{{full_name}}</td>
             <td>{{email}}</td>
             <td>{{phone_number}}</td>
         </tr>
 
         {{/leadsArr}}
-    
-    </table>
 
+    </table>
+    <button id=sort>sort</button>
 </body>
 <script src="sortLeadsTable.js"></script>
 </html>
