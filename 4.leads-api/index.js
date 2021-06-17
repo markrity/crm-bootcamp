@@ -5,7 +5,7 @@ const cors = require('cors');
 const bodyParser = require('body-parser');
 app.use(cors());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -14,27 +14,43 @@ var con = mysql.createConnection({
   database: "gameStation"
 });
 
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+
+});
+
+
+app.get('/admin', function(req, res) {
+  con.query("SELECT * FROM leads", function (err, result, fields) {
+    if (err) throw err;
+    console.log(result);
+    res.send(result);
+   
+  }
+)});
 
 app.get('/', function(req, res) {
   res.send('hello there');
 });
 
 app.post('/',function(req,res){
+  console.dir(req);
+
   const {fullName,email,phoneNumber}=req.body;
-  console.log({fullName,phoneNumber,email});
+  // console.log({fullName,phoneNumber,email});
   const ifValid=validateInput(fullName,email,phoneNumber);
   
   if(ifValid){
 
-    con.connect(function(err) {
-      if (err) throw err;
-      console.log("Connected!");
+   
       var sql = `INSERT INTO leads (email, full_name,phone_number) VALUES ('${email}', '${fullName}','${phoneNumber}')`;
       con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");
+  
       });
-    });
+
     res.send(true);
   }
   else{

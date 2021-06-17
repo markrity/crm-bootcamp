@@ -31,16 +31,16 @@
         {
             document.getElementById("errorMsg").innerHTML="Submit successfully";
             document.getElementById("errorMsg").style.color ="green"; 
-
+            let inputValid=false;
             axios.post('http://localhost:8004',{fullName,email,phoneNumber})
             .then(function (response) {
-              console.log(response.data);
+                inputValid=response.data
+                console.log(response.data);
             })
             .catch(function (error) {
               console.log(error);
             });
-            
-            
+
             
         }
         
