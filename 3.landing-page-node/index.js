@@ -7,9 +7,26 @@ app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
 app.set('views', __dirname + '/views'); //For calling from location down.
 
+const axios = require('axios');
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}/`);
 });
+
+
+/**
+ * Rendering of the leads page
+ */
+ app.get('/admin', function(req, res) {
+  var params = req.query;
+  const data = {
+    title: "Leads",
+    logo:"RGB",
+    business: "Gradiz",
+    headers: ["Full Name", "Email", "Phone"],
+  }
+  res.render('leads', data);
+});
+
 
 /**
  * Rendering of the landing page
