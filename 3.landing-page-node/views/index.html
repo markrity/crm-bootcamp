@@ -4,7 +4,7 @@
 <head>
     <meta name="description" content="Webpage description goes here" />
     <meta charset="utf-8">
-    <title>Study Group</title>
+    <title>The Wedding Planners</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="">
     <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -16,25 +16,24 @@
 
 <body>
     <nav>
-        <div id="logo">The Wedding Planner</div>
+        <div id="logo">{{logo}}</div>
         <ul>
-            <li>About</li>
-            <li>Our Latest Events</li>
-            <li>Reviews</li>
+            {{#nav}}
+                <li>{{title}}</li>
+            {{/nav}}
         </ul>
     </nav>
     <div class="container">
-
         <div class="row">
 
             <div class="left-column">
                 <form id="lead-form">
-                    <h1>Let Us Set Your Perfect Day</h1>
-                    <input type="text" id="fullName" placeholder="Enter Name">
-                    <input type="text" id="email" placeholder="Enter Email">
-                    <input type="text" id="phone" placeholder="Enter PhoneNumber">
+                    <h1>{{form.initHeader}}</h1>
+                    {{#form.formFields}}
+                        <input type="{{type}}" id="{{id}}" placeholder="{{placeholder}}">
+                    {{/form.formFields}}
                     <div id="form-err"></div>
-                    <button onclick='onSubmit(event)'>Contact Me</button>
+                    <button onclick='onSubmit(event)'>{{form.btnText}}</button>
                 </form>
             </div>
             <div class="right-column">

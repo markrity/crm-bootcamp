@@ -1,7 +1,7 @@
 body {
     background-color:white;
     margin: 0 auto!important;
-    background-image: url('../pexels-asad-photo-maldives-169192.jpg');
+    background-image: url('../assets/pexels-asad-photo-maldives-169192.jpg');
     background-repeat: no-repeat;
     background-size:cover;
 }
@@ -83,7 +83,7 @@ flex:3;
 }
 
 #wedding-bg{
-    background-image: url('../pexels-asad-photo-maldives-169192.jpg');
+    background-image: url('../assets/pexels-asad-photo-maldives-169192.jpg');
     background-repeat: no-repeat;
     background-size:cover;
 
@@ -146,7 +146,7 @@ flex:3;
     color: #000000;
     border-style: solid;
     border-radius: 17px;
-    box-shadow: 0px 0px 7px rgba(66,66,66,.75);
+    box-shadow: -1px 1px 4px 0px rgb(66 66 66 / 75%);
     width: 60%;
 }
 input:focus {
