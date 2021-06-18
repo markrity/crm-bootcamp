@@ -25,12 +25,11 @@ app.get('/admin', function(req, res) {
       //console.log(result);
       res.send(result);
     });
-
   });
 // });
 
 app.post('/', function(req, res) {
-  var { firstname,lastname,phone} = req.body;
+  var {firstname,lastname,phone} = req.body;
   console.log(firstname);
   console.log(req.body);
   var invalid_type="";
@@ -75,3 +74,15 @@ function validateName(name,index) {
   }
   return "";
 }
+
+app.post('/delete', function(req, res) {
+  console.log(req.body)
+  var id = req.body.lead_id;
+  console.log(id)
+  // con.connect(function(err) {
+    con.query(`DELETE FROM leads WHERE lead_id='${id}'`, function (err, result, fields) {
+      if (err) throw err;
+      //console.log(result);
+      res.json({status:true})
+    });
+  });

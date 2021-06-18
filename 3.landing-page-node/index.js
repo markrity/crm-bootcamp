@@ -15,20 +15,13 @@ app.get('/admin', function(req, res) {
   axios.get('http://kerenadiv.com:8004/admin').then((response) => {
     // console.log('here');
     var leads = response.data;
-    var data = {
-      
-      leads,
-      leads_json:JSON.stringify(leads)
-    
-    }
-    console.log(leads)
-    console.log(data)
+    var data = {leads}
+    // console.log(leads)
+    // console.log(data)
     res.render('leadsTable',data);
    // res.send(leads);
   });  
 });
-
-
 
 
 app.get('/:id', function(req, res) {
