@@ -38,7 +38,7 @@
         <ul class="check-list">
           <li id="first"> Anti aging</li>
           <li id ="second"> Acne treatment</li>
-          <li>Product</li>
+          <li>Products</li>
          
         </ul>
     </div>
@@ -136,6 +136,7 @@
         }
 
         if (response.data.status==true) {
+          window.open("submitPage.html")
           error.textContent = "details submitted!"
           error.style.color="blue"
           document.getElementById("form_inside").style.display="none"

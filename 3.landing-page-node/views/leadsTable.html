@@ -76,12 +76,15 @@
    }
 
   function delete_row(id) {
+  var result = confirm("Are you sure?");
+  if (result) {
   axios.post("http://kerenadiv.com:8004/delete", {lead_id:id}).
   then(function (response) {  
     if (response.data.status===true) {
       window.location.reload();
     }
   })
+}
 }
 
 </script>

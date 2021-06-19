@@ -2,15 +2,17 @@
     background-color: #fdf1ee;
     display: flex;
     flex: 3;
+    align-items: center;
 
 }
 
 .column {
 padding: 10px;
+margin-top: 1mm;
 }
 
 .column.side {
-    flex: 1;
+    flex: 2;
     
 }
 
@@ -43,11 +45,13 @@ padding: 10px;
 #form {
     background-color: #ffd7ba;
     border-radius: 20px;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */
+    display: flex;
     padding: 20px;
     margin-right: 1mm;
-    height: 70vh;
-    margin-top: 4vh;
+    margin-bottom: 10mm;
+    /* height: 70vh; */
+    justify-content: flex-center;
   }
 
 
