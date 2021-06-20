@@ -7,22 +7,20 @@ app.use(express.static('views'));
 
 app.engine('html', mustacheExpress());
 app.set('view engine', 'html');
-app.set('views', __dirname + '/views'); //For calling from location down.
+app.set('views', __dirname + '/views'); 
 
 
 app.get('/admin', function(req, res) {
-  // console.log('bla')
   axios.get('http://kerenadiv.com:8004/admin').then((response) => {
-    // console.log('here');
     var leads = response.data;
     var data = {leads}
-    // console.log(leads)
-    // console.log(data)
     res.render('leadsTable',data);
-   // res.send(leads);
   });  
 });
 
+app.get('/submit',function(req, res) {
+  res.render('submitPage.html');
+});
 
 app.get('/:id', function(req, res) {
   var picId=req.params.id;
