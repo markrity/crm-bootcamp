@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8">
+    <title>The Wedding Planners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="background">
+        <nav>
+            <div id="logo">{{logo}}</div>
+            <ul>
+                {{#nav}}
+                    <li>{{title}}</li>
+                {{/nav}}
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="row">
+
+                <div class="left-column">
+                    <form id="lead-form">
+                        <h1>{{form.initHeader}}</h1>
+                        {{#form.formFields}}
+                            <input type="{{type}}" class="lead-form" id="{{id}}" placeholder="{{placeholder}}">
+                        {{/form.formFields}}
+                        <div id="form-err"></div>
+                        <button onclick='onSubmit(event)'>{{form.btnText}}</button>
+                    </form>
+                </div>
+                <div class="right-column">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="scripts/formSubmit.js"></script>
+
+</html>

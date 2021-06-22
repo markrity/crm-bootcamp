@@ -1,0 +1,26 @@
+
+
+.default{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+form{
+  display: flex;
+  flex-direction: column;
+}
+
+.clickable{
+  color:rgb(10, 10, 170)
+}
+
+.clickable:hover{
+   color: rgb(155, 105, 105);
+    cursor: pointer;
+}
+
+input{
+  margin: 1rem;
+}

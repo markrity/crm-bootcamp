@@ -12,7 +12,6 @@ app.get('/index', function (req, res) {
     logo: 'The Wedding Planners',
     nav: createNav(),
     form: createFormContant(),
-
   };
   res.render('index', data);
 });
