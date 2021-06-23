@@ -40,42 +40,26 @@ function RegisterBox(props) {
 
     }
 
+    const inputs=[
+        {inputType:'text',inputName:'fullName', inputString:'Full name'},
+        {inputType:'text',inputName:'companyName', inputString:'Company name'},
+        {inputType:'text',inputName:'phoneNumber', inputString:'Phone number'},
+        {inputType:'email',inputName:'email',inputString:'Email'},
+        {inputType:'password',inputName:'password', inputString:'Password'},
+        {inputType:'password',inputName:'confirmPassword',inputString:'Confirm password'}
+       
+    ];
+    
+       
+        const inputsList=inputs.map((value)=>
+                                    <Input  inputType={value.inputType} inputName={value.inputName} inputString={value.inputString}/>);
+       
     return (
-        <form className="login-register register" onSubmit={saveDetailsOnDatabase}>
 
-            <div className="inputContainer">
-                <Label inputName="fullName" labelValue="Full name"/>
-                <Input inputType="text" inputName="fullName" />
-            </div>
-
-            <div className="inputContainer">
-                <Label inputName="companyName" labelValue="Company name"/>
-                <Input inputType="text" inputName="companyName" />
-            </div>
-
-            <div className="inputContainer">
-                <Label inputName="phoneNumber" labelValue="Phone number"/>
-                <Input inputType="text" inputName="phoneNumber" />
-            </div>
-
-            <div className="inputContainer">
-                <Label inputName="email" labelValue="Email"/>
-                <Input inputType="email" inputName="email" />
-            </div>
-
-            <div className="inputContainer">
-                <Label inputName="password" labelValue="Password"/>
-                <Input inputType="password" inputName="password" />
-            </div>
-
-            <div className="inputContainer">
-                <Label inputName="confirmPassword" labelValue="Confirm password"/>
-                <Input inputType="password" inputName="confirmPassword" />
-            </div>
-
+        
+        <form className="login-register" onSubmit={saveDetailsOnDatabase}>
+            {inputsList}
             <Button buttonText="Sign up" />
-
-            
         </form>
     );
 }
