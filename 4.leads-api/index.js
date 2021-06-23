@@ -14,9 +14,9 @@ const app = express();
 var cors = require('cors')
 app.use(cors());
 
-const bodyParser = require('body-parser')
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+//const bodyParser = require('body-parser')
+app.use(express.json());
+app.use(express.urlencoded());
 
 app.get('/admin', function(req, res) {
     con.query("SELECT * FROM leads", function (err, result, fields) {
@@ -24,7 +24,7 @@ app.get('/admin', function(req, res) {
       res.send(result);
     });
   });
-  
+
 app.post('/', function(req, res) {
   var {firstname,lastname,phone} = req.body;
   var first="";
