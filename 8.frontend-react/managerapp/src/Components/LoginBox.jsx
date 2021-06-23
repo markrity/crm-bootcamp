@@ -6,11 +6,17 @@ import Button from './Button';
 function LoginBox(props) {
     return (
         <div className="login-register">
+
+            <div className="inputContainer">
+                <Label inputName="email" labelValue="Email"/>
+                <Input inputType="email" inputName="email" />
+            </div>
             
-            <Label inputName="email" labelValue="Email"/>
-            <Input inputType="email" inputName="email" />
-            <Label inputName="password" labelValue="Password"/>
-            <Input inputType="password" inputName="password" />
+            <div className="inputContainer">
+                 <Label inputName="password" labelValue="Password"/>
+                <Input inputType="password" inputName="password" />
+            </div>
+
             <Button buttonType="submit" buttonText="Sign in"/>
         </div>
     );

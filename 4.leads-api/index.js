@@ -44,7 +44,7 @@ app.post('/',function(req,res){
   if(ifValid){
 
    
-      var sql = `INSERT INTO leads (email, full_name,phone_number) VALUES ('${email}', '${fullName}','${phoneNumber}')`;
+      var sql = `INSERT INTO leads (email, fullName,phoneNumber) VALUES ('${email}', '${fullName}','${phoneNumber}')`;
       con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("1 record inserted");

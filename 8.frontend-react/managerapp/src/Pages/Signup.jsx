@@ -4,29 +4,36 @@ import LoginBox from '../Components/LoginBox';
 import RegisterBox from '../Components/RegisterBox';
 import Button from '../Components/Button';
 import ChoiceContainer from '../Components/ChoiceContainer';
+import Message from '../Components/message';
 
 function Signup(props) {
+
     const [isLogin, setIsLogin] = useState(true);
-    const [isRegister, setIsRegister]=useState(false);
-  
+    const [registerMsg,setRegisterMsg]=useState('');
+    const [messageColor,setMsgColor]=useState('');
     const showLoginBox=()=>{
         setIsLogin(true);
-        setIsRegister(false);
     }
-
 
     const showRegisterBox=()=>{
         setIsLogin(false);
-        setIsRegister(true);
     }
+
+    const showMsg=(msg)=>{
+       setRegisterMsg(msg);
+    }
+
+    const changeMsgColor=(color)=>{
+        setMsgColor(color)
+    }
+
     return (
 
            <div className="signup">
+                {registerMsg?<Message  msgContent={registerMsg} msgColor={messageColor}/>:null}
                <div className="mainContainer">
              <ChoiceContainer showLogBox={showLoginBox} showRegBox={showRegisterBox}/>
-
-               {isLogin && <LoginBox/>}
-                {isRegister && <RegisterBox/>}
+               {isLogin ? <LoginBox/>: <RegisterBox msgColor={changeMsgColor} regMsg={showMsg}/>}
                 </div>
             </div>
     );
