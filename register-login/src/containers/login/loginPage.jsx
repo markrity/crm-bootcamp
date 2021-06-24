@@ -19,12 +19,17 @@ class Login extends React.Component {
         mail: this.state.email,
         password: this.state.password
         }).then(function (response) {
+            console.log(response.data.status);
+            
             if (typeof(Storage) !== "undefined") {
              localStorage.setItem("my_user", response.data.accessToken);
-          
-             console.log(localStorage.getItem("my_user"));
+            
+             //console.log(localStorage.getItem("my_user"));
             } else {
              console.log("Sorry, your browser does not support Web Storage...")
+            }
+            if(response.data.status){
+            window.location.href = "http://localhost:3000/home";
             }
           })
     } 

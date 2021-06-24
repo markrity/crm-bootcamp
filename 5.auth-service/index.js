@@ -56,10 +56,10 @@ app.post('/login', function(req, res) {
   con.query(isExist, function (err, result) {
   //  console.log(result)
     if (result==0) {
-      console.log('user not exist!')
+      res.json({status:false});
     }
     else {
-      console.log(result[0].user_id)
+ //     console.log(result[0].user_id)
       const bodyJWT = {
         "user_id":result[0].user_id,
         "account_id": result[0].account_id,
@@ -68,7 +68,7 @@ app.post('/login', function(req, res) {
 
       const accessToken = jwt.sign(bodyJWT, secret)
      // console.log(accessToken);
-      res.json({accessToken});
+      res.json({accessToken, status:true});
 
     }
   });
