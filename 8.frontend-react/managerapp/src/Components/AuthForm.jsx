@@ -19,7 +19,7 @@ function AuthForm(props) {
              props.msgColor('#D4EDDA');
              localStorage.setItem("token",token);
              window.location.href="/homepage";
-             console.log(localStorage.getItem("token"));
+     
             }
             else{
                 

@@ -9,7 +9,6 @@ app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 const jwt = require('jsonwebtoken');
-var router = express.Router();
 
 
 const toksec="afj3487avn754ljh9udsg";
@@ -21,7 +20,22 @@ var con = mysql.createConnection({
   database: "gameStation"
 });
 
-// router.use(middle)
+
+app.get('/checkToken',  function(req, res) {
+  let tokenValidate=false;
+  
+  try {
+    const verified = jwt.verify(req.headers.token, toksec);
+    tokenValidate=true;
+    
+  }
+  catch(err) {
+   tokenValidate=false;
+  }
+  console.log(tokenValidate);
+  const data={tokenValidate};
+  res.send(data);
+});
 
 app.get('/', function(req, res) {
   res.send('hello ');
@@ -65,7 +79,7 @@ app.post('/login',(req,res)=>{
   if (err) throw err;
   if(result!=0){
     loginCorrect=true;
-    console.log("login correct");
+
     const accessToken = jwt.sign({ email: email}, toksec);
     jwt.ver
     token=accessToken;
