@@ -11,7 +11,8 @@ class AuthApi {
             }
         })
         .then(function (response) {
-            localStorage.removeItem('jwtToken', response.data.accessToken);
+            localStorage.removeItem('jwtToken');
+            window.location.href = "http://localhost:3000/signup";
         })
         .catch(function (error) {
             console.log(error);
@@ -37,6 +38,9 @@ class AuthApi {
           const token  = response.data.accessToken;
           if(token){
             localStorage.setItem('jwtToken', response.data.accessToken);
+          }
+          if(response.data.valid){
+            window.location.href = "http://localhost:3000/home";;
           }
       })
       .catch(function (error) {
