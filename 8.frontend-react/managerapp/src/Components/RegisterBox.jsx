@@ -52,7 +52,7 @@ function RegisterBox(props) {
     
        
         const inputsList=inputs.map((value)=>
-                                    <Input  inputType={value.inputType} inputName={value.inputName} inputString={value.inputString}/>);
+            <Input  inputType={value.inputType} inputName={value.inputName} inputString={value.inputString}/>);
        
     return (
 

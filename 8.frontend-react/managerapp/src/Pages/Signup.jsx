@@ -5,7 +5,7 @@ import RegisterBox from '../Components/RegisterBox';
 import Button from '../Components/Button';
 import ChoiceContainer from '../Components/ChoiceContainer';
 import Message from '../Components/message';
-
+import AuthForm from '../Components/AuthForm';
 function Signup(props) {
 
     const [isLogin, setIsLogin] = useState(true);
@@ -33,7 +33,8 @@ function Signup(props) {
                 {registerMsg?<Message  msgContent={registerMsg} msgColor={messageColor}/>:null}
                <div className="mainContainer">
              <ChoiceContainer showLogBox={showLoginBox} showRegBox={showRegisterBox}/>
-               {isLogin ? <LoginBox/>: <RegisterBox msgColor={changeMsgColor} regMsg={showMsg}/>}
+               {/* {isLogin ? <LoginBox/>: <RegisterBox msgColor={changeMsgColor} regMsg={showMsg}/>} */}
+               {isLogin ? <AuthForm formAction='login' msgColor={changeMsgColor} regMsg={showMsg} />: <AuthForm formAction='register' msgColor={changeMsgColor} regMsg={showMsg}/>}
                 </div>
             </div>
     );
