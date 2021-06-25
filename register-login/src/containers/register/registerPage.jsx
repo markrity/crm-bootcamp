@@ -66,11 +66,11 @@ class Register extends React.Component {
         <Header header_text = "Create your account"/>
         <FormInput label = "Full Name" type = "text" className ="input" placeholder= "full name"  onChange={this.handleChange} />
         <FormInput label = "Business Name" type = "text" className ="input" placeholder= "business name" onChange={this.handleChange_business}/>
-        <FormInput label = "Email" type = "text" className ="input" placeholder= "Email" onChange={this.handleChange_email} />
+        <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
-        <FormInput label = "Password" type = "text" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
+        <FormInput label = "Password" type = "text" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
 
-        <Button button_text="Sign Up" onClick={() => this.handleClick()} />
+        <Button button_text="Get started free" onClick={() => this.handleClick()} />
 
         </div>
       );

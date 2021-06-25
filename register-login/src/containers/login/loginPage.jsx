@@ -49,7 +49,7 @@ class Login extends React.Component {
 
         <Header className="header" header_text = "Sign in"/>
         
-        <FormInput label = "Email" type = "text" className ="input" placeholder= "Email" onChange={this.handleChange_email} />
+        <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         <FormInput label = "Password" type = "text" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
         <Button button_text="Login" onClick={() => this.handleClick()} />
 

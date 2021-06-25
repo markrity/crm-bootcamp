@@ -8,7 +8,7 @@ function FormInput(props) {
         <input
         type={props.type}
         className={props.className}
-      //  placeholder={props.placeholder}
+        placeholder={props.placeholder}
         onChange={props.onChange} />
     </div>
     );
