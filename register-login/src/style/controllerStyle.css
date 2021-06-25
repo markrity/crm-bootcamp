@@ -1,0 +1,24 @@
+.controller_header {
+    display: flex;
+    flex-direction: column;
+    font-size: smaller;
+    letter-spacing: 0.5px;
+}
+
+.controller {
+    position: relative;
+    width: 450px;
+    /* height: 650px; */
+    /* border-radius: 20px; */
+    padding: 40px;
+    box-sizing: border-box;
+    background: white;
+     box-shadow: 14px 14px 20px rgb(222, 217, 217), -14px -14px 20px rgb(222, 217, 217); 
+}
+
+.clickController {
+    font-weight: bolder;
+    cursor: pointer;
+    /* border-bottom: 4px dotted v; */
+    margin-top: 5px;
+}

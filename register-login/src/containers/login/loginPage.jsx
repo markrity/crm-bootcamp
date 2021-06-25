@@ -3,6 +3,7 @@ import Header from '../../components/header'
  import Button from '../../components/button'
  import FormInput from'../../components/formInput'
 import axios from 'axios';
+import '../../style/inputStyle.css'
 
 
 class Login extends React.Component {
@@ -46,9 +47,10 @@ class Login extends React.Component {
       return (
         <div>
 
-        <Header header_text = "Login"/>
-        <FormInput label = "Email" type = "text" className ="register" placeholder= "Email" onChange={this.handleChange_email} />
-        <FormInput label = "Password" type = "text" className ="register" placeholder= "Password" onChange={this.handleChange_password} />
+        <Header className="header" header_text = "Sign in"/>
+        
+        <FormInput label = "Email" type = "text" className ="input" placeholder= "Email" onChange={this.handleChange_email} />
+        <FormInput label = "Password" type = "text" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
         <Button button_text="Login" onClick={() => this.handleClick()} />
 
         </div>

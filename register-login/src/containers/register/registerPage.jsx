@@ -63,12 +63,12 @@ class Register extends React.Component {
       return (
         <div>
         
-        <Header header_text = "Sign Up"/>
-        <FormInput label = "Full Name" type = "text" className ="register" placeholder= "full name"  onChange={this.handleChange} />
-        <FormInput label = "Business Name" type = "text" className ="register" placeholder= "business name" onChange={this.handleChange_business}/>
-        <FormInput label = "Email" type = "text" className ="register" placeholder= "Email" onChange={this.handleChange_email} />
-        <FormInput label = "Phone" type = "text" className ="register" placeholder= "phone" onChange={this.handleChange_phone} />
-        <FormInput label = "Password" type = "text" className ="register" placeholder= "Password" onChange={this.handleChange_password} />
+        <Header header_text = "Create your account"/>
+        <FormInput label = "Full Name" type = "text" className ="input" placeholder= "full name"  onChange={this.handleChange} />
+        <FormInput label = "Business Name" type = "text" className ="input" placeholder= "business name" onChange={this.handleChange_business}/>
+        <FormInput label = "Email" type = "text" className ="input" placeholder= "Email" onChange={this.handleChange_email} />
+        <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
+        <FormInput label = "Password" type = "text" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
 
         <Button button_text="Sign Up" onClick={() => this.handleClick()} />
 

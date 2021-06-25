@@ -3,6 +3,8 @@ import DivController from "../../components/divController";
 import Register from '../../containers/register/registerPage'
 import Login from '../../containers/login/loginPage'
 
+import '../../style/controllerStyle.css';
+
 class Controller extends React.Component {
 
     constructor(props) {
@@ -23,11 +25,16 @@ class Controller extends React.Component {
 
     render() {
       return (
-        <div>
-        <DivController header_text = "Login" onClick={() => this.handleClickLogin()}/>
-        <DivController header_text = "Sign Up" onClick={() => this.handleClickRegister()}/>
+        <div className="controller">
+       
         {this.state.isLoginOpen && <Login />}
         {this.state.isRegisterOpen && <Register />}
+        <div className="controller_header">
+
+        
+        {this.state.isRegisterOpen && <DivController p_text="Already have an account?" click_text = "Click here to sign in" onClick={() => this.handleClickLogin()}/> }
+        {this.state.isLoginOpen && <DivController p_text="Don't have an account yet?" click_text = "Click here to start a free 30-day trial" onClick={() => this.handleClickRegister()}/>}
+        </div>
         </div>
       );
     

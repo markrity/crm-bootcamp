@@ -3,9 +3,9 @@ import React from "react";
 
 function Header(props) {
     return (
-    <div className="header">
+    <h1 className="header">
     {props.header_text}
-    </div>
+    </h1>
     );
 }
 

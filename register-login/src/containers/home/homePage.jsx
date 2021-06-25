@@ -4,6 +4,8 @@ import Header from '../../components/header'
  import FormInput from'../../components/formInput'
  import Controller from '../controller/controller'
 import axios from 'axios';
+import ping from '../../helpers/ping'
+
 import {
     BrowserRouter as Router,
     Switch,
@@ -28,6 +30,7 @@ class HomePage extends React.Component {
       }
    
     render() {
+   // var isExist = ping()
     var user = localStorage.getItem("my_user")
     var isExist=false;
     if(user) {

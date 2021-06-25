@@ -2,6 +2,7 @@
 import React from "react";
 import Controller from "./containers/controller/controller";
 import HomePage from "./containers/home/homePage";
+import './style/app.css'
 import {
   BrowserRouter as Router,
   Switch,
