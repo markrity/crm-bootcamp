@@ -26,25 +26,39 @@ app.get('/', function(req, res) {
 
 app.post('/register', function(req, res) {   
   var {full_name,business_name,mail,phone,password} = req.body;
-  password=(md5(password));
-  var sql = `INSERT INTO main_account (user_fullname, user_businessname, user_mail, user_phone, user_password) VALUES ('${full_name}', '${business_name}','${mail}', '${phone}', '${password}')`;
-  con.query(sql, function (err, result) {
-    if (err) throw err;
-    var user = `INSERT INTO users (account_id, user_fullname, user_mail, user_phone, user_password) VALUES ('${result.insertId}', '${full_name}','${mail}', '${phone}', '${password}')`;
-    con.query(user, function (err, result_user) {
-      if (err) throw err;
-      const bodyJWT = {
-        "user_id":result_user.insertId,
-        "account_id": result.insertId,
-        "user_fullname":full_name
+
+  //check if the user is already exist 
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}')`
+
+  con.query(isExist, function (err, result) {
+    //  console.log(result)
+      if (result!=0) {
+        res.json({status:false});
       }
-
-      const accessToken = jwt.sign(bodyJWT, secret)
-      console.log(accessToken);
-      res.json({accessToken});
-
+      else {
+      password=(md5(password));
+      var sql = `INSERT INTO main_account (user_fullname, user_businessname, user_mail, user_phone, user_password) VALUES ('${full_name}', '${business_name}','${mail}', '${phone}', '${password}')`;
+      con.query(sql, function (err, result) {
+        if (err) throw err;
+        var user = `INSERT INTO users (account_id, user_fullname, user_mail, user_phone, user_password) VALUES ('${result.insertId}', '${full_name}','${mail}', '${phone}', '${password}')`;
+        con.query(user, function (err, result_user) {
+          if (err) throw err;
+          const bodyJWT = {
+            "user_id":result_user.insertId,
+            "account_id": result.insertId,
+            "user_fullname":full_name
+          }
+    
+          const accessToken = jwt.sign(bodyJWT, secret)
+          console.log(accessToken);
+          res.json({status:true, accessToken});
+    
+        });
+      });
+    }
     });
-  });
+
+
 });
 
 app.post('/login', function(req, res) {   

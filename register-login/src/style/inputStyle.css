@@ -37,6 +37,7 @@ font-weight: 900;
 box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
 transition: 0.5s;
 font-size: large;
+cursor: pointer;
 }
 
 
