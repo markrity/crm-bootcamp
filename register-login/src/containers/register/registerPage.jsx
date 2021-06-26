@@ -3,6 +3,10 @@ import Header from '../../components/header'
  import Button from '../../components/button'
  import FormInput from'../../components/formInput'
 import axios from 'axios';
+import {
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
 
 
 class Register extends React.Component {
@@ -27,8 +31,9 @@ class Register extends React.Component {
         }).then(function (response) {
           if (typeof(Storage) !== "undefined") {
            localStorage.setItem("my_user", response.data.accessToken);
-        
+           
            console.log(localStorage.getItem("my_user"));
+           window.location.href = "http://localhost:3000/home";
           } else {
            console.log("Sorry, your browser does not support Web Storage...")
           }
@@ -60,6 +65,8 @@ class Register extends React.Component {
 
     
     render() {
+      var isExist;
+      localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
         
@@ -70,7 +77,7 @@ class Register extends React.Component {
         <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
         <FormInput label = "Password" type = "text" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
 
-        <Button button_text="Get started free" onClick={() => this.handleClick()} />
+        <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
 
         </div>
       );

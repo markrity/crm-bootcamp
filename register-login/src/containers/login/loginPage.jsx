@@ -5,53 +5,68 @@ import Header from '../../components/header'
 import axios from 'axios';
 import '../../style/inputStyle.css'
 
+import {
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
+
 
 class Login extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {email:'', password:''}
+      this.state = {email:'', password:'', errormessage: ''}
       this.handleChange_email = this.handleChange_email.bind(this)
-      this.handleChange_password = this.handleChange_password.bind(this)
+      this.handleChange_password = this.handleChange_password.bind(this) 
     }
 
-    handleClick() {
+    handleClick = () => {
+  
       axios.post('http://kerenadiv.com:8005/login', {
         mail: this.state.email,
         password: this.state.password
-        }).then(function (response) {
-            console.log(response.data.status);
-            
+        }).then(response => {
+
+            //user is exist
+            if(response.data.status) {
             if (typeof(Storage) !== "undefined") {
-             localStorage.setItem("my_user", response.data.accessToken);
-            
-             //console.log(localStorage.getItem("my_user"));
-            } else {
-             console.log("Sorry, your browser does not support Web Storage...")
+              localStorage.setItem("my_user", response.data.accessToken);
+             } else {
+              console.log("Sorry, your browser does not support Web Storage...")
+             }
+             window.location.href = "http://localhost:3000/home";
             }
-            if(response.data.status){
-            window.location.href = "http://localhost:3000/home";
+
+            else {
+              this.setState({errormessage:'You are not an account!'})
             }
           })
     } 
 
     handleChange_email(event) {
+      this.setState({errormessage:''})
       this.setState({email: event.target.value});
     }
 
     handleChange_password(event) {
+      this.setState({errormessage:''})
       this.setState({password: event.target.value});
     }
 
-    render() {
+    render() {      
+      var isExist;
+      localStorage.getItem("my_user") ? isExist=true : isExist = false
+      
       return (
         <div>
+            {(isExist)&& <Redirect to="/home" />}
 
         <Header className="header" header_text = "Sign in"/>
         
         <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         <FormInput label = "Password" type = "text" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
-        <Button button_text="Login" onClick={() => this.handleClick()} />
+        <Button className="button" button_text="Login" onClick={() => this.handleClick()} />
+        {this.state.errormessage}
 
         </div>
       );

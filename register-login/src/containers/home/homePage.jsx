@@ -8,9 +8,6 @@ import ping from '../../helpers/ping'
 
 import {
     BrowserRouter as Router,
-    Switch,
-    Route,
-    Link,
     Redirect
   } from "react-router-dom";
 
@@ -30,16 +27,12 @@ class HomePage extends React.Component {
       }
    
     render() {
-   // var isExist = ping()
-    var user = localStorage.getItem("my_user")
-    var isExist=false;
-    if(user) {
-    isExist=true;
-    }
+    var isExist;
+    localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
         {console.log(isExist)}
-         {(!isExist)&& <Redirect to="/login" />} <Button button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
+         {(!isExist)&& <Redirect to="/login" />} <Button className="button" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
         </div>
       );
     }
