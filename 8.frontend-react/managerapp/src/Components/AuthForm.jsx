@@ -10,7 +10,7 @@ function AuthForm(props) {
         const email=e.target.elements.email.value.trim();
         const password=e.target.elements.password.value.trim();
        
-        axios.post('http://localhost:8005/login',{email,password})
+        axios.post('http://localhost:8005/signin',{email,password})
         .then(function (response) {
             
            const {loginCorrect,token}=response.data;
@@ -18,7 +18,7 @@ function AuthForm(props) {
              props.regMsg("Login successful");
              props.msgColor('#D4EDDA');
              localStorage.setItem("token",token);
-             window.location.href="/homepage";
+             window.location.reload();
      
             }
             else{
@@ -42,7 +42,7 @@ function AuthForm(props) {
         const email=e.target.elements.email.value.trim();
         const password=e.target.elements.password.value.trim();
         let emailExists=false;
-        axios.post('http://localhost:8005/register',{fullName,companyName,phoneNumber,email,password})
+        axios.post('http://localhost:8005/signup',{fullName,companyName,phoneNumber,email,password})
         .then(function (response) {
            emailExists=response.data.emailExists;
            console.log(emailExists);
@@ -87,8 +87,8 @@ function AuthForm(props) {
                  ];
         }
 
-    const inputsList=inputs.map((value)=>
-    <Input  inputType={value.inputType} inputName={value.inputName} inputString={value.inputString}/>);
+    const inputsList=inputs.map((value,index)=>
+    <Input  key={index} inputType={value.inputType} inputName={value.inputName} inputString={value.inputString}/>);
 
     return (
         <form className="login-register" onSubmit={(props.formAction=='login')?authToDatabase:saveDetailsOnDatabase}>

@@ -1,15 +1,16 @@
 const e = require('cors');
 const cors = require('cors');
 const express = require('express');
-const mysql = require('mysql');
+const mysqlserver=require
 const md5=require('md5');
+const mysql = require('mysql');
 const app = express();
 const bodyParser = require('body-parser');
 app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 const jwt = require('jsonwebtoken');
-
+const JwtMiddleware=require('./checkJWTmiddleware');
 
 const toksec="afj3487avn754ljh9udsg";
 
@@ -21,31 +22,53 @@ var con = mysql.createConnection({
 });
 
 
-app.get('/checkToken',  function(req, res) {
-  let tokenValidate=false;
+// app.get('/checkToken',  function(req, res) {
+//   let tokenValidate=false;
   
-  try {
-    const verified = jwt.verify(req.headers.token, toksec);
-    tokenValidate=true;
+//   try {
+//     const verified = jwt.verify(req.headers.token, toksec);
+//     tokenValidate=true;
     
+//   }
+//   catch(err) {
+//    tokenValidate=false;
+//   }
+//   const data={tokenValidate};
+//   res.send(data);
+// });
+app.use(function (req, res, next) {
+  let tokenValidate=false;
+    console.log(req.originalUrl);
+    if(req.originalUrl==="/signup" || req.originalUrl==="/signin")
+    {
+      next();
+    }
+    else{
+   console.log("returend to middleware");
+    try {
+      const verified = jwt.verify(req.headers.token, toksec);
+      next();
+    }
+    catch(err) {
+     res.status(401).json({"message" : "not authenticated!!!"});
+   
+    }
   }
-  catch(err) {
-   tokenValidate=false;
-  }
-  console.log(tokenValidate);
-  const data={tokenValidate};
-  res.send(data);
+  
 });
+
+app.get('/registered',function(req,res){
+  return res.status(200).json({"message": "I'm Alive!"});
+})
 
 app.get('/', function(req, res) {
   res.send('hello ');
 });
 
-app.post('/register',(req,res)=>{
+app.post('/signup',(req,res)=>{
 
     const {fullName,companyName,phoneNumber,email,password}=req.body;
     const encPassword=(md5(password));
-    console.log(encPassword);
     let emailExists=false;
     con.query(`SELECT * FROM accounts WHERE email='${email}'`, function (err, result, fields) {
     if (err) throw err;
@@ -68,8 +91,9 @@ app.post('/register',(req,res)=>{
   }
 )});
 
-app.post('/login',(req,res)=>{
+app.post('/signin',(req,res)=>{
   
+  console.log(req.body)
   const {email,password}=req.body;
   const encPassword=(md5(password));
   
@@ -81,7 +105,6 @@ app.post('/login',(req,res)=>{
     loginCorrect=true;
 
     const accessToken = jwt.sign({ email: email}, toksec);
-    jwt.ver
     token=accessToken;
     console.log(token);
   }
