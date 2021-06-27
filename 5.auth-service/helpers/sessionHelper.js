@@ -11,8 +11,10 @@ class SessionHelper {
         if(accessToken){
           return jwt.verify(accessToken, this.accessTokenSecret, (err, user) => {
             if (err){
+              console.log("not verified");
               return null;
             }
+            console.log("verified!");
             return this.openSessions.has(user.session_id) ?  this.openSessions.get(user.session_id) : null;
           });
         } 
@@ -26,6 +28,7 @@ class SessionHelper {
           "algorithm": "HS256",
           expiresIn: 86400 * 10 // expires in 10 days
         });
+        console.log(this.openSessions);
         return token;
     }
 

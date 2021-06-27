@@ -5,14 +5,18 @@ import SessionHelper from './helpers/sessionHelper.js';
 import mysql from 'mysql';
 import md5 from 'md5';
 import validate from './helpers/validationHelper.js';
+// import user from './helpers/user.js'
 
 const app = express();
 const sessionHelper = new SessionHelper();
 
+// var router = express.Router();
+// app.use('/isConnect', authMiddleware);
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
 
 const sqlHelper = new SqlHelper();
 
@@ -75,18 +79,18 @@ app.post('/signup', async function (req, res) {
   res.send(resData);
 });
 
-// checking if the session is open
-app.post('/ping', function (req, res) {
-  let isValid = false;
-  console.log("hi! this is ping function");
-  var userData = sessionHelper.verifySession(req.headers.authorization)
-  console.log("userData from verified", userData);
-  if(userData && sessionHelper.isOpenSession(userData)){
-    isValid = true;
-  }
-  console.log("returning from ping: ", resData);
-  res.send(isValid);
-});
+// // checking if the session is open
+// app.post('/ping', function (req, res) {
+//   let isValid = false;
+//   console.log("hi! this is ping function");
+//   var userData = sessionHelper.verifySession(req.headers.authorization)
+//   console.log("userData from verified", userData);
+//   if(userData && sessionHelper.isOpenSession(userData)){
+//     isValid = true;
+//   }
+//   console.log("returning from ping: ", resData);
+//   res.send(isValid);
+// });
 
 app.post('/login', async function (req, res) {
   const body = req.body;
@@ -135,7 +139,7 @@ app.post('/login', async function (req, res) {
 app.post('/logout', function (req, res) {
   let resData = { valid: false }
 
-  var userData = sessionHelper.verifySession(req.headers.authorization)
+  var userData = sessionHelper.verifySession(req.headers.authorization);
   if(userData){
     sessionHelper.deleteSession(userData);
     resData.valid = true;
@@ -143,6 +147,25 @@ app.post('/logout', function (req, res) {
   res.send(resData);
 });
 
+
+
 function encodePassword(password){
   return md5(password);
 }
+
+
+function authMiddleware(req, res, next){
+  const userData = sessionHelper.verifySession(req.headers.authorization);
+  console.log(userData)
+  if(userData){
+    next()
+  } else {
+      console.log("returns false");
+      return res.send(false);
+  }
+}
+
+
+app.get('/ping', authMiddleware,  function(req, res){
+  res.send(true);
+});
