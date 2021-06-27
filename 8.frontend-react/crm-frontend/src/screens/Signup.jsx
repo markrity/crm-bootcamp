@@ -1,82 +1,91 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Form from '../components/Form';
+import Logo from '../components/Logo';
 import AuthApi from '../helpers/authApi';
-
+import '../styles/signUp.css';
+import {
+    // BrowserRouter as Router,
+    Link,
+  } from "react-router-dom";
 const authApi = new AuthApi();
 
+
+
 function Signup(props) {
+
+  const submit = async (data) => {
+    const res = await authApi.signup(data);
+    console.log("submit function get: ", res);
+    if(res.valid){
+      window.location.href = "http://localhost:3000/home";
+    }
+    // return the backend result
+  }
+
     const signup = {
-        submitFunc: authApi.signup,
+        submitFunc: submit,
         type: 'signup',
-        title: "Sign up",
+        title: "Let's get started!",
+        buttonTitle: "SIGN UP",
         fields: {
           name: {
             text: "Full Name",
-            id: "name"
+            id: "name",
+            type: 'text',
+            error: false,
+            mainType: 'name'
           },
-          mail: {
-            text: "Email",
-            id: "mail"
-          },
-          phone: {
-            text: "Phone number",
-            id: "phone"
-          }, 
-          business: {
-            text: "Business Name",
-            id: "Business"
-          },
-          password: {
-            text: "Password",
-            id: "password"
-          }
-        }
-      }
-    
-    
-      const signin = {
-        submitFunc: authApi.signin,
-        type: 'signin',
-        title: "Sign In",
-        fields: {
           mail: {
             text: "Email",
             id: "mail",
+            type: 'text',
+            error: false,
+            mainType: 'mail'
+          },
+          phone: {
+            text: "Phone Number",
+            id: "phone",
+            type: 'text',
+            error: false,
+            mainType: 'phone'
+          }, 
+          business: {
+            text: "Business Name",
+            id: "business",
+            type: 'text',
+            error: false,
+            mainType: 'name'
           },
           password: {
             text: "Password",
-            id: "password"
+            id: "password",
+            type: "password",
+            error: false,
+            mainType: 'password'
           }
         }
-    
       }
-      
     
-      const [isSignUp, setIsSignUp] = useState(true);  
-    
-      
-      const changeMode = (e) => {
-        if(e.target.id === "signin" && isSignUp){
-          setIsSignUp(false);
-        } else if(e.target.id === "signup" && !isSignUp){
-          setIsSignUp(true);
-        }
-        return;
-      };
 
     return (
-        <div>
-            <div>
-        <button id="signin" onClick={(e)=>changeMode(e)}>Sign In</button>
-        <button id="signup" onClick={(e)=>changeMode(e)}>Sign Up</button>
+      <div className='wrapper'>
+          <div className='text-container'> 
+          <Logo size='large'/>
+            <h2>Be the best graphic designer you can</h2>
+          </div>
+          <div className='form-container'>
+              <Form 
+              className='form-body'
+              fields={signup.fields} 
+              title={signup.title}
+              submitHandle={signup.submitFunc} 
+              type={signup.type}
+              button={signup.buttonTitle}
+              />
+              <hr></hr>
+              <Link className='linkto' to="/login">I already have an account</Link>
+          </div>
       </div>
-      <Form 
-      fields={isSignUp ? signup.fields : signin.fields} 
-      title={isSignUp ? signup.title : signin.title}
-      submitHandle={isSignUp ? signup.submitFunc : signin.submitFunc} 
-      type={isSignUp ? signup.type : signin.type}
-      />
-    </div>
     );
 }
 

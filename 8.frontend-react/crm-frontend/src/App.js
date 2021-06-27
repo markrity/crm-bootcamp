@@ -1,26 +1,21 @@
 
 // import './App.css';
 // import Form from './components/Form';
-import AuthApi from './helpers/authApi';
-import React, { useState } from 'react';
+
+import React from 'react';
 import Home from './screens/Home';
 import Signup from './screens/Signup';
+import Login from './screens/Login';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
-const authApi = new AuthApi();
 
 function App() {
+  let isUserAuthenticated = localStorage.getItem('jwtToken') ? true : false;
 
-  const jwtToken = localStorage.getItem('jwtToken');
-  let isUserAuthenticated = false;
-  if(jwtToken){
-    isUserAuthenticated = true;
-  }
 
   return (
 
@@ -39,6 +34,9 @@ function App() {
         />
         <Route exact path="/signup">
           <Signup />
+        </Route>
+        <Route exact path="/login">
+          <Login />
         </Route>
         <Route exact path="/home">
           <Home />

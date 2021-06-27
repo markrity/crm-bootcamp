@@ -1,7 +1,9 @@
 // import React from 'react';
+import '../styles/formStyle.css';
 import React, { useState, useEffect } from 'react';
 import FormField from './FormField';
 import CrmButton from './CrmButton';
+import validate from '../helpers/validationHelper';
 
 
 function Form(props) {
@@ -20,32 +22,48 @@ function Form(props) {
 
     const submit = () => {
         let data = {};
-        for(let key in fields){
-            data[`${key}`] = fields[`${key}`].value;
-        }
-        console.log(data);
-        // validation
-        props.submitHandle(data);
+        const fieldsTmp = {...fields};
+        let validationRes = true;
+
+        // for(let key in fields){
+        //     data[`${key}`].value = fields[`${key}`].value;
+        //     data[`${key}`].type = fields[`${key}`].mainType;
+        //     let isValid = validate(fields[`${key}`].mainType, true, fields[`${key}`].value);
+        //     console.log(key, " is: ", isValid);
+        //     if(!isValid){
+        //         fieldsTmp[`${key}`].error = true;
+        //         validationRes = false;
+        //     } else {
+        //         fieldsTmp[`${key}`].error = false;
+        //     }
+        // }
+        // if(!validationRes){
+        //     setFields(fieldsTmp);
+        //     return;
+        // }
+        props.submitHandle(data); //async - response from backend validation
     };
 
     const fieldsComponents = [];
-    // console.log(fields);
-    // for (let fieldKey in props.fields){
-    //     const content = fields[`${fieldKey}`];
-    //     console.log(content);
-    //     fieldsComponents.push(<FormField text={content.text} key={`${content.id}`} callback={(e)=> setValue(fieldKey, e.target.value)}/>);
-    // }
     for (let fieldKey in fields){
         const content = fields[`${fieldKey}`];
-        fieldsComponents.push(<FormField text={content.text} value={content.value || ''} key={`${props.type}${content.id}`} callback={(e)=> setValue(fieldKey, e.target.value)}/>);
+        let error;
+        if (content.error){
+            error = `Invalid ${content.id}`;
+        }
+        
+        fieldsComponents.push(<FormField errorText={error} text={content.text} type={content.type} value={content.value || ''} key={`${props.type}${content.id}`} callback={(e)=> setValue(fieldKey, e.target.value)}/>);
+        
     }
 
     return (
 
-        <div>
+        <div className='form-body'>
             <h2>{props.title}</h2>
             {fieldsComponents}
-            <CrmButton content="submit" callback={()=> submit()}/>
+            <div className='button-container'>
+                <CrmButton content={props.button} callback={()=> submit()}/>
+            </div>
         </div>
     );
 }

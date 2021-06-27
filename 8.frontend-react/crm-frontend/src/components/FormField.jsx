@@ -1,11 +1,12 @@
 import React from 'react';
-
+import '../styles/formFieldStyle.css';
 
 function FormField(props) {
+    var error = `error-${props.id}`;
     return (
-        <div>
-            <label>{props.text}</label>
-            <input type="text" value={props.value} onChange={props.callback}/>
+        <div className='fieldContainer' >
+            <input className='form-input' type={props.type} value={props.value} onChange={props.callback}  placeholder={props.text}/>
+            <span className='field-error' id={error}>{props.errorText}</span>
         </div>
     );
 }
