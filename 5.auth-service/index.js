@@ -11,6 +11,7 @@ app.use(cors());
 app.use(bodyParser.json());
 const jwt = require('jsonwebtoken');
 const JwtMiddleware=require('./checkJWTmiddleware');
+const { response } = require('express');
 
 const toksec="afj3487avn754ljh9udsg";
 
@@ -21,32 +22,18 @@ var con = mysql.createConnection({
   database: "gameStation"
 });
 
-
-// app.get('/checkToken',  function(req, res) {
-//   let tokenValidate=false;
-  
-//   try {
-//     const verified = jwt.verify(req.headers.token, toksec);
-//     tokenValidate=true;
-    
-//   }
-//   catch(err) {
-//    tokenValidate=false;
-//   }
-//   const data={tokenValidate};
-//   res.send(data);
-// });
 app.use(function (req, res, next) {
   let tokenValidate=false;
-    console.log(req.originalUrl);
+    // console.log(req.originalUrl);
     if(req.originalUrl==="/signup" || req.originalUrl==="/signin")
     {
       next();
     }
     else{
-   console.log("returend to middleware");
     try {
       const verified = jwt.verify(req.headers.token, toksec);
+      req.fullName=verified.fullName;
+      // console.log(res.userEmail);
       next();
     }
     catch(err) {
@@ -58,7 +45,9 @@ app.use(function (req, res, next) {
 });
 
 app.get('/registered',function(req,res){
-  return res.status(200).json({"message": "I'm Alive!"});
+  console.log(req.fullName);
+  return res.status(200).json({"message": "I'm Alive!"
+                              ,"fullName":req.fullName});
 })
 
 app.get('/', function(req, res) {
@@ -92,8 +81,8 @@ app.post('/signup',(req,res)=>{
 )});
 
 app.post('/signin',(req,res)=>{
-  
-  console.log(req.body)
+
+  // console.log(req.body)
   const {email,password}=req.body;
   const encPassword=(md5(password));
   
@@ -102,11 +91,12 @@ app.post('/signin',(req,res)=>{
   con.query(`SELECT * FROM accounts WHERE email='${email}' AND userPassword='${encPassword}'`, function (err, result, fields) {
   if (err) throw err;
   if(result!=0){
+    const fullName=result[0].fullName;
     loginCorrect=true;
 
-    const accessToken = jwt.sign({ email: email}, toksec);
+    const accessToken = jwt.sign({fullName:fullName ,email: email, }, toksec);
     token=accessToken;
-    console.log(token);
+    // console.log(token);
   }
   else{
     console.log("login faild");

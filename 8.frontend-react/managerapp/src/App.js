@@ -17,12 +17,15 @@ import {
 
 
  function  App() {
-  
+  const [userName,setUserName]=useState("");
   const [loading, setLoading] = useState(true);
   const [validToken,setValidToken]=useState(false);
   const token=localStorage.getItem("token");
  
   useEffect(()=>{
+      
+      const token=localStorage.getItem("token");
+      if(token){
       axios.get('http://localhost:8005/registered', {
         headers: {
           'token': token
@@ -30,15 +33,20 @@ import {
       })
       .then(function (response) {
           
-          console.log(response.status);
+          // console.log(response.status);
+          console.log(response.data.fullName)
+          setUserName(response.data.fullName);
           setValidToken(true);
-          setLoading(false);
+          
       })
       .catch(function (error) {
         setValidToken(false);
-        setLoading(false);
+        
       });
-
+    }
+  
+      setLoading(false);
+    
     },[])
 
     if (loading) {
@@ -51,7 +59,7 @@ import {
     <div className="App">
       { validToken?
         <div>
-          <Login/>
+          <Login userName={userName}/>
         </div>
       
       :
