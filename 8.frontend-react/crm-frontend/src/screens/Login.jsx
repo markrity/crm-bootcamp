@@ -11,8 +11,21 @@ const authApi = new AuthApi();
 
 function Login(props) {  
 
+      const submit = async (data) => {
+
+        const res = await authApi.signin(data);
+        console.log(res.valid);
+        if(res.valid){
+          console.log("login is done!!",res.valid);
+          window.location.href = "http://localhost:3000/home";
+        } else {
+          return res.errors;
+        }
+        // return the backend result
+      }
+
       const login = {
-        submitFunc: authApi.signin,
+        submitFunc: submit,
         type: 'signin',
         title: "Welcome Back!",
         buttonTitle: "LOG IN",
@@ -20,10 +33,14 @@ function Login(props) {
           mail: {
             text: "Email",
             id: "mail",
+            error: false,
+            mainType: 'mail'
           },
           password: {
             text: "Password",
-            id: "password"
+            id: "password",
+            error: false,
+            mainType: 'password'
           }
         }
       }

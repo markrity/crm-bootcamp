@@ -14,10 +14,14 @@ const authApi = new AuthApi();
 function Signup(props) {
 
   const submit = async (data) => {
+
     const res = await authApi.signup(data);
-    console.log("submit function get: ", res);
+    console.log(res.valid);
     if(res.valid){
+      console.log("signup is done!!",res.valid);
       window.location.href = "http://localhost:3000/home";
+    } else {
+      return res.errors;
     }
     // return the backend result
   }

@@ -15,6 +15,7 @@ import {
 
 function App() {
   let isUserAuthenticated = localStorage.getItem('jwtToken') ? true : false;
+  console.log("isUserAuthenticated ", isUserAuthenticated);
 
 
   return (
@@ -35,11 +36,11 @@ function App() {
         <Route exact path="/signup">
           <Signup />
         </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
         <Route exact path="/home">
           <Home />
+        </Route>
+        <Route exact path="/login">
+          <Login />
         </Route>
       </Switch>
     </div>

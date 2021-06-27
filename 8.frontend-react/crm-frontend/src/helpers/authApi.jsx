@@ -35,24 +35,26 @@ class AuthApi {
         });
     }
 
-    signin(data) {
-        axios.post('http://rgb.com:8005/login', data)
-      .then(function (response) {
-          const token  = response.data.accessToken;
-          if(token){
-            localStorage.setItem('jwtToken', response.data.accessToken);
-          }
-          console.log("response: ", response.data)
-          return response.data;
-      })
-      .catch(function (error) {
-          console.log(error);
-      });
+    async signin(data) {
+        const response = await axios.post('http://rgb.com:8005/login', data);
+        
+        if(response){
+            const token  = response.data.accessToken;
+            if(response.data.valid && token){
+                localStorage.setItem('jwtToken', token);
+            }
+            return response.data;
+        }
+        return null;
     }
 
     async signup(data){
         const response = await axios.post('http://rgb.com:8005/signup', data);
         if(response){
+            const token  = response.data.accessToken;
+            if(response.data.valid && token){
+                localStorage.setItem('jwtToken', token);
+            }
             return response.data;
         }
         return null;
