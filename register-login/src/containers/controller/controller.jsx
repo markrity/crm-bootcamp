@@ -27,7 +27,7 @@ class Controller extends React.Component {
       return (
         <div className="controller">
        
-        {this.state.isLoginOpen && <Login />}
+        {this.state.isLoginOpen && <Login isExist={this.props.isExist} />}
         {this.state.isRegisterOpen && <Register />}
         <div className="controller_header">
 

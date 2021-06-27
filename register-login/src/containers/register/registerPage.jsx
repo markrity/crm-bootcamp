@@ -3,17 +3,19 @@ import Header from '../../components/header'
  import Button from '../../components/button'
  import FormInput from'../../components/formInput'
 import axios from 'axios';
-import {
-  BrowserRouter as Router,
-  Redirect
-} from "react-router-dom";
+// import {
+//   BrowserRouter as Router,
+//   Redirect
+// } from "react-router-dom";
+import ErrorMessage from "../../components/errorMessage";
 
 
 class Register extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {full_name:'', business_name:'', phone:'', email:'', password:'', errormessage_exist: '', email_validate:'', phone_validate:'', password_validate:''}
+      this.state = {full_name:'', business_name:'', phone:'', email:'', password:'',
+       errormessage_exist: '', email_validate:'', phone_validate:'', password_validate:'', name_validate:''}
       this.handleChange = this.handleChange.bind(this)
       this.handleChange_business = this.handleChange_business.bind(this)
       this.handleChange_phone = this.handleChange_phone.bind(this)
@@ -39,7 +41,11 @@ class Register extends React.Component {
           this.setState({password_validate:'invalid password'})
         }
 
-        if(response.data.status==1) {
+        if (!response.data.name_validate) {
+          this.setState({name_validate:'invalid name'})
+        }
+
+        if(response.data.status===1) {
           if (typeof(Storage) !== "undefined") {
           localStorage.setItem("my_user", response.data.accessToken);
           
@@ -49,17 +55,16 @@ class Register extends React.Component {
           console.log("Sorry, your browser does not support Web Storage...")
           }
         }
-        if(response.data.status==0){
+        if(response.data.status===0){
           this.setState({errormessage_exist:'This email already exist'})
         }
 
         })
-     // console.log(this.state)
     }
 
     handleChange(event) {
+     this.setState({name_validate:''})
      this.setState({full_name: event.target.value});
-     
     }
 
     handleChange_business(event) {
@@ -85,23 +90,22 @@ class Register extends React.Component {
 
     
     render() {
-      var isExist;
-      localStorage.getItem("my_user") ? isExist=true : isExist = false
+      // var isExist;
+      // localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
-        
         <Header header_text = "Create your account"/>
         <FormInput label = "Full Name" type = "text" className ="input" placeholder= "full name"  onChange={this.handleChange} />
+        <ErrorMessage err = {this.state.name_validate} />
         <FormInput label = "Business Name" type = "text" className ="input" placeholder= "business name" onChange={this.handleChange_business}/>
         <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
-        {this.state.errormessage_exist}
-        {this.state.email_validate}
+        <ErrorMessage err = {this.state.errormessage_exist} />
+        <ErrorMessage err = {this.state.email_validate} />
         <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
-        {this.state.phone_validate}
+        <ErrorMessage err = {this.state.phone_validate} />
         <FormInput label = "Password" type = "password" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
-        {this.state.password_validate}
+        <ErrorMessage err = {this.state.password_validate} />
         <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
-
         </div>
       );
     }

@@ -19,6 +19,27 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded());
+app.use(myLogger);
+
+
+function myLogger(req, res, next) {
+  // console.log('hiiiiii')
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' ) {
+    console.log('hiiiiii')
+    next();
+  } 
+  //
+  else {
+  var {token} = req.body;
+  jwt.verify(token, secret, (err) => {
+    if (err) {
+      return res.json({status:false});
+    }
+    return res.json({status:true});
+  });
+}
+};
+module.exports = myLogger;
 
 app.get('/', function(req, res) {
   res.send('hello there');
@@ -45,10 +66,15 @@ app.post('/register', function(req, res) {
     valid.password_valid = false;
   }
  
+  if (!validateName(full_name)){
+    valid.name_valid = false;
+  }
+
   if (!(valid.name_valid && valid.password_valid && valid.mail_valid && valid.phone_valid)) {
-    res.json({status:2,email_validate:valid.mail_valid, phone_validate:valid.phone_valid, password_validate:valid.password_valid});
+    res.json({status:2,email_validate:valid.mail_valid, phone_validate:valid.phone_valid, password_validate:valid.password_valid, name_validate:valid.name_valid});
     console.log('hi')
   }
+
   else {
   //check if the user is already exist 
   var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}')`
@@ -113,6 +139,9 @@ app.post('/login', function(req, res) {
  
 });
 
+app.post('/ping', function(req, res) {   
+  
+});
 
 
 function validateEmail(email) {
@@ -126,15 +155,17 @@ function validatePassword(password) {
 }
 
 function validatePhone(phone) {  
-  var phoneRGEX = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
-  return phoneRGEX.test(phone);
+  var re = /^[(]{0,1}[0-9]{3}[)]{0,1}[-\s\.]{0,1}[0-9]{3}[-\s\.]{0,1}[0-9]{4}$/;
+  return re.test(phone);
+}
+
+function validateName(name) {  
+  var re = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
+  return re.test(name);
 }
 
 
 
-// app.post('/ping', function(req, res) {   
-//    var {jwt_check} = req.body;
-//  });
 
 app.listen(process.env.PORT, () => {
   console.log(`Server running at http://localhost:${process.env.PORT}/`);

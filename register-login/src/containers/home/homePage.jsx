@@ -1,13 +1,9 @@
 import React from "react";
-import Header from '../../components/header'
+
  import Button from '../../components/button'
- import FormInput from'../../components/formInput'
- import Controller from '../controller/controller'
-import axios from 'axios';
-import ping from '../../helpers/ping'
+
 
 import {
-    BrowserRouter as Router,
     Redirect
   } from "react-router-dom";
 
@@ -22,17 +18,17 @@ class HomePage extends React.Component {
     }
 
     onButtonClick() { 
-        window.location.href = "http://localhost:3000/login";
-        localStorage.removeItem("my_user")
+      localStorage.removeItem("my_user")
+
+       window.location.href = "http://localhost:3000/login";
       }
    
     render() {
-    var isExist;
-    localStorage.getItem("my_user") ? isExist=true : isExist = false
+    // var isExist;
+    // localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
-        {console.log(isExist)}
-         {(!isExist)&& <Redirect to="/login" />} <Button className="button" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
+         {!(this.props.isExist)&& <Redirect to="/login" />} <Button className="button" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
         </div>
       );
     }

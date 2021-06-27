@@ -1,60 +1,70 @@
 //import './App.css';
-import React from "react";
+//import React from "react";
+import React, { useEffect, useState } from "react";
 import Controller from "./containers/controller/controller";
 import HomePage from "./containers/home/homePage";
 import './style/app.css'
+import axios from 'axios';
+
+
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
   Redirect
 } from "react-router-dom";
 
-const user = localStorage.getItem("my_user")
-var isExist=false;
 
-if(user) {
-  isExist=true;
-}
+var counter=0;
 
-
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+function App() {
+  
+  const [isExist, setExist] = useState(false);
+  
+  useEffect(() => {
+   // setExist(false)
+  
+    var token = localStorage.getItem("my_user");
+    if (token) {
+    console.log(counter++)
+    axios.post('http://kerenadiv.com:8005/ping', {
+      token: token
+      }).then(response => {
+          if (response.data.status) {
+            
+            setExist(true)
+          }
+        })
+      }
+  });
 
  
+  return (   
+    <Router>
+        <Switch>
+        <Route
+        exact path="/"
+        render={() => {
+            return (
+              {isExist} ?
+              <Redirect to="/home" /> :
+              <Redirect to="/login" /> 
+            )
+        }}
+        />
+        <Route path="/home">
+            <HomePage isExist={isExist} /> 
+        </Route>
 
-  render() { 
-    return (   
-      <Router>
-          <Switch>
-          <Route
-          exact path="/"
-          render={() => {
-              return (
-                isExist ?
-                <Redirect to="/home" /> :
-                <Redirect to="/login" /> 
-              )
-          }}
-         />
-          <Route exact path="/home">
-             <HomePage/> 
-          </Route>
+        
+        <Route  path="/login">
+            <Controller isExist={isExist} />
+        </Route>
 
-          <Route exact path="/login">
-             <Controller />
-          </Route>
-
-        </Switch>
-       </Router>
-
-       
-    );
+      </Switch>
+      </Router>
+  );
   }
-}
 
 
 export default App;

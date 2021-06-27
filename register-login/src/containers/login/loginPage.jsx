@@ -6,10 +6,8 @@ import axios from 'axios';
 import '../../style/inputStyle.css'
 
 import {
-  BrowserRouter as Router,
   Redirect
 } from "react-router-dom";
-
 
 class Login extends React.Component {
 
@@ -24,6 +22,7 @@ class Login extends React.Component {
   
       axios.post('http://kerenadiv.com:8005/login', {
         mail: this.state.email,
+        
         password: this.state.password
         }).then(response => {
 
@@ -34,13 +33,16 @@ class Login extends React.Component {
              } else {
               console.log("Sorry, your browser does not support Web Storage...")
              }
+             console.log(this.props.history)
              window.location.href = "http://localhost:3000/home";
+             //window.location.reload();
             }
 
             else {
               this.setState({errormessage:'You are not an account!'})
             }
           })
+         
     } 
 
     handleChange_email(event) {
@@ -54,12 +56,12 @@ class Login extends React.Component {
     }
 
     render() {      
-      var isExist;
-      localStorage.getItem("my_user") ? isExist=true : isExist = false
+      // var isExist;
+      // localStorage.getItem("my_user") ? isExist=true : isExist = false
       
       return (
         <div>
-            {(isExist)&& <Redirect to="/home" />}
+        {this.props.isExist && <Redirect to="/home" />}
 
         <Header className="header" header_text = "Sign in"/>
         
