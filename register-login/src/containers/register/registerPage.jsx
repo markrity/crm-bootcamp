@@ -13,7 +13,7 @@ class Register extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {full_name:'', business_name:'', phone:'', email:'', password:'', errormessage_exist: ''}
+      this.state = {full_name:'', business_name:'', phone:'', email:'', password:'', errormessage_exist: '', email_validate:'', phone_validate:'', password_validate:''}
       this.handleChange = this.handleChange.bind(this)
       this.handleChange_business = this.handleChange_business.bind(this)
       this.handleChange_phone = this.handleChange_phone.bind(this)
@@ -29,8 +29,17 @@ class Register extends React.Component {
         phone: this.state.phone,
         password: this.state.password
         }).then(response => {
+        if (!response.data.email_validate) {
+          this.setState({email_validate:'invalid email'})
+        }
+        if (!response.data.phone_validate) {
+          this.setState({phone_validate:'invalid phone'})
+        }
+        if (!response.data.password_validate) {
+          this.setState({password_validate:'invalid password'})
+        }
 
-        if(response.data.status) {
+        if(response.data.status==1) {
           if (typeof(Storage) !== "undefined") {
           localStorage.setItem("my_user", response.data.accessToken);
           
@@ -40,7 +49,7 @@ class Register extends React.Component {
           console.log("Sorry, your browser does not support Web Storage...")
           }
         }
-        else {
+        if(response.data.status==0){
           this.setState({errormessage_exist:'This email already exist'})
         }
 
@@ -58,15 +67,18 @@ class Register extends React.Component {
     }
 
     handleChange_phone(event) {
+    this.setState({phone_validate:''})
     this.setState({phone: event.target.value});
     }
 
     handleChange_email(event) {
+      this.setState({email_validate:''})
       this.setState({errormessage_exist:''})
       this.setState({email: event.target.value});
     }
 
     handleChange_password(event) {
+      this.setState({password_validate:''})
       this.setState({password: event.target.value});
     }
 
@@ -83,9 +95,11 @@ class Register extends React.Component {
         <FormInput label = "Business Name" type = "text" className ="input" placeholder= "business name" onChange={this.handleChange_business}/>
         <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         {this.state.errormessage_exist}
+        {this.state.email_validate}
         <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
-        <FormInput label = "Password" type = "text" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
-
+        {this.state.phone_validate}
+        <FormInput label = "Password" type = "password" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
+        {this.state.password_validate}
         <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
 
         </div>
