@@ -1,15 +1,50 @@
 
 
+body{
+  min-height: 100vh;
+}
+
 .default{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-height: 100vh;
 }
 
 form{
-  display: flex;
-  flex-direction: column;
+  margin-top: 18px;
+        background-color: white;
+        border: 1px solid lightgrey;
+        display:flex;
+        flex-direction: column;
+        width: 300px;
+        height: 300px;
+        border-radius: 5px;
+        align-content: center;
+        margin-bottom: 100px;
+}
+
+
+
+h1{
+  margin: unset;
+  margin-left: 1em;
+  font-family: 'Dancing Script', cursive;
+}
+
+button{
+  background-color:#ffffff;
+border-radius:28px;
+border:1px solid #9faa3e;
+display:inline-block;
+cursor:pointer;
+font-family: 'Dancing Script', cursive;
+font-size:17px;
+padding:9px 16px;
+text-decoration:none;
+  margin-left: 1em;
+  align-self: center;
 }
 
 .clickable{
@@ -22,5 +57,47 @@ form{
 }
 
 input{
-  margin: 1rem;
+  margin-top: 3em ;
+  margin-bottom: 2em;
+  margin-left: 1rem;
+
 }
+
+#root{
+  min-height: 100vh;
+}
+
+
+#header-bar{
+  overflow: hidden;
+  background-color: wheat;
+  display: flex;
+  height: 70px;
+  -webkit-box-shadow: 1px 1px 15px 5px #000000; 
+  box-shadow: 1px 1px 15px 5px #000000;
+
+}
+
+
+#logo{
+  font-size: large;
+  font-weight: bold;
+  align-content: space-between;
+  align-self: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  justify-self: center;
+  font-family: 'Viaoda Libre', cursive;
+  font-size: 30px;
+  }
+
+  .card{
+    padding: 0px;
+    width: 784px;
+    height: 535px;
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-radius: 12px;
+  }
+
