@@ -30,46 +30,45 @@ app.post('/signup', async function (req, res) {
 
   const body = req.body;
   let resData = { valid: true, errors: [] }
-
+  
   for(let field in req.body){
-    if(!validate(field.mainType,true,field.value)){
+    let content = req.body[`${field}`];
+    if(!validate(content.type, true, content.value)){
       resData.valid = false;
       resData.errors.push(field);
     }
   }
-
   if(!resData.valid){
+    console.log("invalid!");
     res.send(resData);
     return;
   }
+  console.log("valid!");
     
     // insert the account to the db
     
-    var sql = `INSERT INTO accounts (business_name, first_user_mail) VALUES ('${body.business}', '${body.mail}');`;
+    var sql = `INSERT INTO accounts (business_name, first_user_mail) VALUES ('${body.business.value}', '${body.mail.value}');`;
     let result = await sqlHelper.insert(sql).catch((err)=>{});
     if(!result){
       resData.valid = false;
       resData.errors.push("error-server");
-      res.statusCode(401).send(resData);
+      res.status(401).send(resData);
       return;
     }
 
     let account_id_value = result.insertId;
 
     // insert the user to the db
-    var sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name}', '${encodePassword(body.password)}', '${body.mail}', ${body.phone});`;
-    //  TODO
+    var sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', ${body.phone.value});`;
+
     result = await sqlHelper.insert(sql).catch((err)=>{});
     if(!result){
       resData.valid = false;
       resData.errors.push("error-server");
-      res.statusCode(401).send(resData);
+      res.status(401).send(resData);
       return;
     }
-
-    console.log("result is ", result);
-    const user = {user_name: body.name,  user_id: result.insertId, account_id: account_id_value};
-    console.log("signup", user.user_name);
+    const user = {user_name: body.name.value,  user_id: result.insertId, account_id: account_id_value};
     resData.accessToken = sessionHelper.createSession(user);
     resData.user_name = result.user_name;
   // }
@@ -93,9 +92,23 @@ app.post('/login', async function (req, res) {
   const body = req.body;
   let resData = { valid: true, errors: [] }
 
-  // TODO Validation
+
+  for(let field in req.body){
+    let content = req.body[`${field}`];
+    if(!validate(content.type, true, content.value)){
+      resData.valid = false;
+      resData.errors.push(field);
+    }
+  }
+  if(!resData.valid){
+    console.log("invalid!");
+    res.send(resData);
+    return;
+  }
+  console.log("valid!");
   
-  var sql = `SELECT * FROM users WHERE user_mail = '${body.mail}' AND user_password = '${encodePassword(body.password)}' ;`;
+  
+  var sql = `SELECT * FROM users WHERE user_mail = '${body.mail.value}' AND user_password = '${encodePassword(body.password.value)}' ;`;
   let result = await sqlHelper.select(sql).catch((err)=>{});
   if(!result){
     resData.valid = false;
