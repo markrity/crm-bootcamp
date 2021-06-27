@@ -4,6 +4,7 @@ import cors from 'cors';
 import SessionHelper from './helpers/sessionHelper.js';
 import mysql from 'mysql';
 import md5 from 'md5';
+import validate from './helpers/validationHelper.js';
 
 const app = express();
 const sessionHelper = new SessionHelper();
@@ -30,7 +31,17 @@ app.post('/signup', async function (req, res) {
   const body = req.body;
   let resData = { valid: true, errors: [] }
 
-  // TODO Validation
+  for(let field in req.body){
+    if(!validate(field.mainType,true,field.value)){
+      resData.valid = false;
+      resData.errors.push(field);
+    }
+  }
+
+  if(!resData.valid){
+    res.send(resData);
+    return;
+  }
     
     // insert the account to the db
     
@@ -67,14 +78,15 @@ app.post('/signup', async function (req, res) {
 
 // checking if the session is open
 app.post('/ping', function (req, res) {
-  let resData = { valid: false }
-
+  let isValid = false;
+  console.log("hi! this is ping function");
   var userData = sessionHelper.verifySession(req.headers.authorization)
+  console.log("userData from verified", userData);
   if(userData && sessionHelper.isOpenSession(userData)){
-    resData.valid = true;
+    isValid = true;
   }
   console.log("returning from ping: ", resData);
-  res.send(resData);
+  res.send(isValid);
 });
 
 app.post('/login', async function (req, res) {
