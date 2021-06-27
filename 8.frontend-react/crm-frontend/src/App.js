@@ -2,20 +2,40 @@
 // import './App.css';
 // import Form from './components/Form';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+// import React, { useEffect } from 'react';
 import Home from './screens/Home';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
+import AuthApi from './helpers/authApi';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect
 } from "react-router-dom";
+const axios = require('axios');
 
+const authApi = new AuthApi();
 function App() {
-  let isUserAuthenticated = localStorage.getItem('jwtToken') ? true : false;
-  console.log("isUserAuthenticated ", isUserAuthenticated);
+
+  const [isConnect, setConnection] = useState(false);
+  const [isLoading, setLoading] = useState(true);
+
+  
+    useEffect(async () => {
+
+      // if(localStorage.getItem('jwtToken')){
+        console.log("********************");
+        const isUserAuthenticated = await authApi.ping();
+        console.log(isUserAuthenticated);
+        setConnection(isUserAuthenticated);
+        setLoading(false);
+      // } else {
+      //   setConnection(false);
+      //   setLoading(false);
+      // }
+  }, [])
 
 
   return (
@@ -26,8 +46,9 @@ function App() {
       <Route
           exact path="/"
           render={() => {
-              return (
-                isUserAuthenticated ?
+              return ( isLoading ? 
+                (<div>Loading</div>) : 
+                isConnect ?
                 <Redirect to="/home" /> :
                 <Redirect to="/signup" /> 
               )

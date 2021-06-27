@@ -20,19 +20,19 @@ class AuthApi {
     }
 
     async ping(){
-        axios.post('http://rgb.com:8005/ping', {}, 
+        const response = await axios.get('http://rgb.com:8005/ping', 
         {
             headers: {
-                'Authorization': localStorage.getItem('jwtToken')
+                'authorization': localStorage.getItem('jwtToken')
             }
         })
-        .then(function (response) {
-            console.log("the response is:", response);
-        //    return response.data.valid;
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        console.log(response)
+        if(response){
+            return response.data;
+        }
+        else {
+            return false;
+        }
     }
 
     async signin(data) {
