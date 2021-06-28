@@ -2,9 +2,18 @@
 
 body{
   min-height: 100vh;
+  overflow: hidden;
 }
 
 .default{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.centered{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -75,7 +84,10 @@ input{
   height: 70px;
   -webkit-box-shadow: 1px 1px 15px 5px #000000; 
   box-shadow: 1px 1px 15px 5px #000000;
-
+  position: sticky;
+  position: -webkit-sticky; 
+  position: sticky;
+  top: 0;
 }
 
 
@@ -96,8 +108,21 @@ input{
     width: 784px;
     height: 535px;
     display: flex;
-    flex-direction: row;
-    background-color: #fff;
+    background-color: beige;
     border-radius: 12px;
+    position: absolute;
+    top: 20%;
   }
 
+
+  .card-left-col{
+    flex:2
+
+  }
+
+  .card-right-col{
+    flex: 1;
+    background-image: url('./assets/card-left-grid.jpeg');
+    opacity: 40%;
+    background-size: cover;
+  }

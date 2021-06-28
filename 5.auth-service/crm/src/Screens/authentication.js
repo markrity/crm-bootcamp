@@ -4,6 +4,7 @@ import Header from '../Components/Header';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import '../App.css'
+import Card from '../Components/Card';
 
 
 
@@ -19,12 +20,15 @@ const Auth = () => {
         }
     }, [isOnline])
 
-
+    const authForm = <AuthForm isNewBuisness={isNewBuisness} setIsNewBuisness={setIsNewBuisness} isNewUser={false} />
 
     return (
         <>
             <Header />
-            <AuthForm isNewBuisness={isNewBuisness} setIsNewBuisness={setIsNewBuisness} isNewUser={false} />
+            <div className='centered'>
+                <Card left={authForm} />
+            </div>
+
         </>
     )
 }

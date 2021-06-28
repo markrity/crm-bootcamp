@@ -6,33 +6,12 @@ import FormFooter from './AuthFormFooter';
 import ClickableTxt from './ClickableTxt';
 import { Redirect } from 'react-router';
 import { addBuisness, login } from '../actions/auth';
+import AuthFormHeader from './AuthFormHeader';
+import { signupFormFields, loginFormFields, newBuisnessFormFields } from '../formFields'
 
 const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
 
     const dispatch = useDispatch()
-    const signupFormFields = {
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-        email: '',
-        password: '',
-        re_password: ''
-    }
-
-    const loginFormFields = {
-        email: '',
-        password: ''
-    }
-
-    const newBuisnessFormFields = {
-        buisnessName: '',
-        email: '',
-        firstName: '',
-        lastName: '',
-        phoneNumber: '',
-        password: '',
-        re_password: ''
-    }
 
     const [formStage, setFormStage] = useState(1)
     const [formData, setFormData] = useState(isNewBuisness ? newBuisnessFormFields : isNewUser ? signupFormFields : loginFormFields);
@@ -40,7 +19,6 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
     const { buisnessName, email, firstName, lastName, phoneNumber, password, re_password } = formData;
 
     const onChange = e => setFormData({ ...formData, [e.target.name]: e.target.value });
-
 
     const addNewUser = () => {
         if (password === re_password) {
@@ -60,8 +38,8 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
 
     const userForm = (disableEmail) => {
         return (
-            <>
-                <CustomInput type='email'
+
+            /* <CustomInput type='email'
                     placeholder='Email*'
                     name='email'
                     lbl='Email'
@@ -77,8 +55,8 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
                     value={password}
                     onChangeFunc={e => onChange(e)}
                     minLength='6'
-                />{
-                    (isNewUser || isNewBuisness) ?
+                />{ */
+                    /* (isNewUser || isNewBuisness) ?
                         <>
                             <CustomInput type='password'
                                 placeholder='Confirm Password*'
@@ -117,7 +95,7 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
                     <FormFooter isNewBuisness={isNewBuisness} setIsNewBuisness={setIsNewBuisness} /> :
                     <ClickableTxt txt="Back" onClickFunc={() => setFormStage(formStage - 1)} />
                 }
-            </>
+            </> */
         )
     }
 
@@ -125,6 +103,7 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
         return (
             formStage === 1 ?
                 <>
+                    <AuthFormHeader mode="addMyBuisness" />
                     <CustomInput type='text'
                         placeholder='Buisness Name*'
                         name='buisnessName'
@@ -141,7 +120,7 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
                     <FormFooter isNewBuisness={isNewBuisness} setIsNewBuisness={setIsNewBuisness} />
                 </> :
                 <>
-                    <h1>Set Main Account</h1>
+                    <AuthFormHeader mode="addMyBuisness2" />
                     {userForm(true)}
                 </>
         )
