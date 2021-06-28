@@ -8,10 +8,10 @@ const validate = (type, isRequired, value) => {
     switch (type) {
         case 'mail':
            return validateMail(value);
-            break;
+            // break;
         case 'password':
             return validatePassword(value);
-            break;
+            // break;
         case 'phone':
             return validatePhone(value);
         case 'name':

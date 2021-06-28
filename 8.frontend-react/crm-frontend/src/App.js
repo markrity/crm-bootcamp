@@ -5,6 +5,8 @@
 import React, { useState, useEffect } from 'react';
 // import React, { useEffect } from 'react';
 import Home from './screens/Home';
+import ResetPassword from './screens/ResetPassword';
+import ForgotPassword from './screens/ForgotPassword';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
 import AuthApi from './helpers/authApi';
@@ -14,7 +16,7 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
-const axios = require('axios');
+// const axios = require('axios');
 
 const authApi = new AuthApi();
 function App() {
@@ -23,18 +25,19 @@ function App() {
   const [isLoading, setLoading] = useState(true);
 
   
-    useEffect(async () => {
-
-      // if(localStorage.getItem('jwtToken')){
-        console.log("********************");
-        const isUserAuthenticated = await authApi.ping();
-        console.log(isUserAuthenticated);
-        setConnection(isUserAuthenticated);
-        setLoading(false);
-      // } else {
-      //   setConnection(false);
-      //   setLoading(false);
-      // }
+    useEffect(() => {
+      async function checkConnection() {
+        if(localStorage.getItem('jwtToken')){
+          const isUserAuthenticated = await authApi.ping();
+          console.log(isUserAuthenticated);
+          setConnection(isUserAuthenticated);
+          setLoading(false);
+        } else {
+          setConnection(false);
+          setLoading(false);
+        }
+      }
+      checkConnection();
   }, [])
 
 
@@ -54,15 +57,34 @@ function App() {
               )
           }}
         />
-        <Route exact path="/signup">
-          <Signup />
+        <Route 
+          exact path="/signup">
+            {isLoading ? (<div>Loading</div>) : 
+            isConnect ?
+                <Redirect to="/home" /> :
+                <Signup /> 
+            }
         </Route>
         <Route exact path="/home">
-          <Home />
+            {isLoading ? (<div>Loading</div>) : 
+            isConnect ?
+            <Home /> :
+            <Redirect to="/login" /> 
+            }
         </Route>
         <Route exact path="/login">
-          <Login />
+        {isLoading ? (<div>Loading</div>) : 
+            isConnect ?
+                <Redirect to="/home" /> :
+                <Login />
+            }
         </Route>
+        <Route exact path="/resetPassword">
+            <ResetPassword/>
+        </Route >
+        <Route exact path="/forgotPassword">
+            <ForgotPassword/>
+        </Route >
       </Switch>
     </div>
   </Router>

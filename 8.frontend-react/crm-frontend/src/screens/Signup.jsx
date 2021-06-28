@@ -13,6 +13,21 @@ const authApi = new AuthApi();
 
 function Signup(props) {
 
+  // const [isLoading, setLoading] = useState(true);
+
+  
+  //   useEffect(async () => {
+
+  //     if(localStorage.getItem('jwtToken')){
+  //       const isUserAuthenticated = await authApi.ping();
+  //       setLoading(false);
+        
+  //     } else {
+  //       setConnection(false);
+  //       setLoading(false);
+  //     }
+  // }, [])
+
   const submit = async (data) => {
 
     const res = await authApi.signup(data);
@@ -30,7 +45,7 @@ function Signup(props) {
         submitFunc: submit,
         type: 'signup',
         title: "Let's get started!",
-        buttonTitle: "SIGN UP",
+        buttonTitle: "Sign Up",
         fields: {
           name: {
             text: "Full Name",

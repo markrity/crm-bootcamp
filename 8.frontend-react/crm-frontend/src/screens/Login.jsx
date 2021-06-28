@@ -28,7 +28,7 @@ function Login(props) {
         submitFunc: submit,
         type: 'signin',
         title: "Welcome Back!",
-        buttonTitle: "LOG IN",
+        buttonTitle: "Log In",
         fields: {
           mail: {
             text: "Email",
@@ -62,8 +62,11 @@ function Login(props) {
                     type={login.type}
                     button={login.buttonTitle}
                 />
-                <hr></hr>
+                {/* <hr></hr> */}
+                <div className='links'>
                 <Link className='linkto' to="/signup">I don't have an account</Link>
+                <Link className='linkto' to="/forgotPassword">Forgot password?</Link>
+                </div>
             </div>
         </div>
     );

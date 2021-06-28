@@ -29,19 +29,19 @@ function Form(props) {
             data[`${key}`] = {}
             data[`${key}`].value = fields[`${key}`].value;
             data[`${key}`].type = fields[`${key}`].mainType;
-            // let isValid = validate(fields[`${key}`].mainType, true, fields[`${key}`].value);
-            // console.log(key, " is: ", isValid);
-            // if(!isValid){
-            //     fieldsTmp[`${key}`].error = true;
-            //     validationRes = false;
-            // } else {
-            //     fieldsTmp[`${key}`].error = false;
-            // }
+            let isValid = validate(fields[`${key}`].mainType, true, fields[`${key}`].value);
+            console.log(key, " is: ", isValid);
+            if(!isValid){
+                fieldsTmp[`${key}`].error = true;
+                validationRes = false;
+            } else {
+                fieldsTmp[`${key}`].error = false;
+            }
         }
-        // if(!validationRes){
-        //     setFields(fieldsTmp);
-        //     return;
-        // }
+        if(!validationRes){
+            setFields(fieldsTmp);
+            return;
+        }
         const invalidFields =  await props.submitHandle(data); //async - response from backend validation
         if(invalidFields){
             for(let field in fieldsTmp){

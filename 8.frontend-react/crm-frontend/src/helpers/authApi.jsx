@@ -12,7 +12,6 @@ class AuthApi {
         })
         .then(function (response) {
             localStorage.removeItem('jwtToken');
-            window.location.href = "http://localhost:3000/signup";
         })
         .catch(function (error) {
             console.log(error);

@@ -11,11 +11,13 @@
     border: solid 1px #fe5f55 ;
     border-radius: 30px;
     font-size: 17px;
+    outline: none;
 }
 
-.submit-button:hover{
+.submit-button:hover, .submit-button:focus{
     color: white;
     background-color: #fa4639;
     cursor: pointer;
-    /* font-weight: bold; */
 }
+
+

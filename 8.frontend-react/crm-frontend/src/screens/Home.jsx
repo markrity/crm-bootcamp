@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import AuthApi from '../helpers/authApi';
-import {
-    Redirect
-  } from "react-router-dom";
+// import {
+//     Redirect
+//   } from "react-router-dom";
 
 const authApi = new AuthApi();
 
@@ -10,23 +10,20 @@ const authApi = new AuthApi();
 
 function Home(props) {
 
-    let isUserAuthenticated = localStorage.getItem('jwtToken') ? true : false;
-    // console.log("isUserAuthenticated:", isUserAuthenticated);
-    // if(isUserAuthenticated){
-    //     var result = authApi.ping() ;
-    //     console.log("ping result:", result);
-    //     if(!result || !result.valid){
-    //         isUserAuthenticated = false;
-    //         console.log("isUserAuthenticated change to true: ", result);
-    //     }
-    // }
+    const [isLogout, setIsLogout] = useState(false);
 
+    const logoutFunc = ()=>{
+        authApi.logout();
+        // TODO - use the state instead of window
+        window.location.href = 'http://localhost:3000/login';
+        setIsLogout(true);
+    }
 
     return (
-        
         <div>
-            {!isUserAuthenticated && <Redirect to="/login" />}
-            <button id="logout" onClick={()=>authApi.logout()}>Logout</button>
+            {/* {isLogout &&  <Redirect to="/login" />} */}
+            {/* {!isUserAuthenticated && <Redirect to="/login" />} */}
+            <button id="logout" onClick={()=>logoutFunc()}>Logout</button>
             home page
         </div>
     );

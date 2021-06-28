@@ -28,9 +28,14 @@ hr {
 
 .linkto {
     color: #495867;
+    outline: none;
 }
 
 .linkto:hover {
+    font-weight: bold;
+}
+
+.linkto:focus {
     font-weight: bold;
 }
 
