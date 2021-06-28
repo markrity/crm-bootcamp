@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import auth from './Screens/authentication';
 import additionInfo from './Screens/additionalInfo';
 import resetPassword from './Screens/resetPassword';
-import axios from 'axios'
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from './actions/auth'
 import homePage from './Screens/homePage';
-import { BrowserRouter as Router, Route, Switch, Link, Redirect, useHistory } from 'react-router-dom';
-import { Provider } from 'react-redux';
-import store from './store';
+import { Route, Switch, useHistory } from 'react-router-dom';
 
 import './App.css';
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   const isOnline = useSelector(state => state.auth.isOnline)
   const history = useHistory();
   useEffect(() => {
     dispatch(checkAuth())
-  }, [])
+  }, [history])
 
   useEffect(() => {
     if (!isOnline)
       history.push('/auth')
-  }, [isOnline])
+  }, [isOnline, history])
   return (
     <Switch>
       <Route exact path='/' component={homePage} />

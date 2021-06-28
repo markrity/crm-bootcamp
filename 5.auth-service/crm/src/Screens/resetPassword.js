@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import CustomInput from '../Components/CustomInput'
 import { resetPass } from '../actions/auth'
-import { Redirect, Route, useHistory } from 'react-router';
+import { useHistory } from 'react-router';
 import ClickableTxt from '../Components/ClickableTxt';
 
 

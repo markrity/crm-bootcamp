@@ -1,6 +1,6 @@
 import React from 'react'
 import ClickableTxt from './ClickableTxt'
-import { BrowserRouter as Router, Route, Switch, Link, Redirect, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 const labels = [`I Already Have An Account`, `I Dont Have An Account, Lets Signup`, 'Forgot My Password']
 
 const FormFooter = ({ isNewBuisness, setIsNewBuisness }) => {

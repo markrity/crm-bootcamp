@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux';
-import { login } from '../actions/auth'
+import { useDispatch } from 'react-redux';
 import axios from 'axios'
 import CustomInput from './CustomInput';
 import FormFooter from './AuthFormFooter';
 import ClickableTxt from './ClickableTxt';
-import { Redirect, Route } from 'react-router';
+import { Redirect } from 'react-router';
+import { addBuisness, login } from '../actions/auth';
 
-const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness, login, addBuisness }) => {
+const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness }) => {
 
+    const dispatch = useDispatch()
     const signupFormFields = {
         firstName: '',
         lastName: '',
@@ -53,7 +54,7 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness, login, addBuisne
 
     const onSubmit = e => {
         e.preventDefault();
-        isNewBuisness ? addBuisness() : isNewUser ? addNewUser() : login(email, password)
+        isNewBuisness ? dispatch(addBuisness(formData)) : isNewUser ? addNewUser() : dispatch(login(email, password))
     };
 
 
@@ -159,9 +160,4 @@ const AuthForm = ({ isNewUser, isNewBuisness, setIsNewBuisness, login, addBuisne
 
 
 
-const mapStateToProps = state => ({
-    user: state.auth.user,
-    isOnline: state.auth.isOnline,
-})
-
-export default connect(mapStateToProps, { login })(AuthForm)
+export default AuthForm

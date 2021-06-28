@@ -17,7 +17,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     const { type, payload } = action;
-
     switch (type) {
         case LOGIN_SUCCESS:
             return {
@@ -43,25 +42,6 @@ export default function (state = initialState, action) {
                 ...state,
                 err: payload
             }
-        //     case USER_LOADED_SUCCESS:
-        //         return {
-        //             ...state,
-        //             user: payload
-        //         }
-        //     case AUTHENTICATED_FAIL:
-        //         return {
-        //             ...state,
-        //             isAuthenticated: false
-        //         }
-        //     case USER_LOADED_FAIL:
-        //         return {
-        //             ...state,
-        //             user: null
-        //         }
-        //     case GOOGLE_AUTH_FAIL:
-        //     case FACEBOOK_AUTH_FAIL:
-        //     case LOGIN_FAIL:
-        //     case SIGNUP_FAIL:
         case LOGOUT:
             return {
                 ...state,
@@ -70,18 +50,6 @@ export default function (state = initialState, action) {
             }
         case PASSWORD_RESET_SUCCESS:
         case PASSWORD_RESET_FAIL:
-        //     case PASSWORD_RESET_CONFIRM_SUCCESS:
-        //     case PASSWORD_RESET_CONFIRM_FAIL:
-        //     case ACTIVATION_SUCCESS:
-        //     case ACTIVATION_FAIL:
-        //         return {
-        //             ...state
-        //         }
-        //     case REFRESH_USER:
-        //         return {
-        //             ...state,
-        //             user: payload
-        //         }
         default:
             return state
     }
