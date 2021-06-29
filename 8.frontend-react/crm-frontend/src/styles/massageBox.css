@@ -1,0 +1,15 @@
+
+.successful-operation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form-box {
+    width: 100%;
+}
+
+.form-box hr {
+    margin-bottom: 15px;
+    margin-top: 0px;
+}

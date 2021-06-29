@@ -6,6 +6,7 @@ import '../styles/signUp.css';
 import {
     // BrowserRouter as Router,
     Link,
+    withRouter
   } from "react-router-dom";
 const authApi = new AuthApi();
 
@@ -13,32 +14,17 @@ const authApi = new AuthApi();
 
 function Signup(props) {
 
-  // const [isLoading, setLoading] = useState(true);
-
-  
-  //   useEffect(async () => {
-
-  //     if(localStorage.getItem('jwtToken')){
-  //       const isUserAuthenticated = await authApi.ping();
-  //       setLoading(false);
-        
-  //     } else {
-  //       setConnection(false);
-  //       setLoading(false);
-  //     }
-  // }, [])
-
   const submit = async (data) => {
 
     const res = await authApi.signup(data);
     console.log(res.valid);
     if(res.valid){
       console.log("signup is done!!",res.valid);
-      window.location.href = "http://localhost:3000/home";
+      window.location.href = 'http://localhost:3000/home'
+      // props.history.push('/home');
     } else {
-      return res.errors;
+      return res;
     }
-    // return the backend result
   }
 
     const signup = {
@@ -46,6 +32,10 @@ function Signup(props) {
         type: 'signup',
         title: "Let's get started!",
         buttonTitle: "Sign Up",
+        errorMap: {
+          'serverError': 'Try again later',
+          'userAlreadyExist': 'User already exist'
+        },
         fields: {
           name: {
             text: "Full Name",
@@ -87,6 +77,7 @@ function Signup(props) {
     
 
     return (
+      <div className='wrapper-container'>
       <div className='wrapper'>
           <div className='text-container'> 
           <Logo size='large'/>
@@ -99,11 +90,13 @@ function Signup(props) {
               title={signup.title}
               submitHandle={signup.submitFunc} 
               type={signup.type}
+              errorMap = {signup.errorMap}
               button={signup.buttonTitle}
               />
               <hr></hr>
               <Link className='linkto' to="/login">I already have an account</Link>
           </div>
+      </div>
       </div>
     );
 }

@@ -1,4 +1,12 @@
 
+.wrapper-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .form-container {
     background-color: white;
     padding: 30px;
@@ -17,13 +25,15 @@ hr {
     height: 1px;
     background-color: rgba(116, 113, 113, 0.123);
     border: none;
-    width: 20%;
+    width: 100%;
     margin-bottom: 15px;
+    margin-top: 0;
 }
 
 
 .form-body {
-    width: 90%;
+    width: 100%;
+    margin-bottom: 10px;
 }
 
 .linkto {
@@ -46,9 +56,7 @@ hr {
     flex-direction: row;
     padding-left: 10%;
     background-color: #495867;
-    /* width: 35%; */
-    margin: auto;
-    margin-top: 10%;
+    width: 100%;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px, rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
 }
 
@@ -80,3 +88,4 @@ hr {
     color: #bdd5ea;
     margin: 0;
 }
+

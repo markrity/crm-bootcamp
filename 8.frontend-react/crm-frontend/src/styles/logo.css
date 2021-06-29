@@ -10,32 +10,26 @@
     align-items: baseline;
 }
 
-/* .logo-container .logo-deco{
-    font-size: 10vw;
-    color: #fe5f55;
-} */
 
 .logo-deco {
     background-color: #fe5f55;
-    /* width: 0.7vw;
-    height: 0.7vw; */
     border-radius: 50%;
 }
 
 .large .logo-text{
-    font-size: 4vw;
+    font-size: 65px;
 }
 
 .large .logo-deco {
-    width: 1vw;
-    height: 1vw;
+    width: 19.5px;
+    height: 19.5px;
 }
 
 .small .logo-text {
-    font-size: 3vw;
+    font-size: 50px;
 }
 
 .small .logo-deco {
-    width: 0.8vw;
-    height: 0.8vw;
+    width: 15px;
+    height: 15px;
 }

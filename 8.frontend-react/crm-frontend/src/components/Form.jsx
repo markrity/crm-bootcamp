@@ -9,6 +9,8 @@ import validate from '../helpers/validationHelper';
 function Form(props) {
 
     const [fields, setFields] = useState(props.fields);
+    const [mainError, setMainError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     
     useEffect(() => {
         setFields(props.fields);
@@ -17,10 +19,12 @@ function Form(props) {
     const setValue = (key, value) => {
         const fieldsTemp = {...fields};
         fieldsTemp[key].value = value;
+        fieldsTemp[key].error = false;
         setFields(fieldsTemp);
     };
 
     const submit = async () => {
+        // set true
         let data = {};
         const fieldsTmp = {...fields};
         let validationRes = true;
@@ -29,6 +33,7 @@ function Form(props) {
             data[`${key}`] = {}
             data[`${key}`].value = fields[`${key}`].value;
             data[`${key}`].type = fields[`${key}`].mainType;
+
             let isValid = validate(fields[`${key}`].mainType, true, fields[`${key}`].value);
             console.log(key, " is: ", isValid);
             if(!isValid){
@@ -42,17 +47,24 @@ function Form(props) {
             setFields(fieldsTmp);
             return;
         }
-        const invalidFields =  await props.submitHandle(data); //async - response from backend validation
-        if(invalidFields){
-            for(let field in fieldsTmp){
-                fieldsTmp[`${field}`].error = false;
+        setIsLoading(true);
+        const responseData =  await props.submitHandle(data); //async - response from backend validation
+        setIsLoading(false);
+        if(responseData){
+            const invalidFields = responseData.errors;
+            if(invalidFields){
+                for(let field in fieldsTmp){
+                    fieldsTmp[`${field}`].error = false;
+                }
+                for(let errorField of invalidFields){
+                    fieldsTmp[`${errorField}`].error = true;
+                }
+                setFields(fieldsTmp);
             }
-            for(let errorField of invalidFields){
-                fieldsTmp[`${errorField}`].error = true;
-            }
-            setFields(fieldsTmp);
+            console.log("error map: ", props.errorMap);
+            setMainError(props.errorMap[responseData.serverError]);
         }
-        
+        // set false
     };
 
     const fieldsComponents = [];
@@ -72,8 +84,11 @@ function Form(props) {
         <div className='form-body'>
             <h2>{props.title}</h2>
             {fieldsComponents}
-            <div className='button-container'>
-                <CrmButton content={props.button} callback={()=> submit()}/>
+            <div className='button-wrapper'>
+                <CrmButton content={props.button} isLoading={isLoading} callback={()=> submit()}/>
+            </div>
+            <div className='server-error'>
+            <span>{mainError}</span>
             </div>
         </div>
     );

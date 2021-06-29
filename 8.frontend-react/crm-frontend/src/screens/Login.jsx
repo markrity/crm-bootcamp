@@ -2,7 +2,7 @@ import React from 'react';
 import Form from '../components/Form';
 import Logo from '../components/Logo';
 import AuthApi from '../helpers/authApi';
-import '../styles/login.css';
+import '../styles/simpleForm.css';
 import {
     Link,
   } from "react-router-dom";
@@ -17,11 +17,11 @@ function Login(props) {
         console.log(res.valid);
         if(res.valid){
           console.log("login is done!!",res.valid);
-          window.location.href = "http://localhost:3000/home";
+          window.location.href = 'http://localhost:3000/home'
+          // props.history.push('/home');
         } else {
-          return res.errors;
+          return res;
         }
-        // return the backend result
       }
 
       const login = {
@@ -29,18 +29,24 @@ function Login(props) {
         type: 'signin',
         title: "Welcome Back!",
         buttonTitle: "Log In",
+        errorMap: {
+          'serverError': 'Try again later',
+          'IncorrectMailOrPassword': 'Incorrect mail or password'
+        },
         fields: {
           mail: {
             text: "Email",
             id: "mail",
             error: false,
-            mainType: 'mail'
+            mainType: 'mail',
+            type: 'text'
           },
           password: {
             text: "Password",
             id: "password",
             error: false,
-            mainType: 'password'
+            mainType: 'password',
+            type: 'password'
           }
         }
       }
@@ -49,7 +55,7 @@ function Login(props) {
     
 
     return (
-        <div>
+        <div className='box-wrapper'>
             <div className='logo'> 
                 <Logo size='small'/>
             </div>
@@ -60,9 +66,10 @@ function Login(props) {
                     title={login.title}
                     submitHandle={login.submitFunc} 
                     type={login.type}
+                    errorMap = {login.errorMap}
                     button={login.buttonTitle}
                 />
-                {/* <hr></hr> */}
+                <hr></hr>
                 <div className='links'>
                 <Link className='linkto' to="/signup">I don't have an account</Link>
                 <Link className='linkto' to="/forgotPassword">Forgot password?</Link>

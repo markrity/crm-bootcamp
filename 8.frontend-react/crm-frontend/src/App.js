@@ -14,7 +14,7 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 // const axios = require('axios');
 
@@ -33,8 +33,9 @@ function App() {
           setConnection(isUserAuthenticated);
           setLoading(false);
         } else {
-          setConnection(false);
           setLoading(false);
+          setConnection(false);
+          
         }
       }
       checkConnection();
@@ -79,7 +80,7 @@ function App() {
                 <Login />
             }
         </Route>
-        <Route exact path="/resetPassword">
+        <Route path="/resetPassword/:mail">
             <ResetPassword/>
         </Route >
         <Route exact path="/forgotPassword">

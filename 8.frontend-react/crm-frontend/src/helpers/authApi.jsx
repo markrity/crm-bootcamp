@@ -59,6 +59,18 @@ class AuthApi {
         return null;
         
     }
+
+    async forgotPassword(data){
+        const response = await axios.post('http://rgb.com:8005/forgotPassword', data);
+        // TODO catch the error and check if response isn't null
+        return response.data;
+    }
+
+    async resetPassword(data){
+        const response = await axios.post('http://rgb.com:8005/resetPassword', data).catch((err)=>{});
+        // TODO catch the error and check if response isn't null
+        return response.data;
+    }
 }
 
 export default AuthApi;
