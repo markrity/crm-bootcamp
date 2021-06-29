@@ -2,9 +2,10 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded());
 // app.use(express.urlencoded({extended: true}));
 // app.use(express.json())
 
@@ -114,6 +115,7 @@ app.get('/leads', function(req, res) {
     resData.valid = false;
     resData.errors.push( "error-server");
   } else {
+    
       const order = req.query.order;
       var orderBy = "";
       if(order) {
@@ -125,13 +127,10 @@ app.get('/leads', function(req, res) {
           where = ` WHERE user_name REGEXP '^${searchValue}'`;
       }
       var sql = 'SELECT user_name, user_mail, user_phone FROM leads' + where + orderBy +";";
-      console.log(sql);
       connection.query(sql, function (err, results) {
         if (err){
           res.send("error");
         } else {
-          console.log(orderMap[order]);
-          console.log(results);
           resData.leads = results;
           res.send(resData);
         }
