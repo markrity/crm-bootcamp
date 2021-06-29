@@ -8,6 +8,7 @@ import '../../style/inputStyle.css'
 import {
   Redirect
 } from "react-router-dom";
+import PLink from "../../components/pLink";
 
 class Login extends React.Component {
 
@@ -19,10 +20,10 @@ class Login extends React.Component {
     }
 
     handleClick = () => {
-  
+
       axios.post('http://kerenadiv.com:8005/login', {
         mail: this.state.email,
-        
+
         password: this.state.password
         }).then(response => {
 
@@ -67,7 +68,9 @@ class Login extends React.Component {
         
         <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         <FormInput label = "Password" type = "password" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
+        <PLink   linkTo="reset" link_text="forget password?"/>
         <Button className="button" button_text="Login" onClick={() => this.handleClick()} />
+        
         {this.state.errormessage}
 
         </div>

@@ -1,11 +1,13 @@
 const express = require('express');
 const app = express();
-
+const dotenv = require('dotenv');
+dotenv.config();
 var mysql = require('mysql');
 var md5 = require('md5');
 const jwt = require('jsonwebtoken');
-
+var mailgun = require('mailgun-js')({apiKey:process.env.API_KEY,domain:process.env.DOMAIN})
 const secret = "jdfkshfglhslffglshlf"
+
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -23,12 +25,9 @@ app.use(myLogger);
 
 
 function myLogger(req, res, next) {
-  // console.log('hiiiiii')
-  if (req.originalUrl=== '/login' || req.originalUrl==='/register' ) {
-    console.log('hiiiiii')
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/change' ) {
     next();
   } 
-  //
   else {
   var {token} = req.body;
   jwt.verify(token, secret, (err) => {
@@ -140,9 +139,51 @@ app.post('/login', function(req, res) {
 });
 
 app.post('/ping', function(req, res) {   
-  
 });
 
+app.post('/reset', function(req, res) {   
+  var {mail} = req.body;
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') `
+
+  con.query(isExist, function (err, result) {
+  //  console.log(result)
+    if (result==0) {
+      res.json({status:false});
+    }
+    else {
+      console.log(process.env.API_KEY)
+      var data = {
+        from: 'neta.carmiel@workiz.com',
+        to: mail,
+        subject: 'Hello',
+        html: `http://localhost:3000/change/${mail}`,
+      };
+
+      console.log(mail)
+      mailgun.messages().send(data, function (error, body) {
+        console.log(body);
+      });
+    
+      res.json({status:true});
+    }
+  });
+});
+
+app.post('/change', function(req, res) {   
+   var {mail,password} = req.body;
+   password=(md5(password));
+   var isExist = `UPDATE users SET user_password = '${password}' WHERE user_mail = '${mail}' `
+   con.query(isExist, function (err, result) {
+     if (err) {
+       console.log(err)
+        res.json({status:false});
+     }
+     else {
+      res.json({status:true});
+     }
+   });
+  
+ });
 
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

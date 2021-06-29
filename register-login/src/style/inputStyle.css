@@ -18,6 +18,10 @@ input {
     text-align: center;
 }
 
+.error {
+    color: red;
+}
+
 
 label, input, button {
     display: block;
@@ -32,7 +36,6 @@ label, input, button {
 margin-top: 20px;
 background: #FEC89A;
 height: 40px;
-/* cursor: pointer; */
 font-weight: 900;
 box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
 transition: 0.5s;
@@ -40,7 +43,9 @@ font-size: large;
 cursor: pointer;
 }
 
-
+.p_link {
+    cursor: pointer;
+}
 
 button:hover {
 box-shadow: none;
@@ -64,14 +69,7 @@ padding-left: 15px;
     
 .label {
 color: #000000;
-/* font-family: sans-serif; */
-/* left: 20px; */
-/* line-height: 14px; */
-/* pointer-events: none; */
 position: relative;
-/* transform-origin: 0 50%;
-transition: transform 200ms, color 200ms; */
 top: 20px;
 font-size: smaller;
-/* text-align: left; */
 }

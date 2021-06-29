@@ -13,6 +13,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+import ResetPassword from "./containers/resetPassword/resetPassword";
+import ChangePassword from "./containers/changePassword/changePassword";
 
 
 var counter=0;
@@ -21,9 +23,7 @@ function App() {
   
   const [isExist, setExist] = useState(false);
   
-  useEffect(() => {
-   // setExist(false)
-  
+  useEffect(() => {  
     var token = localStorage.getItem("my_user");
     if (token) {
     console.log(counter++)
@@ -31,7 +31,6 @@ function App() {
       token: token
       }).then(response => {
           if (response.data.status) {
-            
             setExist(true)
           }
         })
@@ -56,9 +55,16 @@ function App() {
             <HomePage isExist={isExist} /> 
         </Route>
 
-        
         <Route  path="/login">
             <Controller isExist={isExist} />
+        </Route>
+
+        <Route  path="/reset">
+            <ResetPassword />
+        </Route>
+
+        <Route  path="/change/:id" component={ChangePassword}>
+          
         </Route>
 
       </Switch>
