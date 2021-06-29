@@ -25,7 +25,7 @@ app.listen(process.env.PORT || 8080, () => {
     headers: ["Full Name", "Email", "Phone"],
     sort: {
       order: "Order By:",
-      placeholderOrder: "choose order",
+      // placeholderOrder: "choose order",
       options: ["ascending", "descending"]
     }
   }

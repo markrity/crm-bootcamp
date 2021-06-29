@@ -13,12 +13,12 @@ function getLeads(orderType=null, searchVal=null){
     })
     .then(function (response) {
         console.log(response.data);
-        if(orderType){
-            insertLeads(response.data.leads);
-        } else {
-            insertLeads(response.data.leads);
-        }
-        
+        insertLeads(response.data.leads);
+        // if(orderType){
+        //     insertLeads(response.data.leads);
+        // } else {
+        //     insertLeads(response.data.leads);
+        // }
     })
     .catch(function (error) {
         console.log(error);
@@ -37,6 +37,7 @@ function insertLeads(leads){
     for(let l of leads){
         createRow(l);
     }
+    exportLeads(leads);
 }
 
 /**
@@ -84,6 +85,15 @@ function searchLeads(){
     });
 }
 
-searchLeads();
+function autoSearch(){
+    const input = document.querySelector('#search_field');
+    input.addEventListener('input', function(e){
+        e.preventDefault();
+        const text = search_field.value;
+        getLeads(null, text);
+    });
+}
 
-getLeads();
+autoSearch();
+searchLeads();
+getLeads('ascending');

@@ -19,7 +19,7 @@
                     {{#sort}}
                     <label for="sorting">{{order}}</label>
                     <select name="sorting" id="sorting" onchange="return changeOrder(this);"> 
-                        <option value="" disabled selected hidden>{{placeholderOrder}}</option>
+                        <!-- <option value="" disabled selected hidden>{{placeholderOrder}}</option> -->
                         {{#options}}
                         <option value="{{.}}">{{.}}</option>
                         {{/options}}
