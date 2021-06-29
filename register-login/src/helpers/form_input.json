@@ -40,10 +40,9 @@
         "err":"password_validate",
         "label": "password",
         "className": "input",
-        "placeholder": "password",
+        "placeholder": "must be at least eight characters",
         "onChange": "this.handleChange_password"
     }
 ]
-
 }
 

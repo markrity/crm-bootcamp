@@ -8,7 +8,6 @@ const jwt = require('jsonwebtoken');
 var mailgun = require('mailgun-js')({apiKey:process.env.API_KEY,domain:process.env.DOMAIN})
 const secret = process.env.SECRET
 
-
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -46,32 +45,42 @@ app.get('/', function(req, res) {
 
 app.post('/register', function(req, res) {   
   var {full_name,business_name,email,phone,password} = req.body;
+  var flag = false;
+  console.log(email);
+  console.log(phone);
   var valid = {
     'name_validate': validateName(full_name),
     'email_validate': validateEmail(email),
     'phone_validate': validatePhone(phone),
     'password_validate' :validatePassword(password)
   };
-  
-  if (!(valid['name_validate'] && valid['password_validate'] && valid['email_validate'] && valid['phone_validate'])) {
+ 
+  Object.entries(valid).forEach(item => {
+    if (!item[1]) {
+       flag=true;                             
+      }
+  })
+
+  //if there are invalid inputs
+  if (flag) {
     res.json({status:2,valid});
     console.log('hi')
   }
 
   else {
   //check if the user is already exist 
-  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}')`
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${email}')`
 
   con.query(isExist, function (err, result) {
       if (result!=0) {
         res.json({status:0});
       }
       else {
-      password=(md5(password));
-      var sql = `INSERT INTO main_account (user_fullname, user_businessname, user_mail, user_phone, user_password) VALUES ('${full_name}', '${business_name}','${mail}', '${phone}', '${password}')`;
+      // password=(md5(password));
+      var sql = `INSERT INTO main_account (user_fullname, user_businessname, user_mail, user_phone, user_password) VALUES ('${full_name}', '${business_name}','${email}', '${phone}', '${md5(password)}')`;
       con.query(sql, function (err, result) {
         if (err) throw err;
-        var user = `INSERT INTO users (account_id, user_fullname, user_mail, user_phone, user_password) VALUES ('${result.insertId}', '${full_name}','${mail}', '${phone}', '${password}')`;
+        var user = `INSERT INTO users (account_id, user_fullname, user_mail, user_phone, user_password) VALUES ('${result.insertId}', '${full_name}','${email}', '${phone}', '${md5(password)}')`;
         con.query(user, function (err, result_user) {
           if (err) throw err;
           const bodyJWT = {
@@ -122,8 +131,7 @@ app.post('/reset', function(req, res) {
       res.json({status:false});
     }
     else {
-      //TODO expires time 
-      const accessToken = jwt.sign(mail, secret);
+      const accessToken = jwt.sign({mail:mail}, secret, {expiresIn: '1h'});
       var data = {
         from: 'neta.carmiel@workiz.com',
         to: mail,
@@ -141,28 +149,29 @@ app.post('/reset', function(req, res) {
 
 app.post('/change', function(req, res) {   
    var {mail,password} = req.body;
-   password=(md5(password));
+  //  password=(md5(password));
    jwt.verify(mail, secret, (err,result) => {
     if (err) {
     console.log(err)
+      //token expird/invalid
       return res.json({status:false});
     }
     else {
-      var isExist = `UPDATE users SET user_password = '${password}' WHERE user_mail = '${result}' `
+      console.log(result);
+      var isExist = `UPDATE users SET user_password = '${md5(password)}' WHERE user_mail = '${result.mail}' `
       con.query(isExist, function (err, result) {
         if (err) {
           console.log(err)
-           res.json({status:false});
+          //connection error!!!
+           res.json({status:0});
         }
         else {
+          //ok
          res.json({status:true});
         }
       });
     }
-   });
- 
-   
-  
+   }); 
   
  });
 

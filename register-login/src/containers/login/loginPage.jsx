@@ -1,7 +1,7 @@
 import React from "react";
 import Header from '../../components/header'
- import Button from '../../components/button'
- import FormInput from'../../components/formInput'
+import Button from '../../components/button'
+import FormInput from'../../components/formInput'
 import axios from 'axios';
 import '../../style/inputStyle.css'
 
@@ -35,7 +35,6 @@ class Login extends React.Component {
              }
              console.log(this.props.history)
              window.location.href = "http://localhost:3000/home";
-             //window.location.reload();
             }
 
             else {

@@ -23,7 +23,7 @@ function ChangePassword(props) {
                     setMessage('Your password has been reset!')
                 }
                 else {
-                    setMessage('error!')
+                    setMessage('This link is no longer available')
                 }
                 })
         }
