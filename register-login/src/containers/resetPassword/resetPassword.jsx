@@ -29,6 +29,7 @@ function ResetPassword(props) {
         setMessage('')
         setEmail(event.target.value)
     }
+    
 
     return (
     <div className="controller">

@@ -6,7 +6,7 @@ var mysql = require('mysql');
 var md5 = require('md5');
 const jwt = require('jsonwebtoken');
 var mailgun = require('mailgun-js')({apiKey:process.env.API_KEY,domain:process.env.DOMAIN})
-const secret = "jdfkshfglhslffglshlf"
+const secret = process.env.SECRET
 
 
 var con = mysql.createConnection({
@@ -45,32 +45,16 @@ app.get('/', function(req, res) {
 });
 
 app.post('/register', function(req, res) {   
-  var {full_name,business_name,mail,phone,password} = req.body;
+  var {full_name,business_name,email,phone,password} = req.body;
   var valid = {
-    name_valid: true,
-    mail_valid: true,
-    phone_valid: true,
-    password_valid :true
+    'name_validate': validateName(full_name),
+    'email_validate': validateEmail(email),
+    'phone_validate': validatePhone(phone),
+    'password_validate' :validatePassword(password)
   };
   
-  if (!validateEmail(mail)){
-    valid.mail_valid = false;
-    
-  }
-  if (!validatePhone(phone)){
-    valid.phone_valid = false;
-  }
-
-  if (!validatePassword(password)){
-    valid.password_valid = false;
-  }
- 
-  if (!validateName(full_name)){
-    valid.name_valid = false;
-  }
-
-  if (!(valid.name_valid && valid.password_valid && valid.mail_valid && valid.phone_valid)) {
-    res.json({status:2,email_validate:valid.mail_valid, phone_validate:valid.phone_valid, password_validate:valid.password_valid, name_validate:valid.name_valid});
+  if (!(valid['name_validate'] && valid['password_validate'] && valid['email_validate'] && valid['phone_validate'])) {
+    res.json({status:2,valid});
     console.log('hi')
   }
 
@@ -79,7 +63,6 @@ app.post('/register', function(req, res) {
   var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}')`
 
   con.query(isExist, function (err, result) {
-    //  console.log(result)
       if (result!=0) {
         res.json({status:0});
       }
@@ -96,72 +79,59 @@ app.post('/register', function(req, res) {
             "account_id": result.insertId,
             "user_fullname":full_name
           }
-    
           const accessToken = jwt.sign(bodyJWT, secret)
-         
           res.json({status:1, accessToken});
-    
         });
       });
     }
     });
   }
-
-
 });
 
 app.post('/login', function(req, res) {   
- // console.log(req.body)
   var {mail,password} = req.body;
   password=(md5(password));
-  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') AND (user_password = '${password}') `
-
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') AND (user_password = '${password}')`
   con.query(isExist, function (err, result) {
-  //  console.log(result)
     if (result==0) {
       res.json({status:false});
     }
     else {
-
       const bodyJWT = {
         "user_id":result[0].user_id,
         "account_id": result[0].account_id,
         "user_fullname":result[0].full_name
       }
-
       const accessToken = jwt.sign(bodyJWT, secret)
-     // console.log(accessToken);
       res.json({accessToken, status:true});
-
     }
   });
- 
 });
+
 
 app.post('/ping', function(req, res) {   
 });
+
 
 app.post('/reset', function(req, res) {   
   var {mail} = req.body;
   var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') `
 
   con.query(isExist, function (err, result) {
-  //  console.log(result)
     if (result==0) {
       res.json({status:false});
     }
     else {
-      console.log(process.env.API_KEY)
+      //TODO expires time 
+      const accessToken = jwt.sign(mail, secret);
       var data = {
         from: 'neta.carmiel@workiz.com',
         to: mail,
         subject: 'Hello',
-        html: `http://localhost:3000/change/${mail}`,
+        html: `http://localhost:3000/change/${accessToken}`,
       };
 
-      console.log(mail)
       mailgun.messages().send(data, function (error, body) {
-        console.log(body);
       });
     
       res.json({status:true});
@@ -172,16 +142,27 @@ app.post('/reset', function(req, res) {
 app.post('/change', function(req, res) {   
    var {mail,password} = req.body;
    password=(md5(password));
-   var isExist = `UPDATE users SET user_password = '${password}' WHERE user_mail = '${mail}' `
-   con.query(isExist, function (err, result) {
-     if (err) {
-       console.log(err)
-        res.json({status:false});
-     }
-     else {
-      res.json({status:true});
-     }
+   jwt.verify(mail, secret, (err,result) => {
+    if (err) {
+    console.log(err)
+      return res.json({status:false});
+    }
+    else {
+      var isExist = `UPDATE users SET user_password = '${password}' WHERE user_mail = '${result}' `
+      con.query(isExist, function (err, result) {
+        if (err) {
+          console.log(err)
+           res.json({status:false});
+        }
+        else {
+         res.json({status:true});
+        }
+      });
+    }
    });
+ 
+   
+  
   
  });
 

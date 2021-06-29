@@ -1,7 +1,7 @@
 import React from "react";
 
  import Button from '../../components/button'
-
+ import axios from 'axios';
 
 import {
     Redirect
@@ -19,16 +19,28 @@ class HomePage extends React.Component {
 
     onButtonClick() { 
       localStorage.removeItem("my_user")
-
-       window.location.href = "http://localhost:3000/login";
-      }
+      window.location.href = "http://localhost:3000/login";
+    }
    
+    addUser() { 
+      axios.post('http://kerenadiv.com:8005/addUser', {
+       
+        }).then(response => {
+            if(response.data.status) {
+               
+            }
+            else {
+              
+            }
+            })
+    }
+
     render() {
-    // var isExist;
-    // localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
-         {!(this.props.isExist)&& <Redirect to="/login" />} <Button className="button" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
+         {!(this.props.isExist)&& <Redirect to="/login" />}
+          <Button className="button" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
+          <Button className="button" button_text="Add user" onClick={() => this.addUser()}></Button> 
         </div>
       );
     }

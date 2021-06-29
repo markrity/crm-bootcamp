@@ -20,7 +20,6 @@ class Login extends React.Component {
     }
 
     handleClick = () => {
-
       axios.post('http://kerenadiv.com:8005/login', {
         mail: this.state.email,
 
@@ -57,15 +56,12 @@ class Login extends React.Component {
     }
 
     render() {      
-      // var isExist;
-      // localStorage.getItem("my_user") ? isExist=true : isExist = false
       
       return (
         <div>
         {this.props.isExist && <Redirect to="/home" />}
 
         <Header className="header" header_text = "Sign in"/>
-        
         <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
         <FormInput label = "Password" type = "password" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
         <PLink   linkTo="reset" link_text="forget password?"/>

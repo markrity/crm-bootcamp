@@ -9,8 +9,6 @@ function DivController(props) {
         <div className="clickController" onClick={props.onClick}>
         {props.click_text}
         </div>
-   
-    
     </div>
     );
 }

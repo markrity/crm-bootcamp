@@ -1,0 +1,49 @@
+{"register_page":[
+     {
+        "key":"full_name",
+        "err":"name_validate",
+        "label": "Full Name",
+        "className": "input",
+        "type": "text",
+        "placeholder": "full name",
+        "onChange": "this.handleChange"
+    },
+    {
+        "key":"business_name",
+        "label": "Business Name",
+        "className": "input",
+        "type": "text",
+        "placeholder": "business name",
+        "onChange": "this.handleChange_business"
+    }, 
+    {
+        "key":"email",
+        "err":"email_validate",
+        "label": "email",
+        "className": "input",
+        "type": "text",
+        "placeholder": "example@text.com",
+        "onChange": "this.handleChange_email"
+    },
+    {
+        "key":"phone",
+        "err":"phone_validate",
+        "label": "phone",
+        "className": "input",
+        "type": "text",
+        "placeholder": "phone",
+        "onChange": "this.handleChange_phone"
+    
+    } , 
+    {
+        "key":"password",
+        "err":"password_validate",
+        "label": "password",
+        "className": "input",
+        "placeholder": "password",
+        "onChange": "this.handleChange_password"
+    }
+]
+
+}
+

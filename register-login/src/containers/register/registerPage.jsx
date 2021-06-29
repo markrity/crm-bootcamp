@@ -3,48 +3,45 @@ import Header from '../../components/header'
  import Button from '../../components/button'
  import FormInput from'../../components/formInput'
 import axios from 'axios';
-// import {
-//   BrowserRouter as Router,
-//   Redirect
-// } from "react-router-dom";
 import ErrorMessage from "../../components/errorMessage";
+import form_fields from "../../helpers/form_input.json"
 
 
 class Register extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {full_name:'', business_name:'', phone:'', email:'', password:'',
-       errormessage_exist: '', email_validate:'', phone_validate:'', password_validate:'', name_validate:''}
+      this.state = {fields:{full_name:'', business_name:'', phone:'', email:'', password:''}, err:{email_validate:'',
+       phone_validate:'', password_validate:'', name_validate:''},errormessage_exist:''}
       this.handleChange = this.handleChange.bind(this)
-      this.handleChange_business = this.handleChange_business.bind(this)
-      this.handleChange_phone = this.handleChange_phone.bind(this)
-      this.handleChange_email = this.handleChange_email.bind(this)
-      this.handleChange_password = this.handleChange_password.bind(this)
+    
     }
 
     handleClick = () => {
       axios.post('http://kerenadiv.com:8005/register', {
-        full_name: this.state.full_name,
-        business_name: this.state.business_name,
-        mail: this.state.email,
-        phone: this.state.phone,
-        password: this.state.password
+        full_name: this.state.fields.full_name,
+        business_name: this.state.fields.business_name,
+        mail: this.state.fields.mail,
+        phone: this.state.fields.phone,
+        password: this.state.fields.password
         }).then(response => {
-        if (!response.data.email_validate) {
-          this.setState({email_validate:'invalid email'})
-        }
-        if (!response.data.phone_validate) {
-          this.setState({phone_validate:'invalid phone'})
-        }
-        if (!response.data.password_validate) {
-          this.setState({password_validate:'invalid password'})
-        }
 
-        if (!response.data.name_validate) {
-          this.setState({name_validate:'invalid name'})
-        }
+        //if there are invalid fields
+        if (response.data.status===2) {
+          var errMessage = {'name_validate': 'invalid name', 'email_validate':'invalid email','phone_validate': 'invalid phone', 'password_validate':'invalid password' }
+          Object.entries(response.data.valid).forEach(item => {
+            console.log(item[0]);
+            if (!item[1]) {
+              this.setState(prevState => {
+                let err = Object.assign({}, prevState.err);  
+                err[item[0]] = errMessage[item[0]];                              
+                return { err };                                
+              })
+             }
+          })
+         }
 
+         //fields is ok
         if(response.data.status===1) {
           if (typeof(Storage) !== "undefined") {
           localStorage.setItem("my_user", response.data.accessToken);
@@ -55,56 +52,44 @@ class Register extends React.Component {
           console.log("Sorry, your browser does not support Web Storage...")
           }
         }
+
+        //user already exist
         if(response.data.status===0){
           this.setState({errormessage_exist:'This email already exist'})
         }
-
         })
     }
 
-    handleChange(event) {
-     this.setState({name_validate:''})
-     this.setState({full_name: event.target.value});
+    handleChange(event, key, errMessage) {
+      this.setState(prevState => {
+        let fields = Object.assign({}, prevState.fields);  
+        fields[key] = event.target.value;                              
+        return { fields };                                
+      })
+
+      //remove all error messages
+      this.setState(prevState => {
+        let err = Object.assign({}, prevState.err);  
+        err[errMessage] = '';                              
+        return { err };                                
+      })    
     }
 
-    handleChange_business(event) {
-    this.setState({business_name: event.target.value});
+    renderFields() {   
+      let jsx_array = (form_fields.register_page).map(field => { 
+         return <div>
+           <FormInput key={field.key}  label = {field.label} type = {field.type} className = {field.className} placeholder= {field.placeholder}  onChange={(e)=>this.handleChange(e,field.key, field.err)} /> 
+           <ErrorMessage err = {this.state.err[field.err]}/>
+         </div>
+      })
+      return jsx_array
     }
 
-    handleChange_phone(event) {
-    this.setState({phone_validate:''})
-    this.setState({phone: event.target.value});
-    }
-
-    handleChange_email(event) {
-      this.setState({email_validate:''})
-      this.setState({errormessage_exist:''})
-      this.setState({email: event.target.value});
-    }
-
-    handleChange_password(event) {
-      this.setState({password_validate:''})
-      this.setState({password: event.target.value});
-    }
-
-
-    
     render() {
-      // var isExist;
-      // localStorage.getItem("my_user") ? isExist=true : isExist = false
       return (
         <div>
         <Header header_text = "Create your account"/>
-        <FormInput label = "Full Name" type = "text" className ="input" placeholder= "full name"  onChange={this.handleChange} />
-        <ErrorMessage err = {this.state.name_validate} />
-        <FormInput label = "Business Name" type = "text" className ="input" placeholder= "business name" onChange={this.handleChange_business}/>
-        <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
-        <ErrorMessage err = {this.state.errormessage_exist} />
-        <ErrorMessage err = {this.state.email_validate} />
-        <FormInput label = "Phone" type = "text" className ="input" placeholder= "phone" onChange={this.handleChange_phone} />
-        <ErrorMessage err = {this.state.phone_validate} />
-        <FormInput label = "Password" type = "password" className ="input" placeholder= "must have at least 6 character" onChange={this.handleChange_password} />
-        <ErrorMessage err = {this.state.password_validate} />
+        {this.renderFields()}
         <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
         </div>
       );

@@ -17,8 +17,6 @@ import ResetPassword from "./containers/resetPassword/resetPassword";
 import ChangePassword from "./containers/changePassword/changePassword";
 
 
-var counter=0;
-
 function App() {
   
   const [isExist, setExist] = useState(false);
@@ -26,7 +24,6 @@ function App() {
   useEffect(() => {  
     var token = localStorage.getItem("my_user");
     if (token) {
-    console.log(counter++)
     axios.post('http://kerenadiv.com:8005/ping', {
       token: token
       }).then(response => {
