@@ -40,6 +40,26 @@ class SessionHelper {
         return this.openSessions.has(userData.session_id);
     }
 
+    createToken(data){
+      const token = jwt.sign(data, this.accessTokenSecret, {
+        expiresIn: 86400  // expires in 24 hours
+      });
+      return token;
+    }
+
+    verifyToken(token){
+      return jwt.verify(token, this.accessTokenSecret, (err, result) => {
+        if (err){
+          console.log("not verified");
+          return null;
+        }
+        console.log("verified!");
+        return result;
+      });
+      
+      
+    }
+
 }
 
 export default SessionHelper;
