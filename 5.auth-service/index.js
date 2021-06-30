@@ -67,10 +67,10 @@ app.post('/signup', async function (req, res) {
     }
 
     let account_id_value = result.insertId;
-
+    console.log("phone number: ", body.phone.value);
     // insert the user to the db
-    var sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', ${body.phone.value});`;
-
+    sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', '${body.phone.value}');`;
+    console.log(sql);
     result = await sqlHelper.insert(sql).catch((err)=>{});
     if(!result){
       resData.valid = false;
@@ -149,9 +149,12 @@ function encodePassword(password){
  * @returns false if the token not verified
  */
 function authMiddleware(req, res, next){
+  console.log(req.headers.authorization);
   const userData = sessionHelper.verifySession(req.headers.authorization);
-  console.log(userData)
+  console.log(userData);
   if(userData){
+    console.log("verified... add the user to local: ")
+    req.user = userData;
     next()
   } else {
       console.log("returns false");
@@ -279,52 +282,71 @@ function validateAll(fields){
   return resData;
 }
 
-// app.post('/addUser', async function(req, res){
-//   let resData = {valid: true, errors: [], serverError: ''};
-//   const fields = req.body.fields;
-//   const token = req.body.token;
+app.post('/addUser', async function(req, res){
+  let resData = {valid: true, errors: [], serverError: ''};
+  const fields = req.body.fields;
+  const token = req.body.token;
 
-//   // fields validations
-//   resData =  validateAll(fields);
-//   if(!resData.valid){
-//     res.send(resData);
-//     return;
-//   }
+  // fields validations
+  resData =  validateAll(fields);
+  if(!resData.valid){
+    res.send(resData);
+    return;
+  }
 
-//   const userMail = fields.mail.value;
-//   if(userMail){
+  const userMail = fields.mail.value;
+  const tokenBody = sessionHelper.verifySession(token);
+  if(userMail && tokenBody){
 
-//     // Verify the token and extract the account id from it
-//       const tokenBody = sessionHelper.verifySession(token);
-//       if(!tokenBody){
-//         resData.valid = false;
-//         resData.serverError = 'serverError';
-//         res.send(resData);
-//         return;
-//       }
+      // Check if the user is already in the db
+      var sql = `SELECT * FROM users WHERE user_mail = '${userMail}'`;
+      let result = await sqlHelper.select(sql).catch((err)=>{});
 
-//       // Encoding the mail address and the account id 
-//       const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId});
+      // The query failed
+      if(!result){
+        resData.valid = false;
+        resData.serverError = "serverError";
+        res.send(resData);
+        return;
+      };
 
-//       // Insert the new user to the db
+      // User mail is already in the db
+      if(result.length > 0){
+        resData.valid = false;
+        resData.serverError = "userMailAlreadyExist";
+        res.send(resData);
+        return;
+      }
 
+      // New user - insert the new user to the db
+      sql = `INSERT INTO users (account_id, user_mail) VALUES ('${tokenBody.accountId}', '${userMail}');`;
+      result = await sqlHelper.insert(sql).catch((err)=>{});
+      if(!result){
+        resData.valid = false;
+        resData.serverError = 'serverError';
+        res.send(resData);
+        return;
+      }
       
-//       // send the invite mail to the user
-//       try {
-//         resData = await sendMail('coheen1@gmail.com', userMail, 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`http://localhost:3000/bla/${mailToken}`}>Click to sign up.</a>`);
-//       } catch {
-//         resData.valid = false;
-//         resData.serverError = "serverError";
-//       }
-//       res.json(resData);
+      // Encoding the mail address and the account id 
+      const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId, userId: result.insertId});
+      // send the invite mail to the user
+      // TODO replace my mail with userMail
+      try {
+        resData = await sendMail('coheen1@gmail.com', 'coheen1@gmail.com', 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`http://localhost:3000/newUser/${mailToken}`}>Click to sign up.</a>`);
+      } catch {
+        resData.valid = false;
+        resData.serverError = "serverError";
+      }
+      res.json(resData);
 
-//   //  Mail is undefined
-//   } else {
-//       resData.valid = false;
-//       resData.serverError = "serverError";
-//       res.send(resData);
-//     }
-// });
+  //  Mail is undefined
+  } else {
+      resData.valid = false;
+      resData.serverError = "serverError";
+      res.send(resData);
+    }
+});
 
 
 async function sendMail(from, to, subject, html){
@@ -349,3 +371,77 @@ async function sendMail(from, to, subject, html){
     });
   });
 }
+
+
+app.post('/editUser', async function(req, res){
+  let resData = {valid: true, errors: [], serverError: ''};
+  const {fields, token} = req.body;
+
+  // fields validations
+  resData =  validateAll(fields);
+  if(!resData.valid){
+    res.send(resData);
+    return;
+  }
+
+  const tokenBody = sessionHelper.verifyToken(token);
+  console.log('token body:', tokenBody);
+  if(tokenBody) {
+    const {userMail, accountId, userId} = tokenBody;
+    
+    // insert the account to the db
+    const sql = `UPDATE users SET user_name = '${fields.name.value}', user_password = '${encodePassword(fields.password.value)}', user_phone = '${fields.phone.value}' WHERE user_id = ${userId};`;
+    const result = await sqlHelper.update(sql).catch((err)=>{});
+    console.log(sql);
+    if(!result){
+      console.log('query failed');
+      resData.valid = false;
+      resData.serverError = 'serverError';
+      res.send(resData);
+      return;
+    }
+    const user = {userName: fields.name,  userId: userId, accountId: accountId};
+    resData.accessToken = sessionHelper.createSession(user);
+    resData.user_name = result.user_name;
+
+  } else {
+    resData.valid = false;
+    resData.serverError = "serverError";
+  }
+  res.send(resData);
+});
+
+app.get('/getUsers', authMiddleware, async function(req, res){
+  const user = req.user;
+  const resData = {valid: true};
+  // TODO check if the user is an admin
+  let sql = `SELECT * FROM users WHERE account_id = '${user.accountId}'`;
+  let result = await sqlHelper.select(sql).catch((err)=>{});
+
+  // The query failed
+  if(!result){
+    resData.valid = false;
+    resData.serverError = "serverError";
+    res.send(resData);
+    return;
+  };
+
+  resData.usersList = result;
+  res.send(resData);
+
+});
+
+
+
+/**
+ * 
+ {
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Inl1dmFsIGNvaGVuIiwidXNlcklkIjo2NywiYWNjb3VudElkIjoxMTIsInNlc3Npb25faWQiOjAsImlhdCI6MTYyNDk3NzM4OCwiZXhwIjoxNjI1ODQxMzg4fQ.M4CLz107Pfery9dnBeLp_W23OBIQdK2OEEjVA93aVOo",
+    "fields": {
+        "mail": {
+            "type": "mail",
+            "value" : "yuval.halamish@workiz.com"
+        }
+    }
+}
+ */

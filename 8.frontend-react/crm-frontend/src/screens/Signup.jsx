@@ -6,6 +6,7 @@ import '../styles/signUp.css';
 import {
     // BrowserRouter as Router,
     Link,
+    useParams,
     withRouter
   } from "react-router-dom";
 const authApi = new AuthApi();
@@ -14,9 +15,15 @@ const authApi = new AuthApi();
 
 function Signup(props) {
 
-  const submit = async (data) => {
-
-    const res = await authApi.signup(data);
+  const {token} = useParams();
+  const submit = async (formData) => {
+    console.log(formData);
+    let res;
+    if(props.type == 'newUser'){
+      res =  await authApi.editUser({fields: formData, token: token});
+    } else {
+      res = await authApi.signup(formData);
+    }
     console.log(res.valid);
     if(res.valid){
       console.log("signup is done!!",res.valid);
@@ -74,6 +81,11 @@ function Signup(props) {
           }
         }
       }
+
+    if(props.type == 'newUser'){
+      delete signup.fields.mail;
+      delete signup.fields.business;
+    }
     
 
     return (
@@ -93,8 +105,7 @@ function Signup(props) {
               errorMap = {signup.errorMap}
               button={signup.buttonTitle}
               />
-              <hr></hr>
-              <Link className='linkto' to="/login">I already have an account</Link>
+              {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
           </div>
       </div>
       </div>

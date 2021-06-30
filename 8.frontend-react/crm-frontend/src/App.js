@@ -9,6 +9,7 @@ import ResetPassword from './screens/ResetPassword';
 import ForgotPassword from './screens/ForgotPassword';
 import Signup from './screens/Signup';
 import Login from './screens/Login';
+import Team from './screens/Team';
 import AuthApi from './helpers/authApi';
 import {
   BrowserRouter as Router,
@@ -59,11 +60,19 @@ function App() {
           }}
         />
         <Route 
-          exact path="/signup">
+           path="/signup">
             {isLoading ? (<div>Loading</div>) : 
             isConnect ?
                 <Redirect to="/home" /> :
-                <Signup /> 
+                <Signup type='newAccount' /> 
+            }
+        </Route>
+        <Route 
+           exact path="/newUser/:token">
+            {isLoading ? (<div>Loading</div>) : 
+            isConnect ?
+                <Redirect to="/home" /> :
+                <Signup type='newUser'/> 
             }
         </Route>
         <Route exact path="/home">
@@ -86,6 +95,12 @@ function App() {
         <Route exact path="/forgotPassword">
             <ForgotPassword/>
         </Route >
+        <Route exact path="/team">
+        {isLoading ? (<div>Loading</div>) : 
+            isConnect ?
+                <Team /> : <Redirect to="/login" /> 
+            }
+        </Route>
       </Switch>
     </div>
   </Router>

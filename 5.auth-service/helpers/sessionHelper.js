@@ -15,14 +15,14 @@ class SessionHelper {
               return null;
             }
             console.log("verified!");
-            return this.openSessions.has(user.session_id) ?  this.openSessions.get(user.session_id) : null;
+            return this.openSessions.has(user.sessionId) ?  this.openSessions.get(user.sessionId) : null;
           });
         } 
         return null;
     }
 
     createSession (user){
-        user.session_id = this.sessionCounter;
+        user.sessionId = this.sessionCounter;
         this.openSessions.set(this.sessionCounter++, user);
         const token = jwt.sign(user, this.accessTokenSecret, {
           "algorithm": "HS256",
@@ -33,11 +33,11 @@ class SessionHelper {
     }
 
     deleteSession(userData){
-        this.openSessions.delete(userData.session_id);
+        this.openSessions.delete(userData.sessionId);
     }
 
     isOpenSession(userData){
-        return this.openSessions.has(userData.session_id);
+        return this.openSessions.has(userData.sessionId);
     }
 
     createToken(data){
