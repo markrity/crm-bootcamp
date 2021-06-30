@@ -28,7 +28,6 @@ class SessionHelper {
           "algorithm": "HS256",
           expiresIn: 86400 * 10 // expires in 10 days
         });
-        console.log(this.openSessions);
         return token;
     }
 

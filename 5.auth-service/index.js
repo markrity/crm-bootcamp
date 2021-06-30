@@ -67,10 +67,8 @@ app.post('/signup', async function (req, res) {
     }
 
     let account_id_value = result.insertId;
-    console.log("phone number: ", body.phone.value);
     // insert the user to the db
     sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', '${body.phone.value}');`;
-    console.log(sql);
     result = await sqlHelper.insert(sql).catch((err)=>{});
     if(!result){
       resData.valid = false;
@@ -115,7 +113,6 @@ app.post('/login', async function (req, res) {
   } else {
     resData.valid = false;
     resData.serverError = 'IncorrectMailOrPassword';
-    console.log('here in incorrect mail');
   }
   res.send(resData);
 });
@@ -149,15 +146,11 @@ function encodePassword(password){
  * @returns false if the token not verified
  */
 function authMiddleware(req, res, next){
-  console.log(req.headers.authorization);
   const userData = sessionHelper.verifySession(req.headers.authorization);
-  console.log(userData);
   if(userData){
-    console.log("verified... add the user to local: ")
     req.user = userData;
     next()
   } else {
-      console.log("returns false");
       // TODO return something else
       return res.send(false);
   }
@@ -208,7 +201,6 @@ app.post('/forgotPassword', async function (req, res) {
       // Encoding the mail address
       let tokenBody = {userMail: userMail};
       const mailToken = sessionHelper.createToken(tokenBody);
-      console.log("this is the mail link to reset the password: ", `http://localhost:3000/resetPassword/${mailToken}`);
       try {
         resData = await sendMail('coheen1@gmail.com', userMail, 'RGB - Reset password', `<a href=${`http://localhost:3000/resetPassword/${mailToken}`}>Click to reset your password.</a>`);
       } catch {
@@ -261,7 +253,6 @@ app.post('/resetPassword', async function(req, res){
     return;
   }
   // The password has changed
-  console.log(`password changed to ${encodePassword(password)}`);
   resData.valid = true;
   res.send(resData);
 });
@@ -385,22 +376,36 @@ app.post('/editUser', async function(req, res){
   }
 
   const tokenBody = sessionHelper.verifyToken(token);
-  console.log('token body:', tokenBody);
   if(tokenBody) {
-    const {userMail, accountId, userId} = tokenBody;
+    const {accountId, userId} = tokenBody;
     
     // insert the account to the db
-    const sql = `UPDATE users SET user_name = '${fields.name.value}', user_password = '${encodePassword(fields.password.value)}', user_phone = '${fields.phone.value}' WHERE user_id = ${userId};`;
-    const result = await sqlHelper.update(sql).catch((err)=>{});
-    console.log(sql);
+    let sql = `UPDATE users SET user_name = '${fields.name.value}', user_password = '${encodePassword(fields.password.value)}', user_phone = '${fields.phone.value}' WHERE user_id = ${userId};`;
+    let result = await sqlHelper.update(sql).catch((err)=>{});
     if(!result){
-      console.log('query failed');
       resData.valid = false;
       resData.serverError = 'serverError';
       res.send(resData);
       return;
     }
-    const user = {userName: fields.name,  userId: userId, accountId: accountId};
+
+    sql = `SELECT * FROM accounts WHERE account_id = '${accountId}'`;
+    result = await sqlHelper.select(sql).catch((err)=>{});
+    if(!result || result == 0){
+      resData.valid = false;
+      resData.serverError = 'serverError';
+      res.send(resData);
+      return;
+    }
+
+    const adminMail = result[0].first_user_mail;
+
+    try {
+      resData = await sendMail('coheen1@gmail.com', adminMail, 'RGB - Invitation accepted', `The invitation you sent to <b>${fields.name.value}</b> was accepted.`);
+    } catch {}
+
+    // userMail
+    const user = {userName: fields.name.value,  userId: userId, accountId: accountId };
     resData.accessToken = sessionHelper.createSession(user);
     resData.user_name = result.user_name;
 

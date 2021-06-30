@@ -1,9 +1,13 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat');
 
+.button-icon {
+    margin-right: 5px;
+}
 
 
 .submit-button{
+    display: flex;
     color: #fe5f55;
     background-color: white;
     padding: 5px 20px;
@@ -12,6 +16,7 @@
     border-radius: 30px;
     font-size: 18px;
     outline: none;
+    align-items: baseline;
 }
 
 .submit-button:hover, .submit-button:focus{

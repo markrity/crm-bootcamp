@@ -10,6 +10,7 @@ import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
 import Header from '../components/Header';
 
+
 const authApi = new AuthApi();
 
 function Team(props){
@@ -28,6 +29,14 @@ function Team(props){
         console.log('add user');
     };
 
+    const getUsersList = async () =>{
+       const usersList =  await authApi.getUsers();
+       if(usersList){
+           console.log("users list: ", usersList);
+       }
+    };
+    getUsersList();
+    
     const addUserForm = {
         submitFunc: submit,
         type: 'addUser',
@@ -59,7 +68,7 @@ function Team(props){
             <Header className/>
             <div className='crm-page'>
             <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
-            <CrmButton content='add user' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
+            <CrmButton content='add user' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
             {/* <ModelWindow/> */}
             <Modal isOpen={isModalOpen} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
                 <Form 

@@ -72,19 +72,6 @@ class AuthApi {
     }
 
 
-    /**
- * 
- {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Inl1dmFsIGNvaGVuIiwidXNlcklkIjo2NywiYWNjb3VudElkIjoxMTIsInNlc3Npb25faWQiOjAsImlhdCI6MTYyNDk3NzM4OCwiZXhwIjoxNjI1ODQxMzg4fQ.M4CLz107Pfery9dnBeLp_W23OBIQdK2OEEjVA93aVOo",
-    "fields": {
-        "mail": {
-            "type": "mail",
-            "value" : "yuval.halamish@workiz.com"
-        }
-    }
-}
- */
-
     async newUser(data){
         const token = localStorage.getItem('jwtToken');
         const response = await axios.post('http://rgb.com:8005/addUser', {token: token, fields: data});
@@ -104,6 +91,22 @@ class AuthApi {
         const response = await axios.post('http://rgb.com:8005/resetPassword', data).catch((err)=>{});
         // TODO catch the error and check if response isn't null
         return response.data;
+    }
+
+    async getUsers(){
+        const response = await axios.get('http://rgb.com:8005/getUsers', 
+        {
+            headers: {
+                'authorization': localStorage.getItem('jwtToken')
+            }
+        })
+        console.log(response);
+        if(response){
+            return response.data;
+        }
+        else {
+            return false;
+        }
     }
 }
 
