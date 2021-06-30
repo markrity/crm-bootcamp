@@ -7,3 +7,11 @@
     margin-bottom: 10px;
 }
 
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.links-container {
+    margin-right: 35px;
+}

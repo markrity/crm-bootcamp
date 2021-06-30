@@ -1,5 +1,8 @@
 import React, {useState} from 'react';
 import AuthApi from '../helpers/authApi';
+import Header from '../components/Header';
+import CrmButton from '../components/CrmButton';
+import '../styles/crmPage.css'
 // import {
 //     Redirect
 //   } from "react-router-dom";
@@ -10,21 +13,13 @@ const authApi = new AuthApi();
 
 function Home(props) {
 
-    const [isLogout, setIsLogout] = useState(false);
-
-    const logoutFunc = ()=>{
-        authApi.logout();
-        // TODO - use the state instead of window
-        window.location.href = 'http://localhost:3000/login';
-        setIsLogout(true);
-    }
 
     return (
         <div>
-            {/* {isLogout &&  <Redirect to="/login" />} */}
-            {/* {!isUserAuthenticated && <Redirect to="/login" />} */}
-            <button id="logout" onClick={()=>logoutFunc()}>Logout</button>
-            home page
+            <Header/>
+            <div className='crm-page'>
+                home page
+            </div>
         </div>
     );
 }

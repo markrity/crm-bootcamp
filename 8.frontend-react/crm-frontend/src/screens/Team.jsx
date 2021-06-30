@@ -36,7 +36,7 @@ function Team(props){
        }
     };
     getUsersList();
-    
+
     const addUserForm = {
         submitFunc: submit,
         type: 'addUser',
@@ -65,7 +65,7 @@ function Team(props){
 
     return (
         <div>
-            <Header className/>
+            <Header/>
             <div className='crm-page'>
             <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
             <CrmButton content='add user' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
