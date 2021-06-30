@@ -5,8 +5,11 @@ import ReactDom from 'react-dom';
 import Form from '../components/Form';
 import ModelWindow from '../components/ModalWindow';
 import Modal from 'react-modal';
+import '../styles/crmPage.css'
 import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
+import Header from '../components/Header';
+
 const authApi = new AuthApi();
 
 function Team(props){
@@ -53,7 +56,9 @@ function Team(props){
 
     return (
         <div>
-            <PageTitle title='Team' description='Here you can find and add bla bla ...'/>
+            <Header className/>
+            <div className='crm-page'>
+            <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
             <CrmButton content='add user' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
             {/* <ModelWindow/> */}
             <Modal isOpen={isModalOpen} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
@@ -67,6 +72,7 @@ function Team(props){
                     submitHandle={addUserForm.submitFunc} 
                 />
             </Modal>
+            </div>
         </div>
     );
 }

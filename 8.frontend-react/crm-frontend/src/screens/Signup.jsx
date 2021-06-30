@@ -90,24 +90,24 @@ function Signup(props) {
 
     return (
       <div className='wrapper-container'>
-      <div className='wrapper'>
-          <div className='text-container'> 
-          <Logo size='large'/>
-            <h2>Be the best graphic designer you can</h2>
-          </div>
-          <div className='form-container'>
-              <Form 
-              className='form-body'
-              fields={signup.fields} 
-              title={signup.title}
-              submitHandle={signup.submitFunc} 
-              type={signup.type}
-              errorMap = {signup.errorMap}
-              button={signup.buttonTitle}
-              />
-              {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
-          </div>
-      </div>
+        <div className='wrapper'>
+            <div className='text-container'> 
+            <Logo size='large'/>
+              <h2>Be the best graphic designer you can</h2>
+            </div>
+            <div className='form-container'>
+                <Form 
+                className='form-body'
+                fields={signup.fields} 
+                title={signup.title}
+                submitHandle={signup.submitFunc} 
+                type={signup.type}
+                errorMap = {signup.errorMap}
+                button={signup.buttonTitle}
+                />
+                {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
+            </div>
+        </div>
       </div>
     );
 }

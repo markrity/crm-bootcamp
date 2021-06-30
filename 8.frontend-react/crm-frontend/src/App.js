@@ -70,9 +70,7 @@ function App() {
         <Route 
            exact path="/newUser/:token">
             {isLoading ? (<div>Loading</div>) : 
-            isConnect ?
-                <Redirect to="/home" /> :
-                <Signup type='newUser'/> 
+              <Signup type='newUser'/> 
             }
         </Route>
         <Route exact path="/home">

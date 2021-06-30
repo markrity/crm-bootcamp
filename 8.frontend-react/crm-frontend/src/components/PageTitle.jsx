@@ -1,4 +1,5 @@
 import React from 'react';
+import '../styles/pageTitle.css'
 
 function PageTitle(props){
 
