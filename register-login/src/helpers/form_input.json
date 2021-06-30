@@ -43,6 +43,36 @@
         "placeholder": "must be at least eight characters",
         "onChange": "this.handleChange_password"
     }
+
+
+], "register_pageNew": [
+    {
+       "key":"full_name",
+       "err":"name_validate",
+       "label": "Full Name",
+       "className": "input",
+       "type": "text",
+       "placeholder": "full name",
+       "onChange": "this.handleChange"
+   },
+
+   {
+       "key":"phone",
+       "err":"phone_validate",
+       "label": "phone",
+       "className": "input",
+       "type": "text",
+       "placeholder": "phone",
+       "onChange": "this.handleChange_phone"
+   
+   } , 
+   {
+       "key":"password",
+       "err":"password_validate",
+       "label": "password",
+       "className": "input",
+       "placeholder": "must be at least eight characters",
+       "onChange": "this.handleChange_password"
+   }
 ]
 }
-

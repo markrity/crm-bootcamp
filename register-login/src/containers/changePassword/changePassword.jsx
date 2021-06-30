@@ -48,8 +48,8 @@ function ChangePassword(props) {
     return (
     <div className="controller">
      {errorMessage}
-     <FormInput type = "text" className ="input" placeholder= "Enter new password" onChange={handleChange}/>
-     <FormInput type = "text" className ="input" placeholder= "Confirm new password" onChange={handleChangeConfirm}/>
+     <FormInput type = "password" className ="input" placeholder= "Enter new password" onChange={(handleChange)}/>
+     <FormInput type = "password" className ="input" placeholder= "Confirm new password" onChange={handleChangeConfirm}/>
      {showChangeButton && <Button className="button" button_text="Change password" onClick={handleClickPassword} />}
      {showLoginButton && <Button className="button" button_text="Back to login" onClick={handleClickLogin} />}
     </div>

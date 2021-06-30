@@ -11,18 +11,23 @@ class Register extends React.Component {
 
   constructor(props) {
     super(props);
+    //console.log(this.props.newUser);
     this.state = {fields:{full_name:'', business_name:'', phone:'', email:'', password:''}, err:{email_validate:'',
       phone_validate:'', password_validate:'', name_validate:''},errormessage_exist:''}
     this.handleChange = this.handleChange.bind(this)
   }
 
   handleClick = () => {
+    var token = this.props.props.match?.params.id 
+    //console.log(token);
     axios.post('http://kerenadiv.com:8005/register', {
       full_name: this.state.fields.full_name,
       business_name: this.state.fields.business_name,
       email: this.state.fields.email,
       phone: this.state.fields.phone,
-      password: this.state.fields.password
+      password: this.state.fields.password,
+      isNew: this.props.newUser,
+      token: token ? token : ''
       }).then(response => {
 
       //if there are invalid fields
@@ -44,9 +49,10 @@ class Register extends React.Component {
       if(response.data.status===1) {
         console.log('netttt');
         if (typeof(Storage) !== "undefined") {
+        console.log(response);
         localStorage.setItem("my_user", response.data.accessToken);
         
-        console.log(localStorage.getItem("my_user"));
+       // console.log(localStorage.getItem("my_user"));
         window.location.href = "http://localhost:3000/home";
         } else {
         console.log("Sorry, your browser does not support Web Storage...")
@@ -75,10 +81,12 @@ class Register extends React.Component {
     })    
   }
 
-  renderFields() {   
-    let jsx_array = (form_fields.register_page).map(field => { 
+  renderFields(isNew) {   
+    let jsx_array1;
+    isNew ? jsx_array1 = (form_fields.register_pageNew) :  jsx_array1 = (form_fields.register_page)
+    let jsx_array = jsx_array1.map(field => { 
         return <div>
-          <FormInput key={field.key}  label = {field.label} type = {field.type} className = {field.className} placeholder= {field.placeholder}  onChange={(e)=>this.handleChange(e,field.key, field.err)} /> 
+          <FormInput key = {field.key} label = {field.label} type = {field.type} className = {field.className} placeholder= {field.placeholder}  onChange={(e)=>this.handleChange(e,field.key, field.err)} /> 
           <ErrorMessage err = {this.state.err[field.err]}/>
         </div>
     })
@@ -89,8 +97,10 @@ class Register extends React.Component {
     return (
       <div>
       <Header header_text = "Create your account"/>
-      {this.renderFields()}
+      {this.props.newUser && this.renderFields(this.props.newUser)}
+      {!this.props.newUser && this.renderFields(this.props.newUser)}
       <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
+      {this.state.errormessage_exist}
       </div>
     );
   }

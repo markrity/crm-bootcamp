@@ -24,30 +24,46 @@ app.use(myLogger);
 
 
 function myLogger(req, res, next) {
-  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/change' ) {
+  //TODO loop on objects 
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/change' || req.originalUrl==='/register:id' ) {
     next();
   } 
   else {
-  var {token} = req.body;
+  console.log('this is middlware checking!!!!');
+  var token = req.body.token;
   jwt.verify(token, secret, (err) => {
     if (err) {
+      console.log(err);
       return res.json({status:false});
     }
-    return res.json({status:true});
+    else {
+     
+     // console.log('hfksjdhfksh');
+      next();
+      return res.json({status:true});
+    }
   });
 }
 };
+
 module.exports = myLogger;
+
 
 app.get('/', function(req, res) {
   res.send('hello there');
 });
 
-app.post('/register', function(req, res) {   
-  var {full_name,business_name,email,phone,password} = req.body;
+app.post('/register', async (req, res) => {   
+  var {full_name,business_name,email,phone,password, isNew, token} = req.body;
+  console.log(req.body);
   var flag = false;
-  console.log(email);
-  console.log(phone);
+ 
+  if (isNew) {
+    const accessToken = await insertNewUser(full_name, phone, password, token);
+    res.json({status:1, accessToken});
+  }
+
+  else {
   var valid = {
     'name_validate': validateName(full_name),
     'email_validate': validateEmail(email),
@@ -70,13 +86,11 @@ app.post('/register', function(req, res) {
   else {
   //check if the user is already exist 
   var isExist = `SELECT * FROM users WHERE (user_mail = '${email}')`
-
   con.query(isExist, function (err, result) {
       if (result!=0) {
         res.json({status:0});
       }
       else {
-      // password=(md5(password));
       var sql = `INSERT INTO main_account (user_fullname, user_businessname, user_mail, user_phone, user_password) VALUES ('${full_name}', '${business_name}','${email}', '${phone}', '${md5(password)}')`;
       con.query(sql, function (err, result) {
         if (err) throw err;
@@ -95,12 +109,36 @@ app.post('/register', function(req, res) {
     }
     });
   }
+}
 });
+
+function insertNewUser(full_name, phone, password, token) {
+  //TODO validation for new user
+   return new Promise(resolve => {
+    jwt.verify(token, secret, (err,result) => {
+      //maybe throw its not like return --- check this
+      if (err) throw err;
+      var user = `INSERT INTO users (account_id, user_fullname, user_mail, user_phone, user_password) VALUES ('${result.account_id}', '${full_name}','${result.newUser_mail}', '${phone}', '${md5(password)}')`;
+      con.query(user, function (err, result_user) {
+      if (err) throw err;
+      const bodyJWT = {
+        "user_id":result_user.insertId,
+        "account_id": result.account_id,
+        "user_fullname":full_name
+      }
+      var accessToken = jwt.sign(bodyJWT, secret)
+      console.log(accessToken);
+      resolve (accessToken);
+    });
+     });
+   
+   });
+ 
+}
 
 app.post('/login', function(req, res) {   
   var {mail,password} = req.body;
-  password=(md5(password));
-  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') AND (user_password = '${password}')`
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') AND (user_password = '${md5(password)}')`
   con.query(isExist, function (err, result) {
     if (result==0) {
       res.json({status:false});
@@ -109,7 +147,7 @@ app.post('/login', function(req, res) {
       const bodyJWT = {
         "user_id":result[0].user_id,
         "account_id": result[0].account_id,
-        "user_fullname":result[0].full_name
+        "user_fullname":result[0].user_fullname
       }
       const accessToken = jwt.sign(bodyJWT, secret)
       res.json({accessToken, status:true});
@@ -117,10 +155,8 @@ app.post('/login', function(req, res) {
   });
 });
 
-
 app.post('/ping', function(req, res) {   
 });
-
 
 app.post('/reset', function(req, res) {   
   var {mail} = req.body;
@@ -174,6 +210,34 @@ app.post('/change', function(req, res) {
    }); 
   
  });
+
+
+app.post('/addUser', function(req, res) {   
+var {mail,token} = req.body;
+console.log(token);
+jwt.verify(token, secret, (err,result) => {
+  if (err) {
+    console.log(err);
+  }
+  else {
+    const bodyJWT = {
+      "account_id": result.account_id,
+      "newUser_mail":mail
+    }
+    const accessToken = jwt.sign(bodyJWT, secret, {expiresIn: '24h'})
+    //console.log(result.user_id);
+
+    var data = {
+          from: 'neta.carmiel@workiz.com',
+          to: mail,
+          subject: 'Hi new user!',
+          html: `http://localhost:3000/register/${accessToken}`,
+        };
+        mailgun.messages().send(data, function (error, body) {
+        });
+  }
+});
+});
 
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

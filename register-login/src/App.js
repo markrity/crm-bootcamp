@@ -15,6 +15,8 @@ import {
 } from "react-router-dom";
 import ResetPassword from "./containers/resetPassword/resetPassword";
 import ChangePassword from "./containers/changePassword/changePassword";
+import AddUser from "./containers/addUser/addUser";
+import Register from "./containers/register/registerPage";
 
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
   
   useEffect(() => {  
     var token = localStorage.getItem("my_user");
+    console.log('useEffect');
     if (token) {
     axios.post('http://kerenadiv.com:8005/ping', {
       token: token
@@ -53,7 +56,7 @@ function App() {
         </Route>
 
         <Route  path="/login">
-            <Controller isExist={isExist} />
+            <Controller isExist={isExist} reg={false} log={true} newUser={false} />
         </Route>
 
         <Route  path="/reset">
@@ -63,6 +66,15 @@ function App() {
         <Route  path="/change/:id" component={ChangePassword}>
           
         </Route>
+
+        <Route  path="/register/:id" render={(props) => <Controller {...props}reg={true} log={false} newUser={true} />}/> 
+
+
+        <Route  path="/addUser" isExist={isExist} >
+          <AddUser />
+        </Route>
+
+        
 
       </Switch>
       </Router>

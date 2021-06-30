@@ -23,17 +23,7 @@ class HomePage extends React.Component {
     }
    
     addUser() { 
-      axios.post('http://kerenadiv.com:8005/addUser', {
-       
-        }).then(response => {
-            if(response.data.status) {
-               
-            }
-            else {
-              
-            }
-            })
-    }
+      window.location.href = "http://localhost:3000/addUser";    }
 
     render() {
       return (
