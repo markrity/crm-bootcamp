@@ -330,6 +330,7 @@ app.post('/addUser', async function(req, res){
       // TODO replace my mail with userMail
       try {
         resData = await mailgunHelper.sendMail('coheen1@gmail.com', 'coheen1@gmail.com', 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`${process.env.URL}/newUser/${mailToken}`}>Click to sign up.</a>`);
+        resData.user = {user_mail: userMail, user_id: result.insertId};
       } catch {
         resData.valid = false;
         resData.serverError = "serverError";
