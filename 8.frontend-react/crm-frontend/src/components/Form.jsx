@@ -49,7 +49,6 @@ function Form(props) {
         }
         setIsLoading(true);
         const responseData =  await props.submitHandle(data); //async - response from backend validation
-        setIsLoading(false);
         if(responseData){
             const invalidFields = responseData.errors;
             if(invalidFields){
@@ -64,6 +63,7 @@ function Form(props) {
             console.log("error map: ", props.errorMap);
             setMainError(props.errorMap[responseData.serverError]);
         }
+        setIsLoading(false);
         // set false
     };
 

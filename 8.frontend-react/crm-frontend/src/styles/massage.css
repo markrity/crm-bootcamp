@@ -1,0 +1,12 @@
+.massage-container {
+    font-size: 35px;
+    display: flex;
+    align-items: center;
+    height: 80%;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.massage-container .linkto {
+    font-size: 25px;
+}

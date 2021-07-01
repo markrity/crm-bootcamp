@@ -67,7 +67,7 @@ function ForgotPassword(props) {
                   submitHandle={forgot.submitFunc} 
                  // type={forgot.type}
                   errorMap={forgot.errorMap}
-                 // button= {forgot.buttonTitle}
+                 button= {forgot.buttonTitle}
                 //  buttonClass={forgot.buttonClass}
                   {...forgot}
               />

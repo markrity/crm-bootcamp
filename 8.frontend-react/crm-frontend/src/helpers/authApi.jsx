@@ -96,6 +96,17 @@ class AuthApi {
         return response.data;
     }
 
+    async checkTokenValidation(data){
+        const response = await axios.get(`${this.basicUrl}/tokenValidation`, {
+            headers: {
+                'authorization': data.mailToken
+            }
+        }).catch((err)=>{});
+        // TODO catch the error and check if response isn't null
+        console.log("the data from axios id: ", response.data);
+        return response.data;
+    }
+
     async getUsers(){
         const response = await axios.get(`${this.basicUrl}/getUsers`, 
         {
