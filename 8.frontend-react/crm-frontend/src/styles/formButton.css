@@ -1,0 +1,23 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat');
+
+
+
+.submit-button{
+    color: #fe5f55;
+    background-color: white;
+    padding: 5px 20px;
+    font-family: 'Montserrat', sans-serif;
+    border: solid 1px #fe5f55 ;
+    border-radius: 30px;
+    font-size: 18px;
+    outline: none;
+}
+
+.submit-button:hover, .submit-button:focus{
+    color: white;
+    background-color: #fa4639;
+    cursor: pointer;
+}
+
+
