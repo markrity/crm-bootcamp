@@ -1,22 +1,34 @@
 import React from 'react'
-import AuthForm from './AuthForm'
 
 const AuthFormHeader = ({ mode }) => {
 
     const view = () => {
-        if (mode === 'addNewBuisness') {
+        if (mode === 'New Buisness') {
+            return (<>
+                <h2>Wellcome To TheWeddingPlanners.com</h2>
+                Let’s get started with a few simple steps
+            </>
+            )
+        }
+        else if (mode === "Login") {
             return (
-                <div className="centered">
-                    <h1>Wellcome To TheWeddingPlanners.com</h1>
-                    <h2>Let’s get started with a few simple steps</h2>
+                <>
+                    <h2>Wellcome Back!</h2>
+                    Let’s Get To It
+                </>
+            )
+        }
+        else if (mode === "Forgot Password") {
+            return (
+                <div className='flex-col center-screen'>
+                    <h2>Enter Email</h2>
                 </div>
             )
         }
-        else {
+        else if (mode === "Change Password") {
             return (
-                <div className="centered">
-                    <h1>Wellcome Back!</h1>
-                    <h2>Let’s Get To It</h2>
+                <div className='flex-col center-screen'>
+                    <h2>Enter Your New Password</h2>
                 </div>
             )
         }
@@ -24,7 +36,7 @@ const AuthFormHeader = ({ mode }) => {
 
     return (
         <>
-            {view}
+            {view()}
         </>
     )
 

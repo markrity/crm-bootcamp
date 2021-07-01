@@ -10,7 +10,6 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
 }
 
 .centered{
@@ -18,23 +17,29 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  height: 100%;
 }
 
 form{
   margin-top: 18px;
         background-color: white;
-        border: 1px solid lightgrey;
         display:flex;
+        align-self: center;
         flex-direction: column;
-        width: 300px;
-        height: 300px;
+        width: 100%;
+        height: fit-content;
         border-radius: 5px;
         align-content: center;
-        margin-bottom: 100px;
+        align-items: center;
 }
 
+.left-side{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:85%;
 
+}
 
 h1{
   margin: unset;
@@ -50,14 +55,16 @@ display:inline-block;
 cursor:pointer;
 font-family: 'Dancing Script', cursive;
 font-size:17px;
-padding:9px 16px;
+padding:9px 30%;
 text-decoration:none;
   margin-left: 1em;
   align-self: center;
+  margin-bottom: 1em;
 }
 
 .clickable{
-  color:rgb(10, 10, 170)
+  color:rgb(10, 10, 170);
+  margin-left: 0.5em;
 }
 
 .clickable:hover{
@@ -65,17 +72,28 @@ text-decoration:none;
     cursor: pointer;
 }
 
-input{
-  margin-top: 3em ;
-  margin-bottom: 2em;
-  margin-left: 1rem;
-
+.custom-input{
+  display: flex;
+  flex-direction: column;
+  width: 50%;
 }
+
+input{
+  /* padding: 7px;
+  border-radius: 25px;
+  border:none;
+  border-bottom: 1px solid lightgray; */
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+}
+
 
 #root{
   min-height: 100vh;
 }
-
 
 #header-bar{
   overflow: hidden;
@@ -104,20 +122,19 @@ input{
   }
 
   .card{
+    -webkit-box-shadow: 1px ​-1px 29px 2px #000000;
+    box-shadow: 1px 1px 15px 5px #000000;
     padding: 0px;
     width: 784px;
     height: 535px;
     display: flex;
-    background-color: beige;
     border-radius: 12px;
     position: absolute;
-    top: 20%;
+    top: 18%;
   }
-
 
   .card-left-col{
     flex:2
-
   }
 
   .card-right-col{
@@ -125,4 +142,44 @@ input{
     background-image: url('./assets/card-left-grid.jpeg');
     opacity: 40%;
     background-size: cover;
+  }
+
+  .flex-row{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #divider{
+    background-image: url('./assets/divider.png');
+    background-size: contain;
+    min-height: 53px;
+    background-repeat: round;
+  }
+
+  /* #sided-hr{
+    flex:2;
+  }
+
+  #twp{
+    flex:1;
+    text-align: center;
+    font-family: 'Yellowtail', cursive;
+    font-size: larger;
+  }
+
+  .flex-col{
+    display: flex;
+    flex-direction: column;
+    font-size: xx-large;
+  } */
+
+  .center-screen{
+    align-self: center;
+    justify-content: center;
+  }
+
+  #err{
+  color: red;
+  
   }

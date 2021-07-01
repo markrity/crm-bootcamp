@@ -2,10 +2,13 @@ import React from 'react'
 
 
 
-const ClickableTxt = ({ txt, onClickFunc }) => {
+const ClickableTxt = ({ txt, clickabletxt, onClickFunc }) => {
     return (
-        <div className='clickable'>
-            <p onClick={onClickFunc}>{txt}</p>
+        <div className='flex-row'>
+            {txt}
+            <div className='clickable'>
+                <p onClick={onClickFunc}>{clickabletxt}</p>
+            </div>
         </div>
     )
 }

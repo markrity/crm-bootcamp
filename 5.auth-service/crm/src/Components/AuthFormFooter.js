@@ -1,22 +1,61 @@
 import React from 'react'
 import ClickableTxt from './ClickableTxt'
 import { useHistory } from 'react-router-dom';
-const labels = [`I Already Have An Account`, `I Dont Have An Account, Lets Signup`, 'Forgot My Password']
+import HR from './HR';
+const nonClickable = ['Already Have An Account? ', 'Dont Have An Account? ']
+const labels = [` Log in`, `Lets Signup`, 'Forgot My Password']
 
-const FormFooter = ({ isNewBuisness, setIsNewBuisness }) => {
+const FormFooter = ({ formData, setFormStage, formStage, mode }) => {
     const history = useHistory()
-    return (
-        <>{
-            isNewBuisness ?
-                <>
-                    <ClickableTxt txt={labels[0]} onClickFunc={() => setIsNewBuisness(!isNewBuisness)} />
+    const footerButtons = () => {
+        if (mode === 'New Buisness') {
+            return (
+                formStage === 0 ?
+                    <button type="submit">Add My Buisness</button> :
+                    <button type="submit">Register</button>
+            )
+        }
+        else if (mode === 'Login') {
+            return (
+                <button type="submit">Login</button>
+            )
+        }
+        else if (mode === 'Forgot Password') {
+            return (
+                <button type="submit">Send Email</button>
+            )
+        }
+        else if (mode === "Change Password") {
+            return (
+                <button type="submit">Submit New Password</button>
+            )
+        }
+    }
 
-                </> :
+    const footerText = () => {
+        if (mode === 'New Buisness') {
+            return (
+                formStage === 0 ? <ClickableTxt txt={nonClickable[0]} clickabletxt={labels[0]} onClickFunc={() => history.push('/login')} /> :
+                    <ClickableTxt clickabletxt="Back" onClickFunc={() => setFormStage(formStage - 1)} />
+            )
+        }
+        else if (mode === 'Login') {
+            return (
                 <>
-                    <ClickableTxt txt={isNewBuisness ? labels[0] : labels[1]} onClickFunc={() => setIsNewBuisness(!isNewBuisness)} />
-                    <ClickableTxt txt={labels[2]} onClickFunc={() => history.push('/resetPassword')} />
-                </>}
+                    <ClickableTxt txt={nonClickable[1]} clickabletxt={labels[1]} onClickFunc={() => history.push('/addNewBuisness')} />
+                    <ClickableTxt clickabletxt={labels[2]} onClickFunc={() => history.push('/ForgotPassword')} />
+                </>
+            )
+        }
+    }
+
+    return (
+        <>
+            {footerButtons()}
+            <HR />
+            {footerText()}
         </>
+
     )
 }
 
