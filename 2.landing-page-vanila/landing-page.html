@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed&amp;family=Six+Caps&amp;family=Montserrat&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/animation.css">
+
+    <title>Gradiz</title>
+    <script type="text/javascript" src="scripts/landing-page.js"></script>
+</head>
+
+<body>
+    <header class="landing-header">
+        <div id="logo">Gradiz</div>
+        <nav class="nav-menu">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Gallery</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="full-body" style="">
+        <div class="area">
+            <ul class="circles">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </div>
+
+        <div class="content-container">
+            <div class="main-content">
+                <h1>Professional Graphic<br>Design Service</h1>
+                <h2>Design anything you need</h2>
+            </div>
+            <div class="form-box">
+                <h4 class="leave-heading">Leave your details and we'll get back to you!</h4>
+                <form id="form" action="" onsubmit="return(validation());">
+                    <div>
+                        <!--                     <label for="name">Full name:</label> -->
+                        <input type="text" id="name" placeholder="Full Name" name="name" onclick="cancelError(this)">
+                    </div>
+                    <span id="error-name"></span>
+                    <div>
+                        <!--                     <label for="mail">Mail:</label> -->
+                        <input type="text" id="mail" name="mail" placeholder="Mail" onclick="cancelError(this)"> 
+                    </div>
+                    <span id="error-mail"></span>
+                    <div>
+                        <!--                     <label for="phone">Phone:</label> -->
+                        <input type="text" id="phone" name="phone" placeholder="Phone" onclick="cancelError(this)">
+                    </div>
+                    <span id="error-phone"></span>
+                    <span id="success"></span>
+                    <div class="button-container">
+                        <input class="submit-button" type="submit" value="Send Details">
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="under-content">
+            <h3 class="why-heading">Why choose Gradiz?</h3>
+            <div class="answers">
+                <div>
+                <div>
+                    Best<br>Prices
+                    <span class="answer-deco">$$$</span>
+                </div>
+            </div>
+            <div>
+                <div style="">
+                    Express Service
+                    <img class="icon" src="assets/fast_clock_orange.png">
+                </div>
+            </div>
+            <div>
+                <div>
+                    Expert Designers
+                    <img class="icon" src="assets/expert.png">
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

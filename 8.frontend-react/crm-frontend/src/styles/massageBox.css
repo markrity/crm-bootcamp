@@ -1,0 +1,22 @@
+.box-wrapper {
+    background-color: #bdd5ea;
+}
+
+.successful-operation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.successful-operation h2 {
+    text-align: center;
+}
+
+.form-box {
+    width: 100%;
+}
+
+.form-box hr {
+    margin-bottom: 15px;
+    margin-top: 0px;
+}

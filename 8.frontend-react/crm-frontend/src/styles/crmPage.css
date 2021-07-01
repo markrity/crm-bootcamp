@@ -1,0 +1,21 @@
+.crm-page {
+    width: 70%;
+    margin: auto;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 10px 30px;
+}
+
+.status-icon {
+    color: #63b67f;
+}
+
+.link-table {
+    color: #577399;
+}
+
+.add-user-box {
+    display: flex;
+    justify-content: flex-end;
+}
+
+

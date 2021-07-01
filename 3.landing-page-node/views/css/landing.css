@@ -1,0 +1,256 @@
+body {
+    padding: 0;
+    /* background-color: #114b5f; */
+    margin: 0;
+}
+
+.full-body {
+    position: relative;
+}
+
+#logo {
+    font-family: 'Six Caps', sans-serif;
+    font-size: 50px;
+}
+
+.landing-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f5cac3;
+    padding: 5px 3%;
+    text-transform: uppercase;
+}
+
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    font-size: 15px;
+    padding-inline-start: 0;
+    font-family: 'Montserrat', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #f45b69;
+    font-weight: bold;
+    font-size: 17px;
+}
+
+.nav-menu li:first-child {
+    margin-left: 0;
+}
+
+.nav-menu li {
+    margin-left: 35px;
+    padding: 4px;
+    transition:  all 0.2s ease-out;
+    box-shadow: 0 0 0 0 #222;
+}
+
+.nav-menu li:hover {
+    text-decoration: underline;
+    transform: translate(2px, -2px);
+}
+
+.content-container {
+    display: flex;
+    background-color: white;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 551px;
+    font-family: 'Montserrat';
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+form label {
+   display: block;
+   color: #00000073;
+}
+
+form div, form button {
+    margin-top: 31px;
+    font-size: 15px;
+}
+
+form {
+    position: relative;
+    top: 0px;
+    text-align: left;
+}
+
+.button-container {
+    text-align: center;
+}
+
+.main-content {
+    top: -20px;
+    text-align: center;
+    position: relative;
+}
+
+.main-content h1 {
+    font-size: 80px;
+    font-weight: bold;
+    color: #114b5f;
+    top: -10px;
+    font-family: auto;
+}
+
+.main-content h2 {
+    font-size: 30px;
+    color: #f45b69;
+    margin: 0;
+    font-family: 'Montserrat';
+}
+
+.submit-button:hover {
+    background-color: #dc4b58;
+    transform: translate(2px, -2px);
+}
+
+.under-content {
+    height: 504px;
+    background-color: #114b5f;
+    text-align: center;
+}
+
+.why-heading {
+    font-size: 45px;
+    margin: 0px;
+    padding-top: 50px;
+    color: #f5cac3;
+}
+
+.answers {
+    display: flex;
+    justify-content: space-around;
+    margin-right: 300px;
+    margin-left: 300px;
+    margin-top: 76px;
+    text-align: center;
+}
+
+.from-tick {
+    width: 60px;
+    height: 60px;
+    margin: 4%;
+    padding-bottom: 5%;
+}
+
+.answers .answer{
+    background-color: white;
+    border-radius: 50%;
+    font-size: 28px;
+    height: 200px;
+    margin: 0 20px;
+    color: #000000;
+    font-family: 'Montserrat';
+    width: 200px;
+    box-shadow: 0 10px 15px -6px #000000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    width: 60px;
+    height: 50px;
+}
+
+.answer-deco {
+    color: #f8aa23;
+    text-decoration: bold;
+}
+
+form input {
+  border: 0;
+  outline: 0;
+  width: 299px;
+  background: transparent;
+  border-bottom: 1px solid black;
+  margin-bottom: 5px;
+}
+
+.submit-button {
+    width: 55%;
+    background-color: #f35a69;
+    color: white;
+    border-radius: 2em;
+    padding: 0.3em 1.2em;
+    margin: 15px 0.3em -.3em 0;
+    box-sizing: border-box;
+    text-decoration: none;
+    font-family: 'Montserrat';
+    font-weight: 300;
+    transition: all 0.2s;
+    border: none;
+    font-size: 17px;
+    transition: all 0.2s ease-out;
+    box-shadow: 0 0 0 0 #222;
+}
+
+.form-box {
+    width: 311px;
+    text-align: center;
+    padding: 50px 40px;
+    border-radius: 10%;
+    background-color: #c7e0e4;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.leave-heading {
+    font-size: 25px;
+    margin: 0;
+    color: #114b5f;
+}
+
+form div input:placeholder-shown{
+    color: gray;
+    font-family: 'Montserrat';
+    font-size: 17px;
+}
+
+form div input{
+    color: black;
+    font-family: 'Montserrat';
+    font-size: 17px; 
+    font-weight: bold; 
+}
+
+@media only screen 
+  and (min-device-width: 320px) 
+  and (max-device-width: 480px) {
+    
+    .content-container {
+        flex-direction: column;
+        height: 61em;
+    }
+
+    .landing-header {
+      flex-direction: column;
+    }
+
+    #logo {
+      font-size: 70px;
+      margin-top: 30px
+    }
+
+    .landing-header a {
+      font-size: 25px;
+    }
+}
+
+
+input:-webkit-autofill,
+ textarea:-webkit-autofill,
+ select:-webkit-autofill { 
+     background-image: none !important;
+     font-family: 'Montserrat';
+     box-shadow: 0 0 0 1000px #c8dfe3 inset !important;
+ }
