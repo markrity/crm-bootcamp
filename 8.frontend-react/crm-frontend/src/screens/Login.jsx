@@ -71,7 +71,7 @@ function Login(props) {
                     button={login.buttonTitle}
                     buttonClass={login.buttonClass}
                 />
-                <hr></hr>
+                {/* <hr></hr> */}
                 <div className='links'>
                 <Link className='linkto' to="/signup">I don't have an account</Link>
                 <Link className='linkto' to="/forgotPassword">Forgot password?</Link>

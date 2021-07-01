@@ -71,7 +71,6 @@ function ForgotPassword(props) {
                 //  buttonClass={forgot.buttonClass}
                   {...forgot}
               />
-              <hr/>
               <div className='links'>
                   <Link className='linkto' to="/signup">Create new account</Link>
                   <Link className='linkto' to="/login">Back to login</Link>

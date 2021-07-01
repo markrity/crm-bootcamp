@@ -106,6 +106,7 @@ function Team(props){
         title: "Add user",
         errorMap: {
           'serverError': 'Try again later',
+          'userMailAlreadyExist': 'User mail already exist'
         },
         buttonTitle: 'Add',
         buttonClass: 'main-button',

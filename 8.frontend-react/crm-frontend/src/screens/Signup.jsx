@@ -106,8 +106,9 @@ function Signup(props) {
                 errorMap = {signup.errorMap}
                 button={signup.buttonTitle}
                 buttonClass={signup.buttonClass}
+                passwordError = 'Password must include 1-9 a-z A-Z and at least 8 characters'
                 />
-                {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
+                {props.type !== 'newUser' && <div><Link className='linkto' to="/login">I already have an account</Link></div>}
             </div>
         </div>
       </div>

@@ -110,6 +110,7 @@ function ResetPassword(props) {
                       errorMap = {reset.errorMap}
                       button={reset.buttonTitle}
                       buttonClass={reset.buttonClass}
+                      passwordError = 'Password must include 1-9 a-z A-Z and at least 8 characters'
                   /> 
                   }
               </div> : <Massage links={links} massage='This page is no longer available.'/>
