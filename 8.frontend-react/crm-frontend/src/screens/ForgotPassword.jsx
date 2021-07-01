@@ -62,13 +62,14 @@ function ForgotPassword(props) {
               : <div className='form-box'>
               <Form 
                   className='form-body'
-                  fields={forgot.fields} 
-                  title={forgot.title}
+                //  fields={forgot.fields} 
+                //  title={forgot.title}
                   submitHandle={forgot.submitFunc} 
-                  type={forgot.type}
+                 // type={forgot.type}
                   errorMap={forgot.errorMap}
-                  button= {forgot.buttonTitle}
-                  buttonClass={forgot.buttonClass}
+                 // button= {forgot.buttonTitle}
+                //  buttonClass={forgot.buttonClass}
+                  {...forgot}
               />
               <hr/>
               <div className='links'>

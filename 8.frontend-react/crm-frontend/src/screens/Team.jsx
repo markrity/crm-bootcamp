@@ -22,16 +22,19 @@ function Team(props){
     const [data, setData] = useState([]);
 
 
-    const submit = async (data) => {
-        const res = await authApi.newUser(data);
+    const submit = async (dataToSent) => {
+        const res = await authApi.newUser(dataToSent);
         console.log(res.valid);
         if(res.valid){
-          console.log("valid!");
+          const newData = [...data];
+          const userDetails = res.user;
+          userDetails.status = 'pending';
+          newData.push(res.user);
+          setData(newData);
           setIsModalOpen(false);
         } else {
           return res;
         }
-        console.log('add user');
     };
 
     
@@ -129,11 +132,13 @@ function Team(props){
         <div>
             <Header/>
             <div className='crm-page'>
-            <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
+            <PageTitle className='page-title' title='Team' description='Manage your team.'/>
             {/* <CrmButton content='add user' class='secondary-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/> */}
+            <div className='add-user-box'>
             <CrmButton content='Add User' buttonClass='main-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
+            </div>
             <Table columns={columns} data={data}/>
-            <Modal isOpen={isModalOpen} ariaHideApp={false} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
+            <Modal isOpen={isModalOpen} ariaHideApp={false} contentLabel='Add User' onRequestClose={closeAddUserWindow}  overlayClassName="Overlay" className='modal'>
                 <Form 
                     className='form-body'
                     fields={addUserForm.fields} 

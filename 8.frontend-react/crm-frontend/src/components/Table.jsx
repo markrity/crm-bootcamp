@@ -1,5 +1,6 @@
 import React from 'react';
 import {useTable} from 'react-table'
+import '../styles/table.css'
 
 function Table(props) {
 
@@ -16,10 +17,10 @@ function Table(props) {
     
     return (
         <div>
-            <table {...getTableProps()}>
+            <table className='table-container' id='table-container' {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
-          <tr {...headerGroup.getHeaderGroupProps()}>
+          <tr className='table-header' {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map(column => (
               <th {...column.getHeaderProps()}>{column.render("Header")}</th>
             ))}
@@ -30,7 +31,7 @@ function Table(props) {
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr {...row.getRowProps()}>
+            <tr className='card' {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}
