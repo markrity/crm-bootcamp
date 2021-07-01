@@ -13,8 +13,8 @@ function Table(props) {
         rows,
         prepareRow,
       } = useTable({columns, data});
-    
-    
+      
+
     return (
         <div>
             <table className='table-container' id='table-container' {...getTableProps()}>

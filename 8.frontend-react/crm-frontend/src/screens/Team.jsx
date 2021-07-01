@@ -127,7 +127,6 @@ function Team(props){
         setIsModalOpen(false);
     };
 
-
     return (
         <div>
             <Header/>

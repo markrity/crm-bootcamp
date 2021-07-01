@@ -67,6 +67,7 @@ function ResetPassword(props) {
             text: "Password",
             id: "password",
             error: false,
+            type: 'password',
             mainType: 'password'
           },
           // confirmPassword: {
