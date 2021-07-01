@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/formButton.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons'
 
 function CrmButton(props) {
 
     const iconsMap  = {
-        'plus': faPlus
+        'plus': faPlus,
+        'check': faCheck
     }
 
     return (

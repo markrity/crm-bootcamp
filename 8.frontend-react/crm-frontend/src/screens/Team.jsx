@@ -10,6 +10,8 @@ import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
 import Header from '../components/Header';
 import Table from '../components/Table';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 
 const authApi = new AuthApi();
@@ -36,10 +38,10 @@ function Team(props){
     function tableParser(table){
       if(table){
         const parseResult = table.map(item => {
+          const status =  !item.user_name ? 'pending' : 'active';
           return {
-            userName: item.user_name,
-            userMail: item.user_mail, 
-            userPhone: item.user_phone
+            ...item, 
+            status: status
           }
         });
         return parseResult;
@@ -51,34 +53,50 @@ function Team(props){
       const result = await authApi.getUsers();
       if(result && result.valid){
          return tableParser(result.usersList);
+        // return result.usersList;
+
+      
       }
    };
    
    
    useEffect(()=>{
      (async () => {
+       console.log('execute get users');
       const result = await getUsersList();
+      console.log(result);
       setData(result);
      })();
    }, [])
     
+  
    const columns = React.useMemo(
     () => [
       {
         Header: 'Full Name',
-        accessor: 'fullName', // accessor is the "key" in the data
+        accessor: 'user_name', // accessor is the "key" in the data
+
       },
       {
         Header: 'Mail',
-        accessor: 'mail',
+        accessor: 'user_mail',
+        Cell: ({value})  => <a className='link-table' href={`mailto:${value}`}>{value}</a>
       },
       {
         Header: 'Phone',
-        accessor: 'phone',
+        accessor: 'user_phone',
+        Cell: ({value})  => <a className='link-table' href={`tel:${value}`}>{value}</a>
       },
+      {
+        Header: 'Status',
+        accessor: 'status',
+        Cell: ({value})  => value == 'active' ? <FontAwesomeIcon className='status-icon' icon={faCheck} size='xs'/> : value
+      },
+
     ],
     []
   )
+
     const addUserForm = {
         submitFunc: submit,
         type: 'addUser',
@@ -114,8 +132,8 @@ function Team(props){
             <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
             {/* <CrmButton content='add user' class='secondary-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/> */}
             <CrmButton content='Add User' buttonClass='main-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
-            {/* <Table columns={columns} data={data}/> */}
-            <Modal isOpen={isModalOpen} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
+            <Table columns={columns} data={data}/>
+            <Modal isOpen={isModalOpen} ariaHideApp={false} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
                 <Form 
                     className='form-body'
                     fields={addUserForm.fields} 

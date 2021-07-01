@@ -2,6 +2,10 @@
 const axios = require('axios');
 
 class AuthApi {
+    constructor(){
+        this.basicUrl = 'http://rgb.com:8005';
+    }
+    
 
     logout(){
         axios.post('http://rgb.com:8005/logout', {}, 
@@ -19,7 +23,7 @@ class AuthApi {
     }
 
     async ping(){
-        const response = await axios.get('http://rgb.com:8005/ping', 
+        const response = await axios.get(`${this.basicUrl}/ping`, 
         {
             headers: {
                 'authorization': localStorage.getItem('jwtToken')
@@ -34,7 +38,7 @@ class AuthApi {
     }
 
     async signin(data) {
-        const response = await axios.post('http://rgb.com:8005/login', data);
+        const response = await axios.post(`${this.basicUrl}/login`, data);
         
         if(response){
             const token  = response.data.accessToken;
@@ -47,7 +51,7 @@ class AuthApi {
     }
 
     async signup(data){
-        const response = await axios.post('http://rgb.com:8005/signup', data);
+        const response = await axios.post(`${this.basicUrl}/signup`, data);
         if(response){
             const token  = response.data.accessToken;
             if(response.data.valid && token){
@@ -59,7 +63,7 @@ class AuthApi {
     }
 
     async editUser(data){
-        const response = await axios.post('http://rgb.com:8005/editUser', data);
+        const response = await axios.post(`${this.basicUrl}/editUser`, data);
         if(response){
             const token  = response.data.accessToken;
             if(response.data.valid && token){
@@ -73,7 +77,7 @@ class AuthApi {
 
     async newUser(data){
         const token = localStorage.getItem('jwtToken');
-        const response = await axios.post('http://rgb.com:8005/addUser', {token: token, fields: data});
+        const response = await axios.post(`${this.basicUrl}/addUser`, {token: token, fields: data});
         if(response) {
             return response.data;
         }
@@ -81,19 +85,19 @@ class AuthApi {
     }
 
     async forgotPassword(data){
-        const response = await axios.post('http://rgb.com:8005/forgotPassword', data);
+        const response = await axios.post(`${this.basicUrl}/forgotPassword`, data);
         // TODO catch the error and check if response isn't null
         return response.data;
     }
 
     async resetPassword(data){
-        const response = await axios.post('http://rgb.com:8005/resetPassword', data).catch((err)=>{});
+        const response = await axios.post(`${this.basicUrl}/resetPassword`, data).catch((err)=>{});
         // TODO catch the error and check if response isn't null
         return response.data;
     }
 
     async getUsers(){
-        const response = await axios.get('http://rgb.com:8005/getUsers', 
+        const response = await axios.get(`${this.basicUrl}/getUsers`, 
         {
             headers: {
                 'authorization': localStorage.getItem('jwtToken')
