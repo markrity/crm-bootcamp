@@ -26,7 +26,7 @@ class SessionHelper {
         this.openSessions.set(this.sessionCounter++, user);
         const token = jwt.sign(user, this.accessTokenSecret, {
           "algorithm": "HS256",
-          expiresIn: 86400 * 10 // expires in 10 days
+          // expiresIn: 86400 *  // expires in 10 days
         });
         return token;
     }
@@ -42,7 +42,8 @@ class SessionHelper {
     createToken(data, expiresTime){
       const token = jwt.sign(data, this.accessTokenSecret, {
         "algorithm": "HS256",
-        expiresIn: 86400  // expires in 24 hours
+        // TODO 
+        expiresIn: expiresTime// expires in 24 hours
       });
 
       return token;
@@ -52,6 +53,7 @@ class SessionHelper {
       return jwt.verify(token, this.accessTokenSecret, (err, result) => {
         if (err){
           console.log("not verified");
+          console.log("returning null from verify");
           return null;
         }
         console.log("verified!");

@@ -158,6 +158,18 @@ function authMiddleware(req, res, next){
   }
 }
 
+app.get('/tokenValidation',  function(req, res){
+  const userData = sessionHelper.verifyToken(req.headers.authorization);
+  console.log("data", userData);
+  if(userData){
+    console.log('returning true');
+    res.send({valid: true});
+  } else {
+    console.log('returning false');
+      res.send({valid: false});
+  }
+});
+
 /**
  * Sets the response to true.
  */
@@ -177,7 +189,7 @@ app.post('/forgotPassword', async function (req, res) {
   if(!resData.valid){
     res.send(resData);
   }
-  console.log('here1');
+  
   const userMail = req.body.mail.value;
   if(userMail){
       // Check if the mail is in the db
@@ -188,7 +200,6 @@ app.post('/forgotPassword', async function (req, res) {
       if(!result){
         resData.valid = false;
         resData.serverError = "serverError";
-        console.log('here2');
         res.send(resData);
         return;
       };
@@ -198,7 +209,7 @@ app.post('/forgotPassword', async function (req, res) {
         res.send(resData);
         return;
       }
-      console.log('here3');
+
       // User exist
       resData.valid = true;
       // Encoding the mail address
@@ -419,16 +430,3 @@ app.get('/getUsers', authMiddleware, async function(req, res){
 });
 
 
-
-/**
- * 
- {
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Inl1dmFsIGNvaGVuIiwidXNlcklkIjo2NywiYWNjb3VudElkIjoxMTIsInNlc3Npb25faWQiOjAsImlhdCI6MTYyNDk3NzM4OCwiZXhwIjoxNjI1ODQxMzg4fQ.M4CLz107Pfery9dnBeLp_W23OBIQdK2OEEjVA93aVOo",
-    "fields": {
-        "mail": {
-            "type": "mail",
-            "value" : "yuval.halamish@workiz.com"
-        }
-    }
-}
- */
