@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
 
 const AuthForm = ({ mode, setMode, formFields }) => {
-    let { token } = useParams();
+    const token = new URLSearchParams(window.location.search).get("token");
     const dispatch = useDispatch()
     const history = useHistory()
     const [formStage, setFormStage] = useState(0)
@@ -72,12 +72,12 @@ const AuthForm = ({ mode, setMode, formFields }) => {
             case 'Login':
                 dispatch(login(form))
                 break
-            case 'Forgot Password':
+            case 'Reset Password':
                 dispatch(forgotPassword(form))
                 break
             case 'Change Password':
                 dispatch(changePassword({ form, token }))
-                history.push('/login')
+                history.push('/auth/login')
                 break
             default:
                 return

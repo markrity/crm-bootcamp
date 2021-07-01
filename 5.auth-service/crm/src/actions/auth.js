@@ -9,6 +9,7 @@ import {
 } from './types';
 import { Redirect } from 'react-router-dom';
 
+
 axios.defaults.withCredentials = true
 
 
@@ -20,7 +21,6 @@ export const login = (formData) => async dispatch => {
     console.log(body)
     try {
         const res = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
-
         dispatch({
             type: LOGIN_SUCCESS,
             payload: res.data
@@ -81,7 +81,8 @@ export const addBuisness = (formData) => async dispatch => {
 
 export const forgotPassword = (formData) => async dispatch => {
     try {
-        await axios.post(`http://localhost:8000/auth/resetPassword/`, { email: formData.email.value }, { withCredentials: true });
+        console.log("Sent resetPassword")
+        await axios.post(`http://localhost:8000/auth/resetPassword`, { email: formData.email.value }, { withCredentials: true });
         dispatch({
             type: PASSWORD_RESET_SUCCESS
         });
@@ -104,9 +105,10 @@ export const addNewEmployee = (formData) => {
 
 
 export const changePassword = (formData) => async dispatch => {
+    console.log(formData)
     const { form, token } = formData
     try {
-        await axios.post(`http://localhost:8000/auth/resetPassword/`, { password: form.password.value, token }, { withCredentials: true });
+        await axios.post(`http://localhost:8000/auth/changePassword`, { password: form.password.value, token }, { withCredentials: true });
     }
     catch {
         console.log("Couldnt change password")
@@ -123,3 +125,5 @@ export const logout = () => async dispatch => {
         type: LOGOUT
     });
 };
+
+

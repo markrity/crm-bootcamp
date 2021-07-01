@@ -11,11 +11,7 @@ const HomePage = () => {
     return (
         <>
             <Header />
-            <div className="centered">
-                {isOnline && <ClickableTxt clickabletxt="Logout" onClickFunc={() => dispatch(logout())} />}
-            </div>
         </>
     )
 }
-
 export default HomePage

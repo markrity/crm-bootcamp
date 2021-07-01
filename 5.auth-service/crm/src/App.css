@@ -181,5 +181,38 @@ input{
 
   #err{
   color: red;
-  
+
   }
+
+  .nav-list{
+
+    display: flex;
+    align-self: center;
+
+  }
+
+  ul
+{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: black 1px;
+    align-self: center;
+}
+
+li{
+  font-size: medium;
+    padding-inline-end: 4em;
+    font-size: 20px;
+}
+
+#clickable:hover{
+  cursor: pointer;
+  color: rgb(155, 105, 105);
+}
+.space-between{
+display:flex;
+flex-direction: row;
+  
+}

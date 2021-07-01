@@ -18,7 +18,7 @@ const AuthFormHeader = ({ mode }) => {
                 </>
             )
         }
-        else if (mode === "Forgot Password") {
+        else if (mode === "Reset Password") {
             return (
                 <div className='flex-col center-screen'>
                     <h2>Enter Email</h2>

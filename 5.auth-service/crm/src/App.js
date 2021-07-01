@@ -3,6 +3,7 @@ import AddNewBuisness from './Screens/addNewBuisness';
 import additionInfo from './Screens/additionalInfo';
 import resetPassword from './Screens/resetPassword';
 import setNewPassword from './Screens/setNewPassword'
+import Employees from './Screens/employees';
 import Login from './Screens/login'
 import { useDispatch, useSelector } from 'react-redux';
 import { checkAuth } from './actions/auth'
@@ -15,12 +16,12 @@ const App = () => {
   const isOnline = useSelector(state => state.auth.isOnline)
   const history = useHistory();
   useEffect(() => {
-    // dispatch(checkAuth())
+    dispatch(checkAuth())
   }, [history])
-  // useEffect(() => {
-  //   if (!isOnline && window.location.pathname.split('/')[1] !== 'auth')
-  //     history.push('auth/login')
-  // }, [isOnline, history])
+  useEffect(() => {
+    if (!isOnline && window.location.pathname.split('/')[1] !== 'auth')
+      history.push('auth/login')
+  }, [isOnline, history])
   return (
     <Switch>
       <Route exact path='/' component={homePage} />
@@ -29,6 +30,7 @@ const App = () => {
       <Route exact path='/auth/additionalInfo' component={additionInfo} />
       <Route exact path='/auth/resetPassword' component={resetPassword} />
       <Route exact path='/auth/resetPassword/valid' component={setNewPassword} />
+      <Route exact path='/employees' component={Employees} />
       <Route>
         <h1>NOT FOUND!</h1>
       </Route>
