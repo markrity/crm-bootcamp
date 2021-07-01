@@ -1,14 +1,16 @@
 import mysql from 'mysql';
 import cors from 'cors';
+import dotenv from 'dotenv';
+dotenv.config();
 
 class SqlHelper {
 
 constructor(){
     this.connection = mysql.createConnection({
-        host: 'localhost',
-        user: 'root',
-        password: "",
-        database: 'landingdb'
+      host: process.env.HOST,
+      user: process.env.ROOT,
+      database: process.env.DB,
+      password: ''
       });
       
       this.connectionValid = false;

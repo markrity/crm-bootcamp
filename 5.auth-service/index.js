@@ -4,12 +4,14 @@ import cors from 'cors';
 import SessionHelper from './helpers/sessionHelper.js';
 import md5 from 'md5';
 import validate from './helpers/validationHelper.js';
+import MailgunHelper from './helpers/mailgunHelper.js'
 import dotenv from 'dotenv';
 import MailGun from 'mailgun-js';
 
 const app = express();
 const sessionHelper = new SessionHelper();
 const sqlHelper = new SqlHelper();
+const mailgunHelper = new MailgunHelper();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
@@ -175,7 +177,7 @@ app.post('/forgotPassword', async function (req, res) {
   if(!resData.valid){
     res.send(resData);
   }
-
+  console.log('here1');
   const userMail = req.body.mail.value;
   if(userMail){
       // Check if the mail is in the db
@@ -186,6 +188,7 @@ app.post('/forgotPassword', async function (req, res) {
       if(!result){
         resData.valid = false;
         resData.serverError = "serverError";
+        console.log('here2');
         res.send(resData);
         return;
       };
@@ -195,18 +198,19 @@ app.post('/forgotPassword', async function (req, res) {
         res.send(resData);
         return;
       }
-
+      console.log('here3');
       // User exist
       resData.valid = true;
       // Encoding the mail address
       let tokenBody = {userMail: userMail};
-      const mailToken = sessionHelper.createToken(tokenBody);
+      const mailToken = sessionHelper.createToken(tokenBody, (86400 / 24) * 4);
       try {
-        resData = await sendMail('coheen1@gmail.com', userMail, 'RGB - Reset password', `<a href=${`http://localhost:3000/resetPassword/${mailToken}`}>Click to reset your password.</a>`);
+        resData = await mailgunHelper.sendMail('coheen1@gmail.com', userMail, 'RGB - Reset password', `<a href=${`${process.env.URL}/resetPassword/${mailToken}`}>Click to reset your password.</a>`);
       } catch {
         resData.valid = false;
         resData.serverError = "serverError";
       }
+      console.log('here4');
       res.json(resData);
 
   //  Mail is undefined
@@ -229,8 +233,9 @@ app.post('/resetPassword', async function(req, res){
   if(!resData.valid){
     res.send(resData);
   }
-  
+  console.log("the token is:", mailToken);
   const data =  sessionHelper.verifyToken(mailToken);
+  console.log("the data is invalid", data);
   // Jwt token invalid
   if(!data){
     resData.valid = false;
@@ -320,11 +325,11 @@ app.post('/addUser', async function(req, res){
       }
       
       // Encoding the mail address and the account id 
-      const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId, userId: result.insertId});
+      const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId, userId: result.insertId}, 86400 * 10);
       // send the invite mail to the user
       // TODO replace my mail with userMail
       try {
-        resData = await sendMail('coheen1@gmail.com', 'coheen1@gmail.com', 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`http://localhost:3000/newUser/${mailToken}`}>Click to sign up.</a>`);
+        resData = await mailgunHelper.sendMail('coheen1@gmail.com', 'coheen1@gmail.com', 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`${process.env.URL}/newUser/${mailToken}`}>Click to sign up.</a>`);
       } catch {
         resData.valid = false;
         resData.serverError = "serverError";
@@ -338,30 +343,6 @@ app.post('/addUser', async function(req, res){
       res.send(resData);
     }
 });
-
-
-async function sendMail(from, to, subject, html){
-  const mailGun = new MailGun({
-    apiKey: process.env.API_KEY,
-    domain: process.env.DOMAIN,
-  });
-  var data = {
-    from: from,
-    to: to,
-    subject: subject,
-    html: html,
-  };
-  // Sending the data to the specify mail
-  
-  return new Promise((resolve, reject)=>{
-    mailGun.messages().send(data, function (err, body) {
-      if (err) {
-        reject('failed to send email');
-      } 
-      resolve({valid: true})
-    });
-  });
-}
 
 
 app.post('/editUser', async function(req, res){
@@ -401,7 +382,7 @@ app.post('/editUser', async function(req, res){
     const adminMail = result[0].first_user_mail;
 
     try {
-      resData = await sendMail('coheen1@gmail.com', adminMail, 'RGB - Invitation accepted', `The invitation you sent to <b>${fields.name.value}</b> was accepted.`);
+      resData = await mailgunHelper.sendMail('coheen1@gmail.com', adminMail, 'RGB - Invitation accepted', `The invitation you sent to <b>${fields.name.value}</b> was accepted.`);
     } catch {}
 
     // userMail

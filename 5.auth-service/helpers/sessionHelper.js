@@ -39,10 +39,12 @@ class SessionHelper {
         return this.openSessions.has(userData.sessionId);
     }
 
-    createToken(data){
+    createToken(data, expiresTime){
       const token = jwt.sign(data, this.accessTokenSecret, {
+        "algorithm": "HS256",
         expiresIn: 86400  // expires in 24 hours
       });
+
       return token;
     }
 
