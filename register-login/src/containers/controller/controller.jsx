@@ -27,9 +27,7 @@ class Controller extends React.Component {
     
 
     render() {
-      console.log(this.props);
       return (
-        
         <body> 
         <div className="topnav">
           <div className="topnav_text">
@@ -43,7 +41,9 @@ class Controller extends React.Component {
         </div>
         <div className="test_login">
         <div className="para">
-          <h1>Help you beautify the world.</h1>
+
+          <img src="https://image.freepik.com/free-photo/beautician-woman-clinic_23-2148878877.jpg"  width="626" height="526"></img>
+          <h1>Learn how manage your clinic easier.</h1>
           </div> 
 
         <div className="controller">

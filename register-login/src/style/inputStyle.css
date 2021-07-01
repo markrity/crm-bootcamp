@@ -59,10 +59,12 @@ font-size: smaller;
 }
 
 .para {
-    margin-bottom: 9%;
+    margin-bottom: 2%; 
 }
 
 
 h1 {
-    font-size: xxx-large;
+    font-size: 35px;
+    margin-left: 1vh;
+    
 }

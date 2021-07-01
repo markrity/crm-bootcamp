@@ -13,7 +13,9 @@ body {
   
   /* font-family: poppins; */
 }
-
+img {
+  border: 5px solid #F9DCC4;
+}
 
 /* .page {
   display: flex;
