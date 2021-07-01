@@ -5,8 +5,6 @@ input {
     height: 40px;
     font-size: 14px;
     outline-color: #FEC89A;
-    
-    /* box-shadow: inset 6px 6px 6px #cbced1, inset -6px -6px 6px white; */
     }
 
 .header {
@@ -18,8 +16,12 @@ input {
     text-align: center;
 }
 
+.error {
+    color: red;
+}
 
-label, input, button {
+
+label, input {
     display: block;
     width: 100%;
     padding: 0;
@@ -28,28 +30,15 @@ label, input, button {
 }
 
 
-.button {
-margin-top: 20px;
-background: #FEC89A;
-height: 40px;
-/* cursor: pointer; */
-font-weight: 900;
-box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
-transition: 0.5s;
-font-size: large;
-cursor: pointer;
+
+
+.p_link {
+    cursor: pointer;
 }
 
-
-
-button:hover {
-box-shadow: none;
-}
 
 .divController {
-/* border-bottom: groove; */
 margin-top: 20px;
-/* margin-left: 150px; */
 text-align: center;
 }
 
@@ -64,14 +53,22 @@ padding-left: 15px;
     
 .label {
 color: #000000;
-/* font-family: sans-serif; */
-/* left: 20px; */
-/* line-height: 14px; */
-/* pointer-events: none; */
 position: relative;
-/* transform-origin: 0 50%;
-transition: transform 200ms, color 200ms; */
 top: 20px;
 font-size: smaller;
-/* text-align: left; */
+}
+
+.para {
+    margin-bottom: 3%; 
+}
+
+
+h1 {
+    font-size: 35px;
+    margin-left: 1vh;
+    
+}
+
+.input {
+    margin-bottom: 0.5vh;
 }

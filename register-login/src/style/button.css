@@ -1,0 +1,45 @@
+.button {
+    margin-top: 20px;
+    margin-bottom: 1vh;
+    background: #FEC89A;
+    height: 40px;
+    font-weight: 900;
+    box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
+    transition: 0.5s;
+    font-size: large;
+    cursor: pointer;
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+ }
+
+
+button:hover {
+    box-shadow: none;
+}
+
+
+.buttons {
+    margin-right: 3%;
+    margin-bottom: 20vh;
+}
+
+.button1 {
+    margin-right: 5vh;
+    width: 15vh;
+    height: 5vh;
+    cursor: pointer;
+   
+    background-color: #FEC89A;
+    /* font-weight: bolder; */
+    font-size: 20px;
+    border: none;
+    font-weight: 900;
+  
+    /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */
+}
+        
+
+
