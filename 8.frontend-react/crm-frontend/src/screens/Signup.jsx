@@ -6,6 +6,7 @@ import '../styles/signUp.css';
 import {
     // BrowserRouter as Router,
     Link,
+    useParams,
     withRouter
   } from "react-router-dom";
 const authApi = new AuthApi();
@@ -14,9 +15,15 @@ const authApi = new AuthApi();
 
 function Signup(props) {
 
-  const submit = async (data) => {
-
-    const res = await authApi.signup(data);
+  const {token} = useParams();
+  const submit = async (formData) => {
+    console.log(formData);
+    let res;
+    if(props.type == 'newUser'){
+      res =  await authApi.editUser({fields: formData, token: token});
+    } else {
+      res = await authApi.signup(formData);
+    }
     console.log(res.valid);
     if(res.valid){
       console.log("signup is done!!",res.valid);
@@ -36,6 +43,7 @@ function Signup(props) {
           'serverError': 'Try again later',
           'userAlreadyExist': 'User already exist'
         },
+        buttonClass: 'main-button',
         fields: {
           name: {
             text: "Full Name",
@@ -74,29 +82,34 @@ function Signup(props) {
           }
         }
       }
+
+    if(props.type == 'newUser'){
+      delete signup.fields.mail;
+      delete signup.fields.business;
+    }
     
 
     return (
       <div className='wrapper-container'>
-      <div className='wrapper'>
-          <div className='text-container'> 
-          <Logo size='large'/>
-            <h2>Be the best graphic designer you can</h2>
-          </div>
-          <div className='form-container'>
-              <Form 
-              className='form-body'
-              fields={signup.fields} 
-              title={signup.title}
-              submitHandle={signup.submitFunc} 
-              type={signup.type}
-              errorMap = {signup.errorMap}
-              button={signup.buttonTitle}
-              />
-              <hr></hr>
-              <Link className='linkto' to="/login">I already have an account</Link>
-          </div>
-      </div>
+        <div className='wrapper'>
+            <div className='text-container'> 
+            <Logo size='large'/>
+              <h2>Be the best graphic designer you can</h2>
+            </div>
+            <div className='form-container'>
+                <Form 
+                className='form-body'
+                fields={signup.fields} 
+                title={signup.title}
+                submitHandle={signup.submitFunc} 
+                type={signup.type}
+                errorMap = {signup.errorMap}
+                button={signup.buttonTitle}
+                buttonClass={signup.buttonClass}
+                />
+                {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
+            </div>
+        </div>
       </div>
     );
 }

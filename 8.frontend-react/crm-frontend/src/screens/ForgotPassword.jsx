@@ -34,6 +34,7 @@ function ForgotPassword(props) {
           'serverError': 'Try again later',
         },
         buttonTitle: 'Reset My Password',
+        buttonClass: 'main-button',
         fields: {
           mail: {
             text: "Enter Your Email",
@@ -61,12 +62,14 @@ function ForgotPassword(props) {
               : <div className='form-box'>
               <Form 
                   className='form-body'
-                  fields={forgot.fields} 
-                  title={forgot.title}
+                //  fields={forgot.fields} 
+                //  title={forgot.title}
                   submitHandle={forgot.submitFunc} 
-                  type={forgot.type}
+                 // type={forgot.type}
                   errorMap={forgot.errorMap}
-                  button= {forgot.buttonTitle}
+                 button= {forgot.buttonTitle}
+                //  buttonClass={forgot.buttonClass}
+                  {...forgot}
               />
               <hr/>
               <div className='links'>

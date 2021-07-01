@@ -30,17 +30,17 @@ function Form(props) {
         let validationRes = true;
 
         for(let key in fields){
-            data[`${key}`] = {}
-            data[`${key}`].value = fields[`${key}`].value;
-            data[`${key}`].type = fields[`${key}`].mainType;
+            data[key] = {}
+            data[key].value = fields[key].value;
+            data[key].type = fields[key].mainType;
 
-            let isValid = validate(fields[`${key}`].mainType, true, fields[`${key}`].value);
+            let isValid = validate(fields[key].mainType, true, fields[key].value);
             console.log(key, " is: ", isValid);
             if(!isValid){
-                fieldsTmp[`${key}`].error = true;
+                fieldsTmp[key].error = true;
                 validationRes = false;
             } else {
-                fieldsTmp[`${key}`].error = false;
+                fieldsTmp[key].error = false;
             }
         }
         if(!validationRes){
@@ -49,34 +49,40 @@ function Form(props) {
         }
         setIsLoading(true);
         const responseData =  await props.submitHandle(data); //async - response from backend validation
-        setIsLoading(false);
         if(responseData){
             const invalidFields = responseData.errors;
             if(invalidFields){
                 for(let field in fieldsTmp){
-                    fieldsTmp[`${field}`].error = false;
+                    fieldsTmp[field].error = false;
                 }
                 for(let errorField of invalidFields){
-                    fieldsTmp[`${errorField}`].error = true;
+                    fieldsTmp[errorField].error = true;
                 }
                 setFields(fieldsTmp);
             }
             console.log("error map: ", props.errorMap);
             setMainError(props.errorMap[responseData.serverError]);
         }
+        setIsLoading(false);
         // set false
     };
 
     const fieldsComponents = [];
     for (let fieldKey in fields){
-        const content = fields[`${fieldKey}`];
+        const content = fields[fieldKey];
         let error;
         if (content.error){
             error = `Invalid ${content.id}`;
         }
         
-        fieldsComponents.push(<FormField errorText={error} text={content.text} type={content.type} value={content.value || ''} key={`${props.type}${content.id}`} callback={(e)=> setValue(fieldKey, e.target.value)}/>);
-        
+        fieldsComponents.push(<FormField 
+            errorText={error} 
+            text={content.text} 
+            type={content.type} 
+            value={content.value || ''} 
+            key={`${props.type}${content.id}`} 
+            callback={(e)=> setValue(fieldKey, e.target.value)}
+            />);
     }
 
     return (
@@ -85,7 +91,7 @@ function Form(props) {
             <h2>{props.title}</h2>
             {fieldsComponents}
             <div className='button-wrapper'>
-                <CrmButton content={props.button} isLoading={isLoading} callback={()=> submit()}/>
+                <CrmButton content={props.button} buttonClass={props.buttonClass} isLoading={isLoading} callback={()=> submit()}/>
             </div>
             <div className='server-error'>
             <span>{mainError}</span>

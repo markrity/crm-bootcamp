@@ -4,12 +4,14 @@ import cors from 'cors';
 import SessionHelper from './helpers/sessionHelper.js';
 import md5 from 'md5';
 import validate from './helpers/validationHelper.js';
+import MailgunHelper from './helpers/mailgunHelper.js'
 import dotenv from 'dotenv';
 import MailGun from 'mailgun-js';
 
 const app = express();
 const sessionHelper = new SessionHelper();
 const sqlHelper = new SqlHelper();
+const mailgunHelper = new MailgunHelper();
 dotenv.config();
 app.use(cors());
 app.use(express.json());
@@ -67,10 +69,8 @@ app.post('/signup', async function (req, res) {
     }
 
     let account_id_value = result.insertId;
-
     // insert the user to the db
-    var sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', ${body.phone.value});`;
-
+    sql = `INSERT INTO users (account_id, user_name, user_password, user_mail, user_phone) VALUES ('${account_id_value}', '${body.name.value}', '${encodePassword(body.password.value)}', '${body.mail.value}', '${body.phone.value}');`;
     result = await sqlHelper.insert(sql).catch((err)=>{});
     if(!result){
       resData.valid = false;
@@ -115,7 +115,6 @@ app.post('/login', async function (req, res) {
   } else {
     resData.valid = false;
     resData.serverError = 'IncorrectMailOrPassword';
-    console.log('here in incorrect mail');
   }
   res.send(resData);
 });
@@ -150,15 +149,26 @@ function encodePassword(password){
  */
 function authMiddleware(req, res, next){
   const userData = sessionHelper.verifySession(req.headers.authorization);
-  console.log(userData)
   if(userData){
+    req.user = userData;
     next()
   } else {
-      console.log("returns false");
       // TODO return something else
       return res.send(false);
   }
 }
+
+app.get('/tokenValidation',  function(req, res){
+  const userData = sessionHelper.verifyToken(req.headers.authorization);
+  console.log("data", userData);
+  if(userData){
+    console.log('returning true');
+    res.send({valid: true});
+  } else {
+    console.log('returning false');
+      res.send({valid: false});
+  }
+});
 
 /**
  * Sets the response to true.
@@ -179,7 +189,7 @@ app.post('/forgotPassword', async function (req, res) {
   if(!resData.valid){
     res.send(resData);
   }
-
+  
   const userMail = req.body.mail.value;
   if(userMail){
       // Check if the mail is in the db
@@ -204,14 +214,14 @@ app.post('/forgotPassword', async function (req, res) {
       resData.valid = true;
       // Encoding the mail address
       let tokenBody = {userMail: userMail};
-      const mailToken = sessionHelper.createToken(tokenBody);
-      console.log("this is the mail link to reset the password: ", `http://localhost:3000/resetPassword/${mailToken}`);
+      const mailToken = sessionHelper.createToken(tokenBody, (86400 / 24) * 4);
       try {
-        resData = await sendMail('coheen1@gmail.com', userMail, 'RGB - Reset password', `<a href=${`http://localhost:3000/resetPassword/${mailToken}`}>Click to reset your password.</a>`);
+        resData = await mailgunHelper.sendMail('coheen1@gmail.com', userMail, 'RGB - Reset password', `<a href=${`${process.env.URL}/resetPassword/${mailToken}`}>Click to reset your password.</a>`);
       } catch {
         resData.valid = false;
         resData.serverError = "serverError";
       }
+      console.log('here4');
       res.json(resData);
 
   //  Mail is undefined
@@ -234,8 +244,9 @@ app.post('/resetPassword', async function(req, res){
   if(!resData.valid){
     res.send(resData);
   }
-  
+  console.log("the token is:", mailToken);
   const data =  sessionHelper.verifyToken(mailToken);
+  console.log("the data is invalid", data);
   // Jwt token invalid
   if(!data){
     resData.valid = false;
@@ -258,7 +269,6 @@ app.post('/resetPassword', async function(req, res){
     return;
   }
   // The password has changed
-  console.log(`password changed to ${encodePassword(password)}`);
   resData.valid = true;
   res.send(resData);
 });
@@ -279,73 +289,144 @@ function validateAll(fields){
   return resData;
 }
 
-// app.post('/addUser', async function(req, res){
-//   let resData = {valid: true, errors: [], serverError: ''};
-//   const fields = req.body.fields;
-//   const token = req.body.token;
+app.post('/addUser', async function(req, res){
+  let resData = {valid: true, errors: [], serverError: ''};
+  const fields = req.body.fields;
+  const token = req.body.token;
 
-//   // fields validations
-//   resData =  validateAll(fields);
-//   if(!resData.valid){
-//     res.send(resData);
-//     return;
-//   }
+  // fields validations
+  resData =  validateAll(fields);
+  if(!resData.valid){
+    res.send(resData);
+    return;
+  }
 
-//   const userMail = fields.mail.value;
-//   if(userMail){
+  const userMail = fields.mail.value;
+  const tokenBody = sessionHelper.verifySession(token);
+  if(userMail && tokenBody){
 
-//     // Verify the token and extract the account id from it
-//       const tokenBody = sessionHelper.verifySession(token);
-//       if(!tokenBody){
-//         resData.valid = false;
-//         resData.serverError = 'serverError';
-//         res.send(resData);
-//         return;
-//       }
+      // Check if the user is already in the db
+      var sql = `SELECT * FROM users WHERE user_mail = '${userMail}'`;
+      let result = await sqlHelper.select(sql).catch((err)=>{});
 
-//       // Encoding the mail address and the account id 
-//       const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId});
+      // The query failed
+      if(!result){
+        resData.valid = false;
+        resData.serverError = "serverError";
+        res.send(resData);
+        return;
+      };
 
-//       // Insert the new user to the db
+      // User mail is already in the db
+      if(result.length > 0){
+        resData.valid = false;
+        resData.serverError = "userMailAlreadyExist";
+        res.send(resData);
+        return;
+      }
 
+      // New user - insert the new user to the db
+      sql = `INSERT INTO users (account_id, user_mail) VALUES ('${tokenBody.accountId}', '${userMail}');`;
+      result = await sqlHelper.insert(sql).catch((err)=>{});
+      if(!result){
+        resData.valid = false;
+        resData.serverError = 'serverError';
+        res.send(resData);
+        return;
+      }
       
-//       // send the invite mail to the user
-//       try {
-//         resData = await sendMail('coheen1@gmail.com', userMail, 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`http://localhost:3000/bla/${mailToken}`}>Click to sign up.</a>`);
-//       } catch {
-//         resData.valid = false;
-//         resData.serverError = "serverError";
-//       }
-//       res.json(resData);
+      // Encoding the mail address and the account id 
+      const mailToken = sessionHelper.createToken({userMail: userMail, accountId: tokenBody.accountId, userId: result.insertId}, 86400 * 10);
+      // send the invite mail to the user
+      // TODO replace my mail with userMail
+      try {
+        resData = await mailgunHelper.sendMail('coheen1@gmail.com', 'coheen1@gmail.com', 'RGB - Invitation', `You have received an invitation to join RGB! <br/> <a href=${`${process.env.URL}/newUser/${mailToken}`}>Click to sign up.</a>`);
+        resData.user = {user_mail: userMail, user_id: result.insertId};
+      } catch {
+        resData.valid = false;
+        resData.serverError = "serverError";
+      }
+      res.json(resData);
 
-//   //  Mail is undefined
-//   } else {
-//       resData.valid = false;
-//       resData.serverError = "serverError";
-//       res.send(resData);
-//     }
-// });
+  //  Mail is undefined
+  } else {
+      resData.valid = false;
+      resData.serverError = "serverError";
+      res.send(resData);
+    }
+});
 
 
-async function sendMail(from, to, subject, html){
-  const mailGun = new MailGun({
-    apiKey: process.env.API_KEY,
-    domain: process.env.DOMAIN,
-  });
-  var data = {
-    from: from,
-    to: to,
-    subject: subject,
-    html: html,
+app.post('/editUser', async function(req, res){
+  let resData = {valid: true, errors: [], serverError: ''};
+  const {fields, token} = req.body;
+
+  // fields validations
+  resData =  validateAll(fields);
+  if(!resData.valid){
+    res.send(resData);
+    return;
+  }
+
+  const tokenBody = sessionHelper.verifyToken(token);
+  if(tokenBody) {
+    const {accountId, userId} = tokenBody;
+    
+    // insert the account to the db
+    let sql = `UPDATE users SET user_name = '${fields.name.value}', user_password = '${encodePassword(fields.password.value)}', user_phone = '${fields.phone.value}' WHERE user_id = ${userId};`;
+    let result = await sqlHelper.update(sql).catch((err)=>{});
+    if(!result){
+      resData.valid = false;
+      resData.serverError = 'serverError';
+      res.send(resData);
+      return;
+    }
+
+    sql = `SELECT * FROM accounts WHERE account_id = '${accountId}'`;
+    result = await sqlHelper.select(sql).catch((err)=>{});
+    if(!result || result == 0){
+      resData.valid = false;
+      resData.serverError = 'serverError';
+      res.send(resData);
+      return;
+    }
+
+    const adminMail = result[0].first_user_mail;
+
+    try {
+      resData = await mailgunHelper.sendMail('coheen1@gmail.com', adminMail, 'RGB - Invitation accepted', `The invitation you sent to <b>${fields.name.value}</b> was accepted.`);
+    } catch {}
+
+    // userMail
+    const user = {userName: fields.name.value,  userId: userId, accountId: accountId };
+    resData.accessToken = sessionHelper.createSession(user);
+    resData.user_name = result.user_name;
+
+  } else {
+    resData.valid = false;
+    resData.serverError = "serverError";
+  }
+  res.send(resData);
+});
+
+app.get('/getUsers', authMiddleware, async function(req, res){
+  const user = req.user;
+  const resData = {valid: true};
+  // TODO check if the user is an admin
+  let sql = `SELECT * FROM users WHERE account_id = '${user.accountId}'`;
+  let result = await sqlHelper.select(sql).catch((err)=>{});
+
+  // The query failed
+  if(!result){
+    resData.valid = false;
+    resData.serverError = "serverError";
+    res.send(resData);
+    return;
   };
-  // Sending the data to the specify mail
-  
-  return new Promise((resolve, reject)=>{
-    mailGun.messages().send(data, function (err, body) {
-      if (err) {
-        reject('failed to send email');
-      } 
-      resolve({valid: true})
-    });
-  });
-}
+
+  resData.usersList = result;
+  res.send(resData);
+
+});
+
+

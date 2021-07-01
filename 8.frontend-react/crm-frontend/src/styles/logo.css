@@ -33,3 +33,12 @@
     width: 15px;
     height: 15px;
 }
+
+.xsmall .logo-text {
+    font-size: 35px;
+}
+
+.xsmall .logo-deco {
+    width: 10.5px;
+    height: 10.5px;
+}

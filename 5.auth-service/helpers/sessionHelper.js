@@ -15,35 +15,37 @@ class SessionHelper {
               return null;
             }
             console.log("verified!");
-            return this.openSessions.has(user.session_id) ?  this.openSessions.get(user.session_id) : null;
+            return this.openSessions.has(user.sessionId) ?  this.openSessions.get(user.sessionId) : null;
           });
         } 
         return null;
     }
 
     createSession (user){
-        user.session_id = this.sessionCounter;
+        user.sessionId = this.sessionCounter;
         this.openSessions.set(this.sessionCounter++, user);
         const token = jwt.sign(user, this.accessTokenSecret, {
           "algorithm": "HS256",
-          expiresIn: 86400 * 10 // expires in 10 days
+          // expiresIn: 86400 *  // expires in 10 days
         });
-        console.log(this.openSessions);
         return token;
     }
 
     deleteSession(userData){
-        this.openSessions.delete(userData.session_id);
+        this.openSessions.delete(userData.sessionId);
     }
 
     isOpenSession(userData){
-        return this.openSessions.has(userData.session_id);
+        return this.openSessions.has(userData.sessionId);
     }
 
-    createToken(data){
+    createToken(data, expiresTime){
       const token = jwt.sign(data, this.accessTokenSecret, {
-        expiresIn: 86400  // expires in 24 hours
+        "algorithm": "HS256",
+        // TODO 
+        expiresIn: expiresTime// expires in 24 hours
       });
+
       return token;
     }
 
@@ -51,6 +53,7 @@ class SessionHelper {
       return jwt.verify(token, this.accessTokenSecret, (err, result) => {
         if (err){
           console.log("not verified");
+          console.log("returning null from verify");
           return null;
         }
         console.log("verified!");
