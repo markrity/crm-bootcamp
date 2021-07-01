@@ -3,7 +3,7 @@ body {
   width: 100vw;
   height: 100vh;
   background: #F8EDEB;
-  display: flex;
+  /* display: flex; */
   align-items: center;
   /* text-align: center; */
   justify-content: center;
@@ -13,3 +13,10 @@ body {
   
   /* font-family: poppins; */
 }
+
+
+/* .page {
+  display: flex;
+} */
+
+

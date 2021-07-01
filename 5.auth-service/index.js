@@ -25,7 +25,7 @@ app.use(myLogger);
 
 function myLogger(req, res, next) {
   //TODO loop on objects 
-  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/change' || req.originalUrl==='/register:id' ) {
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/getAllUsers' || req.originalUrl==='/register:id') {
     next();
   } 
   else {
@@ -37,8 +37,7 @@ function myLogger(req, res, next) {
       return res.json({status:false});
     }
     else {
-     
-     // console.log('hfksjdhfksh');
+     console.log('ma haloz');
       next();
       return res.json({status:true});
     }
@@ -239,6 +238,27 @@ jwt.verify(token, secret, (err,result) => {
 });
 });
 
+
+app.post('/getAllUsers', function(req, res) {   
+  var {token} = req.body;
+  console.log('netaaaaaa');
+  console.log(token);
+  jwt.verify(token, secret, (err,result) => {
+    if (err) {
+      console.log(err);
+    }
+    else {
+      const account_id = result.account_id 
+      console.log(account_id);
+      con.query("SELECT * FROM users", function (err, result) {
+        if (err) throw err;
+        res.send(result);
+      });
+    }
+    });
+  });
+  
+  
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
@@ -258,8 +278,6 @@ function validateName(name) {
   var re = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
   return re.test(name);
 }
-
-
 
 
 app.listen(process.env.PORT, () => {

@@ -1,0 +1,29 @@
+#users {
+   
+    border-collapse: collapse;
+    
+    width: 120vh;
+    
+  }
+  
+  #users td, #users th {
+    border: 1px solid #ddd;
+    padding: 8px;
+  }
+  
+  #users tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #users tr:hover {background-color: #ddd;}
+  
+  #users th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #F9DCC4;
+    color: black;
+  }
+
+  .table_container {
+      /* display: flex; */
+      margin-top: 10%;
+  }

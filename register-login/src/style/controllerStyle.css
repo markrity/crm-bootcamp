@@ -6,14 +6,17 @@
 }
 
 .controller {
-    position: relative;
+    /* position: relative; */
     width: 450px;
     /* height: 650px; */
     /* border-radius: 20px; */
-    padding: 40px;
+    padding: 30px;
     box-sizing: border-box;
     background: white;
      box-shadow: 14px 14px 20px rgb(222, 217, 217), -14px -14px 20px rgb(222, 217, 217); 
+    
+     /* margin-right: 10%; */
+     margin-bottom: 5%;
 }
 
 .clickController {
@@ -21,4 +24,58 @@
     cursor: pointer;
     /* border-bottom: 4px dotted v; */
     margin-top: 5px;
+}
+
+
+.topnav {
+    background-color: #FEC89A;
+    overflow: hidden;
+    height: 10%;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.topnav_text {
+    font-size: xxx-large;
+    font-weight: bold;
+    margin-left: 3%;
+    margin-top: 1%;
+}
+
+.test {
+    height: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+}
+
+.test_login {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.links button {
+margin-left: 20%;
+margin-right: 70%;
+margin-top: 20px;
+background: #FEC89A;
+height: 40px;
+font-weight: 900;
+/* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white; */
+transition: 0.5s;
+font-size: large;
+cursor: pointer;
+display: block;
+padding: 0;
+border: none;
+box-sizing: border-box;
+}
+
+.links {
+    margin-right: 25%;
+    font-size: large;
+    display: flex;
 }

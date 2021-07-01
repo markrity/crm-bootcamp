@@ -27,11 +27,15 @@ function AddUser(props) {
     
 
     return (
+    <body>
+    <div className="test">
     <div className="controller">
      <FormInput type = "text" className ="input" placeholder= "Enter user's mail" onChange={handleChange}/>
      <Button className="button" button_text="Send" onClick={handleClick} />
      {message}
     </div>
+    </div>
+    </body>
     );
 }
 

@@ -4,7 +4,7 @@ import Register from '../../containers/register/registerPage'
 import Login from '../../containers/login/loginPage'
 
 import '../../style/controllerStyle.css';
-
+import '../../style/button.css';
 class Controller extends React.Component {
 
     constructor(props) {
@@ -29,8 +29,25 @@ class Controller extends React.Component {
     render() {
       console.log(this.props);
       return (
+        
+        <body> 
+        <div className="topnav">
+          <div className="topnav_text">
+              Beautiz
+          </div>
+          <div className="links">
+            <button href="#">About</button>
+            <button href="#">Learn</button>
+            <button href="#">Demo</button>
+          </div>
+        </div>
+        <div className="test_login">
+        <div className="para">
+          <h1>Help you beautify the world.</h1>
+          </div> 
+
         <div className="controller">
-       
+  
         {this.state.isLoginOpen && <Login isExist={this.props.isExist} />}
         {this.state.isRegisterOpen && <Register newUser={this.props.newUser}  props={this.props} />}
         <div className="controller_header">
@@ -39,6 +56,8 @@ class Controller extends React.Component {
         {!this.props.newUser &&this.state.isLoginOpen && <DivController p_text="Don't have an account yet?" click_text = "Click here to start a free 30-day trial" onClick={() => this.handleClickRegister()}/>}
         </div>
         </div>
+        </div>
+        </body>
       );
     
   

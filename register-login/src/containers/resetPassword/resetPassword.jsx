@@ -25,11 +25,15 @@ function ResetPassword(props) {
     
 
     return (
+    <body>
+    <div className="test">
     <div className="controller">
      <FormInput type = "text" className ="input" placeholder= "Enter your email" onChange={handleChange_email}/>
      <Button className="button" button_text="Reset password" onClick={handleClick} />
      {message}
     </div>
+    </div>
+    </body>
     );
 }
 
