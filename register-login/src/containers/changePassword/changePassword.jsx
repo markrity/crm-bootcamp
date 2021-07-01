@@ -46,6 +46,8 @@ function ChangePassword(props) {
         setConfirm(event.target.value)
     }
     return (
+    <body>
+     <div className="test_login">
     <div className="controller">
      {errorMessage}
      <FormInput type = "password" className ="input" placeholder= "Enter new password" onChange={(handleChange)}/>
@@ -53,6 +55,8 @@ function ChangePassword(props) {
      {showChangeButton && <Button className="button" button_text="Change password" onClick={handleClickPassword} />}
      {showLoginButton && <Button className="button" button_text="Back to login" onClick={handleClickLogin} />}
     </div>
+    </div>
+    </body>
     );
 }
 

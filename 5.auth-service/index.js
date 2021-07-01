@@ -240,8 +240,6 @@ jwt.verify(token, secret, (err,result) => {
 
 app.post('/getAllUsers', function(req, res) {   
   var {token} = req.body;
-  console.log('netaaaaaa');
-  console.log(token);
   jwt.verify(token, secret, (err,result) => {
     if (err) {
       console.log(err);
@@ -249,7 +247,7 @@ app.post('/getAllUsers', function(req, res) {
     else {
       const account_id = result.account_id 
       console.log(account_id);
-      con.query("SELECT * FROM users", function (err, result) {
+      con.query(`SELECT * FROM users WHERE account_id = '${account_id}'`, function (err, result) {
         if (err) throw err;
         res.send(result);
       });

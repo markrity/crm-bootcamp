@@ -17,6 +17,10 @@ img {
   border: 5px solid #F9DCC4;
 }
 
+.span {
+  display: inline-block; margin-top: 4px
+}
+
 /* .page {
   display: flex;
 } */
