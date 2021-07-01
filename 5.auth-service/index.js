@@ -79,7 +79,6 @@ app.post('/register', async (req, res) => {
   //if there are invalid inputs
   if (flag) {
     res.json({status:2,valid});
-    console.log('hi')
   }
 
   else {

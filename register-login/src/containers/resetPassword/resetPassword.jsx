@@ -13,7 +13,7 @@ function ResetPassword(props) {
         axios.post('http://kerenadiv.com:8005/reset', {
             mail: email
             }).then(response => {
-                setMessage('check your mail......')
+                setMessage('We have e-mailed your password reset link!')
               })
         
     }

@@ -7,12 +7,13 @@ import React from "react";
 import {
     Redirect
   } from "react-router-dom";
+import AddUser from "../addUser/addUser";
 
 class HomePage extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {showLogin:false,showUsers:false}
+      this.state = {showLogin:false,showUsers:false, showAddUser: false}
       this.onButtonClick = this.onButtonClick.bind(this);
     }
 
@@ -22,10 +23,12 @@ class HomePage extends React.Component {
     }
    
     addUser() { 
-      window.location.href = "http://localhost:3000/addUser";    }
+      this.setState({showAddUser:true, showUsers: false})
+    }
 
     onClickUser() {
-      this.setState({showUsers:true})
+
+      this.setState({showUsers:true, showAddUser:false})
     }
 
     render() {
@@ -44,6 +47,7 @@ class HomePage extends React.Component {
           </div>
         </div>
         <div className="text">
+         {this.state.showAddUser && <AddUser/>}
           {this.state.showUsers && <Users/>}
         </div>
           </body>

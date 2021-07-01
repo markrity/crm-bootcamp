@@ -61,7 +61,7 @@ class Register extends React.Component {
 
       //user already exist
       if(response.data.status===0){
-        this.setState({errormessage_exist:'This email already exist'})
+        this.setState({errormessage_exist:'This user already exist'})
       }
       })
   }
@@ -99,7 +99,7 @@ class Register extends React.Component {
       <Header header_text = "Create your account"/>
       {this.props.newUser && this.renderFields(this.props.newUser)}
       {!this.props.newUser && this.renderFields(this.props.newUser)}
-      <Button className="button" button_text="Get started free" onClick={() => this.handleClick()} />
+      <Button className="button" button_text="Sign Up" onClick={() => this.handleClick()} />
       {this.state.errormessage_exist}
       </div>
     );

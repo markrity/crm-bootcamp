@@ -38,7 +38,7 @@ class Login extends React.Component {
             }
 
             else {
-              this.setState({errormessage:'You are not an account!'})
+              this.setState({errormessage:"That Beautiz accounct doesn't exist"})
             }
           })
          
