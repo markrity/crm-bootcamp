@@ -11,13 +11,12 @@ function Navigation(props) {
     
     const linksList = [];
     for (let link of props.links){
-        // linksList.push(<li><a href={link.url}>{link.title}</a></li>);
-        linksList.push(<Link className='nav-link' to={link.url}>{link.title}</Link>)
+        linksList.push(<Link className='nav-link' key={link.url} to={link.url}>{link.title}</Link>)
     }
 
     return (
         <div className="nav-container">
-            <nav class="nav-menu">
+            <nav className="nav-menu">
             <ul>
                 {linksList}
             </ul>

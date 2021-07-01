@@ -1,6 +1,6 @@
 import PageTitle from '../components/PageTitle';
 import CrmButton from '../components/CrmButton';
-import React, {useState} from 'react';
+import React, {useState, useMemo, useEffect} from 'react';
 import ReactDom from 'react-dom';
 import Form from '../components/Form';
 import ModelWindow from '../components/ModalWindow';
@@ -9,6 +9,7 @@ import '../styles/crmPage.css'
 import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
 import Header from '../components/Header';
+import Table from '../components/Table';
 
 
 const authApi = new AuthApi();
@@ -16,6 +17,8 @@ const authApi = new AuthApi();
 function Team(props){
     var isLoading = false;
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [data, setData] = useState([]);
+
 
     const submit = async (data) => {
         const res = await authApi.newUser(data);
@@ -29,14 +32,53 @@ function Team(props){
         console.log('add user');
     };
 
-    const getUsersList = async () =>{
-       const usersList =  await authApi.getUsers();
-       if(usersList){
-           console.log("users list: ", usersList);
-       }
-    };
-    getUsersList();
+    
+    function tableParser(table){
+      if(table){
+        const parseResult = table.map(item => {
+          return {
+            userName: item.user_name,
+            userMail: item.user_mail, 
+            userPhone: item.user_phone
+          }
+        });
+        return parseResult;
+      }
+      return null;
+    }
 
+    const getUsersList = async () => {
+      const result = await authApi.getUsers();
+      if(result && result.valid){
+         return tableParser(result.usersList);
+      }
+   };
+   
+   
+   useEffect(()=>{
+     (async () => {
+      const result = await getUsersList();
+      setData(result);
+     })();
+   }, [])
+    
+   const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Full Name',
+        accessor: 'fullName', // accessor is the "key" in the data
+      },
+      {
+        Header: 'Mail',
+        accessor: 'mail',
+      },
+      {
+        Header: 'Phone',
+        accessor: 'phone',
+      },
+    ],
+    []
+  )
     const addUserForm = {
         submitFunc: submit,
         type: 'addUser',
@@ -45,6 +87,7 @@ function Team(props){
           'serverError': 'Try again later',
         },
         buttonTitle: 'Add',
+        buttonClass: 'main-button',
         fields: {
           mail: {
             text: "Enter User Mail",
@@ -63,13 +106,15 @@ function Team(props){
         setIsModalOpen(false);
     };
 
+
     return (
         <div>
             <Header/>
             <div className='crm-page'>
             <PageTitle className='page-title' title='Team' description='Here you can find and add bla bla ...'/>
-            <CrmButton content='add user' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
-            {/* <ModelWindow/> */}
+            {/* <CrmButton content='add user' class='secondary-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/> */}
+            <CrmButton content='Add User' buttonClass='main-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
+            {/* <Table columns={columns} data={data}/> */}
             <Modal isOpen={isModalOpen} contentLabel='Add User' onRequestClose={closeAddUserWindow} className='modal'>
                 <Form 
                     className='form-body'
@@ -78,6 +123,7 @@ function Team(props){
                     type={addUserForm.type}
                     errorMap={addUserForm.errorMap}
                     button= {addUserForm.buttonTitle}
+                    buttonClass={addUserForm.buttonClass}
                     submitHandle={addUserForm.submitFunc} 
                 />
             </Modal>

@@ -43,6 +43,7 @@ function Signup(props) {
           'serverError': 'Try again later',
           'userAlreadyExist': 'User already exist'
         },
+        buttonClass: 'main-button',
         fields: {
           name: {
             text: "Full Name",
@@ -104,6 +105,7 @@ function Signup(props) {
                 type={signup.type}
                 errorMap = {signup.errorMap}
                 button={signup.buttonTitle}
+                buttonClass={signup.buttonClass}
                 />
                 {props.type !== 'newUser' && <div><hr></hr><Link className='linkto' to="/login">I already have an account</Link></div>}
             </div>

@@ -85,7 +85,7 @@ function Form(props) {
             <h2>{props.title}</h2>
             {fieldsComponents}
             <div className='button-wrapper'>
-                <CrmButton content={props.button} isLoading={isLoading} callback={()=> submit()}/>
+                <CrmButton content={props.button} buttonClass={props.buttonClass} isLoading={isLoading} callback={()=> submit()}/>
             </div>
             <div className='server-error'>
             <span>{mainError}</span>

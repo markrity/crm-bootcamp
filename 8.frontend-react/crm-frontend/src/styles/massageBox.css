@@ -8,6 +8,10 @@
     align-items: center;
 }
 
+.successful-operation h2 {
+    text-align: center;
+}
+
 .form-box {
     width: 100%;
 }

@@ -11,6 +11,9 @@ import Signup from './screens/Signup';
 import Login from './screens/Login';
 import Team from './screens/Team';
 import AuthApi from './helpers/authApi';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
+import './styles/loading.css'
 import {
   BrowserRouter as Router,
   Switch,
@@ -42,6 +45,15 @@ function App() {
       checkConnection();
   }, [])
 
+  const loader = <div className='loader-container'> 
+                  <Loader
+                    type="ThreeDots"
+                    color="#fe5f55"
+                    height={100}
+                    width={100}
+                    // timeout={3000} //3 secs
+                  />
+                  </div>
 
   return (
     <Router>
@@ -50,8 +62,10 @@ function App() {
       <Route
           exact path="/"
           render={() => {
-              return ( isLoading ? 
-                (<div>Loading</div>) : 
+              return ( 
+                isLoading ? 
+                loader
+                : 
                 isConnect ?
                 <Redirect to="/home" /> :
                 <Redirect to="/signup" /> 
@@ -60,7 +74,8 @@ function App() {
         />
         <Route 
            path="/signup">
-            {isLoading ? (<div>Loading</div>) : 
+            {
+            isLoading ? loader : 
             isConnect ?
                 <Redirect to="/home" /> :
                 <Signup type='newAccount' /> 
@@ -68,19 +83,19 @@ function App() {
         </Route>
         <Route 
            exact path="/newUser/:token">
-            {isLoading ? (<div>Loading</div>) : 
+            {isLoading ? loader : 
               <Signup type='newUser'/> 
             }
         </Route>
         <Route exact path="/home">
-            {isLoading ? (<div>Loading</div>) : 
+            {isLoading ? loader: 
             isConnect ?
             <Home /> :
             <Redirect to="/login" /> 
             }
         </Route>
         <Route exact path="/login">
-        {isLoading ? (<div>Loading</div>) : 
+        {isLoading ? loader: 
             isConnect ?
                 <Redirect to="/home" /> :
                 <Login />
@@ -93,7 +108,7 @@ function App() {
             <ForgotPassword/>
         </Route >
         <Route exact path="/team">
-        {isLoading ? (<div>Loading</div>) : 
+        {isLoading ? loader: 
             isConnect ?
                 <Team /> : <Redirect to="/login" /> 
             }

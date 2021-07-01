@@ -16,7 +16,7 @@ function Header(props) {
             url: '/home'
         }, 
         {
-            title: "Teams", 
+            title: "Team", 
             url: '/team'
         }, 
         {
@@ -39,7 +39,7 @@ function Header(props) {
                 <div className='links-container'>
                 <Navigation links={links}/>
                 </div>
-            <CrmButton content='Log out' callback={()=> logoutFunc()}/>
+            <CrmButton buttonClass='spacial-button' content='Log Out' callback={()=> logoutFunc()}/>
             {/* <button id="logout" onClick={()=>logoutFunc()}>Logout</button> */}
             </div>
         </div>

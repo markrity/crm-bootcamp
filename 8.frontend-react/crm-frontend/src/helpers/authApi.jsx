@@ -25,7 +25,6 @@ class AuthApi {
                 'authorization': localStorage.getItem('jwtToken')
             }
         })
-        console.log(response)
         if(response){
             return response.data;
         }
@@ -100,7 +99,6 @@ class AuthApi {
                 'authorization': localStorage.getItem('jwtToken')
             }
         })
-        console.log(response);
         if(response){
             return response.data;
         }

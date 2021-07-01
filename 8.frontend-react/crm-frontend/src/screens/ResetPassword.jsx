@@ -34,6 +34,7 @@ function ResetPassword(props) {
         type: 'reset',
         title: "Enter a new password",
         buttonTitle:'Change Password',
+        buttonClass: 'main-button',
         errorMap: {
           'serverError': 'Try again later',
         },
@@ -75,6 +76,7 @@ function ResetPassword(props) {
                     type={reset.type}
                     errorMap = {reset.errorMap}
                     button={reset.buttonTitle}
+                    buttonClass={reset.buttonClass}
                 /> 
                 }
                 

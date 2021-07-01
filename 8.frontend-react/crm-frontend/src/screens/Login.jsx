@@ -29,6 +29,7 @@ function Login(props) {
         type: 'signin',
         title: "Welcome Back!",
         buttonTitle: "Log In",
+        buttonClass: 'main-button',
         errorMap: {
           'serverError': 'Try again later',
           'IncorrectMailOrPassword': 'Incorrect mail or password'
@@ -68,6 +69,7 @@ function Login(props) {
                     type={login.type}
                     errorMap = {login.errorMap}
                     button={login.buttonTitle}
+                    buttonClass={login.buttonClass}
                 />
                 <hr></hr>
                 <div className='links'>

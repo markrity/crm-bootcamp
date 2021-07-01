@@ -34,6 +34,7 @@ function ForgotPassword(props) {
           'serverError': 'Try again later',
         },
         buttonTitle: 'Reset My Password',
+        buttonClass: 'main-button',
         fields: {
           mail: {
             text: "Enter Your Email",
@@ -67,6 +68,7 @@ function ForgotPassword(props) {
                   type={forgot.type}
                   errorMap={forgot.errorMap}
                   button= {forgot.buttonTitle}
+                  buttonClass={forgot.buttonClass}
               />
               <hr/>
               <div className='links'>
