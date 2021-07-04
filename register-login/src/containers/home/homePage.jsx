@@ -1,13 +1,13 @@
 import React from "react";
-
- import Button from '../../components/button'
- import axios from 'axios';
- import Users from '../../components/users'
+import Button from '../../components/button'
+import Users from '../../components/users'
+import '../../style/sideBarStyle.css'
 
 import {
     Redirect
   } from "react-router-dom";
 import AddUser from "../addUser/addUser";
+import SideBar from "../../components/sideBar";
 
 class HomePage extends React.Component {
 
@@ -36,6 +36,7 @@ class HomePage extends React.Component {
         <div>
          {!(this.props.isExist)&& <Redirect to="/login" />}
          <body>
+         <SideBar/>
          <div className="topnav">
           <div className="topnav_text">
               Beautiz
@@ -50,7 +51,7 @@ class HomePage extends React.Component {
          {this.state.showAddUser && <AddUser/>}
           {this.state.showUsers && <Users/>}
         </div>
-          </body>
+        </body>
         </div>
       );
     }

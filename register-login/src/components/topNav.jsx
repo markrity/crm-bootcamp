@@ -7,10 +7,10 @@ function TopNav(props) {
         <div className="topnav_text">
             Beautiz
         </div>
-        <div className={props.className}>
-          <button className={props.button_class}>{props.button_text}</button>
-          <button className={props.button_class}>{props.button_text}</button>
-          <button className={props.button_class}>{props.button_text}</button>
+        <div className="links">
+          <button href="#">About</button>
+          <button href="#">Learn</button>
+          <button href="#">Demo</button>
         </div>
       </div>
     );

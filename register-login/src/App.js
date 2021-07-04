@@ -1,11 +1,10 @@
-//import './App.css';
+//import '../App.css';
 //import React from "react";
 import React, { useEffect, useState } from "react";
 import Controller from "./containers/controller/controller";
 import HomePage from "./containers/home/homePage";
-import './style/app.css'
 import axios from 'axios';
-
+import './style/App.css'
 
 import {
   BrowserRouter as Router,
