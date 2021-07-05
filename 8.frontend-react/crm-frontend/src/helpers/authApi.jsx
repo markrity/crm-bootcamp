@@ -7,19 +7,14 @@ class AuthApi {
     }
     
 
-    logout(){
-        axios.post('http://rgb.com:8005/logout', {}, 
+    async logout(){
+       axios.post('http://rgb.com:8005/logout', {}, 
         {
             headers: {
                 'Authorization': localStorage.getItem('jwtToken')
             }
-        })
-        .then(function (response) {
-            localStorage.removeItem('jwtToken');
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
+        }).catch(()=>{});
+        localStorage.removeItem('jwtToken'); 
     }
 
     async ping(){
@@ -114,6 +109,17 @@ class AuthApi {
                 'authorization': localStorage.getItem('jwtToken')
             }
         })
+        if(response){
+            return response.data;
+        }
+        else {
+            return false;
+        }
+    }
+
+    async deleteUser(data){
+        console.log("removing: ", data);
+        const response = await axios.post(`${this.basicUrl}/removeUser`, data)
         if(response){
             return response.data;
         }

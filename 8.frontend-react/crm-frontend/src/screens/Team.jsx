@@ -1,6 +1,6 @@
 import PageTitle from '../components/PageTitle';
 import CrmButton from '../components/CrmButton';
-import React, {useState, useMemo, useEffect} from 'react';
+import React, {useState, useMemo, useEffect, useRef} from 'react';
 import ReactDom from 'react-dom';
 import Form from '../components/Form';
 import ModelWindow from '../components/ModalWindow';
@@ -11,7 +11,7 @@ import AuthApi from '../helpers/authApi';
 import Header from '../components/Header';
 import Table from '../components/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck } from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTrash , faEdit} from '@fortawesome/free-solid-svg-icons'
 
 
 const authApi = new AuthApi();
@@ -20,9 +20,12 @@ function Team(props){
     var isLoading = false;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [data, setData] = useState([]);
+    const dataRef = useRef(data);
+    dataRef.current = data;
 
 
     const submit = async (dataToSent) => {
+      // TODO add validation
         const res = await authApi.newUser(dataToSent);
         console.log(res.valid);
         if(res.valid){
@@ -62,6 +65,17 @@ function Team(props){
       }
    };
    
+
+   const onRemoveItem = (value) => {
+     console.log("the value is: ",value);
+    console.log("data current: ",dataRef.current);
+    authApi.deleteUser(value);
+    let newData = dataRef.current.filter((item)=>{
+      console.log(value.user_id,"is equal?", item.user_id);
+      return value.user_id != item.user_id;
+    })
+    setData(newData);
+   }
    
    useEffect(()=>{
      (async () => {
@@ -94,6 +108,27 @@ function Team(props){
         Header: 'Status',
         accessor: 'status',
         Cell: ({value})  => value == 'active' ? <FontAwesomeIcon className='status-icon' icon={faCheck} size='xs'/> : value
+      },
+      {
+        Header: 'Action',
+        // accessor: 'delete',
+        Cell: (value)=> (
+          <div>
+            <span style={{cursor:'pointer'}}
+                onClick={() => {
+                  // console.log(value);
+                    onRemoveItem(value.cell.row.original);
+                  }}>
+                  <FontAwesomeIcon className='trash-icon' icon={faTrash} size='sm'/>
+          </span> 
+          {/* <span style={{cursor:'pointer'}}
+                onClick={() => {
+                  }}>
+                  <FontAwesomeIcon className='edit-icon' icon={faEdit} size='sm'/>
+          </span>  */}
+          </div>
+          
+        )
       },
 
     ],

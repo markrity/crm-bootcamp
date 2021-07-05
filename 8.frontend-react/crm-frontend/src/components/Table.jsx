@@ -5,7 +5,7 @@ import '../styles/table.css'
 function Table(props) {
 
     const {columns, data} = props;
-
+    
     const {
         getTableProps,
         getTableBodyProps,
