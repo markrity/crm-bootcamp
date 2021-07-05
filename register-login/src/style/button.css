@@ -27,8 +27,8 @@ button:hover {
 }
 
 .button1 {
-    margin-right: 5vh;
-    width: 15vh;
+    margin-left: 15%;
+    width: 10vh;
     height: 5vh;
     cursor: pointer;
    
@@ -41,5 +41,15 @@ button:hover {
     /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */
 }
         
+.add_button {
+    margin-top: 8%;
+}
 
-
+.close {
+    background-color: #F8EDEB;
+    border-color:#FEC89A ;
+    border-width: 3px;
+    font-weight: 100px;
+    cursor: pointer;
+    color: #FEC89A;
+}

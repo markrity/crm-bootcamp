@@ -14,7 +14,6 @@ import {
 } from "react-router-dom";
 import ResetPassword from "./containers/resetPassword/resetPassword";
 import ChangePassword from "./containers/changePassword/changePassword";
-import AddUser from "./containers/addUser/addUser";
 import Register from "./containers/register/registerPage";
 
 
@@ -67,13 +66,6 @@ function App() {
         </Route>
 
         <Route  path="/register/:id" render={(props) => <Controller {...props}reg={true} log={false} newUser={true} />}/> 
-
-
-        <Route  path="/addUser" isExist={isExist} >
-          <AddUser />
-        </Route>
-
-        
 
       </Switch>
       </Router>

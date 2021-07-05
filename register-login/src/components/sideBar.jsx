@@ -1,13 +1,12 @@
-
+import Button from '../components/button'
 import React from "react";
 
 function SideBar(props) {
+
+    
     return (
         <div class="sidenav">
-        <a href="#about">About</a>
-        <a href="#services">Services</a>
-        <a href="#clients">Clients</a>
-        <a href="#contact">Contact</a>
+        <Button className="button1" button_text="Users" onClick={props.onClick}></Button>
       </div>
     );
 }

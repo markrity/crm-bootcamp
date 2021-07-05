@@ -25,7 +25,7 @@ app.use(myLogger);
 
 function myLogger(req, res, next) {
   //TODO loop on objects 
-  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/getAllUsers' || req.originalUrl==='/register:id') {
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/getAllUsers' || req.originalUrl==='/register:id' || req.originalUrl=== '/addUser') {
     next();
   } 
   else {
@@ -210,31 +210,38 @@ app.post('/change', function(req, res) {
  });
 
 
-app.post('/addUser', function(req, res) {   
-var {mail,token} = req.body;
-console.log(token);
-jwt.verify(token, secret, (err,result) => {
-  if (err) {
-    console.log(err);
-  }
-  else {
+app.post('/addUser', async (req, res) => {   
+  var {mail,token} = req.body;
+
+    console.log('2222222');
+    jwt.verify(token, secret, async (err,result) => {
+    if (err) throw err;
     const bodyJWT = {
       "account_id": result.account_id,
       "newUser_mail":mail
     }
+    const isExist = await checkIfEmailExist(mail, result.account_id)
+    console.log(isExist);
+    if (isExist) {
+      console.log('111111');
+      res.json({status: 0});
+      return;
+    } 
     const accessToken = jwt.sign(bodyJWT, secret, {expiresIn: '24h'})
-    //console.log(result.user_id);
-
     var data = {
           from: 'neta.carmiel@workiz.com',
           to: mail,
           subject: 'Hi new user!',
           html: `http://localhost:3000/register/${accessToken}`,
-        };
-        mailgun.messages().send(data, function (error, body) {
-        });
-  }
-});
+    };
+
+    mailgun.messages().send(data, function (error, body) {
+    });
+
+    res.json({status: 1});
+    return;
+  });
+  
 });
 
 
@@ -255,7 +262,26 @@ app.post('/getAllUsers', function(req, res) {
     });
   });
   
-  
+
+app.listen(process.env.PORT, () => {
+  console.log(`Server running at http://localhost:${process.env.PORT}/`);
+});
+
+
+function checkIfEmailExist(email, account_id) {
+  return new Promise(resolve => {
+  var isExist = `SELECT * FROM users WHERE (user_mail = '${email}') AND (account_id = '${account_id}')`
+  con.query(isExist, function (err, result) {
+      if (err) throw err; 
+      if (result!=0) {
+        resolve(true); 
+      }
+      resolve(false); 
+  });
+});
+}
+
+
 function validateEmail(email) {
   const re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return re.test(email);
@@ -275,8 +301,3 @@ function validateName(name) {
   var re = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
   return re.test(name);
 }
-
-
-app.listen(process.env.PORT, () => {
-  console.log(`Server running at http://localhost:${process.env.PORT}/`);
-});

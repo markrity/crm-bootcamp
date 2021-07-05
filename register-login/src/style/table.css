@@ -3,7 +3,7 @@
     border-collapse: collapse;
     
     width: 140vh;
-    
+    margin-left: 5%;
   }
   
   #users td, #users th {

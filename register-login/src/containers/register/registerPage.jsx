@@ -30,11 +30,12 @@ class Register extends React.Component {
       token: token ? token : ''
       }).then(response => {
 
+      switch(response.data.status) {
+
       //if there are invalid fields
-      if (response.data.status===2) {
+      case 2 :
         var errMessage = {'name_validate': 'invalid name', 'email_validate': 'invalid email', 'phone_validate': 'invalid phone', 'password_validate': 'invalid password' }
         Object.entries(response.data.valid).forEach(item => {
-          console.log(item[0]);
           if (!item[1]) {
             this.setState(prevState => {
               let err = Object.assign({}, prevState.err);  
@@ -43,27 +44,24 @@ class Register extends React.Component {
             })
             }
         })
-        }
-
-      //fields are ok
-      if(response.data.status===1) {
-        console.log('netttt');
-        if (typeof(Storage) !== "undefined") {
-        console.log(response);
-        localStorage.setItem("my_user", response.data.accessToken);
+        break;
         
-       // console.log(localStorage.getItem("my_user"));
+      //fields are ok
+      case 1:
+        if (typeof(Storage) !== "undefined") {
+        localStorage.setItem("my_user", response.data.accessToken);
         window.location.href = "http://localhost:3000/home";
         } else {
         console.log("Sorry, your browser does not support Web Storage...")
         }
-      }
+       break
 
       //user already exist
-      if(response.data.status===0){
+      case 0:
         this.setState({errormessage_exist:'This user already exist'})
+        break
       }
-      })
+    })
   }
 
   handleChange(event, key, errMessage) {

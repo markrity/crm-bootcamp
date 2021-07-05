@@ -1,19 +1,18 @@
 import React from "react";
 import Button from '../../components/button'
-import Users from '../../components/users'
+import Users from '../users/users'
 import '../../style/sideBarStyle.css'
 
 import {
     Redirect
   } from "react-router-dom";
-import AddUser from "../addUser/addUser";
 import SideBar from "../../components/sideBar";
 
 class HomePage extends React.Component {
 
     constructor(props) {
       super(props);
-      this.state = {showLogin:false,showUsers:false, showAddUser: false}
+      this.state = {showLogin:false,showUsers:false}
       this.onButtonClick = this.onButtonClick.bind(this);
     }
 
@@ -21,14 +20,9 @@ class HomePage extends React.Component {
       localStorage.removeItem("my_user")
       window.location.href = "http://localhost:3000/login";
     }
-   
-    addUser() { 
-      this.setState({showAddUser:true, showUsers: false})
-    }
 
     onClickUser() {
-
-      this.setState({showUsers:true, showAddUser:false})
+      this.setState({showUsers:true})
     }
 
     render() {
@@ -36,21 +30,18 @@ class HomePage extends React.Component {
         <div>
          {!(this.props.isExist)&& <Redirect to="/login" />}
          <body>
-         <SideBar/>
+         <SideBar onClick={() => this.onClickUser()}/>
          <div className="topnav">
           <div className="topnav_text">
               Beautiz
           </div>
           <div className="buttons">
-          <Button className="button1" button_text="Users" onClick={() => this.onClickUser()}></Button>
-          <Button className="button1" button_text="Add user" onClick={() => this.addUser()}></Button>
           <Button className="button1" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
           </div>
         </div>
-        <div className="text">
-         {this.state.showAddUser && <AddUser/>}
-          {this.state.showUsers && <Users/>}
-        </div>
+       
+         {this.state.showUsers && <Users/>}
+       
         </body>
         </div>
       );

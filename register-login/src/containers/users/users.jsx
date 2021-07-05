@@ -1,15 +1,15 @@
 import React, {useState, useEffect, useMemo} from "react";
 import axios from 'axios';
-import Button from '../components/button'
+import Button from '../../components/button'
 
-import Table from '../components/table'
+import Table from '../../components/table'
 
-import '../style/table.css'
-import AddUser from "../containers/addUser/addUser";
+import '../../style/table.css'
+import AddUser from "../../components/addUser";
 
 function Users(props) {
     const [data, setData] = useState([]);
-    const [showAddUser, setShowAddUser] = useState(false);
+    const [modalIsOpen, setIsOpen] = useState(false);
 
     useEffect(() => {
         var token = localStorage.getItem("my_user");
@@ -19,6 +19,8 @@ function Users(props) {
                setData(response.data);
               });
     }, []);
+
+   
 
     const columns = useMemo(
         () => [
@@ -44,17 +46,23 @@ function Users(props) {
         ],
         []
       );
-    
 
+    function openModal() {
+      setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+    
     return (
     <body>
-        
+
     <div className="test">
-    {/* TODO add here functionality */}
-    {showAddUser && <AddUser/>}
-    <Table  columns={columns} data={data} />
-    
    
+    {modalIsOpen && <AddUser modalIsOpen={() => openModal()} closeModal={() => closeModal()}/>}
+    <Table columns={columns} data={data} /> 
+    <Button className="add_button" button_text="Add user" onClick={() => openModal()}></Button>
     </div>
     
     </body>
