@@ -3,11 +3,6 @@
 
 export default function validateInfo(formData, mode, formStage) {
     let foundError = false
-    console.log('formFields', formData)
-    console.log('mode', mode)
-    console.log('formStage', formStage)
-
-
     let funcMap = new Map()
     funcMap.set('email', {
         func: (email) => {
@@ -55,9 +50,9 @@ export default function validateInfo(formData, mode, formStage) {
 
     funcMap.set('buisnessName', {
         func: (buisnessName) => {
-            const regex = /^[a-zA-Z]{1,}$/;
+            const regex = /^[a-zA-Z]{,}$/;
             console.log('BuisnessName', buisnessName)
-            return regex.test(buisnessName)
+            return true
         }, msg: "Field is empty"
     })
 

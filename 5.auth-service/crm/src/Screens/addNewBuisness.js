@@ -6,7 +6,6 @@ const AddNewBuisness = () => {
     console.log("New Buisness Screen")
     return (
         <>
-            {console.log("New Buisness Screen")}
             <Auth initMode="New Buisness" />
         </>
     )

@@ -3,12 +3,10 @@ import { useDispatch } from 'react-redux'
 import { useHistory } from 'react-router'
 import { logout } from '../actions/auth'
 
-const EmployeeNav = () => {
+const GuestNav = () => {
     const history = useHistory()
-    const dispatch = useDispatch()
-    const navTitleArr = [{ title: 'Home', func: () => history.push('/home') },
-    { title: "Logout", func: () => dispatch(logout()) }]
-
+    const navTitleArr = [{ title: 'Login', func: () => history.push('/auth/login') },
+    { title: "SignUp", func: () => history.push('/auth/addNewBuisness') }]
 
     return (
         <ul className="nav-list">
@@ -18,4 +16,4 @@ const EmployeeNav = () => {
 
 }
 
-export default EmployeeNav
+export default GuestNav

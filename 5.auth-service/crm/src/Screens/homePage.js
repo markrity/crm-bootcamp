@@ -1,17 +1,19 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import '../App.css'
 import { logout } from '../actions/auth'
 import ClickableTxt from '../Components/ClickableTxt';
 import Header from '../Components/Header';
-const HomePage = () => {
-    console.log("HomePage")
-    const dispatch = useDispatch();
-    const isOnline = useSelector(state => state.auth.isOnline)
+import { useHistory } from 'react-router';
+const HomePage = ({ isOnline }) => {
+
+
     return (
         <>
             <Header />
         </>
     )
 }
+
+
 export default HomePage

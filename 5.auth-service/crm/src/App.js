@@ -1,43 +1,50 @@
 import React, { useEffect } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux'
 import AddNewBuisness from './Screens/addNewBuisness';
-import additionInfo from './Screens/additionalInfo';
-import resetPassword from './Screens/resetPassword';
-import setNewPassword from './Screens/setNewPassword'
+import AdditionInfo from './Screens/additionalInfo';
+import ResetPassword from './Screens/resetPassword';
+import SetNewPassword from './Screens/setNewPassword'
 import Employees from './Screens/employees';
-import Login from './Screens/login'
-import { useDispatch, useSelector } from 'react-redux';
+import LoginPage from './Screens/login'
+import EmailSent from './Screens/emailSent'
+import EmployeeReg from './Screens/employeeRegistration';
 import { checkAuth } from './actions/auth'
-import homePage from './Screens/homePage';
-import { Route, Switch, useHistory } from 'react-router-dom';
-
+import HomePage from './Screens/homePage';
+import Verification from './Screens/verification';
+import { BrowserRouter as Router, Route, Switch, useHistory } from 'react-router-dom';
+import AuthRoute from './Components/AuthRoute';
 import './App.css';
 const App = () => {
-  const dispatch = useDispatch();
-  const isOnline = useSelector(state => state.auth.isOnline)
-  const history = useHistory();
+  const dispatch = useDispatch()
+  const { isOnline } = useSelector(state => state.auth)
+  const history = useHistory()
   useEffect(() => {
     dispatch(checkAuth())
-  }, [history])
-  useEffect(() => {
-    if (!isOnline && window.location.pathname.split('/')[1] !== 'auth')
-      history.push('auth/login')
-  }, [isOnline, history])
+  }, [])
+
   return (
-    <Switch>
-      <Route exact path='/' component={homePage} />
-      <Route exact path='/auth/login' component={Login} />
-      <Route exact path='/auth/addNewBuisness' component={AddNewBuisness} />
-      <Route exact path='/auth/additionalInfo' component={additionInfo} />
-      <Route exact path='/auth/resetPassword' component={resetPassword} />
-      <Route exact path='/auth/resetPassword/valid' component={setNewPassword} />
-      <Route exact path='/employees' component={Employees} />
-      <Route>
-        <h1>NOT FOUND!</h1>
-      </Route>
-    </Switch>
+    <Router>
+      <Switch>
+        <AuthRoute path="/auth/login" type="guest" component={LoginPage} />
+        <AuthRoute path="/home" type="private" component={HomePage} />
+        <AuthRoute path="/auth/addNewBuisness" type="guest" component={AddNewBuisness} />
+        <AuthRoute path='/auth/additionalInfo' type="guest" component={AdditionInfo} />
+        <AuthRoute path='/auth/resetPassword' type="guest" component={ResetPassword} />
+        <AuthRoute path='/auth/resetPassword/valid' type="guest" component={SetNewPassword} />
+        <AuthRoute path='/employees' type="private" component={Employees} />
+        <AuthRoute path='/auth/emailSent' type="guest" component={EmailSent} />
+        <AuthRoute path='/auth/newEmployee/valid' type="guest" component={EmployeeReg} />
+        <AuthRoute path='/verification/valid' type="guest" component={Verification} />
+        {/* <Route path="/" component={history.push('/home')} /> */}
+        <Route>
+          <h1>NOT FOUND!</h1>
+        </Route>
+      </Switch >
+    </Router >
   );
 }
 
 
 export default App;
+
 

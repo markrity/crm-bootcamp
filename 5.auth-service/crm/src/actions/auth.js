@@ -7,13 +7,14 @@ import {
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
 } from './types';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 
 axios.defaults.withCredentials = true
 
 
 export const login = (formData) => async dispatch => {
+    // const history = useHistory()
     console.log(formData)
     const email = formData.email.value
     const password = formData.password.value
@@ -27,27 +28,28 @@ export const login = (formData) => async dispatch => {
         });
     } catch (err) {
         dispatch({
-            type: LOGIN_FAIL
+            type: LOGIN_FAIL,
+            payload: "Your Password Or Email Are Incorrect"
         })
     }
 };
 
-export const checkAuth = () => async dispatch => {
-    try {
-        console.log("dispatch function- checkAuth")
-        const { data, status } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
-        console.log(data)
-        console.log(status)
-        if (status === 200) {
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: data.userInfo
-            })
+export const checkAuth = () => {
+    return async (dispatch, getState) => {
+        try {
+            const { data, status } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
+            if (status === 200) {
+                dispatch({
+                    type: LOGIN_SUCCESS,
+                    payload: data
+                })
+            }
+        }
+        catch (err) {
+            console.log(err)
         }
     }
-    catch (err) {
-        console.log(err)
-    }
+
 }
 
 export const addBuisness = (formData) => async dispatch => {
@@ -79,6 +81,8 @@ export const addBuisness = (formData) => async dispatch => {
 }
 
 
+
+
 export const forgotPassword = (formData) => async dispatch => {
     try {
         console.log("Sent resetPassword")
@@ -94,12 +98,35 @@ export const forgotPassword = (formData) => async dispatch => {
 };
 
 
-export const addNewEmployee = (formData) => {
+export const addNewEmployee = (formData, buisnessID, email) => async dispatch => {
+
+    let { firstName, lastName, phoneNumber, password } = formData
+    password = password.value
+    firstName = firstName.value
+    lastName = lastName.value
+    phoneNumber = phoneNumber.value
+    const employeeInfo = { password, firstName, lastName, phoneNumber, email, buisnessID }
+    console.log(employeeInfo)
     try {
-        axios.post('http://localhost:8000/auth/addEmployee', formData, { withCredentials: true })
+        const res = await axios.post('http://localhost:8000/auth/addEmployee', employeeInfo, { withCredentials: true })
+
     }
     catch {
         console.log("Couldnt Add Employee")
+    }
+}
+
+export const finishVerification = (token) => async dispatch => {
+    try {
+        console.log(token)
+        const { data } = await axios.post('http://localhost:8000/auth/verification', { token }, { withCredentials: true })
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: data
+        })
+    }
+    catch {
+        console.log("verification Failed")
     }
 }
 

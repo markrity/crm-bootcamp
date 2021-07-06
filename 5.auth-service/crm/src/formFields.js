@@ -20,11 +20,11 @@ export const signupFormFields = {
     },
     password: {
         type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
-        name: 'password', lbl: 'Password'
+        name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     },
     rePassword: {
         type: 'text', value: '', err: '', placeholder: 'Again:)',
-        name: 'rePassword', lbl: 'Re-Password'
+        name: 'rePassword', lbl: 'Re-Password', icon1: "FiEyeOff", icon2: "FiEye"
     }
 }
 
@@ -35,7 +35,7 @@ export const loginFormFields = {
     },
     password: {
         type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
-        name: 'password', lbl: 'Password'
+        name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     }
 }
 
@@ -65,11 +65,11 @@ export const newBuisnessFormFields = [
         },
         password: {
             type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
-            name: 'password', lbl: 'Password'
+            name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
         },
         rePassword: {
             type: 'text', value: '', err: '', placeholder: 'Again:)',
-            name: 'rePassword', lbl: 'Re-Password'
+            name: 'rePassword', lbl: 'Re-Password', icon1: "FiEyeOff", icon2: "FiEye"
         }
     }
 ]
@@ -85,10 +85,41 @@ export const forgotPasswordFields = {
 export const changePasswordFields = {
     password: {
         type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
-        name: 'password', lbl: 'Password'
+        name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     },
     rePassword: {
         type: 'text', value: '', err: '', placeholder: 'Again:)',
-        name: 'rePassword', lbl: 'Re-Password'
+        name: 'rePassword', lbl: 'Re-Password', icon1: "FiEyeOff", icon2: "FiEye"
+    }
+}
+
+export const inviteEmployeeFields = {
+    email: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Email',
+        name: 'email', lbl: 'Email'
+    }
+}
+
+
+export const newEmployee = {
+    firstName: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your First Name',
+        name: 'firstName', lbl: 'First Name'
+    },
+    lastName: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Last Name',
+        name: 'lastName', lbl: 'Last Name'
+    },
+    phoneNumber: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Phone number',
+        name: 'phoneNumber', lbl: 'Phone'
+    },
+    password: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
+        name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
+    },
+    rePassword: {
+        type: 'text', value: '', err: '', placeholder: 'Again:)',
+        name: 'rePassword', lbl: 'Re-Password', icon1: "FiEyeOff", icon2: "FiEye"
     }
 }

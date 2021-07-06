@@ -1,0 +1,20 @@
+import React, { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import Auth from '../Components/authentication'
+import { finishVerification } from '../actions/auth'
+
+const Verification = () => {
+    const dispatch = useDispatch()
+    useEffect(() => {
+        const token = new URLSearchParams(window.location.search).get("token");
+        setTimeout(() => {
+            dispatch(finishVerification(token))
+        }, 5000);
+    }, [])
+    return (
+        < Auth initMode="Verification" />
+    )
+
+}
+
+export default Verification

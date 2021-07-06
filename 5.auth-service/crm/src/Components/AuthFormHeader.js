@@ -32,6 +32,32 @@ const AuthFormHeader = ({ mode }) => {
                 </div>
             )
         }
+        else if (mode === "Email Sent") {
+            return (
+                <div className='flex-col center-screen'>
+                    <h2>An Email Was Sent</h2>
+                </div>
+            )
+        }
+        else if (mode === "Invite Employee") {
+            return (
+                <div className='flex-col center-screen'>
+                    <h2>Invite An Employee</h2>
+                </div>
+            )
+        }
+        else if (mode === "Employee Registration")
+            return <h2>Finish Registration</h2>
+        else if (mode === "Verification") {
+            return (
+                <div className='flex-col center-screen'>
+                    <h2>Verification in Prograss</h2>
+                </div>
+            )
+        }
+        else if (mode === "Loading") {
+
+        }
     }
 
     return (
