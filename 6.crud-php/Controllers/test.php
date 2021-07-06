@@ -8,6 +8,7 @@
         private $response;
         private $errors = "";
         private $model;
+        public $model_class = 'test';
 
         public function __construct()
         {

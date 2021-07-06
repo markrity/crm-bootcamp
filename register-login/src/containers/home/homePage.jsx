@@ -2,11 +2,16 @@ import React from "react";
 import Button from '../../components/button'
 import Users from '../users/users'
 import '../../style/sideBarStyle.css'
+import { removeFromLS } from '../../helpers/local_storage_helper';
+
+import axios from 'axios';
+
 
 import {
     Redirect
   } from "react-router-dom";
 import SideBar from "../../components/sideBar";
+import Home_TopNav from "../../components/home_topNav";
 
 class HomePage extends React.Component {
 
@@ -17,9 +22,18 @@ class HomePage extends React.Component {
     }
 
     onButtonClick() { 
-      localStorage.removeItem("my_user")
+      removeFromLS();
       window.location.href = "http://localhost:3000/login";
     }
+
+    // phpRequest() { 
+    //   // console.log('php req');
+    //   axios.post('http://localhost:991/test/test/').then(response => {
+    //       console.log('respose from php!!!');
+    //       console.log(JSON.stringify(response.data))
+    //       })
+    // }
+
 
     onClickUser() {
       this.setState({showUsers:true})
@@ -30,16 +44,11 @@ class HomePage extends React.Component {
         <div>
          {!(this.props.isExist)&& <Redirect to="/login" />}
          <body>
+
          <SideBar onClick={() => this.onClickUser()}/>
-         <div className="topnav">
-          <div className="topnav_text">
-              Beautiz
-          </div>
-          <div className="buttons">
-          <Button className="button1" button_text="Logout" onClick={() => this.onButtonClick()}></Button> 
-          </div>
-        </div>
-       
+         <Home_TopNav className="button1" button_text="Logout" onClick={() => this.onButtonClick()} />
+         {/* <Button className = "button1" button_text="php" onClick={()=>this.phpRequest()}></Button>  */}
+
          {this.state.showUsers && <Users/>}
        
         </body>

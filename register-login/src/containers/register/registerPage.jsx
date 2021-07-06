@@ -4,38 +4,35 @@ import Header from '../../components/header'
  import FormInput from'../../components/formInput'
 import axios from 'axios';
 import ErrorMessage from "../../components/errorMessage";
-import form_fields from "../../helpers/form_input.json"
+import form_fields from "../../input_fields/form_input.json"
+import { connectToServerRegister } from '../../helpers/api_helpers';
+import {errMessage} from '../../constans/constants.js'
+
 
 
 class Register extends React.Component {
 
   constructor(props) {
     super(props);
-    //console.log(this.props.newUser);
     this.state = {fields:{full_name:'', business_name:'', phone:'', email:'', password:''}, err:{email_validate:'',
       phone_validate:'', password_validate:'', name_validate:''},errormessage_exist:''}
     this.handleChange = this.handleChange.bind(this)
   }
 
-  handleClick = () => {
+  handleClick = async ()  => {
     var token = this.props.props.match?.params.id 
-    //console.log(token);
-    axios.post('http://kerenadiv.com:8005/register', {
-      full_name: this.state.fields.full_name,
-      business_name: this.state.fields.business_name,
-      email: this.state.fields.email,
-      phone: this.state.fields.phone,
-      password: this.state.fields.password,
-      isNew: this.props.newUser,
-      token: token ? token : ''
-      }).then(response => {
-
-      switch(response.data.status) {
-
+    const params = { full_name: this.state.fields.full_name,
+                    business_name: this.state.fields.business_name,
+                    email: this.state.fields.email,
+                    phone: this.state.fields.phone,
+                    password: this.state.fields.password,
+                    isNew: this.props.newUser,
+                    token: token ? token : ''} 
+    const response = await connectToServerRegister(params)
+    switch(response.status) {
       //if there are invalid fields
-      case 2 :
-        var errMessage = {'name_validate': 'invalid name', 'email_validate': 'invalid email', 'phone_validate': 'invalid phone', 'password_validate': 'invalid password' }
-        Object.entries(response.data.valid).forEach(item => {
+      case 'invalid':
+        Object.entries(response.valid).forEach(item => {
           if (!item[1]) {
             this.setState(prevState => {
               let err = Object.assign({}, prevState.err);  
@@ -45,23 +42,10 @@ class Register extends React.Component {
             }
         })
         break;
-        
-      //fields are ok
-      case 1:
-        if (typeof(Storage) !== "undefined") {
-        localStorage.setItem("my_user", response.data.accessToken);
-        window.location.href = "http://localhost:3000/home";
-        } else {
-        console.log("Sorry, your browser does not support Web Storage...")
-        }
-       break
-
-      //user already exist
-      case 0:
+      case 'exist':
         this.setState({errormessage_exist:'This user already exist'})
         break
       }
-    })
   }
 
   handleChange(event, key, errMessage) {

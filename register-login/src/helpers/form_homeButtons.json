@@ -1,9 +1,0 @@
-{"side_bar":[
-    {
-       "key":"Users",
-       "button_text": "Users",
-       "className": "button1",
-       "onClick": "this.handleChange"
-   }
-]
-}

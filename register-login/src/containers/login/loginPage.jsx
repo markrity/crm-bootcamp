@@ -2,13 +2,15 @@ import React from "react";
 import Header from '../../components/header'
 import Button from '../../components/button'
 import FormInput from'../../components/formInput'
+import PLink from '../../components/pLink'
 import axios from 'axios';
 import '../../style/inputStyle.css'
 
 import {
   Redirect
 } from "react-router-dom";
-import PLink from "../../components/pLink";
+
+import { connectToServerLogin } from '../../helpers/api_helpers';
 
 class Login extends React.Component {
 
@@ -19,30 +21,13 @@ class Login extends React.Component {
       this.handleChange_password = this.handleChange_password.bind(this) 
     }
 
-    handleClick = () => {
-      axios.post('http://kerenadiv.com:8005/login', {
-        mail: this.state.email,
-
-        password: this.state.password
-        }).then(response => {
-
-            //user is exist
-            if(response.data.status) {
-            if (typeof(Storage) !== "undefined") {
-              localStorage.setItem("my_user", response.data.accessToken);
-             } else {
-              console.log("Sorry, your browser does not support Web Storage...")
-             }
-             console.log(this.props.history)
-             window.location.href = "http://localhost:3000/home";
-            }
-
-            else {
-              this.setState({errormessage:"That Beautiz accounct doesn't exist"})
-            }
-          })
-         
-    } 
+    handleClick = async ()  => {
+      const params = {mail: this.state.email, password: this.state.password}
+      const response = await connectToServerLogin(params)
+      if(!response) {
+        this.setState({errormessage:"That Beautiz account doesn't exist"})
+      }
+  } 
 
     handleChange_email(event) {
       this.setState({errormessage:''})

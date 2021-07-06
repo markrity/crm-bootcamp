@@ -25,7 +25,7 @@ app.use(myLogger);
 
 function myLogger(req, res, next) {
   //TODO loop on objects 
-  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/getAllUsers' || req.originalUrl==='/register:id' || req.originalUrl=== '/addUser') {
+  if (req.originalUrl=== '/login' || req.originalUrl==='/register' || req.originalUrl==='/reset' || req.originalUrl==='/getAllUsers' || req.originalUrl==='/register:id' || req.originalUrl=== '/addUser' || req.originalUrl==='/change') {
     next();
   } 
   else {
@@ -134,7 +134,8 @@ function insertNewUser(full_name, phone, password, token) {
  
 }
 
-app.post('/login', function(req, res) {   
+app.post('/login', function(req, res) {  
+  console.log(req.body); 
   var {mail,password} = req.body;
   var isExist = `SELECT * FROM users WHERE (user_mail = '${mail}') AND (user_password = '${md5(password)}')`
   con.query(isExist, function (err, result) {
@@ -148,6 +149,7 @@ app.post('/login', function(req, res) {
         "user_fullname":result[0].user_fullname
       }
       const accessToken = jwt.sign(bodyJWT, secret)
+      console.log(accessToken);
       res.json({accessToken, status:true});
     }
   });
@@ -194,11 +196,7 @@ app.post('/change', function(req, res) {
       console.log(result);
       var isExist = `UPDATE users SET user_password = '${md5(password)}' WHERE user_mail = '${result.mail}' `
       con.query(isExist, function (err, result) {
-        if (err) {
-          console.log(err)
-          //connection error!!!
-           res.json({status:0});
-        }
+        if (err) { throw err }
         else {
           //ok
          res.json({status:true});
