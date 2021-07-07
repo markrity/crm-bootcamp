@@ -18,14 +18,13 @@ class UsersManager {
      * @param {string} token 
      * @returns 
      */
-   async editUser(fields, token){
+   async editNewUser(fields, token){
         let data = {valid: false, errors: [], serverError: ''};
 
         // fields validations
         data =  validation.validateAll(fields);
         if(!data.valid){
-            res.send(data);
-            return;
+            return data;
         }
 
         const tokenBody = sessionHelper.verifyToken(token);
@@ -181,6 +180,34 @@ class UsersManager {
         console.log(data);
         return data;  
     }
+
+    /**
+     * Updates the new details of the old user in the db.
+     * @param {object} fields 
+     * @param {string} token 
+     * @returns 
+     */
+   async editOldUser(fields, userId){
+    let data = {valid: false, errors: [], serverError: ''};
+
+    // fields validations
+    data =  validation.validateAll(fields);
+    if(!data.valid){
+        res.send(data);
+        return;
+    }
+    
+    // insert the account to the db
+    let sql = `UPDATE users SET user_name = '${fields.name.value}', user_mail = '${fields.mail.value}', user_phone = '${fields.phone.value}' WHERE user_id = ${userId};`;
+    let result = await sqlHelper.update(sql).catch((err)=>{});
+    if(!result){
+        data.serverError = 'serverError';
+        return data;
+    }
+
+    data.valid = true;
+    return data;
+}
 
 } 
 

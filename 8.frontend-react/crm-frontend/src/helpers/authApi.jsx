@@ -127,20 +127,12 @@ class AuthApi {
             return false;
         }
     }
+
+    async editOldUser(data){
+        const response = await axios.post(`${this.basicUrl}/editOldUser`, data);
+        return response ? response.data : null;
+    }
 }
 
 
-// const response = await axios.get('http://rgb.com:8005/ping', 
-//         {
-//             headers: {
-//                 'authorization': localStorage.getItem('jwtToken')
-//             }
-//         })
-//         console.log(response)
-//         if(response){
-//             return response.data;
-//         }
-//         else {
-//             return false;
-//         }
 export default AuthApi;

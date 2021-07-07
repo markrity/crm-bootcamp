@@ -99,7 +99,7 @@ app.post('/addUser', async function(req, res){
 
 app.post('/editUser', async function(req, res){
   const {fields, token} = req.body;
-  const response = await usersManager.editUser(fields, token);
+  const response = await usersManager.editNewUser(fields, token);
   res.send(response);
 });
 
@@ -114,4 +114,12 @@ app.post('/removeUser', async function(req, res){
   const response = await usersManager.removeUser(req.body);
   res.send(response);
 });
+
+app.post('/editOldUser', async function(req, res){
+  const {fields, userId} = req.body;
+  const response = await usersManager.editOldUser(fields, userId);
+  res.send(response);
+});
+
+
 

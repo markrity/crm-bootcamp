@@ -6,7 +6,7 @@ import '../styles/massageBox.css';
 import {
     Link,
   } from "react-router-dom";
-  import React, { useState, useEffect , usePrevious} from 'react';
+  import React, { useState} from 'react';
 
 const authApi = new AuthApi();
 
@@ -62,13 +62,9 @@ function ForgotPassword(props) {
               : <div className='form-box'>
               <Form 
                   className='form-body'
-                //  fields={forgot.fields} 
-                //  title={forgot.title}
                   submitHandle={forgot.submitFunc} 
-                 // type={forgot.type}
                   errorMap={forgot.errorMap}
                  button= {forgot.buttonTitle}
-                //  buttonClass={forgot.buttonClass}
                   {...forgot}
               />
               <div className='links'>

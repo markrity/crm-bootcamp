@@ -16,8 +16,8 @@ function Table(props) {
       
 
     return (
-        <div>
-            <table className='table-container' id='table-container' {...getTableProps()}>
+        <div className='table-container'>
+            <table className='table sticky' id='table' {...getTableProps()}>
       <thead>
         {headerGroups.map(headerGroup => (
           <tr className='table-header' {...headerGroup.getHeaderGroupProps()}>

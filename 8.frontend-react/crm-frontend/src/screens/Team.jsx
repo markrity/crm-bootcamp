@@ -3,7 +3,7 @@ import CrmButton from '../components/CrmButton';
 import React, {useState, useMemo, useEffect, useRef} from 'react';
 import ReactDom from 'react-dom';
 import Form from '../components/Form';
-import ModelWindow from '../components/ModalWindow';
+import '../styles/actionModal.css';
 import Modal from 'react-modal';
 import '../styles/crmPage.css'
 import '../styles/modalWindow.css';
@@ -18,21 +18,24 @@ const authApi = new AuthApi();
 
 function Team(props){
     var isLoading = false;
+    const [itemToDelete, setItemToDelete] = useState({});
+    const [itemToEdit, setItemToEdit] = useState({});
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
     const [data, setData] = useState([]);
     const dataRef = useRef(data);
     dataRef.current = data;
 
 
     const submit = async (dataToSent) => {
-      // TODO add validation
         const res = await authApi.newUser(dataToSent);
         console.log(res.valid);
         if(res.valid){
           const newData = [...data];
           const userDetails = res.user;
           userDetails.status = 'pending';
-          newData.push(res.user);
+          newData.unshift(res.user);
           setData(newData);
           setIsModalOpen(false);
         } else {
@@ -56,24 +59,27 @@ function Team(props){
     }
 
     const getUsersList = async () => {
-      const result = await authApi.getUsers();
+      let result = await authApi.getUsers();
       if(result && result.valid){
-         return tableParser(result.usersList);
-        // return result.usersList;
-
-      
+          result = result.usersList.reverse();
+         return tableParser(result);
       }
    };
    
-
+   
    const onRemoveItem = (value) => {
-     console.log("the value is: ",value);
-    console.log("data current: ",dataRef.current);
-    authApi.deleteUser(value);
+     setItemToDelete(value);
+     openDeleteUserWindow();
+   }
+   
+   const removeItem = () => {
+    authApi.deleteUser(itemToDelete);
+    console.log("item to delete", itemToDelete);
     let newData = dataRef.current.filter((item)=>{
-      console.log(value.user_id,"is equal?", item.user_id);
-      return value.user_id != item.user_id;
+      console.log(itemToDelete.user_id,"is equal?", item.user_id);
+      return itemToDelete.user_id != item.user_id;
     })
+    closeDeleteUserWindow();
     setData(newData);
    }
    
@@ -121,11 +127,13 @@ function Team(props){
                   }}>
                   <FontAwesomeIcon className='trash-icon' icon={faTrash} size='sm'/>
           </span> 
-          {/* <span style={{cursor:'pointer'}}
+          {value.cell.row.original.user_name && <span style={{cursor:'pointer'}}
                 onClick={() => {
+                  setItemToEdit(value.cell.row.original);
+                  openEditUserWindow();
                   }}>
                   <FontAwesomeIcon className='edit-icon' icon={faEdit} size='sm'/>
-          </span>  */}
+          </span> }
           </div>
           
         )
@@ -153,7 +161,68 @@ function Team(props){
             mainType: 'mail'
           }
         }
+    }
+
+    const submitEditUser = async (formFieldsData) => {
+        const res = await authApi.editOldUser({fields: formFieldsData, userId: itemToEdit.user_id});
+        console.log(res.valid);
+        if(res.valid){
+
+          let newData = dataRef.current.map((item)=>{
+            if(item.user_id == itemToEdit.user_id){
+              item.user_name = formFieldsData.name.value;
+              item.user_mail = formFieldsData.mail.value;
+              item.user_phone = formFieldsData.phone.value;
+            }
+            return item;
+          })
+          console.log(newData);
+          
+          setData(newData);
+          closeEditUserWindow();
+        } else {
+          return res;
+        }
+    };
+
+    const editUserForm = {
+      submitFunc: submitEditUser,
+      type: 'editUser',
+      title: "Edit user details",
+      errorMap: {
+        'serverError': 'Try again later',
+        'userMailAlreadyExist': 'User mail already exist'
+      },
+      buttonTitle: 'Save',
+      buttonClass: 'main-button',
+      fields: {
+        name: {
+          text: "Full Name",
+          id: "name",
+          type: 'text',
+          error: false,
+          mainType: 'name',
+          value: itemToEdit.user_name
+        },
+        mail: {
+          text: "Enter User Mail",
+          id: "mail",
+          error: false,
+          mainType: 'mail',
+          value: itemToEdit.user_mail
+        },
+        phone: {
+          text: "Phone Number",
+          id: "phone",
+          type: 'text',
+          error: false,
+          mainType: 'phone',
+          value: itemToEdit.user_phone
+        }, 
       }
+    }
+
+
 
     const openAddUserWindow = ()=>{
         setIsModalOpen(true);
@@ -163,12 +232,29 @@ function Team(props){
         setIsModalOpen(false);
     };
 
+    const openDeleteUserWindow = ()=>{
+      setIsDeleteModalOpen(true);
+    };
+
+    const closeDeleteUserWindow = ()=>{
+        setIsDeleteModalOpen(false);
+    };
+
+    const openEditUserWindow = ()=>{
+      setIsEditModalOpen(true);
+      console.log('item ', itemToEdit);
+    };
+
+    const closeEditUserWindow = ()=>{
+        setIsEditModalOpen(false);
+    };
+    
+
     return (
         <div>
             <Header/>
             <div className='crm-page'>
             <PageTitle className='page-title' title='Team' description='Manage your team.'/>
-            {/* <CrmButton content='add user' class='secondary-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/> */}
             <div className='add-user-box'>
             <CrmButton content='Add User' buttonClass='main-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
             </div>
@@ -183,6 +269,21 @@ function Team(props){
                     button= {addUserForm.buttonTitle}
                     buttonClass={addUserForm.buttonClass}
                     submitHandle={addUserForm.submitFunc} 
+                />
+            </Modal>
+            <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeDeleteUserWindow}  overlayClassName="Overlay" className='modal'>
+                <h2>Are you sure you want delete this item?</h2>
+                <div className='action-buttons-modal'>
+                <CrmButton content='Delete' buttonClass='main-button' isLoading={isLoading} callback={()=> removeItem()}/>
+                <CrmButton content='Cancel' buttonClass='secondary-button' isLoading={isLoading} callback={()=> closeDeleteUserWindow()}/>
+                </div>
+            </Modal>
+            <Modal isOpen={isEditModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeEditUserWindow}  overlayClassName="Overlay" className='modal'>
+            <Form 
+                    className='form-body'
+                    button= {editUserForm.buttonTitle}
+                    submitHandle={editUserForm.submitFunc} 
+                    {...editUserForm}
                 />
             </Modal>
             </div>

@@ -76,6 +76,3 @@ insert(sql){
 }
 
 export default SqlHelper;
-
-
-// // "debug": "export PORT=8005 && nodemon --inspect index.js"
