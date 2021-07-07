@@ -16,12 +16,9 @@ function Login(props) {
       
       const submit = async (data) => {
         const res = await authApi.signin(data);
-        console.log(res.valid);
+        console.log("response", res.valid);
         if(res.valid){
-          console.log("history" , props.history);
           window.location.href = 'http://localhost:3000/home';
-          // props.history.push('/home');
-          
         } else {
           return res;
         }

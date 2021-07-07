@@ -59,7 +59,6 @@ function Form(props) {
                 }
                 setFields(fieldsTmp);
             }
-            console.log("error map: ", props.errorMap);
             setMainError(props.errorMap[responseData.serverError]);
         }
         setIsLoading(false);

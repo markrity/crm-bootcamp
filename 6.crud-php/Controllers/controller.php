@@ -15,4 +15,9 @@ class controller
         require_once("./Models/$model_class_name.php");
         $this->model = new $model_class_name();
     }
+
+    public function getPostJsonData()
+    {
+       return json_decode(file_get_contents('php://input'));
+    }
 }
