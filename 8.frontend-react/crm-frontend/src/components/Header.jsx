@@ -15,12 +15,33 @@ function Header(props) {
             url: '/home'
         }, 
         {
+            title: "Projects", 
+            subLinks: [
+                {
+                    title: "All projects", 
+                    url: '/2'
+                },
+                {
+                    title: "My projects", 
+                    url: '/3'
+                }, 
+            ]
+        }, 
+        {
+            title: "Clients", 
+            url: '/6'
+        }, 
+        {
             title: "Team", 
             url: '/team'
         }, 
         {
+            title: "Finance", 
+            url: '/7'
+        }, 
+        {
             title: "Settings", 
-            url: '#'
+            url: '/5'
         }
     ];
 
@@ -34,10 +55,10 @@ function Header(props) {
     return (
         <div className="header-container">
             <Logo size='xsmall'/>
-            <div className='nav-wrapper' >
-                <div className='links-container'>
+            <div className='links-container'>
                 <Navigation links={links}/>
                 </div>
+            <div className='nav-wrapper' >
             <CrmButton buttonClass='spacial-button' content='Log Out' callback={()=> logoutFunc()}/>
             {/* <button id="logout" onClick={()=>logoutFunc()}>Logout</button> */}
             </div>

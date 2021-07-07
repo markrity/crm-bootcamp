@@ -10,6 +10,7 @@ import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Loader from "react-loader-spinner";
 import './styles/loading.css';
 import './styles/styles.scss';
+import Header from './components/Header';
 import {
   BrowserRouter as Router,
   Switch,
