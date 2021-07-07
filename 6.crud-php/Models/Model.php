@@ -32,7 +32,8 @@ class Model
     {
         $columns = join(", ", $queryData["cols"]);
         $values = join(", ", $queryData["values"]);
-        return $this->insertQuery("INSERT INTO $this->table ($columns) VALUES ($values)");
+        return $this->insert("INSERT INTO $this->table ($columns) VALUES ($values)");
+        // return "INSERT INTO $this->table ($columns) VALUES ($values)";
     }
 
     /**
@@ -47,7 +48,7 @@ class Model
             $columns = join(", ", $queryData["cols"]);
         }
         $where = $this->buildWhere($queryData);
-        return $this->selectQuery("SELECT $columns FROM $this->table $where;");   
+        return $this->select("SELECT $columns FROM $this->table $where;");   
     }
 
     /**
@@ -72,7 +73,7 @@ class Model
     /**
      * Make an insert query 
      */
-    public function insertQuery ($sql){
+    public function insert ($sql){
         $result = $this->getDB()->query($sql);
         if($result){
             return $this->getDB()->insert_id;
@@ -83,7 +84,7 @@ class Model
     /**
      * Make a select query 
      */
-    public function selectQuery ($sql){
+    public function select ($sql){
         $this->getDB()->prepare($sql);
         $query = $this->getDB()->query($sql);
         if(!$query){
