@@ -156,10 +156,10 @@ function AllProjects(props){
         <div>
             <Header/>
             <div className='crm-page'>
-            <PageTitle className='page-title' title='All Projects' description='Manage your projects.'/>
-            <div className='add-user-box'>
+            <PageTitle className='page-title' title={props.mine ? 'My Projects' : 'All Projects'} description='Manage your projects.'/>
+            {!props.mine && <div className='add-user-box'>
             <CrmButton content='Add Project' buttonClass='main-button' icon='plus' isLoading={false} callback={()=> {}}/>
-            </div>
+            </div>}
             <Table columns={columns} data={data}/>
             <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove Project' onRequestClose={closeDeleteProjectWindow}  overlayClassName="Overlay" className='modal'>
                 <h2>Are you sure you want delete this item?</h2>

@@ -115,7 +115,7 @@ function Clients(props){
         <div>
             <Header/>
             <div className='crm-page'>
-            <PageTitle className='page-title' title='All clients' description='Manage your clients.'/>
+            <PageTitle className='page-title' title='All Clients' description='Manage your clients.'/>
             <Table columns={columns} data={data}/>
             <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove Project' onRequestClose={closeDeleteProjectWindow}  overlayClassName="Overlay" className='modal'>
                 <h2>Are you sure you want delete this item?</h2>
