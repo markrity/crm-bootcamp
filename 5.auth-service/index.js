@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken')
 const authRoutes = require('./routes/authRoutes')
+const buisnessRoutes = require('./routes/buisnessRoutes')
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const requireAuth = require('./Middleware/requireAuth');
@@ -15,12 +16,13 @@ app.use(cors({ credentials: true, origin: 'http://localhost:3000', exposedHeader
 app.options('*', cors());
 app.use(express.json());
 app.use(cookieParser())
-app.use('/auth', authRoutes)
 app.use(requireAuth)
+app.use('/auth', authRoutes)
+app.use('/buisness', buisnessRoutes)
+
 
 app.get('/me', (req, res) => {
   const { id } = req.user
-  console.log(token)
   console.log(id)
   try {
     let sql = `SELECT * FROM Users WHERE id='${id}'`;
@@ -30,7 +32,7 @@ app.get('/me', (req, res) => {
         return res.sendStatus(500)
       console.log(result)
       const userInfo = result[0]
-      return res.status(200).send({ token, userInfo })
+      return res.status(200).send({ userInfo })
     })
   } catch {
     return res.sendStatus(403);
