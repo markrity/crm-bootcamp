@@ -18,12 +18,12 @@ nav.primary-navigation ul li {
   position: relative;
   text-decoration: none;
   text-align: center;
-  font-family: arvo;
 }
 
 nav.primary-navigation li a, nav.primary-navigation .nav-icon {
   color: white;
   padding-left: 5px;
+  text-decoration: none;
 }
 
 nav.primary-navigation .dropdown li a {
@@ -75,16 +75,8 @@ nav.primary-navigation ul li ul li a:hover {
   transition: all 0.3s ease;
 }
 
-a {
-  text-decoration: none;
-}
-
-a:hover {
-  color: #3CA0E7;
-}
-
-ul li ul li a {
+nav ul li ul li a {
   -webkit-transition: all 0.5s ease;
   transition: all 0.5s ease;
 }
-/*# sourceMappingURL=nav.css.map */
+/*# sourceMappingURL=navigation.css.map */

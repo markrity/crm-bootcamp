@@ -6,21 +6,24 @@ class Model_projects extends Model
 {
     public $table = "projects";
     public $clientModel;
+    public $account_id;
+
     public function __construct()
     {
         parent::__construct();
         $this->clientModel = new Model_clients();
+        $this->clientModel->account_id = $this->account_id;
     }
 
     public function addProject($projectDetails)
     {
-
+        $this->clientModel->account_id = $this->account_id;
         $clientDetails = $projectDetails->client;
-        if(empty($clientDetails->clientId)){
-           $clientId = $this->clientModel->addClient($clientDetails->name, $projectDetails->accountId, $clientDetails->mail, $clientDetails->phone);
-        } else {
-            $clientId = $clientDetails->clientId;
-        }
+        $clientId = intval($clientDetails->clientId ?? -1);
+        if($clientId <= 0){
+           $clientId = $this->clientModel->addClient($clientDetails->name, $clientDetails->mail, $clientDetails->phone);
+        } 
+
         $queryData = [
             "cols" => [
                 'client_id', 
@@ -32,7 +35,7 @@ class Model_projects extends Model
             ],
             "values" => [
                 "'$clientId'",
-                "'$projectDetails->accountId'",
+                "'$this->account_id'",
                 "'$projectDetails->type'",
                 "'$projectDetails->description'",
                 "'$projectDetails->deadline'",
@@ -42,13 +45,21 @@ class Model_projects extends Model
         return $this->insertItem($queryData);
     }
 
-    public function getAllProjects($account)
+    public function getAllProjects($data)
     {   
         $queryData = [
+            "cols" => [
+                'projects.*',
+                'clients.client_name'
+            ],
             "where" => [
-                "account_id" => $account,
-            ]
+                "projects.account_id" => $this->account_id,
+            ],
+            "join" => 'INNER JOIN clients ON clients.client_id=projects.client_id'
         ];
-        return $this->getAll($queryData, true); 
+        if(!empty($data['user'])){
+            $queryData["where"]["assigned_user_id"] = $data['user'];
+        }
+        return $this->getAll($queryData); 
     }
 }

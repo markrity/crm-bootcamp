@@ -1,15 +1,17 @@
-import PageTitle from '../components/PageTitle';
-import CrmButton from '../components/CrmButton';
+import PageTitle from '../components/pageTitle/PageTitle';
+import CrmButton from '../components/crmButton/CrmButton';
 import React, {useState, useMemo, useEffect, useRef} from 'react';
 import ReactDom from 'react-dom';
-import Form from '../components/Form';
+// import Form from '../components/Form';
+import Form from '../components/form/Form';
 import '../styles/actionModal.css';
 import Modal from 'react-modal';
 import '../styles/crmPage.css'
-import '../styles/modalWindow.css';
+import '../styles/modal.scss';
+// import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
-import Header from '../components/Header';
-import Table from '../components/Table';
+import Header from '../components/header/Header';
+import Table from '../components/table/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck, faTrash , faEdit} from '@fortawesome/free-solid-svg-icons'
 
@@ -278,7 +280,7 @@ function Team(props){
                 <CrmButton content='Cancel' buttonClass='secondary-button' isLoading={isLoading} callback={()=> closeDeleteUserWindow()}/>
                 </div>
             </Modal>
-            <Modal isOpen={isEditModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeEditUserWindow}  overlayClassName="Overlay" className='modal'>
+            <Modal isOpen={isEditModalOpen} ariaHideApp={false} contentLabel='Edit User' onRequestClose={closeEditUserWindow}  overlayClassName="Overlay" className='modal'>
             <Form 
                     className='form-body'
                     button= {editUserForm.buttonTitle}

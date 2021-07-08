@@ -5,12 +5,14 @@ require_once("Model.php");
 class Model_clients extends Model
 {
     public $table = "clients";
+    public $account_id = 1;
+    
     public function __construct()
     {
         parent::__construct();
     }
 
-    public function addClient($name, $account, $mail, $phone)
+    public function addClient($name, $mail, $phone)
     {
         $queryData = [
             "cols" => [
@@ -21,7 +23,7 @@ class Model_clients extends Model
             ],
             "values" => [
                 "'$name'",
-                "'$account'",
+                "'$this->account_id'",
                 "'$mail'",
                 "'$phone'"
             ],
@@ -29,11 +31,11 @@ class Model_clients extends Model
         return $this->insertItem($queryData);
     }
 
-    public function getAllClients($account)
+    public function getAllClients()
     {   
         $queryData = [
             "where" => [
-                "account_id" => $account,
+                "account_id" => $this->account_id,
             ]
         ];
         return $this->getAll($queryData, true); 

@@ -1,5 +1,5 @@
-import Form from '../components/Form';
-import Logo from '../components/Logo';
+import Form from '../components/form/Form';
+import Logo from '../components/logo/Logo';
 import AuthApi from '../helpers/authApi';
 // import '../styles/login.css';
 import '../styles/massageBox.css';
@@ -7,7 +7,7 @@ import {
     Link, useParams
   } from "react-router-dom";
 import React, { useState, useEffect } from 'react';
-import Massage from '../components/Massage';
+import Message from '../components/message/Message';
 
 const authApi = new AuthApi();
 
@@ -107,7 +107,7 @@ function ResetPassword(props) {
                       passwordError = 'Password must include 1-9 a-z A-Z and at least 8 characters'
                   /> 
                   }
-              </div> : <Massage links={links} massage='This page is no longer available.'/>
+              </div> : <Message links={links} massage='This page is no longer available.'/>
             )}
             
         </div>

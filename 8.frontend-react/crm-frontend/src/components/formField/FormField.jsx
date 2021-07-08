@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/formFieldStyle.css';
+import './formField.scss';
 
 function FormField(props) {
     var error = `error-${props.id}`;
@@ -12,5 +12,3 @@ function FormField(props) {
 }
 
 export default FormField;
-
-// value={props.value}

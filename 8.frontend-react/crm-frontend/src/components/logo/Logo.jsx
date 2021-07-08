@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/logo.css';
+import './logo.scss';
 
 function Logo(props) {
     var classes = `logo-container ${props.size}`

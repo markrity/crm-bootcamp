@@ -1,6 +1,6 @@
 import React from 'react';
-import Form from '../components/Form';
-import Logo from '../components/Logo';
+import Form from '../components/form/Form';
+import Logo from '../components/logo/Logo';
 import AuthApi from '../helpers/authApi';
 import '../styles/simpleForm.css';
 import {

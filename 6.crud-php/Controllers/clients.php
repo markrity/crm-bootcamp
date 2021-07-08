@@ -16,14 +16,13 @@ class clients extends controller
     public function addClient()
     {
         $data = $this->getPostJsonData();
-        $this->response = $this->model->addClient($data->name, $data->account , $data->mail, $data->phone);
+        $this->response = $this->model->addClient($data->name, $this->account_id , $data->mail, $data->phone);
         return $this->response;
     }
 
     public function getAllClients()
     {
-        $data = $this->getPostJsonData();
-        $result= $this->model->getAllClients($data->account);
+        $result= $this->model->getAllClients($this->account_id);
         $this->response = $result;
         return $this->response;
     }

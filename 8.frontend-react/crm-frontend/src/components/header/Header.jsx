@@ -1,9 +1,10 @@
 import React from 'react';
-import Navigation from './Navigation';
-import Logo from './Logo';
-import '../styles/header.css'
-import AuthApi from '../helpers/authApi';
-import CrmButton from './CrmButton';
+import Navigation from '../navigation/Navigation';
+import Logo from '../logo/Logo';
+import AuthApi from '../../helpers/authApi';
+import CrmButton from '../crmButton/CrmButton';
+import './header.scss';
+
 const authApi = new AuthApi();
 
 function Header(props) {
@@ -19,17 +20,17 @@ function Header(props) {
             subLinks: [
                 {
                     title: "All projects", 
-                    url: '/2'
+                    url: '/allProjects'
                 },
                 {
                     title: "My projects", 
-                    url: '/3'
+                    url: '/myProjects'
                 }, 
             ]
         }, 
         {
             title: "Clients", 
-            url: '/6'
+            url: '/clients'
         }, 
         {
             title: "Team", 

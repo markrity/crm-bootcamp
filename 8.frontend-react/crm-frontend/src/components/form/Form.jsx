@@ -1,9 +1,8 @@
-// import React from 'react';
-import '../styles/formStyle.css';
 import React, { useState, useEffect } from 'react';
-import FormField from './FormField';
-import CrmButton from './CrmButton';
-import validate from '../helpers/validationHelper';
+import FormField from '../formField/FormField';
+import CrmButton from '../crmButton/CrmButton';
+import validate from '../../helpers/validationHelper';
+import './form.scss';
 
 
 function Form(props) {

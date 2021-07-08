@@ -6,6 +6,8 @@ class Model
 {
     public static $db_instance = null;
     public $table;
+    public $account_id;
+    // static public $account_id;
 
     public function __construct()
     {
@@ -48,7 +50,13 @@ class Model
             $columns = join(", ", $queryData["cols"]);
         }
         $where = $this->buildWhere($queryData);
-        return $this->select("SELECT $columns FROM $this->table $where;");   
+
+        $join = '';
+        if(!empty($queryData["join"])){
+            $join = $queryData["join"];
+        }
+        // return "SELECT $columns FROM $this->table $join $where;";
+        return $this->select("SELECT $columns FROM $this->table $join $where;");   
     }
 
     /**
@@ -85,7 +93,6 @@ class Model
      * Make a select query 
      */
     public function select ($sql){
-        $this->getDB()->prepare($sql);
         $query = $this->getDB()->query($sql);
         if(!$query){
             return false;

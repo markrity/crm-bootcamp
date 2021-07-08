@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTable} from 'react-table'
-import '../styles/table.css'
+import './table.scss'
 
 function Table(props) {
 

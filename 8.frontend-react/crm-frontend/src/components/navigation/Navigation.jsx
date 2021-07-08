@@ -1,12 +1,8 @@
 import React from 'react';
-import '../styles/navigation.css';
-import '../styles/nav.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons'
-import {
-    // BrowserRouter as Router,
-    Link,
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
+import './navigation.css';
 
 function Navigation(props) {
     
@@ -18,7 +14,6 @@ function Navigation(props) {
     const navList = [];
     for (let link of props.links){
         if(link.url){
-            console.log(link.url);
             navList.push(<li key={link.title}><Link className='nav-link' key={link.title} to={link.url}>{link.title}</Link></li>);
         } else {
             let subLinks = []

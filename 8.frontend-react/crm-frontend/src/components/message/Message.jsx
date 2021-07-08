@@ -1,9 +1,6 @@
 import React from 'react';
-import '../styles/massage.css'
-import {
-    // BrowserRouter as Router,
-    Link
-  } from "react-router-dom";
+import { Link } from "react-router-dom";
+import './message.scss'
 
 
 function Massage(props) {

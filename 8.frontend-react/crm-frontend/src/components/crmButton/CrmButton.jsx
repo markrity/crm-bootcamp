@@ -1,7 +1,7 @@
 import React from 'react';
-import '../styles/formButton.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus, faCheck } from '@fortawesome/free-solid-svg-icons'
+import './CrmButton.scss';
 
 function CrmButton(props) {
 
