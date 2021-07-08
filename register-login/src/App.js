@@ -16,6 +16,7 @@ import ResetPassword from "./containers/resetPassword/resetPassword";
 import ChangePassword from "./containers/changePassword/changePassword";
 import Register from "./containers/register/registerPage";
 import SideBar from "./components/sideBar";
+import SideBarNew from "./components/sideBarNew";
 import Home_TopNav from "./components/home_topNav";
 import Clients from "./containers/clients/clients";
 
@@ -53,7 +54,7 @@ function App(props) {
       <Router>
       <div>
         {isExist && <Home_TopNav className="button1" button_text="Logout" onClick={() => onButtonClick()}/>}
-        {isExist && <SideBar/>}
+   
      
         <Switch>
           <Route

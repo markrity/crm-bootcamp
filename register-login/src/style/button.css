@@ -28,14 +28,15 @@ button:hover {
 
 .button1 {
     margin-left: 15%;
-    width: 10vh;
+    width: 13vh;
     height: 5vh;
     cursor: pointer;
    
     background-color: #FEC89A;
     /* font-weight: bolder; */
     font-size: 20px;
-    border: none;
+    border-color: #F8EDEB;
+    border-radius: 5vh;
     font-weight: 900;
   
     /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */

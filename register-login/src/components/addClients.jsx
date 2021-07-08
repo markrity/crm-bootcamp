@@ -23,8 +23,9 @@ function AddClients(props) {
                 account_id: account_id
                 }).then(response => {
                     console.log(response);
+                    props.closeModal()
                   })  
-                setMessage('client added!')  
+               
         }
 
         else {
@@ -35,9 +36,10 @@ function AddClients(props) {
                 id: props.id
                 }).then(response => {
                     console.log(response);
+                    props.closeModal()
                     })  
-                setMessage('client edited!')  
         }
+       
     }
 
    
@@ -65,7 +67,6 @@ function AddClients(props) {
         <FormInput label="Email" defaultValue = {props.phone} type = "text" className ="input" placeholder= "Enter client's mail" onChange={e=> setEmail(e.target.value)}/>
         <Button className="button" button_text={props.button_text} onClick={handleClick} />
      
-        {message}
       </Modal>
     );
 }

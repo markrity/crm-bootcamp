@@ -7,17 +7,17 @@ import Table from '../../components/table'
 import '../../style/table.css'
 import AddUser from "../../components/addUser";
 import AddClients from "../../components/addClients";
-
+var counter = 1;
 function Clients(props) {
     const [data, setData] = useState([]);
     const [fullname, setFullName]= useState('');
     const [phone, setPhone]= useState('');
     const [email, setEmail]= useState('');
     const [userId, setUserId] = useState('');
-    const [dataChange, setDataChange] = useState(false);
+    const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [whichModal, setWhichModal] = useState('');
-
+    
     useEffect(() => {
         var account_id = localStorage.getItem("account_id");
         axios.post('http://localhost:991/clients/getAll/', {
@@ -29,7 +29,7 @@ function Clients(props) {
     }, [dataChange, modalIsOpen]);
 
     function changeData() {
-      setDataChange(!dataChange)
+      setDataChange(counter++)     
     }
 
     const columns = useMemo(
@@ -68,7 +68,6 @@ function Clients(props) {
                    </span> 
 
                    <span  onClick={() => {
-                            //console.log(row.cell);
                             setUserId(row.cell.row.original.id)
                             setFullName(row.cell.row.values.fullname);
                             setPhone(row.cell.row.values.phone);
