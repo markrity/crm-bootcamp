@@ -33,7 +33,7 @@ class Controller extends React.Component {
       <TopNav/>
         <div className="test_login">
         <div className="para">
-          <img src="https://image.freepik.com/free-photo/beautician-woman-clinic_23-2148878877.jpg"  width="626" height="526" ></img>
+          <img className = "mainImg" src="https://image.freepik.com/free-photo/beautician-woman-clinic_23-2148878877.jpg"  width="626" height="526" ></img>
           <h1>Learn how manage your clinic easier.</h1>
           </div> 
         <div className="controller">

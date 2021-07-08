@@ -15,7 +15,7 @@
 
         public function getAll($account_id) {
             $sql = "SELECT * FROM $this->table_name WHERE (account_id=$account_id)";
-            var_dump($sql);
+           
             $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }
@@ -30,14 +30,12 @@
             $headers = substr_replace($headers ,"",-1);
             $values = substr_replace($values ,"",-1);
             $sql = "INSERT INTO $this->table_name ($headers) VALUES ($values)";
-            var_dump($sql);
             $res = $this->getDB()->query($sql);
             return $res;
          }
 
          public function delete($id) {
-            $sql = "DELETE FROM $this->table_name WHERE ('id' = $id)";
-            var_dump($sql);
+            $sql = "DELETE FROM $this->table_name WHERE (id = $id)";
             $res = $this->getDB()->query($sql);
             return $res;
         }

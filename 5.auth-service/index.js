@@ -101,7 +101,7 @@ app.post('/register', async (req, res) => {
             "user_fullname":full_name
           }
           const accessToken = jwt.sign(bodyJWT, secret)
-          res.json({status:1, accessToken});
+          res.json({status:1, accessToken, account_id:result.insertId});
         });
       });
     }
@@ -150,7 +150,7 @@ app.post('/login', function(req, res) {
       }
       const accessToken = jwt.sign(bodyJWT, secret)
       console.log(accessToken);
-      res.json({accessToken, status:true});
+      res.json({accessToken, status:true,account_id:result[0].account_id});
     }
   });
 });

@@ -56,16 +56,14 @@ function Users(props) {
     }
     
     return (
-    <body>
-
+  
     <div className="test">
-   
     {modalIsOpen && <AddUser modalIsOpen={() => openModal()} closeModal={() => closeModal()}/>}
     <Table columns={columns} data={data} /> 
     <Button className="add_button" button_text="Add user" onClick={() => openModal()}></Button>
     </div>
     
-    </body>
+   
     );
 }
 

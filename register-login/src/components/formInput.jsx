@@ -8,6 +8,7 @@ function FormInput(props) {
         <input
         type={props.type}
         className={props.className}
+        defaultValue={props.defaultValue}
         placeholder={props.placeholder}
         onChange={props.onChange} />
     </div>

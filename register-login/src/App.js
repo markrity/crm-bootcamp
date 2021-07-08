@@ -17,6 +17,10 @@ import ChangePassword from "./containers/changePassword/changePassword";
 import Register from "./containers/register/registerPage";
 import SideBar from "./components/sideBar";
 import Home_TopNav from "./components/home_topNav";
+import Clients from "./containers/clients/clients";
+
+import {removeFromLS} from "./helpers/local_storage_helper"
+import Users from "./containers/users/users";
 
 function App(props) {
   const [isExist, setExist] = useState(false);
@@ -38,9 +42,19 @@ function App(props) {
     }
   });
 
+  function onButtonClick()  { 
+    removeFromLS();
+    window.location.href = "http://localhost:3000/login";
+  }
+
   return (
     <div>
+     
       <Router>
+      <div>
+        {isExist && <Home_TopNav className="button1" button_text="Logout" onClick={() => onButtonClick()}/>}
+        {isExist && <SideBar/>}
+     
         <Switch>
           <Route
             exact
@@ -80,7 +94,18 @@ function App(props) {
               <Controller {...props} reg={true} log={false} newUser={true} />
             )}
           />
+
+        <Route path="/clients">
+            <Clients  isExist={isExist} />
+            </Route>
+
+        <Route path="/users">
+           <Users  isExist={isExist} />
+          </Route>
+
+
         </Switch>
+        </div>
       </Router>
     </div>
   );

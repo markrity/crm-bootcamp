@@ -27,3 +27,19 @@
       /* display: flex; */
       margin-top: 10%;
   }
+
+  .manImg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+  }
+
+  .add_button {
+    background-color: none;
+  }
+
+  .action {
+    display: flex;
+    justify-content: space-around;
+  }

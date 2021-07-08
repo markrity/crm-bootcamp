@@ -41,8 +41,11 @@ button:hover {
     /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */
 }
         
-.add_button {
-    margin-top: 8%;
+.add_image {
+    width:40px;
+    cursor: pointer;
+    margin-top: 13vh;
+    
 }
 
 .close {
@@ -51,5 +54,5 @@ button:hover {
     border-width: 3px;
     font-weight: 100px;
     cursor: pointer;
-    color: #FEC89A;
+    color: black;
 }

@@ -9,6 +9,7 @@ export async function connectToServerLogin(params) {
    const res =  await axios.post(basicURL+'/login',{...params})
    if(res.data.status) {
         localStorage.setItem("my_user", res.data.accessToken);
+        localStorage.setItem("account_id", res.data.account_id);
         window.location.href = "http://localhost:3000/home";
         return true;
     }
@@ -25,6 +26,7 @@ export async function connectToServerRegister(params) {
         //ok
         case 1:  
             localStorage.setItem("my_user", res.data.accessToken);
+            localStorage.setItem("account_id", res.data.account_id);
             window.location.href = "http://localhost:3000/home";
             break
         //invalid fields

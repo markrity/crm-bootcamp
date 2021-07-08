@@ -4,6 +4,7 @@ import Button from '../components/button'
 function Home_TopNav(props) {
 
     return (
+        <body>
         <div className="topnav">
         <div className="topnav_text">
             Beautiz
@@ -12,6 +13,7 @@ function Home_TopNav(props) {
         <Button className = {props.className} button_text={props.button_text} onClick={props.onClick}></Button> 
         </div>
       </div>
+      </body>
     );
 }
 
