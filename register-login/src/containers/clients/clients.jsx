@@ -7,6 +7,14 @@ import Table from '../../components/table'
 import '../../style/table.css'
 import AddUser from "../../components/addUser";
 import AddClients from "../../components/addClients";
+import ConfirmDelete from "../../components/confirmDelete";
+
+import {
+  BrowserRouter as Router,
+
+
+  Redirect,
+} from "react-router-dom";
 var counter = 1;
 function Clients(props) {
     const [data, setData] = useState([]);
@@ -16,6 +24,7 @@ function Clients(props) {
     const [userId, setUserId] = useState('');
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [confirmIsOpen, setConfirmOpen] = useState(false);
     const [whichModal, setWhichModal] = useState('');
     
     useEffect(() => {
@@ -30,6 +39,16 @@ function Clients(props) {
 
     function changeData() {
       setDataChange(counter++)     
+    }
+
+    function deleteClient() {
+      console.log('hi');
+      axios.post('http://localhost:991/clients/delete/', {
+        client_id: userId
+          }).then(response => {
+            changeData()
+            setConfirmOpen(false)
+            });
     }
 
     const columns = useMemo(
@@ -56,13 +75,11 @@ function Clients(props) {
 
                 Cell: (row)=> (
                   <div className= "action">
+                    
                   <span  onClick={() => {
-                            console.log(row.cell.row.original.id);
-                            axios.post('http://localhost:991/clients/delete/', {
-                              client_id: row.cell.row.original.id 
-                                }).then(response => {
-                                  changeData()
-                                  });
+                            setConfirmOpen(true)
+                            setUserId(row.cell.row.original.id);      
+
                           }}>
                             <img class="manImg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
                    </span> 
@@ -98,9 +115,11 @@ function Clients(props) {
     
     return (
     <body>
-
+   {!(props.isExist)&& <Redirect to="/login" />}
     <div className="test">
-   
+
+    {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteClient()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
+
     {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={userId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     <Table columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Clients" onClick={() => onClickAdd()}>
