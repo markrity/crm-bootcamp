@@ -49,7 +49,7 @@ class Model
         } else {
             $columns = join(", ", $queryData["cols"]);
         }
-        $where = $this->buildWhere($queryData);
+        $where = $this->build($queryData, 'where');
 
         $join = '';
         if(!empty($queryData["join"])){
@@ -59,21 +59,36 @@ class Model
         return $this->select("SELECT $columns FROM $this->table $join $where;");   
     }
 
+    protected function updateItem($queryData)
+    {
+        
+        $where = $this->build($queryData, 'where');
+        $set = $this->build($queryData, 'set');
+
+
+        return $this->update("UPDATE $this->table $set $where;");   
+        // return "UPDATE $this->table $set $where;";   
+    }
+
+
+
     /**
      * Create string of where clause from queryData
      */
-    public function buildWhere($queryData){
-        if(!empty($queryData["specialCondition"])){
-            $condition = $queryData["specialCondition"];
-            return "WHERE $condition";
+    public function build($queryData, $operation){
+        if($operation == 'where'){
+            if(!empty($queryData["specialCondition"])){
+                $condition = $queryData["specialCondition"];
+                return "WHERE $condition";
+            }
         }
 
-        if(!empty($queryData["where"])){
+        if(!empty($queryData[$operation])){
             $conditions = [];
-            foreach ($queryData["where"] as $col => $value){
+            foreach ($queryData[$operation] as $col => $value){
                 array_push($conditions, "$col = $value");
             }
-            return 'WHERE ' . join(" AND ", $conditions);
+            return "$operation " . join($operation == 'where' ? " AND " : ', ', $conditions);
         } 
         return "";
     }
@@ -99,6 +114,17 @@ class Model
         }
         $result = $query->fetch_all(MYSQLI_ASSOC);
         return $result;
+    }
+
+    /**
+     * Make an update query 
+     */
+    public function update ($sql){
+        $result = $this->getDB()->query($sql);
+        if($result){
+            return $this->getDB()->affected_rows;
+        }
+        return -1;
     }
 
 }

@@ -2,8 +2,15 @@
 .fieldContainer {
     display: flex;
     flex-direction: column;
-    /* width: 20%; */
     margin-bottom: 15px;
+
+    textarea {
+        border: solid 1px lightgray;
+
+        &:focus{
+            border: solid 1px #fe5f55;
+        }
+    }
 }
 
 .form-input{
@@ -16,9 +23,9 @@
     font-family: 'Montserrat', sans-serif;
 }
 
-.form-input::placeholder{
+.form-input::placeholder, label{
     color:  rgb(184, 180, 180);
-    
+    padding-bottom: 8px;
 }
 
 .form-input:focus{
@@ -29,4 +36,8 @@
 
 .field-error {
     color: red;
+}
+
+#date {
+    width: 40%;
 }

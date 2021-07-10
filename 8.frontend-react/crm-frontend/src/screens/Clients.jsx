@@ -32,7 +32,6 @@ function Clients(props){
     const getClientsList = async () => {
         let clients = await crmApi.getAllClients();
         if(clients){
-            clients = clients.data;
             return clients;
         }
    };

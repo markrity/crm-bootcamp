@@ -34,4 +34,23 @@ class projects extends controller
         return $this->response;
     }
 
+    public function updateProject()
+    {
+        $params = $this->getPostJsonData();
+        $data = [
+            'account' => $this->account_id,
+            'user' => $this->user_id,
+        ];
+        $result= $this->model->updateProject($data, $params);
+        if($result == -1){
+            $this->response->valid = false;
+            $this->response->serverError = "serverError";
+        }
+        else {
+            $this->response->valid = true;
+            $this->response->affectedRows = $result;
+        }
+        return $this->response;
+    }
+
 }

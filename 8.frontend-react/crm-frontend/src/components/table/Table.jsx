@@ -31,7 +31,7 @@ function Table(props) {
         {rows.map((row, i) => {
           prepareRow(row);
           return (
-            <tr className='card' {...row.getRowProps()}>
+            <tr onClick={()=>{props.clickRow(row)}} className='card' {...row.getRowProps()}>
               {row.cells.map(cell => {
                 return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
               })}

@@ -32,7 +32,7 @@ function Team(props){
 
     const submit = async (dataToSent) => {
         const res = await authApi.newUser(dataToSent);
-        console.log(res.valid);
+        console.log("result:", res);
         if(res.valid){
           const newData = [...data];
           const userDetails = res.user;
@@ -146,7 +146,7 @@ function Team(props){
   )
 
     const addUserForm = {
-        submitFunc: submit,
+      submitHandle: submit,
         type: 'addUser',
         title: "Add user",
         errorMap: {
@@ -188,7 +188,7 @@ function Team(props){
     };
 
     const editUserForm = {
-      submitFunc: submitEditUser,
+      submitHandle: submitEditUser,
       type: 'editUser',
       title: "Edit user details",
       errorMap: {
@@ -270,7 +270,7 @@ function Team(props){
                     errorMap={addUserForm.errorMap}
                     button= {addUserForm.buttonTitle}
                     buttonClass={addUserForm.buttonClass}
-                    submitHandle={addUserForm.submitFunc} 
+                    submitHandle={addUserForm.submitHandle} 
                 />
             </Modal>
             <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeDeleteUserWindow}  overlayClassName="Overlay" className='modal'>
@@ -284,7 +284,7 @@ function Team(props){
             <Form 
                     className='form-body'
                     button= {editUserForm.buttonTitle}
-                    submitHandle={editUserForm.submitFunc} 
+                    submitHandle={editUserForm.submitHandle} 
                     {...editUserForm}
                 />
             </Modal>

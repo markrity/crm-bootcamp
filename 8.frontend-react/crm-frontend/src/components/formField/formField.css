@@ -6,8 +6,15 @@
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  /* width: 20%; */
   margin-bottom: 15px;
+}
+
+.fieldContainer textarea {
+  border: solid 1px lightgray;
+}
+
+.fieldContainer textarea:focus {
+  border: solid 1px #fe5f55;
 }
 
 .form-input {
@@ -20,20 +27,24 @@
   font-family: 'Montserrat', sans-serif;
 }
 
-.form-input::-webkit-input-placeholder {
+.form-input::-webkit-input-placeholder, label {
   color: #b8b4b4;
+  padding-bottom: 8px;
 }
 
-.form-input:-ms-input-placeholder {
+.form-input:-ms-input-placeholder, label {
   color: #b8b4b4;
+  padding-bottom: 8px;
 }
 
-.form-input::-ms-input-placeholder {
+.form-input::-ms-input-placeholder, label {
   color: #b8b4b4;
+  padding-bottom: 8px;
 }
 
-.form-input::placeholder {
+.form-input::placeholder, label {
   color: #b8b4b4;
+  padding-bottom: 8px;
 }
 
 .form-input:focus {
@@ -44,5 +55,9 @@
 
 .field-error {
   color: red;
+}
+
+#date {
+  width: 40%;
 }
 /*# sourceMappingURL=formField.css.map */

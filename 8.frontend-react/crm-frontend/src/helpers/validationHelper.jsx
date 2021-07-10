@@ -14,6 +14,8 @@ const validate = (type, isRequired, value) => {
             // break;
         case 'phone':
             return validatePhone(value);
+        case 'number':
+            return validateNumber(value);
         case 'name':
         default:
             return validateName(value);
@@ -29,6 +31,15 @@ export default validate;
  */
 function validatePassword(password){
     var regex = new RegExp("^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})");
+    return regex.test(password);
+}
+
+/**
+ * @param {string} number 
+ * @returns true if the number is valid.
+ */
+ function validateNumber(password){
+    var regex = /^\d+$/;
     return regex.test(password);
 }
 

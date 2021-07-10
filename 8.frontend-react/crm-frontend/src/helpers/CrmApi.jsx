@@ -10,18 +10,29 @@ class CrmApi {
         const response = await axios.post(`${this.basicUrl}/projects/getAllProjects/`, {user: isUser, token: localStorage.getItem('jwtToken')});
 
         if(response){
-            return response;
+            return response.data;
         }
         else {
             return false;
         }
     }
 
-    async getAllClients(){
-        const response = await axios.post(`${this.basicUrl}/clients/getAllClients/`, {token: localStorage.getItem('jwtToken')});
+    async getAllClients(searchInput=''){
+        const response = await axios.post(`${this.basicUrl}/clients/getAllClients/`, {input: searchInput, token: localStorage.getItem('jwtToken')});
 
         if(response){
-            return response;
+            return response.data;
+        }
+        else {
+            return false;
+        }
+    }
+
+    async updateProject(data){
+        const response = await axios.post(`${this.basicUrl}/projects/updateProject/`, {...data, token: localStorage.getItem('jwtToken')});
+
+        if(response){
+            return response.data;
         }
         else {
             return false;

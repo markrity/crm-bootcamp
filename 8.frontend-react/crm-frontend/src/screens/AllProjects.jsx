@@ -4,17 +4,19 @@ import React, {useState, useMemo, useEffect, useRef} from 'react';
 import ReactDom from 'react-dom';
 // import Form from '../components/Form';
 import Form from '../components/form/Form';
+import TabsTable from '../components/tabsTable/TabsTable';
 import '../styles/actionModal.css';
 import Modal from 'react-modal';
 import '../styles/crmPage.css'
 import '../styles/modal.scss';
 // import '../styles/modalWindow.css';
 import AuthApi from '../helpers/authApi';
+import Search from '../components/search/Search';
 import CrmApi from '../helpers/CrmApi';
 import Header from '../components/header/Header';
 import Table from '../components/table/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTrash , faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTrash , faEdit, faDraftingCompass} from '@fortawesome/free-solid-svg-icons'
 
 
 const authApi = new AuthApi();
@@ -23,9 +25,16 @@ const crmApi = new CrmApi();
 function AllProjects(props){
     var isLoading = false;
     const [itemToDelete, setItemToDelete] = useState({});
+    const [modalProjectDetails, setModalProjectDetails] = useState({});
+    const [projectDetails, setProjectDetails] = useState({});
+    const projectDetailsRef = useRef(projectDetails);
+    projectDetailsRef.current = projectDetails;
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [isProjectModalOpen, setIsProjectModalOpen] = useState(false);
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
     const [data, setData] = useState([]);
+    const [filteredData, setFilteredData] = useState([]);
     const mineRef = useRef(props.mine);
     mineRef.current = props.mine;
     const dataRef = useRef(data);
@@ -34,7 +43,6 @@ function AllProjects(props){
 
     const submit = async (dataToSent) => {
         const res = await authApi.newUser(dataToSent);
-        console.log(res.valid);
         if(res.valid){
           const newData = [...data];
           const userDetails = res.user;
@@ -49,11 +57,8 @@ function AllProjects(props){
 
 
     const getProjectsList = async () => {
-      const clients = await crmApi.getAllClients();
-        console.log("clients: ",clients);
         let projects =   await crmApi.getAllProject(props.mine);
         if(projects){
-            projects = projects.data;
             return projects;
         }
    };
@@ -82,6 +87,7 @@ function AllProjects(props){
      (async () => {
       const result = await getProjectsList();
       setData(result);
+      setFilteredData(result);
      })();
    }, [props.mine])
     
@@ -150,7 +156,147 @@ function AllProjects(props){
         setIsDeleteModalOpen(false);
     };
 
+    const openAddProjectWindow = ()=>{
+      setIsAddModalOpen(true);
+    };
+
+    const closeAddProjectWindow = ()=>{
+        setIsAddModalOpen(false);
+    };
     
+    const openProjectWindow = ({original}) => {
+        let tempFormDetails  = {...projectModal};
+        tempFormDetails.text = original.description;
+        tempFormDetails.title = original.item_type;
+        setProjectDetails(original)
+        console.log("details: ", projectDetails);
+        setModalProjectDetails(tempFormDetails);
+        setIsProjectModalOpen(true);
+      };
+  
+      const closeProjectWindow = ()=>{
+          setIsProjectModalOpen(false);
+      };
+
+    const submitAddProject = async (formFieldsData) => {
+      // const res = await authApi.editOldUser({fields: formFieldsData, userId: itemToEdit.user_id});
+      // console.log(res.valid);
+      // if(res.valid){
+
+      //   let newData = dataRef.current.map((item)=>{
+      //     if(item.user_id == itemToEdit.user_id){
+      //       item.user_name = formFieldsData.name.value;
+      //       item.user_mail = formFieldsData.mail.value;
+      //       item.user_phone = formFieldsData.phone.value;
+      //     }
+      //     return item;
+      //   })
+      //   console.log(newData);
+        
+      //   setData(newData);
+      //   closeEditUserWindow();
+      // } else {
+      //   return res;
+      // }
+  };
+
+    const addProjectForm = {
+    submitHandle: submitAddProject,
+      type: 'addProject',
+      title: "Add New Project",
+      errorMap: {
+        'serverError': 'Try again later',
+        'clientNotExist': 'Client not exist'
+      },
+      button: 'Add',
+      buttonClass: 'main-button',
+      fields: {
+        type: {
+          text: "Item Type",
+          id: "type",
+          type: 'text',
+          error: false,
+          mainType: 'name',
+        },
+        description: {
+          text: "Description",
+          id: "description",
+          type: 'textarea',
+          error: false,
+          mainType: 'name',
+        },
+        deadline: {
+          text: '2021-07-12',
+          value: new Date().toISOString().substr(0, 10),
+          label: "Deadline",
+          id: "date",
+          type: 'date',
+          error: false,
+          mainType: 'name',
+        }, 
+        // name: {
+        //   text: "Client Full Name",
+        //   id: "name",
+        //   type: 'text',
+        //   error: false,
+        //   mainType: 'name'
+        // },
+        // mail: {
+        //   text: "Client Mail",
+        //   id: "mail",
+        //   type: 'text',
+        //   error: false,
+        //   mainType: 'mail'
+        // },
+        // phone: {
+        //   text: "Client Phone Number",
+        //   id: "phone",
+        //   type: 'text',
+        //   error: false,
+        //   mainType: 'phone'
+        // },
+      }
+    }
+
+
+    const submitUpdateProject = async (dataToSent) => {
+        const res = await crmApi.updateProject({project_id: projectDetailsRef.current.project_id, set:{project_status:"'in progress'", estimated_time: dataToSent.hours.value}});
+        // TODO error
+    };
+
+    const projectModal = {
+        submitHandle: submitUpdateProject,
+        type: 'project',
+        title: '',
+        text: '',
+        errorMap: {
+          'serverError': 'Try again later',
+          'clientNotExist': 'Client not exist'
+        },
+        button: 'Assign To Me',
+        buttonClass: 'main-button',
+        fields: {
+          hours: {
+            text: "Estimated Time (hours)",
+            id: "type",
+            type: 'number',
+            error: false,
+            mainType: 'number',
+          },
+        }
+      }
+
+    const submitTab = (status) =>{
+        if(status == 'all'){
+            setFilteredData(dataRef.current);
+            return
+        }
+        const filtered = dataRef.current.filter((item)=>{
+            return item.project_status == status;
+        })
+        console.log(filtered);
+        setFilteredData(filtered);
+    }
 
     return (
         <div>
@@ -158,15 +304,29 @@ function AllProjects(props){
             <div className='crm-page'>
             <PageTitle className='page-title' title={props.mine ? 'My Projects' : 'All Projects'} description='Manage your projects.'/>
             {!props.mine && <div className='add-user-box'>
-            <CrmButton content='Add Project' buttonClass='main-button' icon='plus' isLoading={false} callback={()=> {}}/>
+            <CrmButton content='Add Project' buttonClass='main-button' icon='plus' isLoading={false} callback={()=> {openAddProjectWindow()}}/>
             </div>}
-            <Table columns={columns} data={data}/>
+            <TabsTable submit={submitTab} clickRow={!props.mine ? openProjectWindow : ()=>{}} columns={columns} data={filteredData}/>
             <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove Project' onRequestClose={closeDeleteProjectWindow}  overlayClassName="Overlay" className='modal'>
                 <h2>Are you sure you want delete this item?</h2>
                 <div className='action-buttons-modal'>
                 <CrmButton content='Delete' buttonClass='main-button' isLoading={isLoading} callback={()=> removeItem()}/>
                 <CrmButton content='Cancel' buttonClass='secondary-button' isLoading={isLoading} callback={()=> closeDeleteProjectWindow()}/>
                 </div>
+            </Modal>
+            {!props.mine && 
+            <Modal isOpen={isAddModalOpen} ariaHideApp={false} contentLabel='Add Project' onRequestClose={closeAddProjectWindow}  overlayClassName="Overlay" className='modal'>
+            <Form 
+                    className='form-body'
+                    {...addProjectForm}
+                />
+              <Search/>
+            </Modal>}
+            <Modal isOpen={isProjectModalOpen} ariaHideApp={false} contentLabel='Project' onRequestClose={closeProjectWindow}  overlayClassName="Overlay" className='modal'>
+            <Form 
+                    className='form-body'
+                    {...modalProjectDetails}
+                />
             </Modal>
             </div>
         </div>

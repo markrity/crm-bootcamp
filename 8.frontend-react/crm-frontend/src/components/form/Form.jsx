@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FormField from '../formField/FormField';
 import CrmButton from '../crmButton/CrmButton';
 import validate from '../../helpers/validationHelper';
+import Search from '../search/Search';
 import './form.scss';
 
 
@@ -80,6 +81,7 @@ function Form(props) {
             errorText={error} 
             text={content.text} 
             type={content.type} 
+            label={content.label || ''}
             value={content.value || ''} 
             key={`${props.type}${content.id}`} 
             callback={(e)=> setValue(fieldKey, e.target.value)}
@@ -90,6 +92,7 @@ function Form(props) {
 
         <div className='form-body'>
             <h2>{props.title}</h2>
+            <h3>{props.text}</h3>
             {fieldsComponents}
             <div className='button-wrapper'>
                 <CrmButton content={props.button} buttonClass={props.buttonClass} isLoading={isLoading} callback={()=> submit()}/>

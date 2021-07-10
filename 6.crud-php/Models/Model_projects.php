@@ -62,4 +62,16 @@ class Model_projects extends Model
         }
         return $this->getAll($queryData); 
     }
+
+    public function updateProject($authData, $params)
+    {
+        $params->set->assigned_user_id = $authData["user"];
+        $queryData = [
+            "set" => $params->set,
+            "where" => [
+                "project_id" => $params->project_id,
+            ],
+        ];
+        return $this->updateItem($queryData); 
+    }
 }

@@ -39,7 +39,7 @@ function Signup(props) {
   }
 
     const signup = {
-        submitFunc: submit,
+        submitHandle: submit,
         type: 'signup',
         title: "Let's get started!",
         buttonTitle: "Sign Up",
@@ -105,7 +105,7 @@ function Signup(props) {
                 className='form-body'
                 fields={signup.fields} 
                 title={signup.title}
-                submitHandle={signup.submitFunc} 
+                submitHandle={signup.submitHandle} 
                 type={signup.type}
                 errorMap = {signup.errorMap}
                 button={signup.buttonTitle}

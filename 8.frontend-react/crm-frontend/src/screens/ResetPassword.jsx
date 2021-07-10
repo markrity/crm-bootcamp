@@ -48,7 +48,7 @@ function ResetPassword(props) {
 
 
       const reset = {
-        submitFunc: submit,
+        submitHandle: submit,
         type: 'reset',
         title: "Enter a new password",
         buttonTitle:'Change Password',
@@ -99,7 +99,7 @@ function ResetPassword(props) {
                       className='form-body'
                       fields={reset.fields} 
                       title={reset.title}
-                      submitHandle={reset.submitFunc} 
+                      submitHandle={reset.submitHandle} 
                       type={reset.type}
                       errorMap = {reset.errorMap}
                       button={reset.buttonTitle}

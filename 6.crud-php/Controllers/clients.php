@@ -22,7 +22,8 @@ class clients extends controller
 
     public function getAllClients()
     {
-        $result= $this->model->getAllClients($this->account_id);
+        $data = $this->getPostJsonData();
+        $result= $this->model->getAllClients($data->input);
         $this->response = $result;
         return $this->response;
     }

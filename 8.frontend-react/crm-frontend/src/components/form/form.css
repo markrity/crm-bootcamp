@@ -1,15 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat");
-h2 {
-  color: black;
-  margin-bottom: 45px;
-}
-
 body {
   font-family: 'Montserrat', sans-serif;
 }
 
 .form-body {
   width: 100%;
+}
+
+.form-body h2 {
+  color: black;
+  margin-bottom: 10px;
+}
+
+.form-body h3 {
+  font-weight: normal;
+  margin-bottom: 30px;
 }
 
 @-webkit-keyframes bounceIn {

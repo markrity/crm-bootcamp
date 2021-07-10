@@ -25,7 +25,7 @@ function Login(props) {
       }
 
       const login = {
-        submitFunc: submit,
+        submitHandle: submit,
         type: 'signin',
         title: "Welcome Back!",
         buttonTitle: "Log In",
@@ -65,7 +65,7 @@ function Login(props) {
                     className='form-body'
                     fields={login.fields} 
                     title={login.title}
-                    submitHandle={login.submitFunc} 
+                    submitHandle={login.submitHandle} 
                     type={login.type}
                     errorMap = {login.errorMap}
                     button={login.buttonTitle}

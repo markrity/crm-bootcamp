@@ -31,13 +31,19 @@ class Model_clients extends Model
         return $this->insertItem($queryData);
     }
 
-    public function getAllClients()
+    public function getAllClients($input)
     {   
-        $queryData = [
-            "where" => [
-                "account_id" => $this->account_id,
-            ]
-        ];
+        if(empty($input)){
+            $queryData = [
+                "where" => [
+                    "account_id" => $this->account_id,
+                ]
+            ];
+        } else {
+            $queryData = [
+                "specialCondition" => "account_id=$this->account_id AND client_name like '$input%'"
+            ];
+        }
         return $this->getAll($queryData, true); 
     }
 }
