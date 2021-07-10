@@ -1,0 +1,27 @@
+.event-side-button{
+    width: 100px;
+    height: 100px;
+    min-height: 1px;
+    background-color: rgb(144,202,249);
+    border-style: outset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.selected{
+    border-style: inset;
+    background-color: whitesmoke;
+}
+
+.event-container{
+    width: 100%;
+    height: 100%;
+    background-color: whitesmoke;
+    min-height: 1px;
+    border-style: outset;
+}
+
+.full-width{
+    width: 100%;
+}

@@ -3,13 +3,12 @@ const generateToken = require('../generateToken')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config();
-var db = require('../db');
-var Mailgun = require('mailgun-js');
+const db = require('../db');
+const Mailgun = require('mailgun-js');
 const router = express.Router();
 
 
 router.post('/resetPassword', function (req, res) {
-    console.log("In ResetPassword")
 
     let sql = `SELECT * FROM users WHERE email='${req.body.email}'`;
     db.query(sql, async (err, data) => {
@@ -17,25 +16,17 @@ router.post('/resetPassword', function (req, res) {
             return res.sendStatus(500)
         const userInfo = data[0]
         const token = generateToken(res, userInfo.id, userInfo, false)
-        console.log(token)
-        var mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
-        var data = {
+        const mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
+        const msgData = {
             from: process.env.email,
-            //The email to contact
             to: req.body.email,
-            //Subject and text data  
             subject: 'Reset Your Password',
             html: '<h1>Click on the link below to reset password</h1> <a href="http://localhost:3000/auth/resetPassword/valid?token=' + token + '">Im Clickable!</a>'
         }
 
-        mailgun.messages().send(data, function (err, body) {
-            //If there is an error, render the error page
+        mailgun.messages().send(msgData, function (err, body) {
             if (err) {
-                res.render('error', { error: err });
                 console.log("got an error: ", err);
-            }
-            else {
-                console.log(body);
             }
         });
     });
@@ -54,24 +45,18 @@ router.post('/addEmployee', async (req, res) => {
             }
             const token = await generateToken(res, result.insertId, userRecord, false)
 
-            var mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
-            var data = {
+            const mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
+            const data = {
                 from: process.env.email,
-                //The email to contact
                 to: email,
-                //Subject and text data  
                 subject: 'Verification Email',
                 html: '<h1>Click on the link below to finish Regisration</h1> <a href="http://localhost:3000/verification/valid?token=' + token + '">Im Clickable!</a>'
             }
             mailgun.messages().send(data, function (err, body) {
-                //If there is an error, render the error page
                 if (err) {
-                    res.render('error', { error: err });
                     console.log("got an error: ", err);
                 }
-                else {
-                    console.log(body);
-                }
+
             });
         })
     }
@@ -90,7 +75,6 @@ router.post('/verification', async (req, res) => {
             if (err)
                 return res.sendStatus(500)
             const userInfo = data[0]
-            console.log(userInfo)
             return res.cookie('token', token).status(200).json({ userInfo })
         })
     })
@@ -103,7 +87,6 @@ router.post('/changePassword', async (req, res) => {
     if (hash) {
         sql = `UPDATE users SET Password ='${hash}' WHERE id = ${id}`
         db.query(sql, async (err, data) => {
-            console.log(data)
             if (err)
                 return res.sendStatus(500)
             return res.status(200)
@@ -114,16 +97,13 @@ router.post('/changePassword', async (req, res) => {
 
 router.post("/login", async (req, res) => {
     const { password, email } = req.body
-    console.log(email)
     const hash = await bcrypt.hash(password, 10)
     if (hash) {
-        console.log(email)
         let sql = `SELECT * FROM users WHERE email='${email}'`;
         db.query(sql, async (err, data) => {
             if (err)
                 return res.sendStatus(500)
             const userInfo = data[0]
-            console.log(userInfo)
             generateToken(res, userInfo.id, userInfo, true)
         })
     }
@@ -132,20 +112,6 @@ router.post("/login", async (req, res) => {
     }
 });
 
-router.post('/signup', async (req, res) => {
-    let { firstName, lastName, phoneNumber, email, buisnessId, password } = req.body
-    const hash = await bcrypt.hash(password, 10)
-    if (hash) {
-        const userRecord = [[firstName, lastName, phoneNumber, email, buisnessId, hash]]
-        sql = 'INSERT INTO users (FirstName,LastName, PhoneNumber,Email,BuisnessID,Password) VALUES ?'
-        db.query(sql, [adminRecord], async (err, result, fields) => {
-            if (err) {
-                return res.status(500).send("Sql Error")
-            }
-            await generateToken(res, result.insertId, adminRecord, true)
-        })
-    }
-})
 
 router.post('/addBuisness', async (req, res) => {
     const { buisnessName, email } = req.body.buisnessInfo

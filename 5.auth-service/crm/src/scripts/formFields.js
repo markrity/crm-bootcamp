@@ -100,7 +100,6 @@ export const inviteEmployeeFields = {
     }
 }
 
-
 export const newEmployee = {
     firstName: {
         type: 'text', value: '', err: '', placeholder: 'Enter Your First Name',

@@ -1,8 +1,8 @@
 import React from 'react'
 import Modal from 'react-modal';
 import { FiXCircle } from "react-icons/fi";
-import { inviteEmployeeFields } from "../formFields"
-import AuthForm from './AuthForm';
+import { inviteEmployeeFields } from "../scripts/formFields"
+import AuthForm from './Auth/AuthForm';
 const CustomModal = ({ isVisible, setIsVisible }) => {
 
     const customStyles = {
@@ -31,8 +31,6 @@ const CustomModal = ({ isVisible, setIsVisible }) => {
             </Modal>
         </div>
     )
-
-
 }
 
 export default CustomModal

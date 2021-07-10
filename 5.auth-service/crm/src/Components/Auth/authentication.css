@@ -1,0 +1,14 @@
+button{
+  background-color:#ffffff;
+border-radius:28px;
+border:1px solid #9faa3e;
+display:inline-block;
+cursor:pointer;
+font-family: 'Dancing Script', cursive;
+font-size:17px;
+padding:9px 30%;
+text-decoration:none;
+  margin-left: 1em;
+  align-self: center;
+  margin-bottom: 1em;
+}

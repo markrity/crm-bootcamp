@@ -3,6 +3,13 @@
 body{
   min-height: 100vh;
   overflow: hidden;
+  background-color: whitesmoke;
+}
+
+.event-button{
+  width: 100px;
+  height: 100px;
+  background-color: yellowgreen;
 }
 
 .default{
@@ -14,11 +21,12 @@ body{
 
 .centered{
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+.full-height{
   height: 100%;
-  width: 100%;
 }
 
 #init-form{
@@ -49,6 +57,9 @@ body{
     width:85%;
 
 }
+.nav-bar-bg{
+  background-color: darkblue;
+}
 
 h1{
   margin: unset;
@@ -56,20 +67,6 @@ h1{
   font-family: 'Dancing Script', cursive;
 }
 
-button{
-  background-color:#ffffff;
-border-radius:28px;
-border:1px solid #9faa3e;
-display:inline-block;
-cursor:pointer;
-font-family: 'Dancing Script', cursive;
-font-size:17px;
-padding:9px 30%;
-text-decoration:none;
-  margin-left: 1em;
-  align-self: center;
-  margin-bottom: 1em;
-}
 
 .clickable{
   color:rgb(10, 10, 170);
@@ -144,12 +141,11 @@ td{
 }
 
 table{
-  width:80%;
+  width:70%;
   table-layout: fixed;
   padding-right: 6px;
   border: 0;
   border-collapse: collapse;
-  margin-block-start: 100px;
 }
 
 
@@ -204,6 +200,7 @@ h2{
   }
 
   .card-left-col{
+    background: white;
     flex:2
   }
 
@@ -216,8 +213,12 @@ h2{
 
   .flex-row{
     display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+
+
+  .flex-col{
+    display: flex;
+    flex-direction: column;
   }
 
   #divider{
@@ -233,8 +234,8 @@ h2{
     display: flex;
     flex-direction: column;
     height: 100vh;
-    width: 66px;
-    background-color: #29304C;
+    width: 65px;
+    background-color: rgb(41,48,76)
   }
   
   #side-bar-ul{
@@ -256,8 +257,37 @@ h2{
 
 
 span:hover{
-  background-color: gray;
   opacity: 20%;
+}
+
+.tooltip{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  height: 30px;
+}
+
+.MuiButton-root{
+  min-width: 66px;
+}
+
+.view-tooltip{
+  width: 0;
+  height: 0;
+  bottom: 50%;
+  border-style: solid;
+  border-width: 8px 6px 8px 0;
+  border-color: transparent whitesmoke transparent transparent;
+  border-color: transparent '#181b3' transparent transparent;
+  position: absolute;
+  right: 0;
+  transition: opacity .1s ease-in-out;
+  opacity: 0;
+}
+
+.selected-view-indicator{
+  opacity: 1;
 }
 
 .lower-sidebar{

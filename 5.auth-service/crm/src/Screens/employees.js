@@ -8,6 +8,7 @@ import { FcApproval } from "react-icons/fc";
 import { BsFillTrashFill } from "react-icons/bs";
 import { removeEmployee, addEmployee } from "../actions/buisness"
 import CustomModal from '../Components/CustomModals'
+import SideNavBar from '../Components/SideNavBar'
 
 const Employees = () => {
     const [isAddVisible, setIsAddVisible] = useState(false)
@@ -58,13 +59,17 @@ const Employees = () => {
         []
     )
 
+    const employees = useSelector(state => state.buisness.employees)
 
     return (
         <>
             <Header />
-            <div className="centered">
-                <CustomModal isVisible={isAddVisible} setIsVisible={setIsAddVisible} />
-                <Table columns={columns} data={useSelector(state => state.buisness.employees)} />
+            <div className="flex-row">
+                <SideNavBar />
+                <div className="centered">
+                    <CustomModal isVisible={isAddVisible} setIsVisible={setIsAddVisible} />
+                    <Table columns={columns} data={employees} />
+                </div>
             </div>
         </>
     )

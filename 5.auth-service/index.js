@@ -23,14 +23,12 @@ app.use('/buisness', buisnessRoutes)
 
 app.get('/me', (req, res) => {
   const { id } = req.user
-  console.log(id)
+
   try {
     let sql = `SELECT * FROM Users WHERE id='${id}'`;
     db.query(sql, (err, result) => {
-      console.log(result)
       if (err)
         return res.sendStatus(500)
-      console.log(result)
       const userInfo = result[0]
       return res.status(200).send({ userInfo })
     })

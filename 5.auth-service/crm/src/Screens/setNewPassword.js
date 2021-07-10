@@ -1,5 +1,5 @@
 import React from 'react'
-import Auth from '../Components/authentication'
+import Auth from '../Components/Auth/authentication'
 
 
 const setNewPassword = () => <Auth initMode={"Change Password"} />

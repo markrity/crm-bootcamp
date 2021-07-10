@@ -17,5 +17,4 @@ const HomePage = ({ isOnline }) => {
     )
 }
 
-
 export default HomePage

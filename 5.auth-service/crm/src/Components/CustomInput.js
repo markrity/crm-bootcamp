@@ -1,25 +1,28 @@
 import React, { useState } from 'react'
 import { FiEye, FiEyeOff } from "react-icons/fi";
-import { useSelector } from 'react-redux';
 
 
-const CustomInput = ({ type, placeholder, value, onChangeFunc, name, disabled, err, icon1, icon2 }) => {
+const CustomInput = ({ placeholder, value, onChangeFunc, name, disabled, err }) => {
     const toggleVisibility = () => setIsVisible(!isVisible)
     const [isVisible, setIsVisible] = useState(false)
-
-    const checkField = (name === "password" || name === "rePassword")
+    const definedVars = {
+        PASSWORD: "password",
+        REPASSWORD: "rePassword",
+        TEXT: "text"
+    }
+    const checkField = (name === definedVars.PASSWORD || name === definedVars.REPASSWORD)
 
     return (
-        <div className="custom-input">
-            <div className="flex-row">
+        <div className="custom-input" >
+            <div className="flex-row centered">
                 <div id={checkField ? "icon" : null}>
-                    {(name === "password" || name === "rePassword") ?
+                    {checkField ?
                         isVisible ? <FiEye onClick={toggleVisibility} size={30} /> :
                             <FiEyeOff onClick={toggleVisibility} size={30} /> : null}
                 </div>
                 <input className="init-form-input-length"
                     disabled={disabled}
-                    type={(name === "password" || name === "rePassword") ? isVisible ? "text" : "password" : null}
+                    type={checkField ? isVisible ? definedVars.TEXT : definedVars.PASSWORD : null}
                     placeholder={placeholder}
                     name={name}
                     value={value}
@@ -27,7 +30,7 @@ const CustomInput = ({ type, placeholder, value, onChangeFunc, name, disabled, e
                 />
             </div>
             <p id="err">{err}</p>
-        </div>
+        </div >
     )
 }
 

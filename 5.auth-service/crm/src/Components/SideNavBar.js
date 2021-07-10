@@ -6,9 +6,13 @@ import Button from '@material-ui/core/Button';
 import { IoStatsChartOutline } from "react-icons/io5";
 import { BiCalendarEvent, BiCalendar } from "react-icons/bi";
 import CustomTooltip from './CustomTooltip';
-const SideNavBar = () => {
-    const upperButtons = [{ logo: AiOutlinePlusSquare, onHoverTxt: "Create Event" },
-    { logo: AiOutlineAppstore, onHoverTxt: "My Workplace" },
+import { useHistory } from 'react-router';
+
+
+const SideNavBar = ({ selected, setSelected }) => {
+    const history = useHistory()
+    const upperButtons = [{ logo: AiOutlineAppstore, onHoverTxt: "My WorkSpace", func: () => history.push('/workSpace') },
+    { logo: AiOutlinePlusSquare, onHoverTxt: "Create Event", func: () => history.push('/createEvent') },
     { logo: AiOutlineBell, onHoverTxt: "Leads" }]
 
     const lowerButtons = [{ logo: BiCalendarEvent, onHoverTxt: "My Week" },
@@ -21,9 +25,12 @@ const SideNavBar = () => {
         <nav>
             <div className="upper-sidebar">
                 {upperButtons.map(button =>
-                    <CustomTooltip title={button.onHoverTxt}>
-                        <button.logo id="mg-btm" size={30} color={"white"} />
+                    <CustomTooltip title={button.onHoverTxt} func={button.func}>
+                        <div className="left-navbar-logo"><button.logo id="mg-btm" size={30} color={"white"} /></div>
+                        <div className={selected !== button.onHoverTxt ? "view-tooltip" :
+                            "view-tooltip selected-view-indicator"}></div>
                     </CustomTooltip>)}
+
             </div>
 
             <div className="lower-sidebar">
@@ -31,9 +38,8 @@ const SideNavBar = () => {
                     <CustomTooltip title={button.onHoverTxt}>
                         <button.logo id="mg-btm" size={30} color={"white"} />
                     </CustomTooltip>)}
-                <Button>
-                    <FaRegUserCircle id="mg-btm" size={40} color={"white"} />
-                </Button>
+
+                <FaRegUserCircle id="mg-btm" size={40} color={"white"} />
             </div>
         </nav>
 

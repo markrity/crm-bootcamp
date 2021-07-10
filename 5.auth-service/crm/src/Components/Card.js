@@ -3,7 +3,7 @@ import React from 'react'
 
 
 
-const Card = ({ left, right }) => {
+const Card = ({ left }) => {
     return (
         <div className='card'>
             <div className='card-left-col'>
