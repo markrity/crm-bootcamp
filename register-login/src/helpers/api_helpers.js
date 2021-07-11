@@ -1,6 +1,6 @@
 
 import axios from 'axios';
-import {basicURL} from '../constans/constants.js'
+import {basicURL, basicURLPHP} from '../constans/constants.js'
 import {addToLS} from '../helpers/local_storage_helper.js'
 
 
@@ -44,3 +44,32 @@ export async function connectToServerChange(params) {
     const res =  await axios.post(basicURL+'/change',{...params})
     return res.data.status;
  }
+
+ export async function connectToServerPhpAdd(params) {
+    console.log("here",params)
+
+    const res =  await axios.post(basicURLPHP+'/clients/add/',{...params})
+    console.log(res);
+    return res;
+ }
+
+
+ export async function connectToServerPhpDelete(params, className) {
+    const res =  await axios.post(basicURLPHP+'/'+className+'/delete/',{...params})
+    return res;
+ }
+
+
+ //not work
+ export async function connectToServerPhpGetAll(params) {
+    const res =  await axios.post(basicURLPHP+'/clients/getAll/',{...params})
+    return res.data.clients;
+ }
+
+
+
+ export async function connectToServerPhpEdit(params) {
+    const res =  await axios.post(basicURLPHP+'/clients/edit/',{...params})
+    return res;
+ }
+

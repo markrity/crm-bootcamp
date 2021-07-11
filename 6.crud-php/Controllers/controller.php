@@ -30,9 +30,7 @@
         public function add() 
         {
             $json = file_get_contents('php://input');
-            var_dump($json);
             $data = json_decode($json);
-            var_dump($data);
             $data_array = [];
             foreach ($this->field_array as $field) {
                 $data_array[$field] = $data->$field;
@@ -46,7 +44,7 @@
         {
             $json = file_get_contents('php://input');
             $data = json_decode($json);
-            $clients = $this->model->delete($data->client_id);
+            $clients = $this->model->delete($data->id);
             $this->response["clients"] = $clients;
             return $this->response;
         }

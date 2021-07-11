@@ -16,13 +16,14 @@ import {
   Redirect,
 } from "react-router-dom";
 import { connectToServerPhpAdd, connectToServerPhpDelete } from "../../helpers/api_helpers";
+import AddTreatment from "../../components/addTreatment";
 var counter = 1;
-function Clients(props) {
+function Treatments(props) {
     const [data, setData] = useState([]);
-    const [fullname, setFullName]= useState('');
-    const [phone, setPhone]= useState('');
-    const [email, setEmail]= useState('');
-    const [userId, setUserId] = useState('');
+    const [date, setDate]= useState('');
+    const [kind, setKind]= useState('');
+    const [price, setPrice]= useState('');
+    const [treatmentId, setTreId] = useState('');
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [confirmIsOpen, setConfirmOpen] = useState(false);
@@ -30,7 +31,7 @@ function Clients(props) {
     
     useEffect(() => {
         var account_id = localStorage.getItem("account_id");
-        axios.post('http://localhost:991/clients/getAll/', {
+        axios.post('http://localhost:991/treatments/getAll/', {
           account_id: account_id
             }).then(response => {
               console.log(response.data.clients);
@@ -42,9 +43,9 @@ function Clients(props) {
       setDataChange(counter++)     
     }
 
-    async function deleteClient() {
-      const params = {id: userId}
-      const response = await connectToServerPhpDelete(params, 'clients')
+    async function deleteTreatment() {
+      const params = {id: treatmentId}
+      const response = await connectToServerPhpDelete(params, 'treatments')
       if (response) {
         changeData()
         setConfirmOpen(false)
@@ -54,22 +55,28 @@ function Clients(props) {
     const columns = useMemo(
         () => [
           {
-            Header: "Clients",
+            Header: "Treatment",
             columns: [
               {
-                Header: "Full name",
-                accessor: "fullname"
+                Header: "client_id",
+                accessor: "client_id"
               },
 
               {
-                Header: "Phone",
-                accessor: "phone"
+                Header: "data & time",
+                accessor: "date_time"
               }, 
 
               {
-                Header: "Email",
-                accessor: "email"
+                Header: "kind",
+                accessor: "kind"
               }  ,
+              
+
+              {
+                Header: "price",
+                accessor: "price"
+              } ,
               {
                 Header: "Actions",
 
@@ -78,17 +85,17 @@ function Clients(props) {
                     
                   <span  onClick={() => {
                             setConfirmOpen(true)
-                            setUserId(row.cell.row.original.id);      
+                            setTreId(row.cell.row.original.id);      
 
                           }}>
                             <img class="manImg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
                    </span> 
 
                    <span  onClick={() => {
-                            setUserId(row.cell.row.original.id)
-                            setFullName(row.cell.row.values.fullname);
-                            setPhone(row.cell.row.values.phone);
-                            setEmail(row.cell.row.values.email);
+                            // setUserId(row.cell.row.original.id)
+                            // setFullName(row.cell.row.values.fullname);
+                            // setPhone(row.cell.row.values.phone);
+                            // setEmail(row.cell.row.values.email);
                             setIsOpen(true)
                             setWhichModal('edit')            
                           }}>
@@ -105,9 +112,9 @@ function Clients(props) {
       );
 
     function onClickAdd() {
-       setPhone('')
-       setEmail('')
-       setFullName('')
+    //    setPhone('')
+    //    setEmail('')
+    //    setFullName('')
        setIsOpen(true)
        setWhichModal('add')
     }
@@ -115,14 +122,14 @@ function Clients(props) {
     
     return (
     <body>
-   {!(props.isExist)&& <Redirect to="/login" />}
+    {!(props.isExist)&& <Redirect to="/login" />}
     <div className="test">
 
-    {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteClient()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
+    {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
-    {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={userId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    {modalIsOpen && <AddTreatment data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     <Table columns={columns} data={data} /> 
-    <span className="add_button" button_text="Add Clients" onClick={() => onClickAdd()}>
+    <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>
     <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
       </span>  
 
@@ -132,4 +139,4 @@ function Clients(props) {
     );
 }
 
-export default Clients;
+export default Treatments;

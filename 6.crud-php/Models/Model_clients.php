@@ -9,6 +9,13 @@
             $this->table_name= "clients";
           
         }
+
+        public function getClientByName($account_id, $fullname) {
+            $sql = "SELECT * FROM $this->table_name WHERE (account_id=$account_id) AND (fullname='$fullname')";
+           // var_dump($sql);
+            $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
         
     }
 

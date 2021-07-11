@@ -22,6 +22,7 @@ import Clients from "./containers/clients/clients";
 
 import {removeFromLS} from "./helpers/local_storage_helper"
 import Users from "./containers/users/users";
+import Treatments from "./containers/treatments/treatments";
 
 function App(props) {
   const [isExist, setExist] = useState(false);
@@ -103,6 +104,10 @@ function App(props) {
         <Route path="/users">
            <Users  isExist={isExist} />
           </Route>
+
+          <Route path="/treatments">
+          <Treatments  isExist={isExist} />
+            </Route>
 
 
         </Switch>
