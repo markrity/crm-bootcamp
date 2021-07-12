@@ -3,8 +3,7 @@
     margin-bottom: 1vh;
     background: #FEC89A;
     height: 40px;
-    margin-left: 1vh;
-    font-weight: 900;
+    font-weight: 750;
     box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
     transition: 0.5s;
     font-size: large;
@@ -28,17 +27,16 @@ button:hover {
 }
 
 .button1 {
-    margin-left: 15%;
     width: 13vh;
     height: 5vh;
     cursor: pointer;
-   
     background-color: #FEC89A;
     /* font-weight: bolder; */
     font-size: 20px;
     border-color: #F8EDEB;
     border-radius: 5vh;
-    font-weight: 900;
+    font-weight: 700;
+    margin-right: 2%;
   
     /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */
 }
@@ -64,4 +62,73 @@ button:hover {
     display: flex;
   
     flex-direction: row;
+}
+
+
+.add {
+    width: 40%;
+    background: #FEC89A;
+    height: 40px;
+    font-weight: 700;
+    box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
+  
+    font-size: large;
+    cursor: pointer;
+  
+    width: 50%;
+    /* border-color: #F8EDEB; */
+    ;
+    border : none;
+    /* box-sizing: border-box; */
+
+}
+
+
+
+
+
+.add_new {
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20%;
+    align-items: flex-start;
+}
+
+
+#client_not_found {
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: larger;
+    
+}
+
+.next {
+    background-color: #F8EDEB;
+    border-color:#FEC89A ;
+    border-width: 3px;
+    font-weight: 100px;
+    cursor: pointer;
+    color: black;
+    margin-top: 20%;
+    margin-left: 79%;
+}
+
+
+#choose_client {
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: larger;
+    margin-left: 30%;
+}
+
+
+#header_client {
+    font-weight: 500;
+    letter-spacing: 1px;
+    font-size: larger;
+    margin-left: 25%;
+}
+
+#select_label {
+    
 }

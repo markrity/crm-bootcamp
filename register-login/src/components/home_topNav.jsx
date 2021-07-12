@@ -15,9 +15,9 @@ function Home_TopNav(props) {
         <Link to="/clients"> Clients</Link>
         <Link to="/treatments"> Treatments</Link>
         <Link to="/"> Products</Link>
-        <div className="buttons">
+      
         <Button className = {props.className} button_text={props.button_text} onClick={props.onClick}></Button> 
-        </div>
+       
       </div>
       </body>
     );

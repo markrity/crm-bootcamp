@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import Modal from 'react-modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import  {useState, useEffect, useMemo} from "react";
 import Button from '../components/button'
-import AddClients from '../components/addClients'
 import FormInput from '../components/formInput'
-import { connectToServerPhpAdd, connectToServerPhpEdit, connectToServerPhpGetAll } from "../helpers/api_helpers";
-
-
+import { connectToServerPhpAdd} from "../helpers/api_helpers";
 
 const customStyles = {
     content : {
@@ -24,8 +21,6 @@ const customStyles = {
     }
   };
 
-const account_id = localStorage.getItem("account_id");
-
 function NextAddTreatment(props) {
     
      const [data, setData] = useState([]);
@@ -33,9 +28,6 @@ function NextAddTreatment(props) {
      const [price, setPrice] = useState('');
      const [kind, setKind] = useState('');
      const [date_time, setDateTime] = useState('');
-
-    // const [addOpen, setAddOpen] = useState(false);
-    // const [nextOpen, setNextOpen] = useState(false);
     
     useEffect(() => {
         const token = localStorage.getItem("my_user");
@@ -43,7 +35,6 @@ function NextAddTreatment(props) {
         axios.post('http://kerenadiv.com:8005/getAllUsers', {
             token: token 
             }).then(response => {
-              //console.log(response.data.clients);
               setData(response.data);
              console.log(data);
               });
@@ -59,12 +50,18 @@ function NextAddTreatment(props) {
     ]
 
     async function handleClick() {
+        if (props.button_text === 'add') {     
+
         const account_id = localStorage.getItem("account_id");
         const params = { client_id : props.client_id, kind, price, date_time, account_id, created_at: Date.now(), user_id:chosen}
         const res = await connectToServerPhpAdd(params, 'treatments')
         if (res) {
             props.closeAllModals()
         }
+    }
+    else {
+
+    }
     }
 
     function getUserId(user_name) {
@@ -74,27 +71,24 @@ function NextAddTreatment(props) {
   
 
     return (
-        <Modal 
-        isOpen={props.modalIsOpen}
-        onRequestClose={props.closeAllModals}
-        style={customStyles}
+    <Modal 
+    isOpen={props.modalIsOpen}
+    onRequestClose={props.closeAllModals}
+    style={customStyles}
     >
-    <Button className="close" button_text="<-prev" onClick={props.closeModal} />
-
-
-      <div className="container">
-    
-          <p>client name: {props.client_name} </p>
-          <Select options={kinds} onChange={e => setKind(e.label)}  />
-          <FormInput label="date and time" defaultValue = {props.email} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
-          <FormInput label="Price" defaultValue = {props.email} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
-          <p>choose user:  </p>
+        <Button className="close" button_text="<-prev" onClick={props.closeModal} />
+        <div className="container">  
+            <p id ="header_client">client name: {props.client_name} </p>
+            
+            <Select defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
           
-          <Select options={options} onChange={e => getUserId(e.label)} />   
-          <Button className="button" button_text={props.button_text} onClick={handleClick} />
-      </div>
-      
-      </Modal>
+            <FormInput label="date and time" defaultValue = {props.date} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
+            <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
+          
+            <Select options={options} onChange={e => getUserId(e.label)} />   
+            <Button className="button" button_text={props.button_text} onClick={handleClick} />
+        </div>
+    </Modal>
     );
   }
 

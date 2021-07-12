@@ -69,21 +69,26 @@ function AddTreatment(props) {
    
 
     return (
-        <Modal 
+    <Modal 
         isOpen={props.modalIsOpen}
         onRequestClose={props.closeModal}
         style={customStyles}
     >
-    <Button className="close" button_text="X" onClick={props.closeModal} />
-    <p> Choose Client</p>
+        <Button className="close" button_text="X" onClick={props.closeModal} />
+        <p id = "choose_client"> Choose Client</p>
 
-      <div className="container">
-        <Select options={options} onChange={e => getClientIdByName(e.label)} />
-        <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
-        {isNextButtonShown && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} /> }
-        {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
-        {nextOpen && <NextAddTreatment client_id = {chosen.id} client_name = {chosen.fullname} button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
-      </div>
+        <div className="container">
+            <Select defaultValue={{label:props.chosen_client}} options={options} onChange={e => getClientIdByName(e.label)} />
+            <div className="buttons_chooseClient">
+            <div className="add_new">
+            <p id="client_not_found">client not found?</p>
+            <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
+            </div>
+            {isNextButtonShown && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} /> }
+            </div>
+            {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
+            {nextOpen && <NextAddTreatment kind={props.kind} price = {props.price} date={props.date} client_id = {chosen.id} client_name = {chosen.fullname} button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
+        </div>
       
       </Modal>
     );

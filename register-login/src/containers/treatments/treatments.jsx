@@ -97,10 +97,11 @@ function Treatments(props) {
                    </span> 
 
                    <span  onClick={() => {
-                            // setUserId(row.cell.row.original.id)
-                            // setFullName(row.cell.row.values.fullname);
-                            // setPhone(row.cell.row.values.phone);
-                            // setEmail(row.cell.row.values.email);
+                             setDate(row.cell.row.values.date_time)
+                             setPrice(row.cell.row.values.price);
+                             setKind(row.cell.row.values.kind);
+                            // console.log(kind);
+
                             setIsOpen(true)
                             setWhichModal('edit')            
                           }}>
@@ -117,9 +118,9 @@ function Treatments(props) {
       );
 
     function onClickAdd() {
-    //    setPhone('')
-    //    setEmail('')
-    //    setFullName('')
+       setDate('')
+       setPrice('')
+       setKind('')
        setIsOpen(true)
        setWhichModal('add')
     }
@@ -132,7 +133,8 @@ function Treatments(props) {
 
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
-    {modalIsOpen && <AddTreatment data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    {modalIsOpen && <AddTreatment button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    
     <Table columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>
     <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>

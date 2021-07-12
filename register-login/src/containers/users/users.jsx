@@ -60,7 +60,9 @@ function Users(props) {
     <div className="test">
     {modalIsOpen && <AddUser modalIsOpen={() => openModal()} closeModal={() => closeModal()}/>}
     <Table columns={columns} data={data} /> 
-    <Button className="add_button" button_text="Add user" onClick={() => openModal()}></Button>
+    <span className="add_button" button_text="Add Clients" onClick={() => openModal()}>
+    <img class="add_image" src="https://www.pngfind.com/pngs/m/678-6781804_add-people-person-add-icon-png-transparent-png.png"></img>
+      </span>  
     </div>
     
    
