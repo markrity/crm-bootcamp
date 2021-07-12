@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useEffect, useMemo, useLayoutEffect} from "react";
 import axios from 'axios';
 import Button from '../../components/button'
 
@@ -21,8 +21,9 @@ var counter = 1;
 function Treatments(props) {
     const [data, setData] = useState([]);
     const [date, setDate]= useState('');
-    const [kind, setKind]= useState('');
+    const [kind, setKind]= useState('select kind...');
     const [price, setPrice]= useState('');
+    const [clientName, setClientName]= useState('select client...');
     const [treatmentId, setTreId] = useState('');
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -34,7 +35,7 @@ function Treatments(props) {
         axios.post('http://localhost:991/treatments/getAll/', {
           account_id: account_id
             }).then(response => {
-              console.log(response.data.clients);
+           //   console.log(response.data.clients);
               setData(response.data.clients);
               });
     }, [dataChange, modalIsOpen]);
@@ -50,6 +51,12 @@ function Treatments(props) {
         changeData()
         setConfirmOpen(false)
       }
+    }
+
+  
+
+    String.prototype.replaceAt = function(index, replacement) {
+        return this.substr(0, index) + replacement + this.substr(index + replacement.length);
     }
 
     const columns = useMemo(
@@ -97,13 +104,14 @@ function Treatments(props) {
                    </span> 
 
                    <span  onClick={() => {
-                             setDate(row.cell.row.values.date_time)
-                             setPrice(row.cell.row.values.price);
-                             setKind(row.cell.row.values.kind);
-                            // console.log(kind);
-
+                            setDate(row.cell.row.values.date_time)
+                            setDate(date.replaceAt(10, "T"))
+                            setPrice(row.cell.row.values.price);
+                            setKind(row.cell.row.values.kind);
+                            setClientName('neta kim')
+                            setWhichModal('edit')   
                             setIsOpen(true)
-                            setWhichModal('edit')            
+                                    
                           }}>
                             <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img>
                    </span> 
@@ -120,7 +128,8 @@ function Treatments(props) {
     function onClickAdd() {
        setDate('')
        setPrice('')
-       setKind('')
+       setKind('select kind...')
+       setClientName('select client...')
        setIsOpen(true)
        setWhichModal('add')
     }
@@ -133,7 +142,7 @@ function Treatments(props) {
 
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
-    {modalIsOpen && <AddTreatment button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    {modalIsOpen && <AddTreatment client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     
     <Table columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>

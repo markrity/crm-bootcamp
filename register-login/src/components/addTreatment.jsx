@@ -26,8 +26,9 @@ const customStyles = {
 const account_id = localStorage.getItem("account_id");
 
 function AddTreatment(props) {
-    
+    const [options, setOptions] = useState([]);
     const [data, setData] = useState([]);
+   
     const [chosen, setChosen] = useState('');
     const [isNextButtonShown, setButtonNextShown] = useState(false);
     const [addOpen, setAddOpen] = useState(false);
@@ -40,14 +41,16 @@ function AddTreatment(props) {
             }).then(response => {
               //console.log(response.data.clients);
               setData(response.data.clients);
+              setOptions(response.data.clients.map(d => ({
+                label : d.fullname , value : ""
+                })))
+                
+            //  setOptions(new_options);
             //  console.log(data);
               });
     },[addOpen]);
     
-    const options = data.map(d => ({
-    "label" : d.fullname 
-    }))
-
+  
 
     function getClientIdByName(fullname) {
 
@@ -78,7 +81,11 @@ function AddTreatment(props) {
         <p id = "choose_client"> Choose Client</p>
 
         <div className="container">
-            <Select defaultValue={{label:props.chosen_client}} options={options} onChange={e => getClientIdByName(e.label)} />
+            <Select 
+            defaultValue={{label:props.client_name}} 
+            options={options} 
+            onChange={e => getClientIdByName(e.label)} />
+            
             <div className="buttons_chooseClient">
             <div className="add_new">
             <p id="client_not_found">client not found?</p>
@@ -87,7 +94,8 @@ function AddTreatment(props) {
             {isNextButtonShown && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} /> }
             </div>
             {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
-            {nextOpen && <NextAddTreatment kind={props.kind} price = {props.price} date={props.date} client_id = {chosen.id} client_name = {chosen.fullname} button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
+            
+            {nextOpen && <NextAddTreatment button_text={props.button_text} kind={props.kind} price = {props.price} date={props.date} client_id = {chosen.id} client_name = {chosen.fullname}  modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
         </div>
       
       </Modal>

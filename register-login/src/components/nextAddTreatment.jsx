@@ -28,6 +28,8 @@ function NextAddTreatment(props) {
      const [price, setPrice] = useState('');
      const [kind, setKind] = useState('');
      const [date_time, setDateTime] = useState('');
+     const [options1, setOption1] = useState([]);
+
     
     useEffect(() => {
         const token = localStorage.getItem("my_user");
@@ -41,12 +43,13 @@ function NextAddTreatment(props) {
     },[]);
     
     const options = data.map(d => ({
-    "label" : d.user_fullname 
+    label : d.user_fullname , value : ""
     }))
 
+    
     const kinds = [
-        {"label": "anti aging"},
-        {"label" : "acne"}
+        {label: "anti aging", value : ""},
+        {label : "acne", value : ""}
     ]
 
     async function handleClick() {
@@ -80,7 +83,7 @@ function NextAddTreatment(props) {
         <div className="container">  
             <p id ="header_client">client name: {props.client_name} </p>
             
-            <Select defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
+            <Select placeholder="choose client" defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
           
             <FormInput label="date and time" defaultValue = {props.date} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
             <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
