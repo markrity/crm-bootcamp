@@ -6,7 +6,7 @@ import axios from 'axios';
 import  {useState, useEffect, useMemo} from "react";
 import Button from '../components/button'
 import AddClients from '../components/addClients'
-import NextAddTreatment from '../components/nextAddTreatment'
+import FormInput from '../components/formInput'
 
 
 
@@ -25,39 +25,42 @@ const customStyles = {
 
 const account_id = localStorage.getItem("account_id");
 
-function AddTreatment(props) {
+function NextAddTreatment(props) {
     
-    const [data, setData] = useState([]);
-    const [chosen, setChosen] = useState('');
-    const [addOpen, setAddOpen] = useState(false);
-    const [nextOpen, setNextOpen] = useState(false);
+     const [data, setData] = useState([]);
+     const [chosen, setChosen] = useState('');
+     const [price, setPrice] = useState('');
+
+    // const [addOpen, setAddOpen] = useState(false);
+    // const [nextOpen, setNextOpen] = useState(false);
     
     useEffect(() => {
-        
-        axios.post('http://localhost:991/clients/getAll/', {
-          account_id: account_id
+        const token = localStorage.getItem("my_user");
+
+        axios.post('http://kerenadiv.com:8005/getAllUsers', {
+            token: token 
             }).then(response => {
               //console.log(response.data.clients);
-              setData(response.data.clients);
-            //  console.log(data);
+              setData(response.data);
+             console.log(data);
               });
-    },[addOpen]);
+    },[]);
     
     const options = data.map(d => ({
-    "label" : d.fullname 
+    "label" : d.user_fullname 
     }))
 
 
-    function getClientIdByName(fullname) {
-        axios.post('http://localhost:991/clients/get/', {
-          account_id: account_id,
-          fullname: fullname
-            }).then(response => {
-              setChosen(...response.data.clients);
-            //   console.log(chosen.id);
+    // function getUserIdByName(fullname) {
+    //     axios.post('http://localhost:991/clients/get/', {
+    //       account_id: account_id,
+    //       fullname: fullname
+    //         }).then(response => {
+    //           setChosen(...response.data.clients);
+    //         //   console.log(chosen.id);
             
-              });
-    }
+    //           });
+    // }
     
    
 
@@ -68,17 +71,18 @@ function AddTreatment(props) {
         style={customStyles}
     >
     <Button className="close" button_text="X" onClick={props.closeModal} />
-    <p> Choose Client</p>
+
 
       <div className="container">
         {/* <div className="row"> */}
           {/* <div className="col-md-3"></div> */}
           {/* <div className="col-md-6"> */}
-            <Select options={options} onChange={e => getClientIdByName(e.label)} />
-            <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
-            <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} />
-            {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
-            {nextOpen && <NextAddTreatment  button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={()=> setNextOpen(false)}/>}
+          <p>client  : {props.client}</p>
+          
+          <FormInput label="Price" defaultValue = {props.email} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
+          <Select options={options} onChange={e => setChosen(e.label)} />
+          
+           
 
           {/* </div> */}
           {/* <div className="col-md-4"></div> */}
@@ -90,4 +94,4 @@ function AddTreatment(props) {
   }
 
 
-export default AddTreatment
+export default NextAddTreatment

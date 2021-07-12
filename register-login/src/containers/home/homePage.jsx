@@ -10,7 +10,6 @@ import axios from 'axios';
 import {
     Redirect
   } from "react-router-dom";
-import SideBar from "../../components/sideBar";
 import Home_TopNav from "../../components/home_topNav";
 
 class HomePage extends React.Component {
