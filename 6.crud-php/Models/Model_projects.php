@@ -12,12 +12,11 @@ class Model_projects extends Model
     {
         parent::__construct();
         $this->clientModel = new Model_clients();
-        $this->clientModel->account_id = $this->account_id;
     }
 
     public function addProject($projectDetails)
     {
-        $this->clientModel->account_id = $this->account_id;
+        $this->clientModel->setAccountId($this->account_id);
         $clientDetails = $projectDetails->client;
         $clientId = intval($clientDetails->clientId ?? -1);
         if($clientId <= 0){
@@ -25,22 +24,12 @@ class Model_projects extends Model
         } 
 
         $queryData = [
-            "cols" => [
-                'client_id', 
-                'account_id',  
-                'item_type', 
-                'description',
-                'deadline',
-                'project_status'
-            ],
-            "values" => [
-                "'$clientId'",
-                "'$this->account_id'",
-                "'$projectDetails->type'",
-                "'$projectDetails->description'",
-                "'$projectDetails->deadline'",
-                "'$projectDetails->status'",
-            ],
+            'client_id' => $clientId,
+            'account_id' => $this->account_id,
+            'item_type' => $projectDetails->type,
+            'description' => $projectDetails->description,
+            'deadline' => $projectDetails->deadline,
+            'project_status' => $projectDetails->status
         ];
         return $this->insertItem($queryData);
     }
@@ -59,6 +48,9 @@ class Model_projects extends Model
         ];
         if(!empty($data['user'])){
             $queryData["where"]["assigned_user_id"] = $data['user'];
+        }
+        if(!empty($data['client'])){
+            $queryData["where"]["clients.client_id"] = $data['client'];
         }
         return $this->getAll($queryData); 
     }

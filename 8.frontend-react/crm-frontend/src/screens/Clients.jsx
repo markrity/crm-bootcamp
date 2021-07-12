@@ -29,12 +29,21 @@ function Clients(props){
     const dataRef = useRef(data);
     dataRef.current = data;
 
+
+        
     const getClientsList = async () => {
-        let clients = await crmApi.getAllClients();
-        if(clients){
-            return clients;
-        }
-   };
+      let clients = await crmApi.getAllClients();
+      if(clients){
+          return clients;
+      }
+    };
+
+    useEffect(()=>{
+      (async () => {
+       const result = await getClientsList();
+       setData(result);
+      })();
+    }, [])
 
    
    const onRemoveItem = (value) => {
@@ -52,13 +61,6 @@ function Clients(props){
     // closeDeleteProjectWindow();
     // setData(newData);
    }
-   
-   useEffect(()=>{
-     (async () => {
-      const result = await getClientsList();
-      setData(result);
-     })();
-   }, [])
     
   
    const columns = React.useMemo(
@@ -78,22 +80,22 @@ function Clients(props){
         accessor: 'client_phone',
         Cell: ({value})  => <a className='link-table' href={`tel:${value}`}>{value}</a>
       },
-      {
-        Header: 'Action',
-        // accessor: 'delete',
-        Cell: (value)=> (
-          <div>
-            <span style={{cursor:'pointer'}}
-                onClick={() => {
-                  // console.log(value);
-                    onRemoveItem(value.cell.row.original);
-                  }}>
-                  <FontAwesomeIcon className='trash-icon' icon={faTrash} size='sm'/>
-          </span> 
-          </div>
+      // {
+      //   Header: 'Action',
+      //   // accessor: 'delete',
+      //   Cell: (value)=> (
+      //     <div>
+      //       <span style={{cursor:'pointer'}}
+      //           onClick={() => {
+      //             // console.log(value);
+      //               onRemoveItem(value.cell.row.original);
+      //             }}>
+      //             <FontAwesomeIcon className='trash-icon' icon={faTrash} size='sm'/>
+      //     </span> 
+      //     </div>
           
-        )
-      },
+      //   )
+      // },
 
     ],
     []

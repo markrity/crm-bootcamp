@@ -8,6 +8,7 @@ import Team from './screens/Team';
 import AuthApi from './helpers/authApi';
 import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 import Clients from './screens/Clients';
+import AddProject from './screens/AddProject';
 import Loader from "react-loader-spinner";
 import './styles/styles.scss';
 import './components/loading/Loading'
@@ -119,6 +120,12 @@ function App() {
         {isLoading ? loader: 
             isConnect ?
                 <Clients/> : <Redirect to="/login" /> 
+            }
+        </Route>
+        <Route exact path="/addProject">
+        {isLoading ? loader: 
+            isConnect ?
+                <AddProject/> : <Redirect to="/login" /> 
             }
         </Route>
       </Switch>}

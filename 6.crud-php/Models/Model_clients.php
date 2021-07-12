@@ -15,18 +15,10 @@ class Model_clients extends Model
     public function addClient($name, $mail, $phone)
     {
         $queryData = [
-            "cols" => [
-                'client_name', 
-                'account_id',  
-                'client_mail', 
-                'client_phone'
-            ],
-            "values" => [
-                "'$name'",
-                "'$this->account_id'",
-                "'$mail'",
-                "'$phone'"
-            ],
+            'client_name' => $name,
+            'account_id' => $this->account_id,
+            'client_mail' => $mail,
+            'client_phone' => $phone
         ];
         return $this->insertItem($queryData);
     }

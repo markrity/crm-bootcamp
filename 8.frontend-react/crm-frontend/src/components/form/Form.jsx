@@ -16,10 +16,16 @@ function Form(props) {
         setFields(props.fields);
     }, [props.fields])
 
-    const setValue = (key, value) => {
+    const setValue = (key, value, isMultiple=false) => {
         const fieldsTemp = {...fields};
-        fieldsTemp[key].value = value;
-        fieldsTemp[key].error = false;
+        if(isMultiple) {
+            for(let fieldName in value.body){
+                fieldsTemp[fieldName].value = value.body[fieldName];
+            }
+        } else {
+            fieldsTemp[key].value = value;
+            fieldsTemp[key].error = false;
+        }
         setFields(fieldsTemp);
     };
 
@@ -66,6 +72,7 @@ function Form(props) {
     };
 
     const fieldsComponents = [];
+    const sideFieldsComponents = [];
     for (let fieldKey in fields){
         const content = fields[fieldKey];
         let error;
@@ -76,8 +83,15 @@ function Form(props) {
                 error = `Invalid ${content.id}`;
             }
         }
-        
-        fieldsComponents.push(<FormField 
+
+        let comp;
+        if(content.id == 'search'){
+            comp =  <div key={'search'}>
+                <Search {...content} callback={(values)=> setValue(fieldKey, values, true)}/>
+                {props.afterSearch && <h3>{props.afterSearch}</h3>}
+                </div>
+        } else {
+            comp = <FormField 
             errorText={error} 
             text={content.text} 
             type={content.type} 
@@ -85,7 +99,13 @@ function Form(props) {
             value={content.value || ''} 
             key={`${props.type}${content.id}`} 
             callback={(e)=> setValue(fieldKey, e.target.value)}
-            />);
+            />
+        }
+        if(content.side){
+            sideFieldsComponents.push(comp);
+        } else {
+            fieldsComponents.push(comp);
+        }
     }
 
     return (
@@ -93,7 +113,16 @@ function Form(props) {
         <div className='form-body'>
             <h2>{props.title}</h2>
             <h3>{props.text}</h3>
-            {fieldsComponents}
+            <div className='fields'> 
+                <div className='left-side'>
+                {fieldsComponents}
+                </div>
+                <div>
+                {sideFieldsComponents}
+                </div>
+            </div>
+            <div>
+            </div>
             <div className='button-wrapper'>
                 <CrmButton content={props.button} buttonClass={props.buttonClass} isLoading={isLoading} callback={()=> submit()}/>
             </div>

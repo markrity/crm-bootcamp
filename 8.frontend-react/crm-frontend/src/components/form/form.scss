@@ -18,6 +18,22 @@ body {
       font-weight: normal;
       margin-bottom: 30px;
     }
+
+    .fields {
+      display: flex;
+
+      .left-side {
+        margin-right: 50px;
+      }
+
+      div {
+        flex: 1;
+
+        // &:first-child {
+        //   margin-right: 50px;
+        // }
+      }
+    }
 }
 
 @keyframes bounceIn {

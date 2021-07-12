@@ -32,8 +32,9 @@ class Model
      */
     protected function insertItem($queryData)
     {
-        $columns = join(", ", $queryData["cols"]);
-        $values = join(", ", $queryData["values"]);
+        $columns = join(', ', array_keys($queryData));
+        $values = join("', '", array_values($queryData));
+        $values = "'" . $values . "'";
         return $this->insert("INSERT INTO $this->table ($columns) VALUES ($values)");
         // return "INSERT INTO $this->table ($columns) VALUES ($values)";
     }
@@ -86,7 +87,7 @@ class Model
         if(!empty($queryData[$operation])){
             $conditions = [];
             foreach ($queryData[$operation] as $col => $value){
-                array_push($conditions, "$col = $value");
+                array_push($conditions, "$col = '$value'");
             }
             return "$operation " . join($operation == 'where' ? " AND " : ', ', $conditions);
         } 
@@ -125,6 +126,11 @@ class Model
             return $this->getDB()->affected_rows;
         }
         return -1;
+    }
+
+    public function setAccountId($account_id){
+        $this->account_id = $account_id;
+        return $account_id;
     }
 
 }

@@ -13,7 +13,8 @@ import AuthApi from '../helpers/authApi';
 import Header from '../components/header/Header';
 import Table from '../components/table/Table';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCheck, faTrash , faEdit} from '@fortawesome/free-solid-svg-icons'
+import { faCheck, faTrash , faEdit} from '@fortawesome/free-solid-svg-icons';
+import ActionModal from '../components/actionModal/ActionModal';
 
 
 const authApi = new AuthApi();
@@ -67,6 +68,15 @@ function Team(props){
          return tableParser(result);
       }
    };
+
+   useEffect(()=>{
+    (async () => {
+      console.log('execute get users');
+     const result = await getUsersList();
+     console.log(result);
+     setData(result);
+    })();
+  }, [])
    
    
    const onRemoveItem = (value) => {
@@ -84,15 +94,7 @@ function Team(props){
     closeDeleteUserWindow();
     setData(newData);
    }
-   
-   useEffect(()=>{
-     (async () => {
-       console.log('execute get users');
-      const result = await getUsersList();
-      console.log(result);
-      setData(result);
-     })();
-   }, [])
+  
     
   
    const columns = React.useMemo(
@@ -257,7 +259,7 @@ function Team(props){
             <Header/>
             <div className='crm-page'>
             <PageTitle className='page-title' title='Team' description='Manage your team.'/>
-            <div className='add-user-box'>
+            <div className='table-actions-box just-one-item'>
             <CrmButton content='Add User' buttonClass='main-button' icon='plus' isLoading={isLoading} callback={()=> openAddUserWindow()}/>
             </div>
             <Table columns={columns} data={data}/>
@@ -273,13 +275,14 @@ function Team(props){
                     submitHandle={addUserForm.submitHandle} 
                 />
             </Modal>
-            <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeDeleteUserWindow}  overlayClassName="Overlay" className='modal'>
+            <ActionModal title='Are you sure you want delete this User?' isLoading={false} ok='Delete' cancel='Cancel' onClose={()=> {setIsDeleteModalOpen(false)}} isOpen={isDeleteModalOpen} action={removeItem}/>
+            {/* <Modal isOpen={isDeleteModalOpen} ariaHideApp={false} contentLabel='Remove User' onRequestClose={closeDeleteUserWindow}  overlayClassName="Overlay" className='modal'>
                 <h2>Are you sure you want delete this item?</h2>
                 <div className='action-buttons-modal'>
                 <CrmButton content='Delete' buttonClass='main-button' isLoading={isLoading} callback={()=> removeItem()}/>
                 <CrmButton content='Cancel' buttonClass='secondary-button' isLoading={isLoading} callback={()=> closeDeleteUserWindow()}/>
                 </div>
-            </Modal>
+            </Modal> */}
             <Modal isOpen={isEditModalOpen} ariaHideApp={false} contentLabel='Edit User' onRequestClose={closeEditUserWindow}  overlayClassName="Overlay" className='modal'>
             <Form 
                     className='form-body'

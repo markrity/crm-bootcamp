@@ -5,17 +5,31 @@ import SearchResult from '../searchResult/searchResult';
 
 const crmApi = new CrmApi(); 
 
-function Search(props) {
+// search: {
+//     id: 'search',
+//     side: true,
+//     text : 'Search Client',
+//     fetchData: crmApi.getAllClients,
+//     mapFunc: mapFunc
+//   },
 
+function Search(props) {
     const [input, setInput] = useState('');
     const [resultsList, setResultList] = useState([]);
 
     const updateInput = async (input) => {
+        let tempList = [];
         if(input !== ''){
-            var tempList = await crmApi.getAllClients(input);
+            tempList = await props.fetchData(input);
         }
         setResultList(tempList);
         setInput(input);
+    }
+
+    const updateChoice = (data) => {
+        setResultList([]);
+        setInput('');
+        props.callback(data.details);
     }
 
 
@@ -24,7 +38,7 @@ function Search(props) {
         <input className='form-input'
         key="search"
         value={input}
-        placeholder={"Search Client"}
+        placeholder={props.text}
         onChange={(e) => updateInput(e.target.value)}
         />
         <div className='results'>
@@ -32,8 +46,11 @@ function Search(props) {
         resultsList && resultsList.map((data,index) => {
         if (data) {
           return (
-            <div className='result' key={data.client_name}>
-                <SearchResult main={data.client_name} second={[data.client_mail, data.client_phone]}/>
+            <div className='result' key={index} onClick={()=>{
+                const mappedData = props.mapFunc(data);
+                updateChoice(props.mapFunc(data));
+                }}>
+                <SearchResult {...props.mapFunc(data)}/>
 	        </div>	
     	   )	
     	 }

@@ -7,8 +7,6 @@ class projects extends controller
 {
 
     public $model_cls = "projects";
-    protected $user_id;
-    protected $account_id;
     public function __construct()
     {
         parent::__construct();
@@ -27,8 +25,12 @@ class projects extends controller
         $params = $this->getPostJsonData();
         $data = [
             'account' => $this->account_id,
-            'user' => $params->user ? $this->user_id : null
+            'user' => $params->user ? $this->user_id : null,
         ];
+        if(!empty($params->client)){
+            $data['client'] = $params->client;
+        }
+
         $result= $this->model->getAllProjects($data);
         $this->response = $result;
         return $this->response;

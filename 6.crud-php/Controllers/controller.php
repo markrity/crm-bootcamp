@@ -16,10 +16,9 @@ class controller
         $model_class_name = "Model_" . $this->model_cls;
         require_once("./Models/$model_class_name.php");
         // get the token and it to parse
-        $this->parseAuthentication();
         $this->model = new $model_class_name();
-        $this->model->account_id = $this->account_id;
-
+        $this->parseAuthentication();
+        $this->model->setAccountId($this->account_id);
     }
 
     public function getPostJsonData()
@@ -29,6 +28,7 @@ class controller
 
     protected function parseAuthentication()
     {
+        // TODO send request to auth service and parse the response
         $this->account_id = 1;
         $this->user_id = 1;
     }

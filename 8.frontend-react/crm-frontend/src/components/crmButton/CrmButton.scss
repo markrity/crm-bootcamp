@@ -7,6 +7,7 @@
 
 
 .submit-button{
+    // text-decoration: none !important;
     display: flex;
     padding: 5px 20px;
     font-family: 'Montserrat', sans-serif;
@@ -76,4 +77,8 @@
     background-color: #bdd5ea;
     color: #577399;
     cursor: pointer;
+}
+
+.button-link {
+    text-decoration: none;
 }
