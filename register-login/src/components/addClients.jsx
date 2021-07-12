@@ -21,7 +21,7 @@ function AddClients(props) {
             const account_id = localStorage.getItem("account_id");
            // checkValidation({full_name: fullName, phone: phone, email: email})
             const params = { fullname, phone, email, account_id}
-            const res = await connectToServerPhpAdd(params)
+            const res = await connectToServerPhpAdd(params, 'clients')
             if (res) {
                 props.closeModal()
             }

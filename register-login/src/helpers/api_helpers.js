@@ -45,10 +45,9 @@ export async function connectToServerChange(params) {
     return res.data.status;
  }
 
- export async function connectToServerPhpAdd(params) {
-    console.log("here",params)
+export async function connectToServerPhpAdd(params, className) {
 
-    const res =  await axios.post(basicURLPHP+'/clients/add/',{...params})
+    const res =  await axios.post(basicURLPHP+'/'+className+'/add/',{...params})
     console.log(res);
     return res;
  }

@@ -29,6 +29,7 @@ function AddTreatment(props) {
     
     const [data, setData] = useState([]);
     const [chosen, setChosen] = useState('');
+    const [isNextButtonShown, setButtonNextShown] = useState(false);
     const [addOpen, setAddOpen] = useState(false);
     const [nextOpen, setNextOpen] = useState(false);
     
@@ -49,6 +50,8 @@ function AddTreatment(props) {
 
 
     function getClientIdByName(fullname) {
+
+        setButtonNextShown(true)
         axios.post('http://localhost:991/clients/get/', {
           account_id: account_id,
           fullname: fullname
@@ -59,6 +62,10 @@ function AddTreatment(props) {
               });
     }
     
+    function closeAllModals() {
+        setNextOpen(false);
+        props.closeModal();
+    }
    
 
     return (
@@ -71,18 +78,11 @@ function AddTreatment(props) {
     <p> Choose Client</p>
 
       <div className="container">
-        {/* <div className="row"> */}
-          {/* <div className="col-md-3"></div> */}
-          {/* <div className="col-md-6"> */}
-            <Select options={options} onChange={e => getClientIdByName(e.label)} />
-            <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
-            <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} />
-            {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
-            {nextOpen && <NextAddTreatment  button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={()=> setNextOpen(false)}/>}
-
-          {/* </div> */}
-          {/* <div className="col-md-4"></div> */}
-        {/* </div> */}
+        <Select options={options} onChange={e => getClientIdByName(e.label)} />
+        <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
+        {isNextButtonShown && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} /> }
+        {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
+        {nextOpen && <NextAddTreatment client_id = {chosen.id} client_name = {chosen.fullname} button_text='add' modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
       </div>
       
       </Modal>

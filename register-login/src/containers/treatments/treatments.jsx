@@ -77,6 +77,11 @@ function Treatments(props) {
                 Header: "price",
                 accessor: "price"
               } ,
+
+              {
+                Header: "user_id",
+                accessor: "user_id"
+              } ,
               {
                 Header: "Actions",
 

@@ -7,6 +7,7 @@ import  {useState, useEffect, useMemo} from "react";
 import Button from '../components/button'
 import AddClients from '../components/addClients'
 import FormInput from '../components/formInput'
+import { connectToServerPhpAdd, connectToServerPhpEdit, connectToServerPhpGetAll } from "../helpers/api_helpers";
 
 
 
@@ -16,7 +17,7 @@ const customStyles = {
       left                  : '50%',
       right                 : 'auto',
       bottom                : 'auto',
-      height                : '55%',
+      height                : '70%',
       width                 : '30%',
       marginRight           : '-50%',
       transform             : 'translate(-50%, -50%)'
@@ -30,6 +31,8 @@ function NextAddTreatment(props) {
      const [data, setData] = useState([]);
      const [chosen, setChosen] = useState('');
      const [price, setPrice] = useState('');
+     const [kind, setKind] = useState('');
+     const [date_time, setDateTime] = useState('');
 
     // const [addOpen, setAddOpen] = useState(false);
     // const [nextOpen, setNextOpen] = useState(false);
@@ -50,43 +53,45 @@ function NextAddTreatment(props) {
     "label" : d.user_fullname 
     }))
 
+    const kinds = [
+        {"label": "anti aging"},
+        {"label" : "acne"}
+    ]
 
-    // function getUserIdByName(fullname) {
-    //     axios.post('http://localhost:991/clients/get/', {
-    //       account_id: account_id,
-    //       fullname: fullname
-    //         }).then(response => {
-    //           setChosen(...response.data.clients);
-    //         //   console.log(chosen.id);
-            
-    //           });
-    // }
-    
-   
+    async function handleClick() {
+        const account_id = localStorage.getItem("account_id");
+        const params = { client_id : props.client_id, kind, price, date_time, account_id, created_at: Date.now(), user_id:chosen}
+        const res = await connectToServerPhpAdd(params, 'treatments')
+        if (res) {
+            props.closeAllModals()
+        }
+    }
+
+    function getUserId(user_name) {
+        let found = data.find(e => e.user_fullname === user_name);
+        setChosen(found.user_id);
+    }
+  
 
     return (
         <Modal 
         isOpen={props.modalIsOpen}
-        onRequestClose={props.closeModal}
+        onRequestClose={props.closeAllModals}
         style={customStyles}
     >
-    <Button className="close" button_text="X" onClick={props.closeModal} />
+    <Button className="close" button_text="<-prev" onClick={props.closeModal} />
 
 
       <div className="container">
-        {/* <div className="row"> */}
-          {/* <div className="col-md-3"></div> */}
-          {/* <div className="col-md-6"> */}
-          <p>client  : {props.client}</p>
-          
+    
+          <p>client name: {props.client_name} </p>
+          <Select options={kinds} onChange={e => setKind(e.label)}  />
+          <FormInput label="date and time" defaultValue = {props.email} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
           <FormInput label="Price" defaultValue = {props.email} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
-          <Select options={options} onChange={e => setChosen(e.label)} />
+          <p>choose user:  </p>
           
-           
-
-          {/* </div> */}
-          {/* <div className="col-md-4"></div> */}
-        {/* </div> */}
+          <Select options={options} onChange={e => getUserId(e.label)} />   
+          <Button className="button" button_text={props.button_text} onClick={handleClick} />
       </div>
       
       </Modal>
