@@ -3,17 +3,28 @@ import ClickableTxt from '../ClickableTxt'
 import { useHistory } from 'react-router-dom';
 import HR from '../HR';
 import ClipLoader from "react-spinners/ClipLoader";
+import { useDispatch } from 'react-redux';
 const nonClickable = ['Already Have An Account? ', 'Dont Have An Account? ']
 const labels = [` Log in`, `Lets Signup`, 'Forgot My Password']
 
-const FormFooter = ({ setFormStage, formStage, mode }) => {
+const FormFooter = ({ setFormStage, formStage, mode, func }) => {
     const history = useHistory()
+    const dispatch = useDispatch()
     const footerButtons = () => {
         switch (mode) {
             case 'New Buisness':
                 return formStage === 0 ?
                     <button type="submit">Add My Buisness</button> :
                     <button type="submit">Register</button>
+            case 'Remove Employee':
+                return (
+                    <div className="flex-row">
+                        <button onClick={func}>No</button>
+                        <button type="submit">Yes</button>
+                    </div>
+                )
+            case 'Employee Removed':
+                return null
             case 'Login':
                 return <button type="submit">Login</button>
             case 'Reset Password':
@@ -26,9 +37,7 @@ const FormFooter = ({ setFormStage, formStage, mode }) => {
                 return <button type="submit">Register</button>
             default:
                 return null
-
         }
-
     }
 
 

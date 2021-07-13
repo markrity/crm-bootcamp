@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 
 const generateToken = (res, id, userInfo, toSend) => {
     const { FirstName } = userInfo
+    console.log(FirstName)
     const token = jwt.sign({ id, FirstName }, process.env.JWT_SECRET, {
         expiresIn: process.env.DB_ENV === 'testing' ? '1d' : '7d'
     });

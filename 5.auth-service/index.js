@@ -23,14 +23,13 @@ app.use('/buisness', buisnessRoutes)
 
 app.get('/me', (req, res) => {
   const { id } = req.user
-
   try {
     let sql = `SELECT * FROM Users WHERE id='${id}'`;
     db.query(sql, (err, result) => {
       if (err)
         return res.sendStatus(500)
       const userInfo = result[0]
-      return res.status(200).send({ userInfo })
+      return res.status(200).send(userInfo)
     })
   } catch {
     return res.sendStatus(403);

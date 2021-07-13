@@ -1,32 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import Modal from 'react-modal';
 import { FiXCircle } from "react-icons/fi";
-import { inviteEmployeeFields } from "../scripts/formFields"
-import AuthForm from './Auth/AuthForm';
-const CustomModal = ({ isVisible, setIsVisible }) => {
+const CustomModal = ({ isVisible, setIsVisible, body }) => {
 
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '50%',
-            height: '50%'
-        }
-    };
+    useEffect(() => Modal.setAppElement('body'), [])
 
     return (
         <div>
-            <Modal
+            <Modal id="modal"
                 isOpen={isVisible}
-                onRequestClose={() => setIsVisible(false)}
-                style={customStyles}>
+                onRequestClose={() => setIsVisible(false)}>
                 <FiXCircle size={40} id="ex-button" onClick={() => setIsVisible(false)} />
                 <div className="centered">
-                    <AuthForm mode={"Invite Employee"} formFields={inviteEmployeeFields} />
+                    {body}
                 </div>
             </Modal>
         </div>

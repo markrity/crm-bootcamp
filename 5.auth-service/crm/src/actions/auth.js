@@ -6,12 +6,36 @@ import {
     ADD_BUISNESS,
     PASSWORD_RESET_SUCCESS,
     PASSWORD_RESET_FAIL,
+    REGISTER_FAIL,
+    CLEAN_ERR,
+    BUISNESS_NAME_EXISTS,
+    BUISNESS_NAME_FREE,
+    SET_ERR
 } from './types';
-import { Redirect } from 'react-router-dom';
 
-
+const CREDENTIALS_ERR = "Please Check Your Credentials"
+const SERVER_ERR = "Mmm Thats Our Bad...Please Try Later"
+const EMAIL_WAS_SENT = "Email Was Sent"
 axios.defaults.withCredentials = true
 
+export const checkBuisnessName = (buisnessName) => async dispatch => {
+    console.log("in checkBuisness Name")
+    try {
+        console.log("in checkBuisness Name")
+        const res = await axios.post(`http://localhost:8000/auth/checkBuisnessName`, { buisnessName }, { withCredentials: true });
+        console.log(res.status)
+        dispatch({ type: BUISNESS_NAME_FREE })
+    } catch (err) {
+        if (err.response) {
+            if (err.response.status === 500)
+                dispatch({ type: SET_ERR, payload: SERVER_ERR })
+            else
+                dispatch({ type: BUISNESS_NAME_EXISTS })
+        }
+        else
+            dispatch({ type: SET_ERR, payload: SERVER_ERR })
+    }
+}
 
 export const login = (formData) => async dispatch => {
     const email = formData.email.value
@@ -19,14 +43,16 @@ export const login = (formData) => async dispatch => {
     const body = { email, password }
     try {
         const res = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
+        console.log(res)
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
+            payload: res.data.userInfo
         });
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: "Your Password Or Email Are Incorrect"
+            payload: err.response ? err.response.status === 401 ?
+                CREDENTIALS_ERR : SERVER_ERR : SERVER_ERR
         })
     }
 };
@@ -43,10 +69,13 @@ export const checkAuth = () => {
             }
         }
         catch (err) {
-            console.log(err)
+            dispatch({
+                type: CLEAN_ERR,
+            })
         }
     }
 }
+
 
 export const addBuisness = (formData) => async dispatch => {
     let { buisnessName, email } = formData[0]
@@ -60,33 +89,43 @@ export const addBuisness = (formData) => async dispatch => {
     const buisnessInfo = { buisnessName, email }
     const adminInfo = { email, password, firstName, lastName, phoneNumber }
     try {
-        const res = axios.post('http://localhost:8000/auth/addBuisness', { buisnessInfo, adminInfo }, {
+        const res = await axios.post('http://localhost:8000/auth/addBuisness', { buisnessInfo, adminInfo }, {
             withCredentials: true
         })
-
+        console.log('res', res.data)
         dispatch({
             type: ADD_BUISNESS,
-            payload: res.data
+            payload: res.data.buisness
         })
-        return <Redirect to="/additionInfo" />
-    } catch {
-        console.log("Server Error")
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: res.data.user
+        })
+    }
+    catch (err) {
+        console.log('err', err)
+        dispatch({
+            type: REGISTER_FAIL,
+            payload: err.response ? err.response.status === 401 ?
+                CREDENTIALS_ERR :
+                SERVER_ERR : SERVER_ERR
+        })
     }
 }
-
-
-
 
 export const forgotPassword = (formData) => async dispatch => {
     try {
         await axios.post(`http://localhost:8000/auth/resetPassword`, { email: formData.email.value }, { withCredentials: true });
         dispatch({
-            type: PASSWORD_RESET_SUCCESS
+            type: PASSWORD_RESET_SUCCESS,
+            payload: EMAIL_WAS_SENT
         });
     } catch (err) {
         dispatch({
-            type: PASSWORD_RESET_FAIL
-        });
+            type: SET_ERR,
+            payload: err.response ? err.response.status === 401 ?
+                CREDENTIALS_ERR : SERVER_ERR : SERVER_ERR
+        })
     }
 };
 
@@ -101,7 +140,6 @@ export const addNewEmployee = (formData, buisnessID, email) => async dispatch =>
     const employeeInfo = { password, firstName, lastName, phoneNumber, email, buisnessID }
     try {
         const res = await axios.post('http://localhost:8000/auth/addEmployee', employeeInfo, { withCredentials: true })
-
     }
     catch {
         console.log("Couldnt Add Employee")
@@ -143,4 +181,12 @@ export const logout = () => async dispatch => {
     });
 };
 
+export const cleanErr = () => async dispatch => {
+    dispatch({
+        type: CLEAN_ERR
+    })
+}
 
+export const setErr = (message) => async dispatch => {
+    dispatch({ type: SET_ERR, payload: message })
+}

@@ -19,7 +19,7 @@ export const signupFormFields = {
         name: 'email', lbl: 'Email'
     },
     password: {
-        type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Password', strength: "",
         name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     },
     rePassword: {
@@ -64,7 +64,7 @@ export const newBuisnessFormFields = [
             name: 'phoneNumber', lbl: 'Phone'
         },
         password: {
-            type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
+            type: 'text', value: '', err: '', placeholder: 'Enter Your Password', strength: "",
             name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
         },
         rePassword: {
@@ -84,7 +84,7 @@ export const forgotPasswordFields = {
 
 export const changePasswordFields = {
     password: {
-        type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Password', strength: "",
         name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     },
     rePassword: {
@@ -114,7 +114,7 @@ export const newEmployee = {
         name: 'phoneNumber', lbl: 'Phone'
     },
     password: {
-        type: 'text', value: '', err: '', placeholder: 'Enter Your Password',
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Password', strength: "",
         name: 'password', lbl: 'Password', icon1: "FiEyeOff", icon2: "FiEye"
     },
     rePassword: {

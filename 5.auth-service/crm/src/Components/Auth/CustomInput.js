@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { FiEye, FiEyeOff } from "react-icons/fi";
 
 
-const CustomInput = ({ placeholder, value, onChangeFunc, name, disabled, err }) => {
+const CustomInput = ({ placeholder, value, onChangeFunc, name, disabled, err, strength }) => {
     const toggleVisibility = () => setIsVisible(!isVisible)
     const [isVisible, setIsVisible] = useState(false)
     const definedVars = {
@@ -26,8 +26,11 @@ const CustomInput = ({ placeholder, value, onChangeFunc, name, disabled, err }) 
                     placeholder={placeholder}
                     name={name}
                     value={value}
+                    strength={strength}
                     onChange={e => onChangeFunc(e)}
                 />
+                {name === definedVars.PASSWORD && strength &&
+                    <p id={strength} className="centered">{strength}</p>}
             </div>
             <p id="err">{err}</p>
         </div >

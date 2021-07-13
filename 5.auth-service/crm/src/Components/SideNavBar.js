@@ -25,7 +25,7 @@ const SideNavBar = ({ selected, setSelected }) => {
         <nav>
             <div className="upper-sidebar">
                 {upperButtons.map(button =>
-                    <CustomTooltip title={button.onHoverTxt} func={button.func}>
+                    <CustomTooltip key={button.onHoverTxt} title={button.onHoverTxt} func={button.func}>
                         <div className="left-navbar-logo"><button.logo id="mg-btm" size={30} color={"white"} /></div>
                         <div className={selected !== button.onHoverTxt ? "view-tooltip" :
                             "view-tooltip selected-view-indicator"}></div>
@@ -35,7 +35,7 @@ const SideNavBar = ({ selected, setSelected }) => {
 
             <div className="lower-sidebar">
                 {lowerButtons.map(button =>
-                    <CustomTooltip title={button.onHoverTxt}>
+                    <CustomTooltip key={button.onHoverTxt} title={button.onHoverTxt}>
                         <button.logo id="mg-btm" size={30} color={"white"} />
                     </CustomTooltip>)}
 

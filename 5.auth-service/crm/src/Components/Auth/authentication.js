@@ -10,8 +10,8 @@ import {
 } from '../../scripts/formFields'
 
 const Auth = ({ initMode }) => {
-    const [mode, setMode] = useState(initMode ?? 'New Buisness')
 
+    const [mode, setMode] = useState(initMode ?? 'New Buisness')
     const formFields = () => {
         switch (mode) {
             case "New Buisness":
@@ -29,11 +29,8 @@ const Auth = ({ initMode }) => {
             default:
                 return []
         }
-
     }
-
-    const authForm = <AuthForm mode={mode} setMode={setMode} formFields={formFields} />
-
+    const authForm = <AuthForm mode={mode} setMode={setMode} formFields={formFields()} />
     return (
         <>
             <Header />

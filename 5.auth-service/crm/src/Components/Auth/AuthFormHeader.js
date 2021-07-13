@@ -10,6 +10,12 @@ const AuthFormHeader = ({ mode }) => {
                     Let’s get started with a few simple steps
                 </>
                 )
+            case 'Remove Employee':
+                return (
+                    <div className='flex-col centered'>
+                        <h2>Are You Sure?</h2>
+                    </div>
+                )
             case 'Login':
                 return (
                     <>
@@ -20,7 +26,7 @@ const AuthFormHeader = ({ mode }) => {
             case 'Reset Password':
                 return (
                     <div className='flex-col center-screen'>
-                        <h2>Enter Email</h2>
+                        <h2>Reset Password</h2>
                     </div>
                 )
             case 'Change Password':

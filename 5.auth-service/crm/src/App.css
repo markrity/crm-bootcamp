@@ -1,5 +1,4 @@
 
-
 body{
   min-height: 100vh;
   overflow: hidden;
@@ -17,6 +16,11 @@ body{
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#approved{
+    color: green;
+    font-size: 13px;
 }
 
 .centered{
@@ -66,7 +70,6 @@ h1{
   margin-left: 1em;
   font-family: 'Dancing Script', cursive;
 }
-
 
 .clickable{
   color:rgb(10, 10, 170);
@@ -303,8 +306,6 @@ span:hover{
 }
 
 
-
-
  #sided-hr{
     flex:2;
   }
@@ -373,4 +374,18 @@ flex-direction: row;
 
 #ex-button:hover{
   background-color: #FCF7EC;
+}
+
+#modal{
+  position: absolute;
+  inset: 50% auto auto 50%!important;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255);
+  overflow: auto;
+  border-radius: 4px;
+  outline: none;
+  padding: 20px;
+  transform: translate(-50%, -50%);
+  width: 50%;
+  height: fit-content;
 }

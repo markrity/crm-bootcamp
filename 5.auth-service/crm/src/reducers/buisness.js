@@ -1,6 +1,7 @@
 import {
     GET_EMPLOYEES,
-    UPDATE_EMPLOYEES
+    UPDATE_EMPLOYEES,
+    ADD_BUISNESS
 } from '../actions/types';
 
 
@@ -12,6 +13,11 @@ const initialState = {
 export default function (state = initialState, action) {
     const { type, payload } = action;
     switch (type) {
+        case ADD_BUISNESS:
+            return {
+                ...state,
+                buisnessID: payload.buisnessID
+            }
         case GET_EMPLOYEES:
             return {
                 ...state,

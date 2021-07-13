@@ -6,9 +6,33 @@ display:inline-block;
 cursor:pointer;
 font-family: 'Dancing Script', cursive;
 font-size:17px;
-padding:9px 30%;
+padding:10px 30px;
 text-decoration:none;
   margin-left: 1em;
   align-self: center;
   margin-bottom: 1em;
+}
+
+#Weak{
+    color: red;
+    font-size: 13px;
+    font-weight: 700;
+    position: absolute;
+    right: 40%;
+}
+
+#Medium{
+  color: orange;
+  font-size: 13px;
+  font-weight: 700;
+  position: absolute;
+  right: 40%;
+}
+
+#Strong{
+  color: green;
+  font-size: 13px;
+  font-weight: 700;
+  position: absolute;
+  right: 40%;
 }

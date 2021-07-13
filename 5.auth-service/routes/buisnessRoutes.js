@@ -54,10 +54,10 @@ router.post('/inviteEmployee', (req, res) => {
     }
     mailgun.messages().send(data, function (err, body) {
         if (err) {
-            console.log("got an error: ", err);
+            return res.sendStatus(401)
         }
         else {
-            res.status(200)
+            return res.sendStatus(200)
         }
     });
 })

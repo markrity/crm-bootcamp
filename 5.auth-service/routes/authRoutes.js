@@ -26,12 +26,24 @@ router.post('/resetPassword', function (req, res) {
 
         mailgun.messages().send(msgData, function (err, body) {
             if (err) {
-                console.log("got an error: ", err);
+                return res.sendStatus(400)
             }
+            return res.sendStatus(200)
         });
     });
 })
 
+
+router.post('/checkBuisnessName', async (req, res) => {
+    const { buisnessName } = req.body
+    let sql = `SELECT * FROM Buisnesses WHERE Name ='${buisnessName}'`
+    db.query(sql, async (err, data) => {
+        if (err)
+            return res.sendStatus(500)
+        console.log(data)
+        return res.sendStatus(data.length === 0 ? 200 : 401)
+    })
+})
 
 router.post('/addEmployee', async (req, res) => {
     const { password, firstName, lastName, phoneNumber, email, buisnessID } = req.body
@@ -104,14 +116,21 @@ router.post("/login", async (req, res) => {
             if (err)
                 return res.sendStatus(500)
             const userInfo = data[0]
-            generateToken(res, userInfo.id, userInfo, true)
+            if (userInfo && userInfo.Password) {
+                const isMatch = await bcrypt.compare(password, userInfo.Password)
+                if (isMatch)
+                    generateToken(res, userInfo.id, userInfo, true)
+                else
+                    return res.sendStatus(401)
+            }
+            else
+                return res.sendStatus(401)
         })
     }
     else {
         return res.sendStatus(500)
     }
 });
-
 
 router.post('/addBuisness', async (req, res) => {
     const { buisnessName, email } = req.body.buisnessInfo
@@ -121,16 +140,18 @@ router.post('/addBuisness', async (req, res) => {
         const buisnessRecord = [[buisnessName, email]]
         let sql = 'INSERT INTO Buisnesses (Name,Email) VALUES ?';
         db.query(sql, [buisnessRecord], (err, result, fields) => {
-            if (err) {
-                return res.status(500).send("Sql Error")
-            }
-            const adminRecord = [[firstName, lastName, phoneNumber, email, result.insertId, hash, true]]
+            if (err)
+                return res.sendStatus(401)
+            console.log(result)
+            const buisnessID = result.insertId
+            const adminRecord = [[firstName, lastName, phoneNumber, email, buisnessID, hash, true]]
             sql = 'INSERT INTO users (FirstName,LastName, PhoneNumber,Email,BuisnessID,Password,isAdmin) VALUES ?'
             db.query(sql, [adminRecord], async (err, result, fields) => {
                 if (err) {
                     return res.status(500).send("Sql Error")
                 }
-                await generateToken(res, result.insertId, adminRecord, true)
+                const token = generateToken(res, result.insertId, { firstName }, false)
+                res.cookie('token', token).status(200).json({ buisness: { buisnessName, buisnessID }, user: { firstName, lastName, isAdmin: 1 } })
             })
         })
     }

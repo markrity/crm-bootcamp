@@ -23,7 +23,7 @@ const Header = () => {
     const employeeNavButtons =
         [{ title: 'Home', func: () => history.push('/home') },
         { title: "Logout", func: () => dispatch(logout()) }]
-    const { isOnline } = useSelector(state => state.auth)
+    const { isOnline, isLoading } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.auth)
     const role = isOnline ? user && user.isAdmin === 1 ? "admin" : "employee" : "guest"
 

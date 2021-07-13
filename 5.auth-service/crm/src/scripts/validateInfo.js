@@ -1,5 +1,7 @@
 
 
+let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,})')
+let mediumPassword = new RegExp('((?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{6,}))|((?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9])(?=.{8,}))')
 
 export default function validateInfo(formData, mode, formStage) {
     let foundError = false
@@ -13,16 +15,16 @@ export default function validateInfo(formData, mode, formStage) {
 
     funcMap.set('password', {
         func: (password) => {
-            return /^[A-Za-z]\w{7,14}$/.test(password);
+            return (strongPassword.test(password) || mediumPassword.test(password));
         },
-        msg: 'Password Must contain uppercase and number'
+        msg: 'Must contain uppercase,lowercase,number,special char and have 6 Characters or more'
     })
 
     funcMap.set('rePassword', {
         func: (password) => {
-            return /^[A-Za-z]\w{7,14}$/.test(password);
+            return (strongPassword.test(password) || mediumPassword.test(password));
         },
-        msg: 'Password Must contain uppercase and number'
+        msg: 'Must contain uppercase,lowercase,number,special char and have 6 Characters or more'
     })
 
     funcMap.set('firstName', {
@@ -72,4 +74,14 @@ export default function validateInfo(formData, mode, formStage) {
     }
 
     return { form: fieldsTemp, hasErrors: foundError }
+}
+
+export const checkPasswordStrength = (password) => {
+    let strength = "Weak"
+    if (strongPassword.test(password)) {
+        strength = "Strong"
+    } else if (mediumPassword.test(password)) {
+        strength = "Medium"
+    }
+    return strength
 }
