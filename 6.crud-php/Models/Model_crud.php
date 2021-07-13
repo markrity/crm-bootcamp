@@ -30,6 +30,7 @@
             $headers = substr_replace($headers ,"",-1);
             $values = substr_replace($values ,"",-1);
             $sql = "INSERT INTO $this->table_name ($headers) VALUES ($values)";
+            var_dump($sql);
             $res = $this->getDB()->query($sql);
             return $res;
          }

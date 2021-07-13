@@ -7,6 +7,7 @@ import  {useState, useEffect, useMemo} from "react";
 import Button from '../components/button'
 import FormInput from '../components/formInput'
 import { connectToServerPhpAdd, connectToServerPhpEdit} from "../helpers/api_helpers";
+import AddKinds from './addKinds';
 
 const customStyles = {
     content : {
@@ -24,17 +25,17 @@ const customStyles = {
 function NextAddTreatment(props) {
     
      const [data, setData] = useState([]);
-     const [chosen, setChosen] = useState('');
      const [userId, setUserId] = useState(props.userId);
      const [clientId, setClientId] = useState(props.client_id);
      const [price, setPrice] = useState(props.price);
      const [kind, setKind] = useState(props.kind);
-
+     const [AllKinds, setAllKinds] = useState([]);
+     const [addOpen, setAddOpen] = useState(false);
      const [date_time, setDateTime] = useState(props.date);
-     const [user_name, setUserName] = useState('')
-     const [client_name, setClientName] = useState('')
+
+     const [errDate, setErrDate] = useState('');
+ 
      
-    
     useEffect(() => {
         console.log(props.client_name);
         const token = localStorage.getItem("my_user");
@@ -43,22 +44,27 @@ function NextAddTreatment(props) {
             }).then(response => {
               setData(response.data);
               });
-    },[]);
+
+        const account_id = localStorage.getItem("account_id");
+        axios.post('http://localhost:991/kinds/getAll/', {
+        account_id : account_id
+        }).then(response => {
+            setAllKinds(response.data.clients);
+            });
+    },[addOpen]);
     
     const options = data.map(d => ({
-    label : d.user_fullname , value : ""
+        label : d.user_fullname , value : ""
     }))
 
     
-    const kinds = [
-        {label: "anti aging", value : ""},
-        {label : "acne", value : ""}
-    ]
+    const kinds = AllKinds.map(d => ({
+        label : d.name , value : ""
+    }))
 
     async function handleClick() {
         const account_id = localStorage.getItem("account_id");
         if (props.button_text === 'add') {     
-
         
         const params = { client_id : clientId, kind, price, date_time, account_id, created_at: Date.now(), user_id:userId}
         const res = await connectToServerPhpAdd(params, 'treatments')
@@ -84,6 +90,11 @@ function NextAddTreatment(props) {
         let found = data.find(e => e.user_fullname === user_name);
         setUserId(found.user_id);
     }
+
+    function getAvailableUsersByDate(date) {
+        setDateTime(date);
+
+    }
   
 
     return (
@@ -97,8 +108,11 @@ function NextAddTreatment(props) {
             <p id ="header_client">client name: {props.client_name1} </p>
             
             <Select  defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
+            <Button className="add_kind" button_text="add new kind" onClick={()=> setAddOpen(true)} />
+            {addOpen && <AddKinds  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
           
-            <FormInput label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
+            <FormInput label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> getAvailableUsersByDate(e.target.value)}/>
+             {errDate}
             <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
           
             <Select options={options} defaultValue = {{label: props.user_name}} onChange={e => getUserId(e.label)} />   

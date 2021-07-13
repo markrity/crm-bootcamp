@@ -18,6 +18,15 @@ import {
 import { connectToServerPhpAdd, connectToServerPhpDelete } from "../../helpers/api_helpers";
 import AddTreatment from "../../components/addTreatment";
 var counter = 1;
+
+
+String.prototype.replaceAt = function(index, replacement) {
+    if (index >= this.length) {
+        return this.valueOf();
+    }
+ 
+    return this.substring(0, index) + replacement + this.substring(index + 1);
+}
 function Treatments(props) {
     const [data, setData] = useState([]);
     const [date, setDate]= useState('');
@@ -56,13 +65,6 @@ function Treatments(props) {
 
   
 
-    String.prototype.replaceAt = function(index, replacement) {
-        if (index >= this.length) {
-            return this.valueOf();
-        }
-     
-        return this.substring(0, index) + replacement + this.substring(index + 1);
-    }
 
     const columns = useMemo(
         () => [
@@ -113,6 +115,7 @@ function Treatments(props) {
                             setDate(row.cell.row.values.date_time)
                             const new_date = date.replaceAt(10, "T");
                             setDate(new_date)
+                            console.log(new_date);
                             setTreId(row.cell.row.original.id);
                             setPrice(row.cell.row.values.price);
                             setKind(row.cell.row.values.kind);
@@ -120,8 +123,7 @@ function Treatments(props) {
                             setClientName(row.cell.row.values.fullname)
                             setUserName(row.cell.row.values.user_fullname)
                             setWhichModal('edit')   
-                            setIsOpen(true)
-                                    
+                            setIsOpen(true)  
                           }}>
                             <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img>
                    </span> 
