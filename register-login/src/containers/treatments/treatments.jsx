@@ -24,7 +24,9 @@ function Treatments(props) {
     const [kind, setKind]= useState('select kind...');
     const [price, setPrice]= useState('');
     const [clientName, setClientName]= useState('select client...');
+    const [userName, setUserName]= useState('select user...');
     const [treatmentId, setTreId] = useState('');
+    const [userId, setUserId] = useState('');
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [confirmIsOpen, setConfirmOpen] = useState(false);
@@ -32,10 +34,9 @@ function Treatments(props) {
     
     useEffect(() => {
         var account_id = localStorage.getItem("account_id");
-        axios.post('http://localhost:991/treatments/getAll/', {
+        axios.post('http://localhost:991/treatments/getTreatmentTable/', {
           account_id: account_id
             }).then(response => {
-           //   console.log(response.data.clients);
               setData(response.data.clients);
               });
     }, [dataChange, modalIsOpen]);
@@ -56,7 +57,11 @@ function Treatments(props) {
   
 
     String.prototype.replaceAt = function(index, replacement) {
-        return this.substr(0, index) + replacement + this.substr(index + replacement.length);
+        if (index >= this.length) {
+            return this.valueOf();
+        }
+     
+        return this.substring(0, index) + replacement + this.substring(index + 1);
     }
 
     const columns = useMemo(
@@ -65,8 +70,8 @@ function Treatments(props) {
             Header: "Treatment",
             columns: [
               {
-                Header: "client_id",
-                accessor: "client_id"
+                Header: "client_name",
+                accessor: "fullname"
               },
 
               {
@@ -86,8 +91,8 @@ function Treatments(props) {
               } ,
 
               {
-                Header: "user_id",
-                accessor: "user_id"
+                Header: "user_name",
+                accessor: "user_fullname"
               } ,
               {
                 Header: "Actions",
@@ -104,11 +109,16 @@ function Treatments(props) {
                    </span> 
 
                    <span  onClick={() => {
+                            console.log(row.cell.row.values.date_time);
                             setDate(row.cell.row.values.date_time)
-                            setDate(date.replaceAt(10, "T"))
+                            const new_date = date.replaceAt(10, "T");
+                            setDate(new_date)
+                            setTreId(row.cell.row.original.id);
                             setPrice(row.cell.row.values.price);
                             setKind(row.cell.row.values.kind);
-                            setClientName('neta kim')
+                            setUserId(row.cell.row.values.user_id)
+                            setClientName(row.cell.row.values.fullname)
+                            setUserName(row.cell.row.values.user_fullname)
                             setWhichModal('edit')   
                             setIsOpen(true)
                                     
@@ -128,8 +138,11 @@ function Treatments(props) {
     function onClickAdd() {
        setDate('')
        setPrice('')
+       setUserId('')
+       setDate('')
        setKind('select kind...')
        setClientName('select client...')
+       setUserName('select user...')
        setIsOpen(true)
        setWhichModal('add')
     }
@@ -142,7 +155,7 @@ function Treatments(props) {
 
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
-    {modalIsOpen && <AddTreatment client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     
     <Table columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>

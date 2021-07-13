@@ -14,6 +14,15 @@
         }
 
 
+        public function getTreatmentTable() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getTreatmentData($data->account_id);
+            $this->response["clients"] = $treatments;
+            return $this->response;
+        }
+
 
 
     }

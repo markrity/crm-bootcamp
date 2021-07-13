@@ -48,6 +48,7 @@
             $set_statement = substr_replace($set_statement ,"",-1);
 
             $sql = "UPDATE $this->table_name SET $set_statement WHERE (id = $data->id)";
+            var_dump($sql);
             $res = $this->getDB()->query($sql);
             return $res;
         }

@@ -28,40 +28,50 @@ const account_id = localStorage.getItem("account_id");
 function AddTreatment(props) {
     const [options, setOptions] = useState([]);
     const [data, setData] = useState([]);
-   
+    const [whichModal, setWhichModal] =  useState(false);
     const [chosen, setChosen] = useState('');
     const [isNextButtonShown, setButtonNextShown] = useState(false);
     const [addOpen, setAddOpen] = useState(false);
     const [nextOpen, setNextOpen] = useState(false);
+    const [clientName, setClientName] = useState(props.client_name);
     
     useEffect(() => {
+
+        String.prototype.replaceAt = function(index, replacement) {
+            if (index >= this.length) {
+                return this.valueOf();
+            }
+         
+            return this.substring(0, index) + replacement + this.substring(index + 1);
+        }
+
         
+
+        console.log(props.date);
+        if (props.whichModal==='edit') {
+            setWhichModal(true)
+        }
+        //setWhichModal(props.whichModal)
         axios.post('http://localhost:991/clients/getAll/', {
           account_id: account_id
             }).then(response => {
-              //console.log(response.data.clients);
               setData(response.data.clients);
               setOptions(response.data.clients.map(d => ({
                 label : d.fullname , value : ""
                 })))
-                
-            //  setOptions(new_options);
-            //  console.log(data);
               });
     },[addOpen]);
     
   
 
     function getClientIdByName(fullname) {
-
         setButtonNextShown(true)
         axios.post('http://localhost:991/clients/get/', {
           account_id: account_id,
           fullname: fullname
             }).then(response => {
+              setClientName(fullname)
               setChosen(...response.data.clients);
-            //   console.log(chosen.id);
-            
               });
     }
     
@@ -82,7 +92,7 @@ function AddTreatment(props) {
 
         <div className="container">
             <Select 
-            defaultValue={{label:props.client_name}} 
+            defaultValue={{label:clientName}} 
             options={options} 
             onChange={e => getClientIdByName(e.label)} />
             
@@ -91,11 +101,12 @@ function AddTreatment(props) {
             <p id="client_not_found">client not found?</p>
             <Button className="add" button_text="add new client" onClick={()=> setAddOpen(true)} />
             </div>
+            {whichModal && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)}/>}
             {isNextButtonShown && <Button className="next" button_text="next ->" onClick={()=> setNextOpen(true)} /> }
             </div>
             {addOpen && <AddClients  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
-            
-            {nextOpen && <NextAddTreatment button_text={props.button_text} kind={props.kind} price = {props.price} date={props.date} client_id = {chosen.id} client_name = {chosen.fullname}  modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
+
+            {nextOpen && <NextAddTreatment user_id = {props.user_id} treatment_id = {props.treatment_id} client_name1 = {clientName} user_name = {props.user_name}button_text={props.button_text} kind={props.kind} price = {props.price} date={props.date} client_id = {chosen.id} client_name = {chosen.fullname}  modalIsOpen={() =>  setNextOpen(true)} closeModal={() =>  setNextOpen(false)} closeAllModals={closeAllModals}/>}
         </div>
       
       </Modal>

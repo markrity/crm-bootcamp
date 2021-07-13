@@ -296,6 +296,6 @@ function validatePhone(phone) {
 }
 
 function validateName(name) {  
-  var re = /^[a-z]([-']?[a-z]+)*( [a-z]([-']?[a-z]+)*)+$/;
+  var re = /^[A-Za-z]([-']?[A-Za-z]+)*( [A-Za-z]([-']?[A-Za-z]+)*)+$/;
   return re.test(name);
 }

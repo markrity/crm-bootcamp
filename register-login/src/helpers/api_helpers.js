@@ -67,8 +67,8 @@ export async function connectToServerPhpAdd(params, className) {
 
 
 
- export async function connectToServerPhpEdit(params) {
-    const res =  await axios.post(basicURLPHP+'/clients/edit/',{...params})
+ export async function connectToServerPhpEdit(params, className) {
+    const res =  await axios.post(basicURLPHP+'/'+className+'/edit/',{...params})
     return res;
  }
 

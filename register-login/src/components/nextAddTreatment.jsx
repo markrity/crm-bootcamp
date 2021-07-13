@@ -6,7 +6,7 @@ import axios from 'axios';
 import  {useState, useEffect, useMemo} from "react";
 import Button from '../components/button'
 import FormInput from '../components/formInput'
-import { connectToServerPhpAdd} from "../helpers/api_helpers";
+import { connectToServerPhpAdd, connectToServerPhpEdit} from "../helpers/api_helpers";
 
 const customStyles = {
     content : {
@@ -25,20 +25,23 @@ function NextAddTreatment(props) {
     
      const [data, setData] = useState([]);
      const [chosen, setChosen] = useState('');
-     const [price, setPrice] = useState('');
-     const [kind, setKind] = useState('');
-     const [date_time, setDateTime] = useState('');
-     const [options1, setOption1] = useState([]);
+     const [userId, setUserId] = useState(props.userId);
+     const [clientId, setClientId] = useState(props.client_id);
+     const [price, setPrice] = useState(props.price);
+     const [kind, setKind] = useState(props.kind);
 
+     const [date_time, setDateTime] = useState(props.date);
+     const [user_name, setUserName] = useState('')
+     const [client_name, setClientName] = useState('')
+     
     
     useEffect(() => {
+        console.log(props.client_name);
         const token = localStorage.getItem("my_user");
-
         axios.post('http://kerenadiv.com:8005/getAllUsers', {
             token: token 
             }).then(response => {
               setData(response.data);
-             console.log(data);
               });
     },[]);
     
@@ -53,23 +56,33 @@ function NextAddTreatment(props) {
     ]
 
     async function handleClick() {
+        const account_id = localStorage.getItem("account_id");
         if (props.button_text === 'add') {     
 
-        const account_id = localStorage.getItem("account_id");
-        const params = { client_id : props.client_id, kind, price, date_time, account_id, created_at: Date.now(), user_id:chosen}
+        
+        const params = { client_id : clientId, kind, price, date_time, account_id, created_at: Date.now(), user_id:userId}
         const res = await connectToServerPhpAdd(params, 'treatments')
         if (res) {
             props.closeAllModals()
         }
     }
     else {
+        console.log(props.treatment_id);
+        const params = { client_id : clientId, kind, price, date_time, account_id, created_at: Date.now(), user_id:userId, id:props.treatment_id}
+        console.log(params);
+        const res = await connectToServerPhpEdit(params, 'treatments')
+        if (res) {
+            console.log(res);
+            props.closeAllModals()
+        }
+
 
     }
     }
 
     function getUserId(user_name) {
         let found = data.find(e => e.user_fullname === user_name);
-        setChosen(found.user_id);
+        setUserId(found.user_id);
     }
   
 
@@ -81,14 +94,14 @@ function NextAddTreatment(props) {
     >
         <Button className="close" button_text="<-prev" onClick={props.closeModal} />
         <div className="container">  
-            <p id ="header_client">client name: {props.client_name} </p>
+            <p id ="header_client">client name: {props.client_name1} </p>
             
-            <Select placeholder="choose client" defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
+            <Select  defaultValue = {{label: props.kind}} options={kinds} onChange={e => setKind(e.label)}  />
           
-            <FormInput label="date and time" defaultValue = {props.date} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
+            <FormInput label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> setDateTime(e.target.value)}/>
             <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
           
-            <Select options={options} onChange={e => getUserId(e.label)} />   
+            <Select options={options} defaultValue = {{label: props.user_name}} onChange={e => getUserId(e.label)} />   
             <Button className="button" button_text={props.button_text} onClick={handleClick} />
         </div>
     </Modal>

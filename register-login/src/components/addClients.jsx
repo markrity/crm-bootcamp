@@ -29,7 +29,7 @@ function AddClients(props) {
 
         else {
             const params = {fullname, phone, email,id: props.id}
-            const res = await connectToServerPhpEdit(params)
+            const res = await connectToServerPhpEdit(params, 'clients')
             if (res) {
                 props.closeModal()
             }
