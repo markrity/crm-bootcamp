@@ -12,6 +12,7 @@ import {
 } from "react-router-dom";
 
 import ClientDetails from "../../components/clientDetails";
+import AddTags from "../../components/addTags";
 var counter = 1;
 
 function ClientData(props) {
@@ -20,10 +21,12 @@ function ClientData(props) {
     const [clientRow, setClientRow] = useState([]);
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [clientId, setClientId] = useState(false);
     
     useEffect(() => {
-        var account_id = localStorage.getItem("account_id");
-        var client_id = localStorage.getItem("client_id");
+        const account_id = localStorage.getItem("account_id");
+        const client_id = localStorage.getItem("client_id");
+        setClientId(client_id)
         axios.post('http://localhost:991/treatments/getTreatmentTableOfClient/', {
           account_id: account_id,
           client_id: client_id
@@ -103,10 +106,14 @@ function ClientData(props) {
     </div>
 
     <div className="container1"> 
-    <div className= "client_tags"> add tags/ show tags</div>
+    
 
     <div className="table_and_select">
     <Table tableID="clientData" columns={columns} data={data}  /> 
+    </div>
+
+    <div className= "client_tags"> 
+    <AddTags client_id = {clientId}/>
     </div>
    
     </div>

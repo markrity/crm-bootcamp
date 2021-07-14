@@ -30,13 +30,20 @@ display: flex;
 }
 
 .client_tags {
-  width: 30%;
+  width: 20%;
   height: 30%;
+  margin-right: 15vh;
+  margin-top: -9%;
 }
 
 
 .client_details {
-  text-align: center;
-  margin-top: 5%;
+  text-align: start;
+  margin-top: 10vh;
+  margin-left: 10vh;
+}
+
+.dataPage {
+  margin-top: 7%;
 }
 
