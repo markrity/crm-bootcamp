@@ -13,16 +13,35 @@
 
 
         public function getTreatmentData($account_id) {
-
             $newSql = "SELECT treatments.*, clients.fullname, users.user_fullname
             FROM clients
             INNER JOIN treatments 
             INNER JOIN users 
             ON (clients.id = treatments.client_id) and (clients.account_id = $account_id) and (users.user_id = treatments.user_id)";
+            $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
 
-            
-            // $sql = "SELECT * FROM $this->table_name WHERE (account_id=$account_id) AND (fullname='$fullname')";
-           // var_dump($sql);
+
+        public function getTreatmentDataOfClient($account_id, $client_id) {
+            $newSql = "SELECT treatments.*, clients.fullname, users.user_fullname
+            FROM clients
+            INNER JOIN treatments 
+            INNER JOIN users 
+            ON (clients.id = treatments.client_id) and (clients.account_id = $account_id) and (users.user_id = treatments.user_id) and (clients.id = $client_id)";
+            $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
+
+
+
+        public function getAvailableUsersByDate($account_id, $date) {
+            $newSql = "	SELECT users.user_fullname, users.user_id
+            from  users 
+            inner join  treatments
+            on '$date' BETWEEN treatments.date_time AND DATE_ADD(treatments.date_time, INTERVAL 3599 second)
+            and treatments.account_id = $account_id
+            and users.user_id = treatments.user_id";
             $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }

@@ -24,6 +24,29 @@
         }
 
 
+        public function getTreatmentTableOfClient() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getTreatmentDataOfClient($data->account_id, $data->client_id);
+            $this->response["treatments"] = $treatments;
+            return $this->response;
+        }
+
+        public function getAvailableUsers() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getAvailableUsersByDate($data->account_id, $data->date);
+            $this->response["clients"] = $treatments;
+            return $this->response;
+        }
+
+
+
+
+
+
 
     }
 

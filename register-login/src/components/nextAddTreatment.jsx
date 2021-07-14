@@ -21,6 +21,9 @@ const customStyles = {
       transform             : 'translate(-50%, -50%)'
     }
   };
+const account_id = localStorage.getItem("account_id");
+const token = localStorage.getItem("my_user");
+
 
 function NextAddTreatment(props) {
     
@@ -32,20 +35,18 @@ function NextAddTreatment(props) {
      const [AllKinds, setAllKinds] = useState([]);
      const [addOpen, setAddOpen] = useState(false);
      const [date_time, setDateTime] = useState(props.date);
+     const [allUsers, setAllUsers] = useState([]);
 
      const [errDate, setErrDate] = useState('');
  
      
     useEffect(() => {
-        console.log(props.client_name);
-        const token = localStorage.getItem("my_user");
+
         axios.post('http://kerenadiv.com:8005/getAllUsers', {
             token: token 
             }).then(response => {
-              setData(response.data);
+               setAllUsers(response.data);
               });
-
-        const account_id = localStorage.getItem("account_id");
         axios.post('http://localhost:991/kinds/getAll/', {
         account_id : account_id
         }).then(response => {
@@ -64,8 +65,8 @@ function NextAddTreatment(props) {
 
     async function handleClick() {
         const account_id = localStorage.getItem("account_id");
+        console.log(userId);
         if (props.button_text === 'add') {     
-        
         const params = { client_id : clientId, kind, price, date_time, account_id, created_at: Date.now(), user_id:userId}
         const res = await connectToServerPhpAdd(params, 'treatments')
         if (res) {
@@ -81,19 +82,32 @@ function NextAddTreatment(props) {
             console.log(res);
             props.closeAllModals()
         }
-
-
     }
     }
 
     function getUserId(user_name) {
         let found = data.find(e => e.user_fullname === user_name);
         setUserId(found.user_id);
+        console.log(data);
     }
 
     function getAvailableUsersByDate(date) {
         setDateTime(date);
 
+
+        axios.post('http://localhost:991/treatments/getAvailableUsers/', {
+            account_id : account_id,
+            date: date
+            }).then(response => {
+                console.log(response.data.clients);
+                if (response.data.clients.length===allUsers.length) {
+                    setErrDate('There are no available users at this time!')
+                }
+                else {
+                  //to do here move on the res and remove from all users ! and set it to data
+                }
+                setData(response.data.clients);
+                });
     }
   
 
@@ -112,10 +126,11 @@ function NextAddTreatment(props) {
             {addOpen && <AddKinds  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
           
             <FormInput label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> getAvailableUsersByDate(e.target.value)}/>
-             {errDate}
-            <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
           
-            <Select options={options} defaultValue = {{label: props.user_name}} onChange={e => getUserId(e.label)} />   
+             <Select options={options} defaultValue = {{label: props.user_name}} onChange={e => getUserId(e.label)} /> 
+             {errDate}  
+            <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
+        
             <Button className="button" button_text={props.button_text} onClick={handleClick} />
         </div>
     </Modal>

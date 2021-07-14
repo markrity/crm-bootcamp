@@ -27,6 +27,8 @@ String.prototype.replaceAt = function(index, replacement) {
  
     return this.substring(0, index) + replacement + this.substring(index + 1);
 }
+
+
 function Treatments(props) {
     const [data, setData] = useState([]);
     const [date, setDate]= useState('');
@@ -111,9 +113,13 @@ function Treatments(props) {
                    </span> 
 
                    <span  onClick={() => {
-                            console.log(row.cell.row.values.date_time);
-                            setDate(row.cell.row.values.date_time)
-                            const new_date = date.replaceAt(10, "T");
+                           // console.log(row.cell.row.values.date_time);
+                            //setDate(row.cell.row.values.date_time)
+                         //   let firstPart = date.substr(0, 10);
+                         //   let lastPart = date.substr(11);
+                         //   let newString = firstPart + 'T' + lastPart;
+                            const new_date = row.cell.row.values.date_time.substr(0, 10) + 'T' + row.cell.row.values.date_time.substr(10 + 1);
+                           // const new_date = date.replaceAt(10, "T");
                             setDate(new_date)
                             console.log(new_date);
                             setTreId(row.cell.row.original.id);
@@ -154,12 +160,12 @@ function Treatments(props) {
     <body>
     {!(props.isExist)&& <Redirect to="/login" />}
     <div className="test">
-
+   
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     
-    <Table columns={columns} data={data} /> 
+    <Table tableID="users" columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>
     <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
       </span>  

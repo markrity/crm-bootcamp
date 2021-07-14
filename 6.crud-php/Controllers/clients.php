@@ -30,6 +30,18 @@
             return $this->response;
         }
 
+        public function getClientNameByID() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+          
+            $clients = $this->model->getClientDetails($data->account_id,$data->client_id);
+           
+            $this->response["clients"] = $clients;
+          //  var_dump($clients);
+            return $this->response;
+        }
+
         // public function getPostData()
         // {
         //     $this->response["post"] = $_POST;

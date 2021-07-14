@@ -23,5 +23,15 @@ body {
 /* .page {
   display: flex;
 } */
+.container1 {
+display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.client_tags {
+  width: 30%;
+  height: 30%;
+}
 
 

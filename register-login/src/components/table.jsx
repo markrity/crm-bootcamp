@@ -2,7 +2,7 @@ import React, {useTable} from "react-table";
 
 import '../style/table.css'
 
-export default function Table({ columns, data }) {
+export default function Table({ columns, data, tableID }) {
     // Table component logic and UI come here
     const {
         getTableProps, // table props from react-table
@@ -17,7 +17,7 @@ export default function Table({ columns, data }) {
 
       return (
         <div className="table_container">
-        <table id="users"{...getTableProps()}>
+        <table id= {tableID} {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
               <tr {...headerGroup.getHeaderGroupProps()}>

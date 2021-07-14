@@ -107,7 +107,7 @@ function Kinds(props) {
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteKinds()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddKinds name= {name}  id={kindId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
-    <Table columns={columns} data={data} /> 
+    <Table tableID="users" columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Kinds" onClick={() => onClickAdd()}>
     <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
       </span>  
