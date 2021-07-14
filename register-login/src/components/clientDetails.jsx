@@ -4,9 +4,9 @@ function ClientDetails(props)  {
 
     return (
     <div className = "client_details" >
-        client name: {props.client_fullname}
-        client phone: {props.client_phone}
-        client email: {props.client_email}
+        <p className="detail">client name: {props.client_fullname}</p>
+        <p className="detail">client phone: {props.client_phone}</p>
+        <p className="detail">client email: {props.client_email}</p>
     </div>
 
     );

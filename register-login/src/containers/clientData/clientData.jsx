@@ -1,33 +1,25 @@
 import React, {useState, useEffect, useMemo} from "react";
 import axios from 'axios';
-import Select from 'react-select';
-
 import Table from '../../components/table'
 
 import '../../style/table_data.css'
 import '../../style/table.css'
-import AddUser from "../../components/addUser";
-import AddClients from "../../components/addClients";
-import ConfirmDelete from "../../components/confirmDelete";
+
 
 import {
   BrowserRouter as Router,
   Redirect,
 } from "react-router-dom";
 
-import { connectToServerPhpAdd, connectToServerPhpDelete } from "../../helpers/api_helpers";
+import ClientDetails from "../../components/clientDetails";
 var counter = 1;
 
 function ClientData(props) {
     const [data, setData] = useState([]);
     const [clientName, setClientName]= useState('');
-    const [phone, setPhone]= useState('');
-    const [email, setEmail]= useState('');
-    const [clientId, setClientId] = useState('');
-    const [clientData, setClientData] = useState([]);
+    const [clientRow, setClientRow] = useState([]);
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
-    const [confirmIsOpen, setConfirmOpen] = useState(false);
     
     useEffect(() => {
         var account_id = localStorage.getItem("account_id");
@@ -47,8 +39,8 @@ function ClientData(props) {
           account_id: account_id,
           client_id: client_id
             }).then(response => {
-              setClientData(response.data.clients);
-              console.log(response.data.clients);
+              setClientRow(...response.data.clients);
+              console.log(...response.data.clients);
               });
     }, [dataChange, modalIsOpen]);
 
@@ -106,7 +98,9 @@ function ClientData(props) {
     {!(props.isExist)&& <Redirect to="/login" />}
     <div className="dataPage">
 
-    <div className= "data_about_client"> write the data about client</div>
+    <div className= "data_about_client"> 
+    <ClientDetails client_fullname={clientRow.fullname} client_phone={clientRow.phone} client_email={clientRow.email}/>
+    </div>
 
     <div className="container1"> 
     <div className= "client_tags"> add tags/ show tags</div>
@@ -116,8 +110,6 @@ function ClientData(props) {
     </div>
    
     </div>
-
-
 
     </div>
     

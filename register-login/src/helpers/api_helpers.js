@@ -72,3 +72,9 @@ export async function connectToServerPhpAdd(params, className) {
     return res;
  }
 
+
+ export async function getAvailableUsers(params) {
+    const res =  await axios.post('http://localhost:991/treatments/getAvailableUsers/',{...params})
+    return res;
+ }
+

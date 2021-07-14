@@ -8,6 +8,8 @@ import Button from '../components/button'
 import FormInput from '../components/formInput'
 import { connectToServerPhpAdd, connectToServerPhpEdit} from "../helpers/api_helpers";
 import AddKinds from './addKinds';
+import Users from '../containers/users/users';
+import {getAvailableUsers} from '../helpers/api_helpers'
 
 const customStyles = {
     content : {
@@ -27,7 +29,6 @@ const token = localStorage.getItem("my_user");
 
 function NextAddTreatment(props) {
     
-     const [data, setData] = useState([]);
      const [userId, setUserId] = useState(props.userId);
      const [clientId, setClientId] = useState(props.client_id);
      const [price, setPrice] = useState(props.price);
@@ -36,12 +37,12 @@ function NextAddTreatment(props) {
      const [addOpen, setAddOpen] = useState(false);
      const [date_time, setDateTime] = useState(props.date);
      const [allUsers, setAllUsers] = useState([]);
-
+     const [notAvbUsers, setNotUsers] = useState([]);
+     const [options, setOptions] = useState([]);
      const [errDate, setErrDate] = useState('');
  
      
     useEffect(() => {
-
         axios.post('http://kerenadiv.com:8005/getAllUsers', {
             token: token 
             }).then(response => {
@@ -54,10 +55,6 @@ function NextAddTreatment(props) {
             });
     },[addOpen]);
     
-    const options = data.map(d => ({
-        label : d.user_fullname , value : ""
-    }))
-
     
     const kinds = AllKinds.map(d => ({
         label : d.name , value : ""
@@ -86,28 +83,63 @@ function NextAddTreatment(props) {
     }
 
     function getUserId(user_name) {
-        let found = data.find(e => e.user_fullname === user_name);
+        let found = allUsers.find(e => e.user_fullname === user_name);
         setUserId(found.user_id);
-        console.log(data);
+        console.log(allUsers);
     }
+  
+    function comparer(otherArray){
+        return function(current){
+          return otherArray.filter(function(other){
+            console.log(other.user_fullname);
+            console.log(current.user_fullname );
+            return other.user_fullname == current.user_fullname 
+          }).length == 0;
+        }
+      }
+      
+     
+  
 
-    function getAvailableUsersByDate(date) {
+    async function getAvailableUsersByDate(date) {
         setDateTime(date);
 
+        const params = {account_id : account_id,date: date}
+        const response = await getAvailableUsers(params);
+        console.log(response);
+        if (response.data.clients.length===allUsers.length) {
+            setOptions([])
+            setErrDate('There are no available users at this time!')
+            
+        }
 
-        axios.post('http://localhost:991/treatments/getAvailableUsers/', {
-            account_id : account_id,
-            date: date
-            }).then(response => {
-                console.log(response.data.clients);
-                if (response.data.clients.length===allUsers.length) {
-                    setErrDate('There are no available users at this time!')
-                }
-                else {
-                  //to do here move on the res and remove from all users ! and set it to data
-                }
-                setData(response.data.clients);
-                });
+        else if  (response.data.clients.length===0) {
+            setErrDate('')
+            setOptions([])
+            console.log('dsfsdf');
+            setOptions(allUsers.map(d => ({
+                label : d.user_fullname , value : ""
+            })));
+        }
+
+        else {
+           setErrDate('')
+           setOptions([])
+           setNotUsers(...response.data.clients)
+ 
+           let onlyInA=[];
+
+           const notavb = {...response.data.clients};
+        
+            for (let i=0; i<[notavb].length; i++) {
+            onlyInA = onlyInA.concat(allUsers.filter(comparer([notavb[i]])))
+ 
+            }
+            setOptions(onlyInA.map(d => ({
+            label : d.user_fullname , value : ""
+        })));       
+ 
+        }
     }
   
 
