@@ -13,16 +13,13 @@ body {
   /* font-family: poppins; */
 }
 .mainImg {
-  border: 5px solid #F9DCC4;
+  border: 5px solid #fcd5ce;
 }
 
 .span {
   display: inline-block; margin-top: 4px
 }
 
-/* .page {
-  display: flex;
-} */
 .container1 {
 display: flex;
     justify-content: space-between;
@@ -41,10 +38,9 @@ display: flex;
   text-align: start;
   margin-top: 10vh;
   margin-left: 25vh;
-  background-color: #FCD5CE;
+  background-color: #ffe5d9;
   width: 22%;
-  box-shadow: 14px 14px 20px rgb(222, 217, 217),
-  -14px -14px 20px rgb(222, 217, 217);
+  border-radius: 10px;
   padding: 1%;
 }
 
@@ -56,22 +52,43 @@ display: flex;
 }
 
 .dataPage {
+  width: 90%;
+  margin-left: 5%;
   /* margin-top: 7%; */
 }
 
-
 .tagsDiv {
-  width: 100%;
-  background-color: #FCD5CE;
+  width: 50%;
+  background-color: #ffe5d9;
   text-align: center;
   font-weight: bold;
   letter-spacing: 1px;
+  margin-left: 23%;
+  border-radius: 5px;
+ 
  
 }
 
 #tag_delete { 
   margin-top: 4vh;
+  
   display: flex;
 }
 
 
+.up_table_treatment {
+  display: flex;
+  align-items: flex-start;
+  /* align-content: flex-end; */
+  margin-right: 30%;
+  margin-top: 5vh;
+}
+
+.link {
+  color: black;
+}
+
+
+.link:hover {
+  color: white;
+}

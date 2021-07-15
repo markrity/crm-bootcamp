@@ -42,6 +42,16 @@
             return $this->response;
         }
 
+        public function getTreFilter() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getTreatmentFilter($data->account_id, $data->start_date, $data->end_date);
+            $this->response["treatment"] = $treatments;
+            return $this->response;
+        }
+
+
 
 
 

@@ -15,7 +15,7 @@ import {
 } from "react-router-dom";
 
 import ClientDetails from "../../components/clientDetails";
-import AddTags from "../../components/addTags";
+
 var counter = 1;
 
 function ClientData(props) {
@@ -67,15 +67,16 @@ function ClientData(props) {
     async function handleClick() {
       const account_id = localStorage.getItem("account_id");
       const client_id = localStorage.getItem("client_id");
-
+       if (tag) {
       // checkValidation({full_name: fullName, phone: phone, email: email})
        const params = {text:tag, client_id:client_id, account_id:account_id}
        const res = await connectToServerPhpAdd(params, 'tags')
        if (res) {
           console.log('added!');
           changeData()
+          setTag('')
        }
-
+      }
     }
 
     const columns = useMemo(
@@ -123,8 +124,8 @@ function ClientData(props) {
 
       const options = [
         {label:"need to pay"},
-        {label:"big client!"},
-        {label:"add???"}
+        {label:"need to call"}
+        
       ]
 
     

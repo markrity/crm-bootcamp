@@ -1,14 +1,17 @@
 import React, {useState, useEffect, useMemo, useLayoutEffect} from "react";
 import axios from 'axios';
 import Button from '../../components/button'
+import ButtonIcon from '../../components/button'
+
+import FormInput from'../../components/formInput'
 
 import Table from '../../components/table'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import '../../style/table.css'
 import AddUser from "../../components/addUser";
 import AddClients from "../../components/addClients";
 import ConfirmDelete from "../../components/confirmDelete";
-
 import {
   BrowserRouter as Router,
 
@@ -38,6 +41,11 @@ function Treatments(props) {
     const [userName, setUserName]= useState('select user...');
     const [treatmentId, setTreId] = useState('');
     const [userId, setUserId] = useState('');
+
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
+
     const [dataChange, setDataChange] = useState(0);
     const [modalIsOpen, setIsOpen] = useState(false);
     const [confirmIsOpen, setConfirmOpen] = useState(false);
@@ -107,19 +115,13 @@ function Treatments(props) {
                   <span  onClick={() => {
                             setConfirmOpen(true)
                             setTreId(row.cell.row.original.id);      
-
                           }}>
-                            <img class="manImg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
+                        <FontAwesomeIcon  icon={faTrashAlt} size={"1x"}/>
+
                    </span> 
 
                    <span  onClick={() => {
-                           // console.log(row.cell.row.values.date_time);
-                            //setDate(row.cell.row.values.date_time)
-                         //   let firstPart = date.substr(0, 10);
-                         //   let lastPart = date.substr(11);
-                         //   let newString = firstPart + 'T' + lastPart;
                             const new_date = row.cell.row.values.date_time.substr(0, 10) + 'T' + row.cell.row.values.date_time.substr(10 + 1);
-                           // const new_date = date.replaceAt(10, "T");
                             setDate(new_date)
                             console.log(new_date);
                             setTreId(row.cell.row.original.id);
@@ -131,7 +133,9 @@ function Treatments(props) {
                             setWhichModal('edit')   
                             setIsOpen(true)  
                           }}>
-                            <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img>
+                              
+                              <FontAwesomeIcon  icon={faEdit} size={"1x"}/>
+                            {/* <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img> */}
                    </span> 
 
                    </div>
@@ -155,6 +159,31 @@ function Treatments(props) {
        setWhichModal('add')
     }
 
+
+    function onClickFilter() {
+        var account_id = localStorage.getItem("account_id");
+        console.log(startDate);
+        console.log(endDate);
+        if (endDate && startDate) {
+            console.log('fillll');
+            axios.post('http://localhost:991/treatments/getTreFilter/', {
+            account_id: account_id,
+            start_date: startDate,
+            end_date: endDate
+            }).then(response => {
+                console.log(response.data.treatment);
+
+                //console.log(response.data.clients);
+                setData(response.data.treatment);
+                });
+
+        }
+        else {
+            console.log('null');
+        }
+     
+    }
+
     
     return (
     <body>
@@ -165,10 +194,21 @@ function Treatments(props) {
 
     {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     
-    <Table tableID="users" columns={columns} data={data} /> 
-    <span className="add_button" button_text="Add Treatments" onClick={() => onClickAdd()}>
-    <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
-      </span>  
+    <Table tableID="tre" columns={columns} data={data} /> 
+    <div className= "up_table_treatment"> 
+    <FormInput label="choose start date"  type = "datetime-local" className ="input"  onChange={e=> setStartDate(e.target.value)}/>
+    <FormInput label="choose end date"  type = "datetime-local" className ="input"  onChange={e=> setEndDate(e.target.value)}/>
+    <span className="add_button_tre" button_text="Add Treatments" onClick={() => onClickFilter()}>
+    <FontAwesomeIcon  icon={faSlidersH} size={"2x"}/>
+    </span> 
+
+    
+    <span className="add_button_tre" button_text="Add Treatments" onClick={() => onClickAdd()}> 
+    {/* <ButtonIcon className="add_tre_button_icon" onClick={() => onClickAdd()} button_text="Add new treatment " ></ButtonIcon> */}
+
+    <FontAwesomeIcon  icon={faPlusSquare} size={"2x"}/>
+       </span>  
+      </div>
 
     </div>
     

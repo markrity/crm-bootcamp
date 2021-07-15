@@ -1,8 +1,8 @@
 import React, {useTable} from "react-table";
 
 import '../style/table.css'
-
-export default function Table({ columns, data, tableID }) {
+import '../style/table_treatment.css'
+export default function Table({ columns, data, tableID , onClick}) {
     // Table component logic and UI come here
     const {
         getTableProps, // table props from react-table
@@ -20,7 +20,7 @@ export default function Table({ columns, data, tableID }) {
         <table id= {tableID} {...getTableProps()}>
           <thead>
             {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+              <tr  {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
                   <th {...column.getHeaderProps()}>{column.render("Header")}</th>
                 ))}
@@ -29,11 +29,17 @@ export default function Table({ columns, data, tableID }) {
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row, i) => {
+              console.log(row.original.client_id);
+              const client_id = row.original.client_id
               prepareRow(row);
               return (
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
-                    return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  if (cell.column.Header==="Full name" || cell.column.Header==="Phone" || cell.column.Header==="Email" ) {
+                    return <td onClick={(e)=>onClick(e,row)}  {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  }else{
+                  return <td {...cell.getCellProps()}>{cell.render("Cell")}</td>;
+                  }
                   })}
                 </tr>
               );

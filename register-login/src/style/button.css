@@ -1,7 +1,7 @@
 .button {
     margin-top: 20px;
     margin-bottom: 1vh;
-    background: #FEC89A;
+    background: #fcd5ce;
     height: 40px;
     font-weight: 750;
     box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
@@ -30,7 +30,7 @@ button:hover {
     width: 13vh;
     height: 5vh;
     cursor: pointer;
-    background-color: #FEC89A;
+    background-color: #F8EDEB;
     /* font-weight: bolder; */
     font-size: 20px;
     border-color: #F8EDEB;
@@ -44,13 +44,15 @@ button:hover {
 .add_image {
     width:40px;
     cursor: pointer;
-    margin-top: 10vh;
+    margin-top: 5.5vh;
+    margin-left: 5vh;
+    
     
 }
 
 .close {
     background-color: #F8EDEB;
-    border-color:#FEC89A ;
+    border-color:#fcd5ce ;
     border-width: 3px;
     font-weight: 100px;
     cursor: pointer;
@@ -67,7 +69,7 @@ button:hover {
 
 .add {
     width: 40%;
-    background: #FEC89A;
+    background: #fcd5ce;
     height: 40px;
     font-weight: 700;
     box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white;
@@ -85,7 +87,11 @@ button:hover {
 
 
 
-
+.add_kind { 
+   background-color: #F8EDEB;
+   color: black;
+   border-color: #fcd5ce;
+}
 
 .add_new {
     display: flex;
@@ -104,7 +110,7 @@ button:hover {
 
 .next {
     background-color: #F8EDEB;
-    border-color:#FEC89A ;
+    border-color:#fcd5ce ;
     border-width: 3px;
     font-weight: 100px;
     cursor: pointer;
@@ -129,14 +135,43 @@ button:hover {
     margin-left: 25%;
 }
 
-#select_label {
-    
+
+
+
+.add_button {
+    margin-top: 10vh;
+    margin-left: 3vh;
+    cursor: pointer;
+}
+
+.add_button_tre {
+    margin-top: 5vh;
+    margin-left: 3vh;
+    cursor: pointer;
 }
 
 
 
+.add_button_icon {
+    background-color: #FFB5A7;
+    width: 150px;
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-around;
+    font-weight: bold;
+    
+    padding: 2px;
+}
 
-/* 
-.table_and_select {
-    width: 20%;
-} */
+
+.add_tre_button_icon {
+    background-color: #FFB5A7;
+    width: 150px;
+    /* margin-top: 5%; */
+    /* display: flex; */
+    /* justify-content: space-around; */
+    font-weight: bold;
+    /* margin-top: 90%; */
+    
+    padding: 2px;
+}

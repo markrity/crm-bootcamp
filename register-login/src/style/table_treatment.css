@@ -1,22 +1,20 @@
-#clientData {
+#tre {
+   
     border-collapse: collapse;
-    /* margin-bottom: 50px; */
-    /* margin-top: -10%; */
-    width: 80vh;
-    margin-left: 8vh;
-    margin-top: 5vh;
+    width: 140vh;
+    margin-left: 48%;
   }
   
-  #clientData td, #clientData th {
+  #tre td, #tre th {
     border: 1px solid #ddd;
     padding: 8px;
   }
   
-  #clientData tr:nth-child(even){background-color: #f2f2f2;}
+  #tre tr:nth-child(even){background-color: #f2f2f2;}
   
-  #clientData tr:hover {background-color: #ddd;}
+  #tre tr:hover {background-color: #ddd;}
   
-  #clientData th {
+  #tre th {
     padding-top: 12px;
     padding-bottom: 12px;
     text-align: left;
@@ -33,6 +31,14 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
+
+  }
+
+  .deleteimg{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    
 
   }
 

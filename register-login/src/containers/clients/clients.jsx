@@ -2,7 +2,8 @@ import React, {useState, useEffect, useMemo} from "react";
 import axios from 'axios';
 import Button from '../../components/button'
 import AddClients from "../../components/addClients";
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import Table from '../../components/table'
 
 import '../../style/table.css'
@@ -15,6 +16,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { connectToServerPhpAdd, connectToServerPhpDelete } from "../../helpers/api_helpers";
+import ButtonIcon from "../../components/buttonIcon";
 var counter = 1;
 function Clients(props) {
     const [data, setData] = useState([]);
@@ -73,7 +75,7 @@ function Clients(props) {
                             setConfirmOpen(true)
                             setClientId(row.cell.row.original.id);      
                           }}>
-                            <img class="manImg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
+                        <FontAwesomeIcon  icon={faTrashAlt} size={"1x"}/>
                    </span> 
 
                    <span  onClick={() => {
@@ -84,21 +86,8 @@ function Clients(props) {
                             setWhichModal('edit')
                             setIsOpen(true)
                           }}>
-                            <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img>
+                          <FontAwesomeIcon  icon={faEdit} size={"1x"}/>
                    </span> 
-
-                   <span  onClick={() => {
-                            setRowData(row.cell.row.values)
-                            localStorage.setItem("client_id", row.cell.row.original.id);
-                      
-                            setOpenClientData(true)
-                            
-                            // console.log(row.cell.row.values);   
-                            // console.log(row.cell.row.original); 
-                          }}>
-                            <img class="manImg" src="https://img.icons8.com/carbon-copy/2x/import.png"></img>
-                   </span> 
-
                    </div>
                 )
               }          
@@ -126,6 +115,14 @@ function Clients(props) {
         setConfirmOpen(false)
       }
     }
+
+    const onclickRow = (e, client) =>{
+      console.log(client.original.id);
+      localStorage.setItem("client_id", client.original.id);
+
+   
+      setOpenClientData(true)
+    }
     
     return (
     <body>
@@ -137,9 +134,11 @@ function Clients(props) {
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteClient()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={clientId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
-    <Table tableID="users"columns={columns} data={data}  /> 
+    <Table onClick = {onclickRow} tableID="users" columns={columns} data={data}  /> 
     <span className="add_button" button_text="Add Clients" onClick={() => onClickAdd()}>
-    <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
+
+    {/* <ButtonIcon className="add_button_icon" onClick={() => onClickAdd()} button_text="Add Clients" ></ButtonIcon> */}
+    <FontAwesomeIcon  icon={faPlusSquare} size={"3x"}/>
       </span>  
 
     </div>

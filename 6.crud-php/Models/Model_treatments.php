@@ -45,7 +45,22 @@
             $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }
-        
+
+
+        public function getTreatmentFilter($account_id, $start_date, $end_date) {
+            $newSql = "	  SELECT treatments.*, clients.fullname, users.user_fullname
+            FROM clients
+            INNER JOIN treatments 
+            INNER JOIN users 
+            ON (clients.id = treatments.client_id) and (clients.account_id = $account_id) and (users.user_id = treatments.user_id)
+			and treatments.date_time BETWEEN '$start_date' AND ' $end_date'";
+            $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
+
+
+
+      
     }
 
 ?>

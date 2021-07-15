@@ -1,7 +1,8 @@
 import React, {useState, useEffect, useMemo} from "react";
 import axios from 'axios';
 import Button from '../../components/button'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import Table from '../../components/table'
 
 import '../../style/table.css'
@@ -21,7 +22,6 @@ function Users(props) {
     }, []);
 
    
-
     const columns = useMemo(
         () => [
           {
@@ -61,7 +61,7 @@ function Users(props) {
     {modalIsOpen && <AddUser modalIsOpen={() => openModal()} closeModal={() => closeModal()}/>}
     <Table tableID="users" columns={columns} data={data} /> 
     <span className="add_button" button_text="Add Clients" onClick={() => openModal()}>
-    <img class="add_image" src="https://www.pngfind.com/pngs/m/678-6781804_add-people-person-add-icon-png-transparent-png.png"></img>
+    <FontAwesomeIcon  icon={faPlusSquare} size={"3x"}/>
       </span>  
     </div>
     

@@ -23,7 +23,7 @@
 }
 
 .topnav {
-  background-color: #fec89a;
+  background-color: #FCD5CE;
   overflow: hidden;
   height: 12vh;
   display: flex;
@@ -59,10 +59,9 @@
   margin-left: 20%;
   margin-right: 70%;
   margin-top: 20px;
-  background: #fec89a;
+  background: #fcd5ce;
   height: 40px;
   font-weight: 900;
-  /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px white; */
   transition: 0.5s;
   font-size: large;
   cursor: pointer;

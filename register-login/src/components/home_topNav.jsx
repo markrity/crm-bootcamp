@@ -10,11 +10,10 @@ function Home_TopNav(props) {
         <div className="topnav_text">
             Beautiz
         </div>
-        
-        <Link to="/users"> Users</Link>
-        <Link to="/clients"> Clients</Link>
-        <Link to="/treatments"> Treatments</Link>
-        <Link to="/kinds"> Kinds of Treatment</Link>
+        <Link className ="link" to="/treatments"> Treatments</Link>
+        <Link className ="link" to="/clients"> Clients</Link>
+        <Link className ="link" to="/users"> Users</Link>
+        <Link className ="link" to="/kinds"> Kinds of Treatment</Link>
       
         <Button className = {props.className} button_text={props.button_text} onClick={props.onClick}></Button> 
        

@@ -3,7 +3,8 @@ import axios from 'axios';
 import Button from '../../components/button'
 
 import Table from '../../components/table'
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 import '../../style/table.css'
 import AddUser from "../../components/addUser";
 import AddKinds from "../../components/addKinds";
@@ -108,8 +109,14 @@ function Kinds(props) {
 
     {modalIsOpen && <AddKinds name= {name}  id={kindId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     <Table tableID="users" columns={columns} data={data} /> 
-    <span className="add_button" button_text="Add Kinds" onClick={() => onClickAdd()}>
+    {/* <span className="add_button" button_text="Add Kinds" onClick={() => onClickAdd()}>
     <img class="add_image" src="https://www.pikpng.com/pngl/m/4-49677_add-button-with-plus-symbol-in-a-black.png"></img>
+      </span>  */}
+      
+      <span className="add_button" button_text="Add kind" onClick={() => onClickAdd()}>
+
+    {/* <ButtonIcon className="add_button_icon" onClick={() => onClickAdd()} button_text="Add Clients" ></ButtonIcon> */}
+    <FontAwesomeIcon  icon={faPlusSquare} size={"3x"}/>
       </span>  
 
     </div>
