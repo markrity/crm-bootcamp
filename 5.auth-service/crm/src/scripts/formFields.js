@@ -122,3 +122,22 @@ export const newEmployee = {
         name: 'rePassword', lbl: 'Re-Password', icon1: "FiEyeOff", icon2: "FiEye"
     }
 }
+
+export const editUserFields = {
+    email: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Email',
+        name: 'email', lbl: 'Email'
+    },
+    firstName: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your First Name',
+        name: 'firstName', lbl: 'First Name'
+    },
+    lastName: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Last Name',
+        name: 'lastName', lbl: 'Last Name'
+    },
+    phoneNumber: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Your Phone number',
+        name: 'phoneNumber', lbl: 'Phone'
+    },
+}

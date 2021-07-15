@@ -2,29 +2,27 @@ import React, { useEffect, useMemo, useState } from 'react'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
 import { getEmployees } from '../actions/buisness'
-import { inviteEmployeeFields } from "../scripts/formFields"
+import { inviteEmployeeFields, editUserFields } from "../scripts/formFields"
 import AuthForm from '../Components/Auth/AuthForm'
 import Header from '../Components/Header'
 import Table from '../Components/table'
 import { FcApproval } from "react-icons/fc";
 import { BsFillTrashFill } from "react-icons/bs";
 import { removeEmployee, addEmployee } from "../actions/buisness"
+import { FaPencilAlt } from "react-icons/fa";
 import CustomModal from '../Components/CustomModals'
 import SideNavBar from '../Components/SideNavBar'
 
 const Employees = () => {
     const [isAddVisible, setIsAddVisible] = useState(false)
     const [deleteModalVisible, setDelModalVisible] = useState(false)
+    const [isEditVisible, setIsEditVisible] = useState(false)
     const [userId, setUserId] = useState(0)
+    const [userFields, setUserFields] = useState({})
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(getEmployees())
     }, []);
-
-    // useEffect(() => {
-    //     console.log("Effect")
-    //     // setDelModalVisible(true)
-    // }, [userId])
 
     const addEmployeeBtn = () => {
         return (
@@ -59,21 +57,28 @@ const Employees = () => {
             {
                 Header: addEmployeeBtn(),
                 accessor: "id",
-                Cell: ({ value }) => <BsFillTrashFill id="clickable" size={20} onClick={() => {
-                    setUserId(value)
-                    setDelModalVisible(true)
-                }
-                } />
+                Cell: ({ row }) => <div className="flex-row spaced-between">
+                    <BsFillTrashFill id="clickable" size={20} onClick={() => {
+                        setUserId(row.original.id)
+                        setDelModalVisible(true)
+                    }} />
+                    <FaPencilAlt id="clickable" size={20} onClick={() => {
+                        setUserId(row.original.id)
+                        setUserFields(row.original)
+                        setIsEditVisible(true)
+                    }} />
+                </div>
             }
         ],
         []
     )
-
     const employees = useSelector(state => state.buisness.employees)
     const inviteModal = () => <AuthForm mode='Invite Employee'
         formFields={inviteEmployeeFields} />
     const deleteModal = () => <AuthForm employeeID={userId} mode='Remove Employee'
         closeModal={() => setDelModalVisible(false)} formFields={[]} />
+    const editModal = () => < AuthForm initValues={userFields} employeeID={userId} mode="Edit Employee"
+        closeModal={() => setIsEditVisible(false)} formFields={editUserFields} />
     return (
         <>
             <Header />
@@ -82,6 +87,7 @@ const Employees = () => {
                 <div className="centered">
                     <CustomModal isVisible={isAddVisible} setIsVisible={setIsAddVisible} body={inviteModal()} />
                     <CustomModal isVisible={deleteModalVisible} setIsVisible={setDelModalVisible} body={deleteModal()} />
+                    <CustomModal isVisible={isEditVisible} setIsVisible={setIsEditVisible} body={editModal()} />
                     <Table columns={columns} data={employees} />
                 </div>
             </div>

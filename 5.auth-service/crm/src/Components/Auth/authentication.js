@@ -10,7 +10,6 @@ import {
 } from '../../scripts/formFields'
 
 const Auth = ({ initMode }) => {
-
     const [mode, setMode] = useState(initMode ?? 'New Buisness')
     const formFields = () => {
         switch (mode) {

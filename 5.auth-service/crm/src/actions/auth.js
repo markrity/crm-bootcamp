@@ -10,7 +10,8 @@ import {
     CLEAN_ERR,
     BUISNESS_NAME_EXISTS,
     BUISNESS_NAME_FREE,
-    SET_ERR
+    SET_ERR,
+    SET_BUISNESS
 } from './types';
 
 const CREDENTIALS_ERR = "Please Check Your Credentials"
@@ -42,12 +43,17 @@ export const login = (formData) => async dispatch => {
     const password = formData.password.value
     const body = { email, password }
     try {
-        const res = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
-        console.log(res)
+        const { data } = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
+
+        const { userInfo, buisnessID } = data
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data.userInfo
+            payload: userInfo
         });
+        dispatch({
+            type: SET_BUISNESS,
+            payload: buisnessID
+        })
     } catch (err) {
         dispatch({
             type: LOGIN_FAIL,
@@ -60,13 +66,17 @@ export const login = (formData) => async dispatch => {
 export const checkAuth = () => {
     return async (dispatch, getState) => {
         try {
-            const { data, status } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
-            if (status === 200) {
-                dispatch({
-                    type: LOGIN_SUCCESS,
-                    payload: data
-                })
-            }
+            const { data } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
+            console.log(data)
+            const { userInfo, buisnessID } = data
+            dispatch({
+                type: LOGIN_SUCCESS,
+                payload: userInfo
+            })
+            dispatch({
+                type: SET_BUISNESS,
+                payload: buisnessID
+            })
         }
         catch (err) {
             dispatch({

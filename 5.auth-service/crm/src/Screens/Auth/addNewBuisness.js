@@ -1,5 +1,5 @@
 import React from 'react'
-import Auth from '../Components/Auth/authentication'
+import Auth from '../../Components/Auth/authentication'
 
 
 const AddNewBuisness = () =>

@@ -31,7 +31,9 @@ export default function (state = initialState, action) {
         case SET_LOADING:
             return {
                 ...state,
-                isLoading: true
+                isLoading: true,
+                err: "",
+                approvedTxt: ""
             }
         case FINISH_LOADING:
             return {

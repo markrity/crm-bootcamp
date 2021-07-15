@@ -8,7 +8,7 @@ const requireAuth = (req, res, next) => {
         next()
     } else {
         const token = req.cookies.token;
-
+        console.log('token', token)
         if (!token) {
             return res.sendStatus(430);
         }
@@ -16,8 +16,9 @@ const requireAuth = (req, res, next) => {
             const data = jwt.verify(token, process.env.JWT_SECRET);
             req.user = {
                 id: data.id,
-                firstName: data.firstName
+                FirstName: data.firstName
             }
+            console.log(req.user)
             next();
         } catch {
             return res.sendStatus(403);

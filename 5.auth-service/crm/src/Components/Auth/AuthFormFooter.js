@@ -9,9 +9,21 @@ const labels = [` Log in`, `Lets Signup`, 'Forgot My Password']
 
 const FormFooter = ({ setFormStage, formStage, mode, func }) => {
     const history = useHistory()
-    const dispatch = useDispatch()
     const footerButtons = () => {
         switch (mode) {
+            case 'New Event':
+                switch (formStage) {
+                    case 0:
+                        return
+
+                        break;
+                    case 1:
+
+                        break;
+                    default:
+                        break
+                }
+                break;
             case 'New Buisness':
                 return formStage === 0 ?
                     <button type="submit">Add My Buisness</button> :
@@ -35,11 +47,12 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
                 return <button type="submit">Send Email</button>
             case 'Employee Registration':
                 return <button type="submit">Register</button>
+            case 'Edit Employee':
+                return <button type="submit">Edit Changes</button>
             default:
                 return null
         }
     }
-
 
     const footerText = () => {
         switch (mode) {

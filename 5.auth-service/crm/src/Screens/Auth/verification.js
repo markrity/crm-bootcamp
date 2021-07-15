@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import Auth from '../Components/Auth/authentication'
-import { finishVerification } from '../actions/auth'
+import Auth from '../../Components/Auth/authentication'
+import { finishVerification } from '../../actions/auth'
 
 const Verification = () => {
     const dispatch = useDispatch()

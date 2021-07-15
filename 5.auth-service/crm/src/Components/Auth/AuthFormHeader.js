@@ -1,9 +1,18 @@
 import React from 'react'
 
-const AuthFormHeader = ({ mode }) => {
+const AuthFormHeader = ({ mode, formStage }) => {
 
     const view = () => {
         switch (mode) {
+            case 'New Event':
+                switch (formStage) {
+                    case 0:
+                        return <h2>Choose A Date</h2>
+                    case 1:
+                        break;
+                    default:
+                        break
+                }
             case 'New Buisness':
                 return (<>
                     <h2>Wellcome To TheWeddingPlanners.com</h2>
@@ -49,6 +58,8 @@ const AuthFormHeader = ({ mode }) => {
                 )
             case 'Employee Registration':
                 return <h2>Finish Registration</h2>
+            case 'Edit Employee':
+                return <h2 className="centered">Edit Employee Details</h2>
             case 'Verification':
                 return (
                     <div className='flex-col center-screen'>

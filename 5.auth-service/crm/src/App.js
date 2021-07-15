@@ -1,23 +1,22 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux'
-import AddNewBuisness from './Screens/addNewBuisness';
-import AdditionInfo from './Screens/additionalInfo';
-import ResetPassword from './Screens/resetPassword';
-import SetNewPassword from './Screens/setNewPassword'
+import AddNewBuisness from './Screens/Auth/addNewBuisness';
+import AdditionInfo from './Screens/Auth/additionalInfo';
+import ResetPassword from './Screens/Auth/resetPassword';
+import SetNewPassword from './Screens/Auth/setNewPassword'
 import Employees from './Screens/employees';
-import LoginPage from './Screens/login'
-import EmailSent from './Screens/emailSent'
-import EmployeeReg from './Screens/employeeRegistration';
-import WorkSpace from './Screens/workSpace';
+import LoginPage from './Screens/Auth/login'
+import EmployeeReg from './Screens/Auth/employeeRegistration';
+import WorkSpace from './Screens/WorkSpace/workSpace';
 import CreateEvent from './Screens/createEvent';
 import { checkAuth } from './actions/auth'
 import HomePage from './Screens/homePage';
-import Verification from './Screens/verification';
+import Verification from './Screens/Auth/verification';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AuthRoute from './Components/AuthRoute';
 import './App.css';
-const App = () => {
 
+const App = () => {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(checkAuth())
@@ -33,7 +32,6 @@ const App = () => {
         <AuthRoute path='/auth/resetPassword' type="guest" component={ResetPassword} />
         <AuthRoute path='/auth/resetPassword/valid' type="guest" component={SetNewPassword} />
         <AuthRoute path='/employees' type="private" component={Employees} />
-        <AuthRoute path='/auth/emailSent' type="guest" component={EmailSent} />
         <AuthRoute path='/auth/newEmployee/valid' type="guest" component={EmployeeReg} />
         <AuthRoute path='/verification/valid' type="guest" component={Verification} />
         <AuthRoute path='/createEvent' type="private" component={CreateEvent} />
@@ -46,7 +44,6 @@ const App = () => {
     </Router >
   );
 }
-
 
 export default App;
 

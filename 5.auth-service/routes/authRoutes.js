@@ -1,12 +1,14 @@
 const express = require('express');
-const generateToken = require('../generateToken')
+const generateToken = require('../scripts/generateToken')
+const generateEmail = require('../scripts/generateEmail')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const db = require('../db');
-const Mailgun = require('mailgun-js');
 const router = express.Router();
-
+const RESET_PASSWORD_EMAIL = "Reset Password"
+const RESET_PASSWORD_SUBJECT = "Reset Your Password"
+const VERIFICATION_EMAIL_SUBJECT = "Verification Email"
 
 router.post('/resetPassword', function (req, res) {
 
@@ -16,20 +18,7 @@ router.post('/resetPassword', function (req, res) {
             return res.sendStatus(500)
         const userInfo = data[0]
         const token = generateToken(res, userInfo.id, userInfo, false)
-        const mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
-        const msgData = {
-            from: process.env.email,
-            to: req.body.email,
-            subject: 'Reset Your Password',
-            html: '<h1>Click on the link below to reset password</h1> <a href="http://localhost:3000/auth/resetPassword/valid?token=' + token + '">Im Clickable!</a>'
-        }
-
-        mailgun.messages().send(msgData, function (err, body) {
-            if (err) {
-                return res.sendStatus(400)
-            }
-            return res.sendStatus(200)
-        });
+        generateEmail(RESET_PASSWORD_SUBJECT, RESET_PASSWORD_EMAIL, { token })
     });
 })
 
@@ -40,7 +29,6 @@ router.post('/checkBuisnessName', async (req, res) => {
     db.query(sql, async (err, data) => {
         if (err)
             return res.sendStatus(500)
-        console.log(data)
         return res.sendStatus(data.length === 0 ? 200 : 401)
     })
 })
@@ -56,20 +44,7 @@ router.post('/addEmployee', async (req, res) => {
                 return res.status(500).send("Sql Error")
             }
             const token = await generateToken(res, result.insertId, userRecord, false)
-
-            const mailgun = new Mailgun({ apiKey: process.env.apiKey, domain: process.env.domain });
-            const data = {
-                from: process.env.email,
-                to: email,
-                subject: 'Verification Email',
-                html: '<h1>Click on the link below to finish Regisration</h1> <a href="http://localhost:3000/verification/valid?token=' + token + '">Im Clickable!</a>'
-            }
-            mailgun.messages().send(data, function (err, body) {
-                if (err) {
-                    console.log("got an error: ", err);
-                }
-
-            });
+            generateEmail(VERIFICATION_EMAIL_SUBJECT, VERIFICATION_EMAIL_SUBJECT, { token })
         })
     }
 })
@@ -110,21 +85,27 @@ router.post('/changePassword', async (req, res) => {
 router.post("/login", async (req, res) => {
     const { password, email } = req.body
     const hash = await bcrypt.hash(password, 10)
+    console.log("In Login")
     if (hash) {
-        let sql = `SELECT * FROM users WHERE email='${email}'`;
-        db.query(sql, async (err, data) => {
+        let sql = `SELECT users.id,users.Password ,users.FirstName, users.LastName, users.email, users.PhoneNumber, users.isAdmin, Buisnesses.id as BuisnessID 
+        FROM users INNER JOIN Buisnesses ON users.BuisnessID = Buisnesses.id WHERE users.email='${email}'`;
+        db.query(sql, async (err, result) => {
             if (err)
                 return res.sendStatus(500)
-            const userInfo = data[0]
-            if (userInfo && userInfo.Password) {
-                const isMatch = await bcrypt.compare(password, userInfo.Password)
-                if (isMatch)
-                    generateToken(res, userInfo.id, userInfo, true)
+            user = result[0]
+            const { BuisnessID, FirstName, LastName, id, email, PhoneNumber, isAdmin } = user
+            const userInfo = { FirstName, LastName, id, email, PhoneNumber, isAdmin }
+            if (user && user.Password) {
+                const isMatch = await bcrypt.compare(password, user.Password)
+                if (isMatch) {
+                    const token = generateToken(res, userInfo.id, userInfo, false)
+                    return res.cookie('token', token).status(200).json({ userInfo, buisnessID: BuisnessID })
+                }
                 else
                     return res.sendStatus(401)
             }
             else
-                return res.sendStatus(401)
+                return res.sendStatus(402)
         })
     }
     else {
