@@ -10,13 +10,13 @@
           
         }
 
-
         public function getTags($account_id, $client_id) {
             $sql = "SELECT * FROM $this->table_name WHERE (account_id=$account_id) AND (client_id='$client_id')";
            // var_dump($sql);
             $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }
+
     }
 
 ?>

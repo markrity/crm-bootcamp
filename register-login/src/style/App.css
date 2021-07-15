@@ -40,10 +40,38 @@ display: flex;
 .client_details {
   text-align: start;
   margin-top: 10vh;
-  margin-left: 10vh;
+  margin-left: 25vh;
+  background-color: #FCD5CE;
+  width: 22%;
+  box-shadow: 14px 14px 20px rgb(222, 217, 217),
+  -14px -14px 20px rgb(222, 217, 217);
+  padding: 1%;
+}
+
+.detail {
+  font-weight: bold;
+  letter-spacing: 1px;
+  margin-top: 5%;
+
 }
 
 .dataPage {
-  margin-top: 7%;
+  /* margin-top: 7%; */
 }
+
+
+.tagsDiv {
+  width: 100%;
+  background-color: #FCD5CE;
+  text-align: center;
+  font-weight: bold;
+  letter-spacing: 1px;
+ 
+}
+
+#tag_delete { 
+  margin-top: 4vh;
+  display: flex;
+}
+
 

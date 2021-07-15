@@ -35,6 +35,14 @@
 
   }
 
+  .deleteimg{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    
+
+  }
+
   .add_button {
     background-color: none;
   }
