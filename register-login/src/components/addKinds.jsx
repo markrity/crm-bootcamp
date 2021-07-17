@@ -7,7 +7,6 @@ import '../style/button.css'
 import '../style/table.css'
 import { errMessage } from "../constans/constants";
 import { connectToServerPhpAdd, connectToServerPhpEdit, connectToServerPhpGetAll } from "../helpers/api_helpers";
-import { validationInput } from "../helpers/validation";
 function AddKinds(props) {
     const [name, setName] = useState(props.name);
     
@@ -32,12 +31,7 @@ function AddKinds(props) {
     }
 
     function checkValidation(params) {
-        const valid = validationInput(params);
-        Object.entries(valid).forEach(item => {
-            if (!item[1]) {
-              console.log(item);                          
-              }
-          })
+       
     
     }
 

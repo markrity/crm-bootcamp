@@ -119,8 +119,6 @@ function Clients(props) {
     const onclickRow = (e, client) =>{
       console.log(client.original.id);
       localStorage.setItem("client_id", client.original.id);
-
-   
       setOpenClientData(true)
     }
     

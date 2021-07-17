@@ -157,7 +157,7 @@ function ClientData(props) {
 
       <div>
         {alltags.map(tag => (
-          <p id = "tag_delete"> <div className="tagsDiv">{tag.text}</div>
+          <p  id = "tag_delete"> <div className="tagsDiv">{tag.text}</div>
               <span  onClick={()=>deleteTag(tag.id)}>
                     <img class="deleteimg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
               </span> 

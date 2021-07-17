@@ -1,5 +1,5 @@
 
-export  function validationInput(params) {
+export  function validationInputClient(params) {
     var valid = {
         'name_validate': validateName(params.full_name),
         'email_validate': validateEmail(params.email),

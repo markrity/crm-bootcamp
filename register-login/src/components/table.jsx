@@ -29,7 +29,7 @@ export default function Table({ columns, data, tableID , onClick}) {
           </thead>
           <tbody {...getTableBodyProps()}>
             {rows.map((row, i) => {
-              console.log(row.original.client_id);
+              //console.log(row.original.client_id);
               const client_id = row.original.client_id
               prepareRow(row);
               return (
