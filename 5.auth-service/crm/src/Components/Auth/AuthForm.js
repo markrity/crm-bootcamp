@@ -34,15 +34,27 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
 
     useEffect(() => {
         if (initValues) {
-            console.log("Hi")
+
             fieldsTemp = { ...formFields }
-            console.log("init ", initValues)
-            fieldsTemp.email.value = initValues.email
-            fieldsTemp.firstName.value = initValues.FirstName
-            fieldsTemp.lastName.value = initValues.LastName
-            fieldsTemp.phoneNumber.value = initValues.PhoneNumber
+            Object.entries(fieldsTemp).forEach((fieldArr) => {
+                console.log(fieldArr)
+                const field = fieldArr[1]
+                console.log(field)
+                console.log(initValues)
+                field.value = initValues.name
+
+
+            })
+
+
+
+            // fieldsTemp.email.value = initValues.email
+            // fieldsTemp.firstName.value = initValues.FirstName
+            // fieldsTemp.lastName.value = initValues.LastName
+            // fieldsTemp.phoneNumber.value = initValues.PhoneNumber
         }
     }, [])
+
 
     useEffect(() => {
         dispatch(cleanErr())

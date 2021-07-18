@@ -82,7 +82,7 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
     return (
         <>
             {footerButtons()}
-            <HR />
+            {mode !== 'Edit Hall' && <HR />}
             {footerText()}
         </>
 

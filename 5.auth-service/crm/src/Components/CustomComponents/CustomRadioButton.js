@@ -1,5 +1,5 @@
 import React from 'react'
-import CustomModal from '../CustomModals'
+import CustomModal from '../Containers/CustomModal/CustomModals'
 import Radio from '@material-ui/core/Radio';
 import Avatar from '@material-ui/core/Avatar';
 

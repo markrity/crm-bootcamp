@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const db = require('../db');
+const con = require('../db');
 const router = express.Router();
 const RESET_PASSWORD_EMAIL = "Reset Password"
 const RESET_PASSWORD_SUBJECT = "Reset Your Password"
@@ -83,23 +84,25 @@ router.post('/changePassword', async (req, res) => {
 })
 
 router.post("/login", async (req, res) => {
+    console.log(req.body)
     const { password, email } = req.body
     const hash = await bcrypt.hash(password, 10)
+    console.log(hash)
     console.log("In Login")
     if (hash) {
-        let sql = `SELECT users.id,users.Password ,users.FirstName, users.LastName, users.email, users.PhoneNumber, users.isAdmin, Buisnesses.id as BuisnessID 
-        FROM users INNER JOIN Buisnesses ON users.BuisnessID = Buisnesses.id WHERE users.email='${email}'`;
+        let sql = `SELECT users.id,users.password ,users.firstName, users.lastName, users.email, users.phoneNumber, users.isAdmin, Buisnesses.id as buisnessID 
+        FROM users INNER JOIN Buisnesses ON users.buisnessID = Buisnesses.id WHERE users.email='${email}'`;
         db.query(sql, async (err, result) => {
             if (err)
                 return res.sendStatus(500)
             user = result[0]
-            const { BuisnessID, FirstName, LastName, id, email, PhoneNumber, isAdmin } = user
-            const userInfo = { FirstName, LastName, id, email, PhoneNumber, isAdmin }
-            if (user && user.Password) {
-                const isMatch = await bcrypt.compare(password, user.Password)
+            const { buisnessID, firstName, lastName, id, email, phoneNumber, isAdmin } = user
+            const userInfo = { firstName, lastName, id, email, phoneNumber, isAdmin }
+            if (user && user.password) {
+                const isMatch = await bcrypt.compare(password, user.password)
                 if (isMatch) {
                     const token = generateToken(res, userInfo.id, userInfo, false)
-                    return res.cookie('token', token).status(200).json({ userInfo, buisnessID: BuisnessID })
+                    return res.cookie('token', token).status(200).json({ userInfo, buisnessID })
                 }
                 else
                     return res.sendStatus(401)
@@ -119,14 +122,14 @@ router.post('/addBuisness', async (req, res) => {
     const hash = await bcrypt.hash(password, 10)
     if (hash) {
         const buisnessRecord = [[buisnessName, email]]
-        let sql = 'INSERT INTO Buisnesses (Name,Email) VALUES ?';
+        let sql = 'INSERT INTO Buisnesses (name,email) VALUES ?';
         db.query(sql, [buisnessRecord], (err, result, fields) => {
             if (err)
                 return res.sendStatus(401)
             console.log(result)
             const buisnessID = result.insertId
             const adminRecord = [[firstName, lastName, phoneNumber, email, buisnessID, hash, true]]
-            sql = 'INSERT INTO users (FirstName,LastName, PhoneNumber,Email,BuisnessID,Password,isAdmin) VALUES ?'
+            sql = 'INSERT INTO users (firstName,lastName, phoneNumber,email,buisnessID,password,isAdmin) VALUES ?'
             db.query(sql, [adminRecord], async (err, result, fields) => {
                 if (err) {
                     return res.status(500).send("Sql Error")

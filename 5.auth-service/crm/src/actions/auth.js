@@ -42,6 +42,7 @@ export const login = (formData) => async dispatch => {
     const email = formData.email.value
     const password = formData.password.value
     const body = { email, password }
+    console.log('body', body)
     try {
         const { data } = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
 

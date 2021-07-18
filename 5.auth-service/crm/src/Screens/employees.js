@@ -10,7 +10,7 @@ import { FcApproval } from "react-icons/fc";
 import { BsFillTrashFill } from "react-icons/bs";
 import { removeEmployee, addEmployee } from "../actions/buisness"
 import { FaPencilAlt } from "react-icons/fa";
-import CustomModal from '../Components/CustomModals'
+import CustomModal from '../Components/Containers/CustomModal/CustomModals'
 import SideNavBar from '../Components/SideNavBar'
 
 const Employees = () => {
@@ -34,16 +34,16 @@ const Employees = () => {
         () => [
             {
                 Header: "First name",
-                accessor: "FirstName",
+                accessor: "firstName",
 
             },
             {
                 Header: "Last name",
-                accessor: "LastName",
+                accessor: "lastName",
             },
             {
                 Header: "Phone number",
-                accessor: "PhoneNumber",
+                accessor: "phoneNumber",
             },
             {
                 Header: "Email address",

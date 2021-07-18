@@ -18,12 +18,12 @@ router.get('/getEmployees', (req, res) => {
     db.query(sql, async (err, data) => {
         if (err)
             return res.sendStatus(500)
-        const { BuisnessID } = data[0]
-        sql = `SELECT * FROM users WHERE buisnessID='${BuisnessID}' AND isAdmin=0`
+        const { buisnessID } = data[0]
+        sql = `SELECT * FROM users WHERE buisnessID='${buisnessID}' AND isAdmin=0`
         db.query(sql, async (err, data) => {
             if (err)
                 return res.sendStatus(500)
-            return res.status(200).json({ employees: data, buisnessID: BuisnessID })
+            return res.status(200).json({ employees: data, buisnessID })
         })
     })
 })
@@ -54,9 +54,9 @@ router.post('/inviteEmployee', (req, res) => {
 router.post('/editEmployee', (req, res) => {
     const { form, employeeID, buisnessID } = req.body
     sql = `UPDATE users SET email = '${form.email.value}' ,
-          FirstName = '${form.firstName.value}' ,
-          LastName = '${form.lastName.value}',
-          PhoneNumber = '${form.phoneNumber.value}'
+          firstName = '${form.firstName.value}' ,
+          lastName = '${form.lastName.value}',
+          phoneNumber = '${form.phoneNumber.value}'
           WHERE id = '${employeeID}'`
     db.query(sql, async (err, data) => {
         if (err)

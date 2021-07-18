@@ -12,7 +12,6 @@ const CreateEvent = () => {
                 <EventForm />
             </div>
         </>
-
     )
 }
 

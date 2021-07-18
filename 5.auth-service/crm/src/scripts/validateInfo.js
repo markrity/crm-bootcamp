@@ -57,6 +57,19 @@ export default function validateInfo(formData, mode, formStage) {
         }, msg: "Field is empty"
     })
 
+    funcMap.set('hallName', {
+        func: (hallName) => {
+            const regex = /^([a-z0-9A-Z -_]{1,})$/;
+            return regex.test(hallName)
+        }, msg: "Field is empty"
+    })
+
+    funcMap.set('capacity', {
+        func: (capacity) => {
+            return capacity > 0
+        }, msg: "Capacity Isnt Valid"
+    })
+
     const generateError = (fieldName, value) => {
         if (!funcMap.get(fieldName).func(value)) {
             foundError = true

@@ -9,7 +9,7 @@ const ClickableTxt = ({ txt, clickabletxt, onClickFunc }) => {
             <div className='clickable'>
                 <p onClick={onClickFunc}>{clickabletxt}</p>
             </div>
-        </div>
+        </div >
     )
 }
 

@@ -141,3 +141,14 @@ export const editUserFields = {
         name: 'phoneNumber', lbl: 'Phone'
     },
 }
+
+export const editHallFields = {
+    name: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Halls Name',
+        name: 'name', lbl: 'name'
+    },
+    capacity: {
+        type: 'text', value: '', err: '', placeholder: 'Enter Capacity',
+        name: 'capacity', lbl: 'capacity'
+    }
+}
