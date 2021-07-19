@@ -17,6 +17,8 @@ import {
 import ClientDetails from "../../components/clientDetails";
 import AddPic from "../../components/addPic";
 import ShowPic from "../../components/showPic";
+import ShowTags from "../../components/showTags";
+import AddTags from "../../components/addTags"
 
 var counter = 1;
 
@@ -132,17 +134,20 @@ function ClientData(props) {
 
     function updatePicArr(e) {
       setPicArr([...picArr, {account_id,client_id,picFileName:e}])
-      console.log(e);
+     // console.log(e);
    }
 
+   function updateTagArr(e) {
+    setAlltags([...alltags, {account_id,client_id,text:e}])
+    console.log(e);
+ }
 
-    async function deleteTag(id) {
-        const params = {id: id}
-        const response = await connectToServerPhpDelete(params, 'tags')
-        if (response) {
-          changeData()
-        }
-      }
+
+    // async function deleteTag(id) {
+    //     const params = {id: id}
+    //     const response = await connectToServerPhpDelete(params, 'tags')
+        
+    //   }
 
 
 
@@ -167,36 +172,25 @@ function ClientData(props) {
 
       <div className="container1"> 
       <div className="table_and_select">
+
       <Table tableID="clientData" columns={columns} data={data}  /> 
+
+
       </div>
       <div className= "client_tags"> 
-      {/* <AddTags client_id = {clientId}/> */}
-      <div>
-          <label>
-            <CreatableSelect defaultValue={{label:"select/add tag..."}}  onChange={(e)=>setTag(e.label)}  options= {options}>  
-            </CreatableSelect>
-          </label>
-          <Button className="button" button_text="add tag" onClick={() => handleClick()} />
-      </div>
-
-      <div>
-        {alltags.map(tag => (
-          <p  id = "tag_delete"> <div className="tagsDiv">{tag.text}</div>
-              <span  onClick={()=>deleteTag(tag.id)}>
-                    <img class="deleteimg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
-              </span> 
-          </p>
-
-          ))}
+      
+      <AddTags updateTags={(e)=>updateTagArr(e)}/>
+      <ShowTags tagArr={alltags} />
+    
       </div>
 
       <AddPic updatePicArr={(e)=>updatePicArr(e)}/>
       <ShowPic imgArr = {picArr} />
 
-      </div>
+    
       </div>
       </div>   
-    </body>
+    </body> 
     );
 }
 
