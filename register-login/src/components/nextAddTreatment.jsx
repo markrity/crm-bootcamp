@@ -110,13 +110,11 @@ function NextAddTreatment(props) {
         if (response.data.clients.length===allUsers.length) {
             setOptions([])
             setErrDate('There are no available users at this time!')
-            
         }
 
         else if  (response.data.clients.length===0) {
             setErrDate('')
             setOptions([])
-            console.log('dsfsdf');
             setOptions(allUsers.map(d => ({
                 label : d.user_fullname , value : ""
             })));

@@ -6,25 +6,18 @@ function  ShowPic (props){
 const [imgArr, setImgArr] = useState([]);
  
 useEffect(() => {
-    const client_id = localStorage.getItem("client_id");
-    const account_id = localStorage.getItem("account_id");
-
-    axios.post('http://localhost:991/picPerClient/getPics/', {
-        client_id,
-        account_id
-    }
-    ).then(res=>
-    { 
-    console.log(res.data.pics);
-    setImgArr(res.data.pics)
-    }
-    );
+   setImgArr(props.imgArr)
+   console.log(props.imgArr);
     
-},[]);
+},[props.imgArr]);
 
-const imgSrc = imgArr.map(d => ({
-   src: 'http://localhost:991/img/'+ d.picFileName 
-}))
+
+let imgSrc = [];
+if (imgArr.length) {
+    imgSrc = imgArr.map(d => ({
+        src: 'http://localhost:991/img/'+ d.picFileName 
+     })) 
+}
 
 return (
     

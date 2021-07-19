@@ -3,16 +3,20 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ShowPic from './showPic';
 class AddPic extends React.Component{
-  state = {
-    selectedFile : null
-  }
+    constructor(props) {
+        super(props);
+        this.state = {  selectedFile : null }
+    }
+
+
   fileSelect = event => {
     this.setState({selectedFile: event.target.files[0]})
     console.log(event.target.files[0])
    
   }
+
+
   fileUpload = () => {
-   
     const client_id = localStorage.getItem("client_id");
     const account_id = localStorage.getItem("account_id");
     const fd = new FormData();
@@ -30,14 +34,16 @@ class AddPic extends React.Component{
         account_id: account_id,
         client_id: client_id,
         picFileName: this.state.selectedFile.name
+
     }).then(res=>
     {
-    console.log(res);
+        this.props.updatePicArr(this.state.selectedFile.name);
+        console.log(res);
     }
     );
-
-    
   }
+
+
   render() {
     return (
   <div>

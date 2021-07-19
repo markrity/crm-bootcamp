@@ -27,14 +27,28 @@ function ClientData(props) {
     const [dataChange, setDataChange] = useState(0);
     const [tag, setTag] = useState('')
 
+    const[picArr, setPicArr] = useState('')
+
     const [modalIsOpen, setIsOpen] = useState(false);
     const [alltags, setAlltags] = useState([]);
-    
-    useEffect(() => {
-        const account_id = localStorage.getItem("account_id");
-        const client_id = localStorage.getItem("client_id");
 
-        // setClientId(client_id)
+    const account_id = localStorage.getItem("account_id");
+    const client_id = localStorage.getItem("client_id");
+
+    useEffect(() => {
+        
+     
+        axios.post('http://localhost:991/picPerClient/getPics/', {
+            client_id,
+            account_id
+        }
+        ).then(res=>
+        { 
+        console.log(res.data.pics);
+        setPicArr(res.data.pics)
+        }
+        );
+
         axios.post('http://localhost:991/treatments/getTreatmentTableOfClient/', {
           account_id: account_id,
           client_id: client_id
@@ -61,6 +75,9 @@ function ClientData(props) {
               console.log(...response.data.clients);
               });
     }, [dataChange, modalIsOpen]);
+
+
+
 
     function changeData() {
       setDataChange(counter++)     
@@ -112,9 +129,12 @@ function ClientData(props) {
         []
       );
 
-    function onClickAdd() {
-       setIsOpen(true)
-    }
+
+    function updatePicArr(e) {
+      setPicArr([...picArr, {account_id,client_id,picFileName:e}])
+      console.log(e);
+   }
+
 
     async function deleteTag(id) {
         const params = {id: id}
@@ -123,6 +143,8 @@ function ClientData(props) {
           changeData()
         }
       }
+
+
 
       const options = [
         {label:"need to pay"},
@@ -168,8 +190,8 @@ function ClientData(props) {
           ))}
       </div>
 
-      <AddPic/>
-      <ShowPic />
+      <AddPic updatePicArr={(e)=>updatePicArr(e)}/>
+      <ShowPic imgArr = {picArr} />
 
       </div>
       </div>
