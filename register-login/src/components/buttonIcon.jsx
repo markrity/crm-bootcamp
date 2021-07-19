@@ -7,11 +7,12 @@ function ButtonIcon(props)  {
 
     return (
    
-    <button 
-    className={props.className} onClick={props.onClick}  >
-    <FontAwesomeIcon  icon={faPlusSquare} size={"lg"}/>
-    {props.button_text}
-    </button>
+        <button className="add_button_tre"  onClick={props.onClick}> 
+        <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
+        <div className="text_add_button">
+         Add 
+         </div>
+        </button>
 
     );
 }

@@ -2,11 +2,12 @@
    
     border-collapse: collapse;
     width: 140vh;
-    margin-left: 48%;
+    margin-left: 60%;
+    margin-top: 2%;
   }
   
   #tre td, #tre th {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     padding: 8px;
   }
   
@@ -15,11 +16,11 @@
   #tre tr:hover {background-color: #ddd;}
   
   #tre th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+    font-size: large;
+    /* text-align: left; */
     background-color: #ffe5d9;
     color: black;
+  
   }
 
   .table_container {

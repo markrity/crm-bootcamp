@@ -6,6 +6,7 @@ import HomePage from "./containers/home/homePage";
 import axios from "axios";
 import "./style/App.css";
 
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -14,7 +15,6 @@ import {
 } from "react-router-dom";
 import ResetPassword from "./containers/resetPassword/resetPassword";
 import ChangePassword from "./containers/changePassword/changePassword";
-import Register from "./containers/register/registerPage";
 import Home_TopNav from "./components/home_topNav";
 import Clients from "./containers/clients/clients";
 
@@ -23,6 +23,7 @@ import Users from "./containers/users/users";
 import Treatments from "./containers/treatments/treatments";
 import Kinds from "./containers/kinds/kinds";
 import ClientData from "./containers/clientData/clientData";
+import MyCalendar from "./components/bigCalender";
 
 function App(props) {
   const [isExist, setExist] = useState(false);
@@ -117,6 +118,9 @@ function App(props) {
             <ClientData  isExist={isExist} />
             </Route>
 
+            <Route path="/calender">
+            <MyCalendar  isExist={isExist} />
+            </Route>
 
 
         </Switch>

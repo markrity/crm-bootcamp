@@ -19,6 +19,7 @@ export default function Table({ columns, data, tableID , onClick}) {
         <div className="table_container">
         <table id= {tableID} {...getTableProps()}>
           <thead>
+            
             {headerGroups.map(headerGroup => (
               <tr  {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers.map(column => (
@@ -33,6 +34,7 @@ export default function Table({ columns, data, tableID , onClick}) {
               const client_id = row.original.client_id
               prepareRow(row);
               return (
+                
                 <tr {...row.getRowProps()}>
                   {row.cells.map(cell => {
                   if (cell.column.Header==="Full name" || cell.column.Header==="Phone" || cell.column.Header==="Email" ) {

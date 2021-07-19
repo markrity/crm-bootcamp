@@ -1,13 +1,13 @@
 #users {
    
-    border-collapse: collapse;
+    /* border-collapse: collapse; */
     
     width: 140vh;
     margin-left: 10%;
   }
   
   #users td, #users th {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     padding: 8px;
   }
   
@@ -16,9 +16,11 @@
   #users tr:hover {background-color: #ddd;}
   
   #users th {
-    padding-top: 12px;
-    padding-bottom: 12px;
-    text-align: left;
+    /* padding-top: 12px; */
+    /* padding-bottom: 12px; */
+    /* text-align: center; */
+    font-size: large;
+    margin-bottom: 15vh;
     background-color: #ffe5d9;
     color: black;
   }
@@ -28,26 +30,11 @@
       margin-top: 10%;
   }
 
-  .manImg {
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
 
-  }
-
-  .deleteimg{
-    width: 20px;
-    height: 20px;
-    cursor: pointer;
-    
-
-  }
-
-  .add_button {
-    background-color: none;
-  }
 
   .action {
     display: flex;
     justify-content: space-around;
   }
+
+ 

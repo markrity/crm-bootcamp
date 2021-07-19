@@ -49,7 +49,9 @@ function Clients(props) {
     const columns = useMemo(
         () => [
           {
-            Header: "Clients",
+            Header: "",
+            isVisible: false,
+            id: "teams",
             columns: [
               {
                 Header: "Full name",
@@ -133,11 +135,13 @@ function Clients(props) {
 
     {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={clientId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     <Table onClick = {onclickRow} tableID="users" columns={columns} data={data}  /> 
-    <span className="add_button" button_text="Add Clients" onClick={() => onClickAdd()}>
 
-    {/* <ButtonIcon className="add_button_icon" onClick={() => onClickAdd()} button_text="Add Clients" ></ButtonIcon> */}
-    <FontAwesomeIcon  icon={faPlusSquare} size={"3x"}/>
-      </span>  
+    <button className="add_button_tre"  onClick={() => onClickAdd()}> 
+    <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
+    <div className="text_add_button">
+     Add 
+     </div>
+    </button>
 
     </div>
     

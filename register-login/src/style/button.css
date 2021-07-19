@@ -145,33 +145,47 @@ button:hover {
 }
 
 .add_button_tre {
-    margin-top: 5vh;
-    margin-left: 3vh;
+    margin-top: 6vh;
+    /* margin-left: 3vh; */
     cursor: pointer;
-}
-
-
-
-.add_button_icon {
-    background-color: #FFB5A7;
-    width: 150px;
-    margin-top: 5%;
+    width: 13vh;
+    text-align: end;
+    font-size: larger;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+    background-color: #b392ac;
+    color: white;
+    border: white;
     font-weight: bold;
-    
-    padding: 2px;
+    border-radius: 10px;
+   
+}
+
+.filter_button {
+    margin-top: 6vh;
+    margin-right: 5px;
+    margin-left: 5px;
+    height: 40px;
+    /* margin-left: 3vh; */
+    cursor: pointer;
+    text-align: center;
+    font-size: larger;
+    width: 10vh;
+    background-color: #b392ac;
+    color: white;
+    border: white;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
 
-.add_tre_button_icon {
-    background-color: #FFB5A7;
-    width: 150px;
-    /* margin-top: 5%; */
-    /* display: flex; */
-    /* justify-content: space-around; */
-    font-weight: bold;
-    /* margin-top: 90%; */
-    
-    padding: 2px;
+
+
+
+
+
+
+.text_add_button {
+    margin-top: 5px;
+    margin-right: 3px;
 }

@@ -25,7 +25,10 @@ function Users(props) {
     const columns = useMemo(
         () => [
           {
-            Header: "Teams",
+            Header: "",
+            isVisible: false,
+            id: "teams",
+       
             columns: [
               {
                 Header: "FULL NAME",
@@ -60,9 +63,12 @@ function Users(props) {
     <div className="test">
     {modalIsOpen && <AddUser modalIsOpen={() => openModal()} closeModal={() => closeModal()}/>}
     <Table tableID="users" columns={columns} data={data} /> 
-    <span className="add_button" button_text="Add Clients" onClick={() => openModal()}>
-    <FontAwesomeIcon  icon={faPlusSquare} size={"3x"}/>
-      </span>  
+    <button className="add_button_tre"  onClick={() => openModal()}> 
+    <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
+    <div className="text_add_button">
+     Add 
+     </div>
+    </button>
     </div>
     
    

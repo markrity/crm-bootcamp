@@ -80,7 +80,7 @@ display: flex;
   display: flex;
   align-items: flex-start;
   /* align-content: flex-end; */
-  margin-right: 30%;
+  margin-right: 35%;
   margin-top: 5vh;
 }
 
@@ -91,4 +91,9 @@ display: flex;
 
 .link:hover {
   color: white;
+}
+
+#header_tre { 
+  /* margin-right: 50vh; */
+  margin-bottom: 50%;
 }

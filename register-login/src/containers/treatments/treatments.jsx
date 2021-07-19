@@ -74,12 +74,14 @@ function Treatments(props) {
     }
 
   
-
-
     const columns = useMemo(
         () => [
           {
-            Header: "Treatment",
+            Header: "",
+            isVisible: false,
+            id: "teams",
+       
+          
             columns: [
               {
                 Header: "client_name",
@@ -193,25 +195,27 @@ function Treatments(props) {
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
-    
+   
     <Table tableID="tre" columns={columns} data={data} /> 
     <div className= "up_table_treatment"> 
+   
     <FormInput label="choose start date"  type = "datetime-local" className ="input"  onChange={e=> setStartDate(e.target.value)}/>
     <FormInput label="choose end date"  type = "datetime-local" className ="input"  onChange={e=> setEndDate(e.target.value)}/>
-    <span className="add_button_tre" button_text="Add Treatments" onClick={() => onClickFilter()}>
-    <FontAwesomeIcon  icon={faSlidersH} size={"2x"}/>
-    </span> 
 
-    
-    <span className="add_button_tre" button_text="Add Treatments" onClick={() => onClickAdd()}> 
-    {/* <ButtonIcon className="add_tre_button_icon" onClick={() => onClickAdd()} button_text="Add new treatment " ></ButtonIcon> */}
+    <button className="filter_button"  onClick={() => onClickFilter()}>
+    filter
+    </button> 
 
-    <FontAwesomeIcon  icon={faPlusSquare} size={"2x"}/>
-       </span>  
-      </div>
-
+    <button className="add_button_tre"  onClick={() => onClickAdd()}> 
+    <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
+    <div className="text_add_button">
+     Add 
+     </div>
+    </button>
     </div>
     
+    </div>
+    {/* <p id="header_tre"> Treatments</p> */}
     </body>
     );
 }
