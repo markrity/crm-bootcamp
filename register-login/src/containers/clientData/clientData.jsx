@@ -15,6 +15,8 @@ import {
 } from "react-router-dom";
 
 import ClientDetails from "../../components/clientDetails";
+import AddPic from "../../components/addPic";
+import ShowPic from "../../components/showPic";
 
 var counter = 1;
 
@@ -165,6 +167,10 @@ function ClientData(props) {
 
           ))}
       </div>
+
+      <AddPic/>
+      <ShowPic />
+
       </div>
       </div>
       </div>   

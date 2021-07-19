@@ -23,6 +23,19 @@
             $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }
+
+        public function getPic($account_id, $client_id) {
+            $sql = "SELECT picFileName FROM $this->table_name WHERE (account_id=$account_id) AND (id='$client_id')";
+           // var_dump($sql);
+            $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
+
+        // public function AddClientPic($account_id, $client_id, $pic) {
+        //     $sql = "UPDATE INTO $this->table_name (`picFileName`) VALUES ($pic) WHERE (account_id=$account_id) AND (id='$client_id') ";
+        //     $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
+        //     return $res;
+        // }
     }
 
 ?>
