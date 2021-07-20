@@ -1,14 +1,17 @@
 #clientData {
-    border-collapse: collapse;
-    /* margin-bottom: 50px; */
-    /* margin-top: -10%; */
-    width: 80vh;
-    margin-left: 8vh;
-    margin-top: 5vh;
+  border-collapse: collapse;
+  /* margin-bottom: 50px; */
+  /* margin-top: -10%; */
+  width: 65vh;
+  /* margin-left: 18vh; */
+  margin-top: 5vh;
+  margin-left: 4vh;
+
+  /* margin-top: 10vh; */
   }
   
   #clientData td, #clientData th {
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
     padding: 8px;
   }
   

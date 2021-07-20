@@ -134,7 +134,7 @@ function Clients(props) {
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteClient()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={clientId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
-    <Table onClick = {onclickRow} tableID="users" columns={columns} data={data}  /> 
+    <Table  class_name="table_container" onClick = {onclickRow} tableID="users" columns={columns} data={data}  /> 
 
     <button className="add_button_tre"  onClick={() => onClickAdd()}> 
     <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>

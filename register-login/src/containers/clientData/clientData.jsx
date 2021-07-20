@@ -6,6 +6,7 @@ import CreatableSelect, { makeCreatableSelect } from 'react-select/creatable';
 
 import '../../style/table_data.css'
 import '../../style/table.css'
+import '../../style/clientDataPage.css'
 import {  connectToServerPhpDelete, connectToServerPhpAdd } from "../../helpers/api_helpers";
 
 
@@ -103,7 +104,10 @@ function ClientData(props) {
     const columns = useMemo(
         () => [
           {
-            Header: "treatments" ,
+            Header: "",
+            isVisible: false,
+            id: "teams",
+
             columns: [
                   {
                     Header: "data & time",
@@ -138,16 +142,16 @@ function ClientData(props) {
    }
 
    function updateTagArr(e) {
-    setAlltags([...alltags, {account_id,client_id,text:e}])
-    console.log(e);
+      setAlltags([...alltags, {account_id,client_id,text:e}])
+    
+    // setAlltags(alltags.filter(item => item.name !== e));
+
+ 
  }
 
 
-    // async function deleteTag(id) {
-    //     const params = {id: id}
-    //     const response = await connectToServerPhpDelete(params, 'tags')
-        
-    //   }
+
+  
 
 
 
@@ -162,35 +166,46 @@ function ClientData(props) {
   
     
     return (
-    <body>
-    {!(props.isExist)&& <Redirect to="/login" />}
       <div className="dataPage">
+    {!(props.isExist)&& <Redirect to="/login" />}
+     
 
       <div className= "data_about_client"> 
       <ClientDetails client_fullname={clientRow.fullname} client_phone={clientRow.phone} client_email={clientRow.email}/>
       </div>
 
-      <div className="container1"> 
-      <div className="table_and_select">
-
-      <Table tableID="clientData" columns={columns} data={data}  /> 
-
-
-      </div>
-      <div className= "client_tags"> 
-      
-      <AddTags updateTags={(e)=>updateTagArr(e)}/>
-      <ShowTags tagArr={alltags} />
-    
-      </div>
-
+      <div className = "border_pics">
+      <div className= "pics">
+      <div className="inside_pics">
       <AddPic updatePicArr={(e)=>updatePicArr(e)}/>
       <ShowPic imgArr = {picArr} />
-
-    
       </div>
+      </div>
+      </div>
+
+     
+      <div className="border_tags" >
+      <div className= "client_tags"> 
+      <div className="inside_tags">
+      <AddTags updateTags={(e)=>updateTagArr(e)}/>
+      </div>
+
+      <div className="show_tags">
+      <ShowTags tagArr={alltags} />
+      </div>
+     
+      </div>
+      </div>
+
+      <div className= "border_table">
+      <div className="table_and_select">
+      <Table class_name="data" tableID="clientData" columns={columns} data={data}  /> 
+      </div>
+      </div>
+    
+    
       </div>   
-    </body> 
+  
     );
 }
 

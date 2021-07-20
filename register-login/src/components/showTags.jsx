@@ -1,40 +1,52 @@
 import React, { Component, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
+import {  connectToServerPhpDelete } from "../helpers/api_helpers";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faBackspace} from '@fortawesome/free-solid-svg-icons';
 function  ShowTags (props){
 
-const [tagArr, setTagArr] = useState([]);
+const [tagArr, setTagArr] = useState(props.tagArr);
  
 useEffect(() => {
    setTagArr(props.tagArr)
    console.log(props.tagArr);
-    
 },[props.tagArr]);
 
 
 let allTags = [];
 if (tagArr.length) {
     allTags = tagArr.map(d => ({
-       text: d.text
+       text: d.text,
+       id: d.id
      })) 
 }
 
+async function deleteTag( id) {
+    console.log(id);
+    const params = {id}
+    const response = await connectToServerPhpDelete(params, 'tags')
+    if (response) {
+      const newArr = tagArr.filter(item => item.id !== id)
+      setTagArr(newArr);
+    }
+    
+  }
+
 return (
     
-  <div>
+  <div className="div_tags">
 
 {allTags.map(tag => (
           <p  id = "tag_delete"> <div className="tagsDiv">{tag.text}</div>
-              {/* <span  onClick={props.deleteTag(tag.id)}>
-                    <img class="deleteimg" src="https://image.flaticon.com/icons/png/128/1345/1345823.png"></img>
-              </span>  */}
+              <span  onClick={()=>deleteTag(tag.id)}>
+              <FontAwesomeIcon icon={faBackspace} size={"1x"}/>
+              </span> 
           </p>
-
-          ))}
+     ))}
 
   </div>
     );
   }
-
 
 export default ShowTags;

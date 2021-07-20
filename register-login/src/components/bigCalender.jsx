@@ -33,7 +33,7 @@ function MyCalendar (props) {
       events={ events}  
       startAccessor="start"
       endAccessor="end"
-      style={{ height: 700 }}
+      style={{ height: '80vh',  marginTop: '5vh'}}
     />
   </div>
     );

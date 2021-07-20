@@ -3,6 +3,8 @@ import Select from 'react-select';
 import CreatableSelect, { makeCreatableSelect } from 'react-select/creatable';
 import Button from '../components/button'
 import { connectToServerPhpAdd } from "../helpers/api_helpers";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';
 
 function AddTags(props)  {
    const [tag, setTag] = useState('')
@@ -26,12 +28,12 @@ function AddTags(props)  {
 
 
     return (
-      <div>
-        <label>
+      <div className="add_tags_inside">
+        <label className="label_tags">
           <CreatableSelect defaultValue={{label:"select/add tag..."}}  onChange={(e)=>setTag(e.label)}  options= {options}>  
           </CreatableSelect>
         </label>
-        <Button className="button" button_text="add tag" onClick={() => handleClick()} />
+        <button className="add_button_tags"  onClick={() => handleClick()}> Add </button>
         </div>
     );
 }

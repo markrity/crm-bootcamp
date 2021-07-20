@@ -1,7 +1,7 @@
 body {
   margin: 0;
   width: 100vw;
-  background: #F8EDEB;
+  background: #f38375;
   /* display: flex; */
   align-items: center;
   /* text-align: center; */
@@ -20,60 +20,14 @@ body {
   display: inline-block; margin-top: 4px
 }
 
-.container1 {
-display: flex;
-    justify-content: space-between;
-    /* align-items: flex-end; */
-}
 
-.client_tags {
-  width: 20%;
-  height: 30%;
-  margin-right: 15vh;
-  margin-top: -9%;
+.body_file {
+  height: 90%;
 }
 
 
-.client_details {
-  text-align: start;
-  margin-top: 10vh;
-  margin-left: 25vh;
-  background-color: #ffe5d9;
-  width: 22%;
-  border-radius: 10px;
-  padding: 1%;
-}
 
-.detail {
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-top: 5%;
 
-}
-
-.dataPage {
-  width: 90%;
-  margin-left: 5%;
-  /* margin-top: 7%; */
-}
-
-.tagsDiv {
-  width: 50%;
-  background-color: #ffe5d9;
-  text-align: center;
-  font-weight: bold;
-  letter-spacing: 1px;
-  margin-left: 23%;
-  border-radius: 5px;
- 
- 
-}
-
-#tag_delete { 
-  margin-top: 4vh;
-  
-  display: flex;
-}
 
 
 .up_table_treatment {
@@ -92,8 +46,16 @@ display: flex;
 .link:hover {
   color: white;
 }
+.bright:hover {
+  color: white;
+}
+
+.bright {
+  font-weight: bold;
+  color: black;
+}
 
 #header_tre { 
   /* margin-right: 50vh; */
-  margin-bottom: 50%;
+
 }

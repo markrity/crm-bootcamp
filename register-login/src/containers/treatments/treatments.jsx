@@ -196,7 +196,7 @@ function Treatments(props) {
 
     {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
    
-    <Table tableID="tre" columns={columns} data={data} /> 
+    <Table class_name="table_container" tableID="tre" columns={columns} data={data} /> 
     <div className= "up_table_treatment"> 
    
     <FormInput label="choose start date"  type = "datetime-local" className ="input"  onChange={e=> setStartDate(e.target.value)}/>

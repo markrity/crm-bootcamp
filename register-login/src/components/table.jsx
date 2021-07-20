@@ -2,7 +2,7 @@ import React, {useTable} from "react-table";
 
 import '../style/table.css'
 import '../style/table_treatment.css'
-export default function Table({ columns, data, tableID , onClick}) {
+export default function Table({ columns, data, tableID , onClick, class_name}) {
     // Table component logic and UI come here
     const {
         getTableProps, // table props from react-table
@@ -16,7 +16,7 @@ export default function Table({ columns, data, tableID , onClick}) {
       });
 
       return (
-        <div className="table_container">
+        <div className={class_name}>
         <table id= {tableID} {...getTableProps()}>
           <thead>
             

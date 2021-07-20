@@ -153,9 +153,9 @@ button:hover {
     font-size: larger;
     display: flex;
     justify-content: space-between;
-    background-color: #b392ac;
-    color: white;
-    border: white;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
     font-weight: bold;
     border-radius: 10px;
    
@@ -171,18 +171,12 @@ button:hover {
     text-align: center;
     font-size: larger;
     width: 10vh;
-    background-color: #b392ac;
-    color: white;
-    border: white;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
     font-weight: bold;
     border-radius: 10px;
 }
-
-
-
-
-
-
 
 
 .text_add_button {

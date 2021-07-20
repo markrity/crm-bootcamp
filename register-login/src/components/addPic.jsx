@@ -46,10 +46,9 @@ class AddPic extends React.Component{
 
   render() {
     return (
-  <div>
-    <input  type="file" onChange = {this.fileSelect} />
-  <button onClick = {this.fileUpload}>Upload</button>
-  
+  <div className = "add_pic" >
+    <input className="input_pic" type="file" onChange = {this.fileSelect} />
+    <button className ="upload_button" onClick = {this.fileUpload}>Upload</button>
   </div>
 
 
