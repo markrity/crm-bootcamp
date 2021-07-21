@@ -1,10 +1,7 @@
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
+import React from 'react'
 import CustomMonthlyCalendar from './CustomMonthlyCalendar'
-import { getHalls } from '../actions/buisness'
 
 const DateAndLocation = () => {
-    const dispatch = useDispatch()
 
     return (
         <div className="flex-col full-height">

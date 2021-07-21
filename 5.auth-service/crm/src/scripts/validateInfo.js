@@ -57,10 +57,10 @@ export default function validateInfo(formData, mode, formStage) {
         }, msg: "Field is empty"
     })
 
-    funcMap.set('hallName', {
-        func: (hallName) => {
+    funcMap.set('name', {
+        func: (name) => {
             const regex = /^([a-z0-9A-Z -_]{1,})$/;
-            return regex.test(hallName)
+            return regex.test(name)
         }, msg: "Field is empty"
     })
 
@@ -68,6 +68,12 @@ export default function validateInfo(formData, mode, formStage) {
         func: (capacity) => {
             return capacity > 0
         }, msg: "Capacity Isnt Valid"
+    })
+
+    funcMap.set('price', {
+        func: (price) => {
+            return price > 0
+        }, msg: "Price Isnt Valid"
     })
 
     const generateError = (fieldName, value) => {

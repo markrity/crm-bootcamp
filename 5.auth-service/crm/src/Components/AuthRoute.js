@@ -14,7 +14,7 @@ const AuthRoute = props => {
             history.push("/auth/login")
         }
     }
-    return <Route exact path={path} component={component} />;
+    return <Route exact path={path} component={component} />
 };
 
 export default AuthRoute;

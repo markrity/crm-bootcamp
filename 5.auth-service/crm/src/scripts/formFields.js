@@ -99,7 +99,6 @@ export const inviteEmployeeFields = {
         name: 'email', lbl: 'Email'
     }
 }
-
 export const newEmployee = {
     firstName: {
         type: 'text', value: '', err: '', placeholder: 'Enter Your First Name',
@@ -150,5 +149,9 @@ export const editHallFields = {
     capacity: {
         type: 'text', value: '', err: '', placeholder: 'Enter Capacity',
         name: 'capacity', lbl: 'capacity'
+    },
+    price: {
+        type: 'text', value: '', err: '', placeholder: 'Enter price',
+        name: 'price', lbl: 'price'
     }
 }

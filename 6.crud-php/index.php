@@ -12,6 +12,8 @@ header('Access-Control-Allow-Methods: GET, POST, OPTION');
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token , Authorization');
 
 
+define('SITE_ROOT', realpath(dirname(__FILE__)));
+
 $data = array();
 
 try {

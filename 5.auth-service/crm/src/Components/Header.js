@@ -25,7 +25,7 @@ const Header = () => {
         { title: "Logout", func: () => dispatch(logout()) }]
     const { isOnline, isLoading } = useSelector(state => state.auth)
     const { user } = useSelector(state => state.auth)
-    const role = isOnline ? user && user.isAdmin === 1 ? "admin" : "employee" : "guest"
+    const role = isLoading === false ? user && user.isAdmin === 1 ? "admin" : "employee" : "guest"
 
     const generateNav = (role) => {
         switch (role) {

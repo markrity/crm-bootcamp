@@ -3,7 +3,6 @@ import ClickableTxt from '../ClickableTxt'
 import { useHistory } from 'react-router-dom';
 import HR from '../HR';
 import ClipLoader from "react-spinners/ClipLoader";
-import { useDispatch } from 'react-redux';
 const nonClickable = ['Already Have An Account? ', 'Dont Have An Account? ']
 const labels = [` Log in`, `Lets Signup`, 'Forgot My Password']
 
@@ -14,8 +13,7 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
             case 'New Event':
                 switch (formStage) {
                     case 0:
-                        return
-
+                        return <button type="submit">Save Pick</button>
                         break;
                     case 1:
 
@@ -35,10 +33,20 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
                         <button type="submit">Yes</button>
                     </div>
                 )
+            case 'Remove Hall':
+                return (
+                    <div className="flex-row">
+                        <button onClick={func}>No</button>
+                        <button type="submit">Yes</button>
+                    </div>
+                )
+
             case 'Employee Removed':
                 return null
             case 'Login':
                 return <button type="submit">Login</button>
+            case 'Add Hall':
+                return <button type="submit">Add</button>
             case 'Reset Password':
                 return <button type="submit">Send Email</button>
             case 'Change Password':
@@ -48,7 +56,9 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
             case 'Employee Registration':
                 return <button type="submit">Register</button>
             case 'Edit Employee':
-                return <button type="submit">Edit Changes</button>
+                return <button type="submit">Save Changes</button>
+            case 'Edit Hall':
+                return <button type="submit">Save Changes</button>
             default:
                 return null
         }
@@ -82,7 +92,7 @@ const FormFooter = ({ setFormStage, formStage, mode, func }) => {
     return (
         <>
             {footerButtons()}
-            {mode !== 'Edit Hall' && <HR />}
+            {mode !== 'Edit Hall' && mode !== 'New Event' && mode !== 'Remove Hall' && < HR />}
             {footerText()}
         </>
 

@@ -8,12 +8,11 @@ import "react-big-calendar/lib/addons/dragAndDrop/styles.css";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import 'react-bnb-gallery/dist/style.css'
 import ReactBnbGallery from 'react-bnb-gallery';
-import { getHalls } from '../actions/buisness'
+import { getHallsInformation } from '../actions/buisness'
 import withDragAndDrop from "react-big-calendar/lib/addons/dragAndDrop";
 import { useDispatch, useSelector } from 'react-redux';
 
 const localizer = momentLocalizer(moment)
-
 
 const gallery = [[
     {
@@ -35,12 +34,12 @@ const gallery = [[
 
 const CustomMonthlyCalendar = () => {
     const { buisnessID, halls } = useSelector(state => state.buisness)
+    const { isLoading } = useSelector(state => state.auth)
     const dispatch = useDispatch()
-    useEffect(() => {
-        dispatch(getHalls(buisnessID))
-    }, [])
 
-    const [photos, setPhotos] = useState(gallery)
+    useEffect(() => {
+        dispatch(getHallsInformation(buisnessID))
+    }, [])
 
     const [events, setEvents] = useState([
         {
@@ -56,11 +55,16 @@ const CustomMonthlyCalendar = () => {
             <div className="flex-col full-width">
                 <h2 className="centered">Choose An Hall For The Wedding</h2>
                 <div className="flex-row spaced-between full-width">
-                    {halls && halls.map((hall, index) => <CustomRadioButton selected={selectedHall}
-                        index={index} setIsGalaryVisible={setIsGalaryVisible} setRadio={setSelectedHall}
-                        key={index} name={hall.Name}
-                        uri={"https://img.traveltriangle.com/blog/wp-content/tr:w-700,h-400/uploads/2018/11/Terra-Caesarea.jpg"} />)}
+                    {halls && halls.map((hall, index) => {
+                        const mainImg = hall.urls.filter((img) => img.isMain === "1")
+                        return (<CustomRadioButton selected={selectedHall}
+                            index={index} setIsGalaryVisible={setIsGalaryVisible} setRadio={setSelectedHall}
+                            key={index} name={hall.name}
+                            uri={mainImg && mainImg.length === 1 ? `http://localhost:991/imgs/${mainImg[0].url}`
+                                : "https://img.traveltriangle.com/blog/wp-content/tr:w-700,h-400/uploads/2018/11/Terra-Caesarea.jpg"} />)
+                    })}
                 </div>
+                <button type="submit">Save Pick</button>
             </div>
         )
     }

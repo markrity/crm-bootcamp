@@ -7,12 +7,14 @@ const AuthFormHeader = ({ mode, formStage }) => {
             case 'New Event':
                 switch (formStage) {
                     case 0:
-                        return <h2>Choose A Date</h2>
+                        break;
+
                     case 1:
                         break;
                     default:
                         break
                 }
+                return null;
             case 'New Buisness':
                 return (<>
                     <h2>Wellcome To TheWeddingPlanners.com</h2>
@@ -25,6 +27,10 @@ const AuthFormHeader = ({ mode, formStage }) => {
                         <h2>Are You Sure?</h2>
                     </div>
                 )
+            case 'Remove Hall':
+                return <h2 className="centered">Are You Sure?</h2>
+            case 'Add Hall':
+                return <h2 className="centered">Add New Hall</h2>
             case 'Login':
                 return (
                     <>

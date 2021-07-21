@@ -21,7 +21,6 @@ const App = () => {
   useEffect(() => {
     dispatch(checkAuth())
   }, [])
-
   return (
     <Router>
       <Switch>

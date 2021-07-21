@@ -11,7 +11,8 @@ import {
     BUISNESS_NAME_EXISTS,
     BUISNESS_NAME_FREE,
     SET_ERR,
-    SET_BUISNESS
+    SET_BUISNESS,
+    FINISH_LOADING
 } from './types';
 
 const CREDENTIALS_ERR = "Please Check Your Credentials"
@@ -64,29 +65,26 @@ export const login = (formData) => async dispatch => {
     }
 };
 
-export const checkAuth = () => {
-    return async (dispatch, getState) => {
-        try {
-            const { data } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
-            console.log(data)
-            const { userInfo, buisnessID } = data
-            dispatch({
-                type: LOGIN_SUCCESS,
-                payload: userInfo
-            })
-            dispatch({
-                type: SET_BUISNESS,
-                payload: buisnessID
-            })
-        }
-        catch (err) {
-            dispatch({
-                type: CLEAN_ERR,
-            })
-        }
+export const checkAuth = () => async dispatch => {
+    try {
+        const { data } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
+        console.log(data)
+        const { userInfo, buisnessID } = data
+        dispatch({
+            type: SET_BUISNESS,
+            payload: buisnessID
+        })
+        dispatch({
+            type: LOGIN_SUCCESS,
+            payload: userInfo
+        })
+    }
+    catch (err) {
+        dispatch({
+            type: FINISH_LOADING,
+        })
     }
 }
-
 
 export const addBuisness = (formData) => async dispatch => {
     let { buisnessName, email } = formData[0]

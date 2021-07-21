@@ -373,3 +373,8 @@ flex-direction: row;
 .spaced-between{
   justify-content: space-around;
 }
+
+
+.align-items-center{
+  align-items: center;
+}

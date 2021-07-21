@@ -1,8 +1,9 @@
 .event-side-button{
-    width: 100px;
-    height: 100px;
+    width: fit-content;
+    min-width: 80px;
+    height: 30px;
     min-height: 1px;
-    background-color: rgb(144,202,249);
+    background-color: gray;
     border-style: outset;
     display: flex;
     align-items: center;

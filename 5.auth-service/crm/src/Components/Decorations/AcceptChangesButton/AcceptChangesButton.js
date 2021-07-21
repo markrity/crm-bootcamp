@@ -4,10 +4,9 @@ import './AcceptChangesButton.scss'
 const AcceptChangesButton = ({ onClickFunc, isVisible }) => {
     return (
         <>
-            {isVisible && <ImCheckmark2 className="accept-button" onClick={onClickFunc} size={40} />}
+            {isVisible && <ImCheckmark2 type="submit" className="accept-button" onClick={() => console.log("Clicked")} size={40} />}
         </>
     )
-
 }
 
 export default AcceptChangesButton

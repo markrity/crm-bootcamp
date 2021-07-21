@@ -43,7 +43,7 @@ export default function (state = initialState, action) {
         case SET_APROVED_MSG:
             return {
                 ...state,
-                isLoading: false,
+                //isLoading: false,
                 approvedTxt: payload,
                 err: ""
             }
@@ -109,7 +109,7 @@ export default function (state = initialState, action) {
                 ...state,
                 err: "",
                 approvedTxt: "",
-                isLoading: false
+                //isLoading: false
             }
         case PASSWORD_RESET_SUCCESS:
             return {

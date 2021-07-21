@@ -5,7 +5,10 @@ import {
     addBuisness, login, forgotPassword, changePassword, addNewEmployee, cleanErr,
     checkBuisnessName, setErr,
 } from '../../actions/auth';
-import { removeEmployee, inviteEmployee, editEmployee } from '../../actions/buisness'
+import {
+    removeEmployee, inviteEmployee, editEmployee, editHall,
+    removeHall, addHall
+} from '../../actions/buisness'
 import FormHeader from './AuthFormHeader';
 import validateInfo, { checkPasswordStrength } from '../../scripts/validateInfo';
 import { useDispatch, useSelector } from 'react-redux';
@@ -16,7 +19,7 @@ import CustomMonthlyCalendar from '../CustomMonthlyCalendar';
 
 const PASSWORDS_NOT_MATCH = "Your Passwords Does Not Match"
 
-const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValues, initFormStage }) => {
+const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValues, hallID, initFormStage }) => {
     let buisnessTimeOutFunc
     const [timeoutID, setTimeoutID] = useState()
     const { buisnessID } = useSelector(state => state.buisness)
@@ -33,25 +36,16 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
     let fieldsTemp
 
     useEffect(() => {
+        async function wait() {
+            await (isLoading === false)
+        }
+        wait()
         if (initValues) {
-
             fieldsTemp = { ...formFields }
             Object.entries(fieldsTemp).forEach((fieldArr) => {
-                console.log(fieldArr)
                 const field = fieldArr[1]
-                console.log(field)
-                console.log(initValues)
-                field.value = initValues.name
-
-
+                field.value = initValues[fieldArr[0]]
             })
-
-
-
-            // fieldsTemp.email.value = initValues.email
-            // fieldsTemp.firstName.value = initValues.FirstName
-            // fieldsTemp.lastName.value = initValues.LastName
-            // fieldsTemp.phoneNumber.value = initValues.PhoneNumber
         }
     }, [])
 
@@ -67,7 +61,7 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
         formFieldsCopy[formStage] : formFieldsCopy
 
     Object.entries(fieldsToIterate).forEach((fieldArr) => {
-        console.log(fieldArr)
+        console.log('fieldArr', fieldArr)
         const field = fieldArr[1]
         formArray.push(<CustomInput
             key={field.name}
@@ -141,8 +135,10 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
             return setFormData(form)
         switch (mode) {
             case 'New Event':
+                console.log("Saved Hall")
                 switch (formStage) {
                     case 0:
+                        console.log("Saved Hall")
                         setFormStage(formStage + 1)
                         break;
                     case 1:
@@ -150,9 +146,14 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
                         break;
                     default:
                         break
-
                 }
                 break;
+            case 'Remove Hall':
+                console.log('Remove Hall')
+                dispatch(removeHall(hallID, buisnessID))
+                if (err === "")
+                    closeModal()
+                break
             case 'New Buisness':
                 if (formStage === 0) {
                     if (err === "")
@@ -168,6 +169,9 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
                 break;
             case 'Login':
                 dispatch(login(form))
+                break
+            case 'Add Hall':
+                dispatch(addHall(buisnessID, form))
                 break
             case 'Reset Password':
                 dispatch(forgotPassword(form))
@@ -190,6 +194,9 @@ const AuthForm = ({ mode, setMode, formFields, closeModal, employeeID, initValue
             case 'Edit Employee':
                 dispatch(editEmployee(employeeID, form, buisnessID))
                 break
+            case 'Edit Hall':
+                console.log(hallID)
+                dispatch(editHall(form, hallID, buisnessID))
             default:
                 return
         }

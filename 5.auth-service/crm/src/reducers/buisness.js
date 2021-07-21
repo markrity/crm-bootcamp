@@ -2,7 +2,7 @@ import {
     GET_EMPLOYEES,
     UPDATE_EMPLOYEES,
     ADD_BUISNESS,
-    GET_HALLS,
+    SET_HALLS,
     SET_BUISNESS
 } from '../actions/types';
 
@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
                 ...state,
                 employees: payload
             }
-        case GET_HALLS:
+        case SET_HALLS:
             return {
                 ...state,
                 halls: payload
