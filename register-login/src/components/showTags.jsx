@@ -22,15 +22,12 @@ if (tagArr.length) {
      })) 
 }
 
-async function deleteTag( id) {
-    console.log(id);
+async function deleteTag(id) {
     const params = {id}
     const response = await connectToServerPhpDelete(params, 'tags')
     if (response) {
-      const newArr = tagArr.filter(item => item.id !== id)
-      setTagArr(newArr);
+      props.deleteTags(id)
     }
-    
   }
 
 return (

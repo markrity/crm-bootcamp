@@ -11,7 +11,10 @@ import {
     Redirect
   } from "react-router-dom";
 import Home_TopNav from "../../components/home_topNav";
-
+import Graph1 from "../../components/graph1";
+import Graph2 from "../../components/graph2";
+import Graph3 from "../../components/graph3";
+import Graph4 from "../../components/graph4";
 class HomePage extends React.Component {
 
     constructor(props) {
@@ -36,9 +39,13 @@ class HomePage extends React.Component {
         <div>
          {!(this.props.isExist)&& <Redirect to="/login" />}
          <body>
-{/* 
-         <SideBar onClick={() => this.onClickUser()}/>
-         <Home_TopNav className="button1" button_text="Logout" onClick={() => this.onButtonClick()} /> */}
+           <div className="all_graphs"> 
+           <Graph1/>
+           <Graph2/>
+           <Graph3/>
+           <Graph4/>
+
+           </div>
         
          {this.state.showUsers && <Users/>}
        

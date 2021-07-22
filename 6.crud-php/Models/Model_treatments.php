@@ -57,9 +57,32 @@
             $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
             return $res;
         }
+        
+        public function getTreatmentByMonth($account_id) {
+            $newSql = "SELECT month(treatments.date_time) as the_month, count(treatments.id) as count1, sum(treatments.price) as sum1
+            from treatments
+            inner join clients
+            on clients.id = treatments.client_id
+            and treatments.account_id = $account_id
+            group by the_month";
+            
+            $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
+          
+            return $res;
+        }
 
-
-
+        public function getTreatmentByKind($account_id) {
+            $newSql = "SELECT treatments.kind as kind, count(treatments.id) as count1
+            from treatments
+            inner join clients
+            on clients.id = treatments.client_id
+            and treatments.account_id = 10
+            group by treatments.kind";
+            
+            $res = $this->getDB()->query($newSql)->fetch_all(MYSQLI_ASSOC);
+          
+            return $res;
+        }
       
     }
 

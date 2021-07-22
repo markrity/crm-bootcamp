@@ -51,6 +51,26 @@
             return $this->response;
         }
 
+        
+
+        public function getTreByMonth() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getTreatmentByMonth($data->account_id);
+            $this->response["treatment"] = $treatments;
+            return $this->response;
+        }
+
+
+        public function getTreatmentByKind() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $treatments = $this->model->getTreatmentByKind($data->account_id);
+            $this->response["treatment"] = $treatments;
+            return $this->response;
+        }
 
     }
 

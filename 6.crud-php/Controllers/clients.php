@@ -25,6 +25,15 @@
             return "save";
         }
 
+        public function getBigClient() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $clients = $this->model->getBigClients($data->account_id);
+            $this->response["clients"] = $clients;
+            return $this->response;
+        }
+
 
 
         public function get() 

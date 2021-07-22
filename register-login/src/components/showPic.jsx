@@ -30,9 +30,8 @@ async function deletePic( id) {
     const params = {id}
     const response = await connectToServerPhpDelete(params, 'picPerClient')
     if (response) {
-      setImgArr(imgArr.filter(item => item.id !== id));
+        props.deletePics(id)
     }
-    
   }
 
 

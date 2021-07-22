@@ -145,13 +145,17 @@ function ClientData(props) {
       setAlltags([...alltags, {account_id,client_id,text:e}])
     
     // setAlltags(alltags.filter(item => item.name !== e));
-
- 
  }
 
 
 
-  
+  function deleteTag(e) {
+    setAlltags(alltags.filter(item => item.id !== e));
+  }  
+
+  function deletePic(e) {
+    setPicArr(picArr.filter(item => item.id !== e));
+  }
 
 
 
@@ -161,8 +165,6 @@ function ClientData(props) {
         
       ]
 
-    
-  
   
     
     return (
@@ -178,7 +180,7 @@ function ClientData(props) {
       <div className= "pics">
       <div className="inside_pics">
       <AddPic updatePicArr={(e)=>updatePicArr(e)}/>
-      <ShowPic imgArr = {picArr} />
+      <ShowPic deletePics={(e)=>deletePic(e)} imgArr = {picArr} />
       </div>
       </div>
       </div>
@@ -191,7 +193,7 @@ function ClientData(props) {
       </div>
 
       <div className="show_tags">
-      <ShowTags tagArr={alltags} />
+      <ShowTags deleteTags={(e)=>deleteTag(e)} tagArr={alltags} />
       </div>
      
       </div>

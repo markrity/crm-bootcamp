@@ -31,6 +31,19 @@
             return $res;
         }
 
+        public function getBigClients($account_id) {
+            $sql = "SELECT clients.fullname, sum(treatments.price) as sum1
+            from treatments
+            inner join clients
+            on clients.id = treatments.client_id
+            and treatments.account_id = $account_id
+            group by treatments.client_id
+            limit 5 ";
+           // var_dump($sql);
+            $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);
+            return $res;
+        }
+
         // public function AddClientPic($account_id, $client_id, $pic) {
         //     $sql = "UPDATE INTO $this->table_name (`picFileName`) VALUES ($pic) WHERE (account_id=$account_id) AND (id='$client_id') ";
         //     $res = $this->getDB()->query($sql)->fetch_all(MYSQLI_ASSOC);

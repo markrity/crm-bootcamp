@@ -16,6 +16,18 @@
            $this->field_array =["name", "account_id"];
 
         }
+
+        public function getGraph1Data() 
+        {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json);
+            $res = $this->model->getGraph1($data->account_id);
+            $this->response["type_data"] = $res;
+            return $this->response;
+        }
+
+
+   
         
     }
 
