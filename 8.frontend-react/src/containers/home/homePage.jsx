@@ -39,6 +39,7 @@ class HomePage extends React.Component {
         <div>
          {!(this.props.isExist)&& <Redirect to="/login" />}
          <body>
+         <iframe src='http://localhost:9034/crmChat'></iframe>
            <div className="all_graphs"> 
            <Graph1/>
            <Graph2/>
