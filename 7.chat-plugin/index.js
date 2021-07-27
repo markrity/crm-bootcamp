@@ -36,7 +36,10 @@ io.on('connection', (socket) => {
     socket.on('join crm', () => {
         socket.join('crm')
     });
-
+    socket.on('welcome message', (data) => {
+        io.emit('welcome message', data.msg)
+        // io.emit('admin message', msg);
+    });
 
     socket.on('admin message', ( room, msg ) => {
         io.in(room).emit('admin message',room,  msg) 
@@ -60,13 +63,6 @@ io.on('connection', (socket) => {
         io.in(leadId).emit('lead message',leadId, msg)
     });
 
-
-    // socket.on('disconnect', function() {
-    //     console.log('Got disconnect!');
-    //     var i = allClients.indexOf(socket);
-    //     allClients.splice(i, 1);
-    //     io.emit('update clients', allClients)
-    //  });
 });
 
 server.listen(9034, () => {
