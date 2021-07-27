@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Select from 'react-select';
 import CreatableSelect, { makeCreatableSelect } from 'react-select/creatable';
-import Button from '../components/button'
+import Button from './button'
 import { connectToServerPhpAdd } from "../helpers/api_helpers";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faTrashAlt, faEdit, faPlusSquare, faSlidersH } from '@fortawesome/free-solid-svg-icons';

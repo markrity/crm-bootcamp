@@ -5,8 +5,7 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
-const allRooms = [];
-const activeUsers = new Set();
+var allClients = [];
 
 app.get('/crm', (req, res) => {
     res.sendFile(__dirname + '/crm.html');
@@ -27,39 +26,42 @@ app.get('/crmChat', (req, res) => {
 io.on('connection', (socket) => {
   
    // var activeUsers=io.engine.clientsCount;
-    console.log(activeUsers);
-    socket.join('crm');
+   //console.log(activeUsers);
+    allClients.push(socket);
 
-    socket.on('welcome message', (data) => {
-        io.emit('welcome message', data.msg)
+    socket.on('join crm', () => {
+        socket.join('crm')
     });
 
-    socket.on('admin message', ({ room, msg }) => {
-        
-        io.in(room).emit('admin message', msg) 
+
+    socket.on('admin message', ( room, msg ) => {
+        io.in(room).emit('admin message',room,  msg) 
     });
 
-    socket.on('lead message', (leadId, msg, isFirstMsg) => {
+    socket.on('lead message', (room, msg, isFirstMsg) => {
         if (isFirstMsg) {
-            allRooms.push(leadId)
-         //   console.log(allRooms);
-            socket.join(leadId)
-            io.in('crm').emit('new message', leadId, msg);
+            socket.join(room)
+            io.in('crm').emit('new message', room, msg);
         }
+
         else {
-            io.in(leadId).emit('lead message', msg)
-            
+            io.in(room).emit('lead message', room, msg) 
         }
     });
+
 
     socket.on('new lead', (leadId, msg) => {
         socket.join(leadId)
-        io.in(leadId).emit('lead message', msg)
-        
+        io.in(leadId).emit('lead message',leadId, msg)
     });
-    socket.on('disconnecting', () => {
-        console.log(socket.rooms); // the Set contains at least the socket ID
-      });
+
+
+    // socket.on('disconnect', function() {
+    //     console.log('Got disconnect!');
+    //     var i = allClients.indexOf(socket);
+    //     allClients.splice(i, 1);
+    //     io.emit('update clients', allClients)
+    //  });
 });
 
 server.listen(9034, () => {

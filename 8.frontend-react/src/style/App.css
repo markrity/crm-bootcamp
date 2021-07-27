@@ -59,3 +59,12 @@ body {
   /* margin-right: 50vh; */
 
 }
+
+
+
+.frame {
+  width: 100vh;
+  height: 50vh;
+  margin-left: 40vh;
+  margin-top: 10vh;
+}

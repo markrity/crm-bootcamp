@@ -49,16 +49,25 @@
             padding: 0.5rem 1rem;
         }
         #messages>li:nth-child(odd) {
-            background: #efefef;
+            background: pink;
+        }
+        .crm_msg {
+          display: flex;
+  
+         justify-content: space-between;
         }
     </style>
 </head>
 <body>
+  <div class="crm_msg">
     <ul id="messages"></ul>
     <form id="form" action="">
         <div id="typing"></div>
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+
+    <ul id="chats"></ul>
+  </div>
     <script src="/socket.io/socket.io.js"></script>
 
     <script>
@@ -67,50 +76,89 @@
         var timeout = undefined;
         var user;
         var messages = document.getElementById('messages');
+        var chats = document.getElementById('chats');
         var form = document.getElementById('form');
         var input = document.getElementById('input');
         var typingMsg = document.getElementById('typing');
         var room;
+        var activeRoom;
+        var allRooms = {}
+
+        window.addEventListener('load', function (e){
+          socket.emit('join crm');
+        })
        
         form.addEventListener('submit', function (e) {
             e.preventDefault();
             if (input.value) {
-                socket.emit('admin message', { room, msg: input.value });
+                socket.emit('admin message', activeRoom, input.value );
                 input.value = '';
             }
         });
 
-
-        // function getAllRooms() {
-
-        // }
-
-        socket.on('welcome message', function (msg) {
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
+        socket.on('admin message', function (room, msg) {
+          console.log(room);
+          console.log(msg);
+            if (room === activeRoom) {
+              var item = document.createElement('li');
+              item.textContent = 'you: ' + msg;
+              messages.appendChild(item);
+              window.scrollTo(0, document.body.scrollHeight);
+            }
+            allRooms[room].push(msg)
         });
 
-        socket.on('lead message', function (msg) {
-            console.log('in crm client', msg)
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
+        socket.on('lead message', function (room, msg) {
+          if (room === activeRoom) {
+              var item = document.createElement('li');
+              item.textContent = room+': ' + msg;
+              messages.appendChild(item);
+              window.scrollTo(0, document.body.scrollHeight);
+            }
+            allRooms[room].push(msg)
         });
 
-        socket.on('admin message', function (msg) {
-            var item = document.createElement('li');
-            item.textContent = msg;
-            messages.appendChild(item);
-            window.scrollTo(0, document.body.scrollHeight);
-        });
 
         socket.on('new message', function (leadId, msg) {
-            socket.emit('new lead', leadId, msg);
-            room = leadId;
+            socket.emit('new lead', leadId, msg)
+            allRooms[leadId] = []
+            var item = document.createElement('li');
+            item.addEventListener('click',function (e) {
+              const roomId = e.target.innerText;
+              activeRoom = roomId;
+              showMsgs(roomId)
+            })
+            item.textContent = leadId;
+            chats.appendChild(item)
+            console.log(chats);
+            window.scrollTo(0, document.body.scrollHeight);
         });
+
+
+        // socket.on('update clients', function (id) {
+        //   console.log(allRooms);
+        //   delete allRooms[id]
+        //   chats.removeChild(id)
+          
+
+        //   console.log(allRooms);
+        // });
+
+
+        function showMsgs(leadId) {
+            messages.innerHTML = ''
+            allRooms[leadId].forEach(element => {
+              var item = document.createElement('li');
+              item.textContent = element;
+              messages.appendChild(item);
+              window.scrollTo(0, document.body.scrollHeight)
+            });
+        }
+
+
+     
+
+
 
     </script>
 

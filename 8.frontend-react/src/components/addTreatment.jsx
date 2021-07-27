@@ -4,9 +4,9 @@ import Modal from 'react-modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import  {useState, useEffect, useMemo} from "react";
-import Button from '../components/button'
-import AddClients from '../components/addClients'
-import NextAddTreatment from '../components/nextAddTreatment'
+import Button from './button'
+import AddClients from './addClients'
+import NextAddTreatment from './nextAddTreatment'
 
 
 

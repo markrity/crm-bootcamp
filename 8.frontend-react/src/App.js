@@ -24,6 +24,7 @@ import Treatments from "./containers/treatments/treatments";
 import Kinds from "./containers/kinds/kinds";
 import ClientData from "./containers/clientData/clientData";
 import MyCalendar from "./components/bigCalender";
+import Messages from "./components/messages";
 
 function App(props) {
   const [isExist, setExist] = useState(false);
@@ -120,6 +121,10 @@ function App(props) {
 
             <Route path="/calender">
             <MyCalendar  isExist={isExist} />
+            </Route>
+
+            <Route path="/messages">
+            <Messages  isExist={isExist} />
             </Route>
 
 
