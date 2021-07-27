@@ -5,6 +5,10 @@ const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
 
+var cors = require('cors')
+app.use(cors());
+
+
 var allClients = [];
 
 app.get('/crm', (req, res) => {
@@ -39,6 +43,7 @@ io.on('connection', (socket) => {
     });
 
     socket.on('lead message', (room, msg, isFirstMsg) => {
+
         if (isFirstMsg) {
             socket.join(room)
             io.in('crm').emit('new message', room, msg);

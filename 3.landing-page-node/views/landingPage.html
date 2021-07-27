@@ -27,7 +27,7 @@
 <body>
 
 <main>
-  <iframe src='http://localhost:9034/landingPage'></iframe>
+ 
 <div class="header">
     <h1>KEREN DEKEL</h1>
     <h2>Advanced Skin Care</h2>
@@ -96,6 +96,10 @@
         </div>
 
 </div>
+<div class="chat_div">
+  <iframe id="chat" src='http://localhost:9034/landingPage'></iframe>
+  <div class="chat_button" onclick="onClickChat()"> </div>
+</div> 
 
 <div class="footer">
     <img class="img1" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Facebook_Logo_%282019%29.png/1200px-Facebook_Logo_%282019%29.png">
@@ -103,8 +107,11 @@
     <div class="footer-text">
     <h3 id="footer-phone"> 03-9230502</h3>
     <h4 id="footer-adress">Hazeitim 35, Tel Aviv</h4>
-  </div>
-  </div> 
+    </div>
+</div>
+
+
+
   </main>
 </body>
  
@@ -112,6 +119,20 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
 <script>
+
+function onClickChat () {
+  console.log('hi');
+  var chat = document.getElementById("chat")
+  if (chat.style.display === "none") {
+    chat.style.display = "block";
+  } else {
+    chat.style.display = "none";
+  }
+}
+
+
+
+
   const form = document.querySelector('#form');
   
   console.log(firstname);

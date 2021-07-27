@@ -18,6 +18,7 @@
             right: 0;
             display: flex;
             height: 3rem;
+            width: 100vh;
             box-sizing: border-box;
             backdrop-filter: blur(10px);
         }
@@ -44,32 +45,38 @@
             list-style-type: none;
             margin: 0;
             padding: 0;
+            width: 100vh;
         }
         #messages>li {
             padding: 0.5rem 1rem;
         }
         #messages>li:nth-child(odd) {
-            background: pink;
+           
         }
         .crm_msg {
           display: flex;
   
          justify-content: space-between;
         }
+
+        .form_div {
+          
+        }
     </style>
 </head>
 <body>
   <div class="crm_msg">
     <ul id="messages"></ul>
+   
     <form id="form" action="">
         <div id="typing"></div>
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
-
+   
     <ul id="chats"></ul>
   </div>
     <script src="/socket.io/socket.io.js"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
         var socket = io();
         var typing = false;
@@ -85,6 +92,11 @@
         var allRooms = {}
 
         window.addEventListener('load', function (e){
+          console.log('*****');
+          axios.get('http://localhost:9090/Beautiz') .then(function (response) {
+        console.log(response);
+       
+        })
           socket.emit('join crm');
         })
        
@@ -103,19 +115,35 @@
               var item = document.createElement('li');
               item.textContent = 'you: ' + msg;
               messages.appendChild(item);
+              item.style.marginRight = '50vh'
+              item.style.backgroundColor = 'pink'
+              item.style.textAlign = 'center'
+              item.style.borderRadius = '10px'
+              item.style.marginBottom = '1vh'
               window.scrollTo(0, document.body.scrollHeight);
             }
-            allRooms[room].push(msg)
+
+            allRooms[room].push({msg, type: 'admin', date: Date.now()})
+
         });
 
         socket.on('lead message', function (room, msg) {
           if (room === activeRoom) {
-              var item = document.createElement('li');
+              const item = document.createElement('li');
               item.textContent = room+': ' + msg;
+              item.style.marginLeft = '50vh'
+              item.style.backgroundColor = 'yellow'
+              item.style.textAlign = 'center'
+              item.style.borderRadius = '10px'
+              item.style.marginBottom = '1vh'
+
               messages.appendChild(item);
               window.scrollTo(0, document.body.scrollHeight);
+            
             }
-            allRooms[room].push(msg)
+            allRooms[room].push({msg, type: 'lead', date: Date.now()})
+            
+          
         });
 
 
@@ -135,21 +163,33 @@
         });
 
 
-        // socket.on('update clients', function (id) {
-        //   console.log(allRooms);
-        //   delete allRooms[id]
-        //   chats.removeChild(id)
-          
-
-        //   console.log(allRooms);
-        // });
-
-
         function showMsgs(leadId) {
+          console.log(allRooms);
             messages.innerHTML = ''
+         
             allRooms[leadId].forEach(element => {
               var item = document.createElement('li');
-              item.textContent = element;
+              //lead
+              if (element.type==='lead') {
+               
+                item.textContent = leadId+': ' + element.msg;
+                item.style.marginLeft = '50vh'
+                item.style.backgroundColor = 'yellow'
+                item.style.textAlign = 'center'
+                item.style.borderRadius = '10px'
+                item.style.marginBottom = '1vh'
+              }
+              //admin
+              if (element.type==='admin') {
+              
+                item.textContent = 'you: '+ element.msg;
+                item.style.backgroundColor = 'pink'
+                item.style.marginRight = '50vh'
+                item.style.textAlign = 'center'
+                item.style.borderRadius = '10px'
+                item.style.marginBottom = '1vh'
+              }
+
               messages.appendChild(item);
               window.scrollTo(0, document.body.scrollHeight)
             });

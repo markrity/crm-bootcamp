@@ -22,3 +22,22 @@
 #footer-adress {
     margin-top: -2mm;
 }
+
+#chat {
+    display: none;
+}
+.visible {
+ 
+}
+.chat_button {
+    width: 5vh;
+    height: 5vh;
+    border-radius: 10px;
+    background-color: pink;
+}
+
+
+.chat_div {
+    display: flex;
+    flex-direction: column;
+}
