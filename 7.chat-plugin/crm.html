@@ -94,7 +94,23 @@
         window.addEventListener('load', function (e){
           console.log('*****');
           axios.get('http://localhost:9090/Beautiz') .then(function (response) {
-        console.log(response);
+          //console.log(response.data);
+          response.data.forEach(element => {
+            allRooms[element.room] = element.messages
+            var item = document.createElement('li');
+            item.addEventListener('click',function (e) {
+              const roomId = element.room;
+              activeRoom = roomId;
+              showMsgs(roomId)
+            })
+            item.textContent = element.room;
+            chats.appendChild(item)
+            console.log(chats);
+            window.scrollTo(0, document.body.scrollHeight);
+
+          })
+          //allRooms = response.data
+          console.log(allRooms);
        
         })
           socket.emit('join crm');
@@ -123,11 +139,19 @@
               window.scrollTo(0, document.body.scrollHeight);
             }
 
+            axios.put(`http://localhost:9090/Beautiz/${room}`, {
+             msg,
+             type: 'admin', 
+             date: Date.now()
+            }) .then(function (response) {
+              //console.log(response);
+            })
             allRooms[room].push({msg, type: 'admin', date: Date.now()})
 
         });
 
         socket.on('lead message', function (room, msg) {
+         
           if (room === activeRoom) {
               const item = document.createElement('li');
               item.textContent = room+': ' + msg;
@@ -141,58 +165,92 @@
               window.scrollTo(0, document.body.scrollHeight);
             
             }
+
+            axios.put(`http://localhost:9090/Beautiz/${room}`, {
+             msg,
+             type: 'lead', 
+             date: Date.now()
+            }) .then(function (response) {
+              //console.log(response);
+            })
             allRooms[room].push({msg, type: 'lead', date: Date.now()})
             
           
         });
 
+        function ifLeadExist(room) {
+          allRooms.forEach(element=>{
+            if (room===element.room) {
+              return true; 
+            }
+          })
+          return false; 
+        }
 
-        socket.on('new message', function (leadId, msg) {
+
+        socket.on('new message', function (leadId, msg, flag) {
+            // const ifExist = ifLeadExist(room)
+            // if (ifExist) {
+
+            // }
             socket.emit('new lead', leadId, msg)
-            allRooms[leadId] = []
-            var item = document.createElement('li');
-            item.addEventListener('click',function (e) {
-              const roomId = e.target.innerText;
-              activeRoom = roomId;
-              showMsgs(roomId)
-            })
-            item.textContent = leadId;
-            chats.appendChild(item)
-            console.log(chats);
-            window.scrollTo(0, document.body.scrollHeight);
+            if (!flag) {
+              allRooms[leadId] = []
+              axios.post('http://localhost:9090/Beautiz', {
+              room: leadId,
+              messages: []
+              }) .then(function (response) {
+                console.log(response);
+              })
+
+              var item = document.createElement('li');
+              item.addEventListener('click',function (e) {
+                const roomId = e.target.innerText;
+                activeRoom = roomId;
+                showMsgs(roomId)
+              })
+              item.textContent = leadId;
+              chats.appendChild(item)
+              console.log(chats);
+              window.scrollTo(0, document.body.scrollHeight);
+          }
         });
 
 
         function showMsgs(leadId) {
+          // axios.get('http://localhost:9090/Beautiz') .then(function (response) {
+          // response.data.forEach(element => {
+          //   allRooms[element.room] = element.messages
+          //   console.log(allRooms);
+          //   
+          // })
+          messages.innerHTML = ''
           console.log(allRooms);
-            messages.innerHTML = ''
-         
-            allRooms[leadId].forEach(element => {
-              var item = document.createElement('li');
-              //lead
-              if (element.type==='lead') {
-               
-                item.textContent = leadId+': ' + element.msg;
-                item.style.marginLeft = '50vh'
-                item.style.backgroundColor = 'yellow'
-                item.style.textAlign = 'center'
-                item.style.borderRadius = '10px'
-                item.style.marginBottom = '1vh'
-              }
-              //admin
-              if (element.type==='admin') {
-              
-                item.textContent = 'you: '+ element.msg;
-                item.style.backgroundColor = 'pink'
-                item.style.marginRight = '50vh'
-                item.style.textAlign = 'center'
-                item.style.borderRadius = '10px'
-                item.style.marginBottom = '1vh'
-              }
+          allRooms[leadId].forEach(element => {
+            var item = document.createElement('li');
+            //lead 
+            if (element.type==='lead') {
+              item.textContent = leadId+': ' + element.msg;
+              item.style.marginLeft = '50vh'
+              item.style.backgroundColor = 'yellow'
+              item.style.textAlign = 'center'
+              item.style.borderRadius = '10px'
+              item.style.marginBottom = '1vh'
+            }
+            //admin
+            if (element.type==='admin') {
+              item.textContent = 'you: '+ element.msg;
+              item.style.backgroundColor = 'pink'
+              item.style.marginRight = '50vh'
+              item.style.textAlign = 'center'
+              item.style.borderRadius = '10px'
+              item.style.marginBottom = '1vh'
+            }
 
-              messages.appendChild(item);
-              window.scrollTo(0, document.body.scrollHeight)
-            });
+            messages.appendChild(item);
+            window.scrollTo(0, document.body.scrollHeight)
+          });   
+        // })
         }
 
 

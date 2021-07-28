@@ -59,6 +59,7 @@
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
     <script>
         var socket = io();
@@ -71,20 +72,43 @@
         var typingMsg = document.getElementById('typing');
         var isFirstMsg = true;
         let person;
+        var isExist = false; 
 
         window.addEventListener('load', function (e){
           socket.emit('welcome message', { msg: "enter your email address" });
         })
+     
 
-        form.addEventListener('submit', function (e) {
-           
+      async function ifLeadExist(room) {
+        console.log(room);
+        var flag = false;
+        const result = await axios.get('http://localhost:9090/Beautiz');
+        if (result) {
+            result.data.forEach(element => {
+              if (room === element.room) {
+              flag = true;
+              }
+            })
+          }
+        return flag; 
+      }
+
+        form.addEventListener('submit', async function (e) {
             e.preventDefault();
+
+            if (await ifLeadExist(input.value)) {
+              console.log('not first!!!!!');
+              isFirstMsg = false; 
+              email = input.value
+              isExist = true; 
+            }
+          
             if (input.value) {
                 if (isFirstMsg) {
                 email = input.value
                 }
-                console.log(person);
-                socket.emit('lead message', email, input.value, isFirstMsg);
+               
+                socket.emit('lead message', email, input.value, isFirstMsg, isExist);
                 isFirstMsg = false;
                 input.value = '';
             }
@@ -103,6 +127,7 @@
         });
 
         socket.on('lead message', function (room, msg) {
+          console.log('hahaha');
             // first msg of lead
             if (room===msg) {
               var item = document.createElement('li');

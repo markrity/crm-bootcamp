@@ -28,32 +28,35 @@ app.get('/crmChat', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-  
-   // var activeUsers=io.engine.clientsCount;
-   //console.log(activeUsers);
+    
     allClients.push(socket);
-
     socket.on('join crm', () => {
         socket.join('crm')
     });
     socket.on('welcome message', (data) => {
         io.emit('welcome message', data.msg)
-        // io.emit('admin message', msg);
     });
 
     socket.on('admin message', ( room, msg ) => {
         io.in(room).emit('admin message',room,  msg) 
     });
 
-    socket.on('lead message', (room, msg, isFirstMsg) => {
-
-        if (isFirstMsg) {
+    socket.on('lead message', (room, msg, isFirstMsg, flag) => {
+        //lead is already exist
+        if (flag) {
             socket.join(room)
-            io.in('crm').emit('new message', room, msg);
+            io.in('crm').emit('new message', room, msg, flag);
         }
 
         else {
-            io.in(room).emit('lead message', room, msg) 
+            //first msg of lead
+            if (isFirstMsg) {
+                socket.join(room)
+                io.in('crm').emit('new message', room, msg);
+            }
+            else {
+                io.in(room).emit('lead message', room, msg) 
+            }
         }
     });
 
