@@ -28,13 +28,16 @@ app.get('/crmChat', (req, res) => {
 });
 
 io.on('connection', (socket) => {
-    
+    var currentRoomId;
     allClients.push(socket);
     socket.on('join crm', () => {
         socket.join('crm')
     });
     socket.on('welcome message', (data) => {
-        io.emit('welcome message', data.msg)
+        console.log(data.room);
+        console.log(data.msg);
+        socket.join(data.room)
+        io.in(data.room).emit('welcome message', data.msg)
     });
 
     socket.on('admin message', ( room, msg ) => {
@@ -44,11 +47,15 @@ io.on('connection', (socket) => {
     socket.on('lead message', (room, msg, isFirstMsg, flag) => {
         //lead is already exist
         if (flag) {
+            currentRoomId = room;
             socket.join(room)
+            io.emit('lead come back', currentRoomId)
             io.in('crm').emit('new message', room, msg, flag);
+
         }
 
         else {
+            currentRoomId = room;
             //first msg of lead
             if (isFirstMsg) {
                 socket.join(room)
@@ -64,6 +71,10 @@ io.on('connection', (socket) => {
     socket.on('new lead', (leadId, msg) => {
         socket.join(leadId)
         io.in(leadId).emit('lead message',leadId, msg)
+    });
+
+    socket.on('disconnect', function() {
+       io.emit('disco', currentRoomId)
     });
 
 });

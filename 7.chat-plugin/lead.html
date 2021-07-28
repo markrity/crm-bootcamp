@@ -73,9 +73,12 @@
         var isFirstMsg = true;
         let person;
         var isExist = false; 
+        
 
-        window.addEventListener('load', function (e){
-          socket.emit('welcome message', { msg: "enter your email address" });
+        window.addEventListener('load', function (e) {
+          const roomId = Math.random()
+          console.log(roomId);
+          socket.emit('welcome message', { msg: "enter your email address" , room: roomId});
         })
      
 
@@ -120,7 +123,6 @@
             item.style.backgroundColor = 'yellow'
             item.style.marginLeft = '40vh'
             item.style.borderRadius = '15px'
-            item.style.textAlign = 'center'
             item.style.marginBottom = '1vh'
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight);
@@ -145,7 +147,6 @@
               item.style.backgroundColor = 'pink'
               item.style.borderRadius = '15px'
               item.style.marginRight = '40vh'
-              item.style.textAlign = 'center'
               item.style.marginBottom = '1vh'
               messages.appendChild(item);
               window.scrollTo(0, document.body.scrollHeight);

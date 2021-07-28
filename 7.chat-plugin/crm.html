@@ -12,11 +12,11 @@
         #form {
             background: rgba(0, 0, 0, 0.15);
             padding: 0.25rem;
-            position: fixed;
+            position: absolute;
             bottom: 0;
-            left: 0;
-            right: 0;
-            display: flex;
+            /* left: 0;
+            right: 0; */
+            display: none;
             height: 3rem;
             width: 100vh;
             box-sizing: border-box;
@@ -50,31 +50,55 @@
         #messages>li {
             padding: 0.5rem 1rem;
         }
-        #messages>li:nth-child(odd) {
-           
-        }
+       
         .crm_msg {
-          display: flex;
-  
-         justify-content: space-between;
+         /* margin-left: 50vh; */
         }
 
-        .form_div {
-          
+        .lead:focus {
+          font-weight: bold;
         }
+
+        .lead {
+          margin-bottom: 2vh;
+        }
+
+        .all_div {
+          display: flex;
+        }
+
+        .msg_div {
+          display: flex;
+          /* background-color: antiquewhite;
+          height: 100vh; */
+          margin-left: 50vh;
+          padding: 30px;
+        }
+  
     </style>
 </head>
 <body>
+  <div class="all_div">
+
+    <div class="chatlist">
+      <h1>Chats</h1>
+      <ul tabindex="1" id="chats"></ul>
+    </div>
+
+  <div class="msg_div">
   <div class="crm_msg">
+
     <ul id="messages"></ul>
-   
     <form id="form" action="">
         <div id="typing"></div>
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
-   
-    <ul id="chats"></ul>
   </div>
+  </div>
+</div>
+
+  
+
     <script src="/socket.io/socket.io.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script>
@@ -84,12 +108,16 @@
         var user;
         var messages = document.getElementById('messages');
         var chats = document.getElementById('chats');
+   
+     //   let li_chat = document.getElementById('chats').getElementsByTagName('li');
+
         var form = document.getElementById('form');
         var input = document.getElementById('input');
         var typingMsg = document.getElementById('typing');
         var room;
         var activeRoom;
         var allRooms = {}
+        var onlineRooms = []
 
         window.addEventListener('load', function (e){
           console.log('*****');
@@ -98,20 +126,20 @@
           response.data.forEach(element => {
             allRooms[element.room] = element.messages
             var item = document.createElement('li');
+            item.setAttribute("class", "lead");
+            item.setAttribute("tabindex", "1");
             item.addEventListener('click',function (e) {
               const roomId = element.room;
               activeRoom = roomId;
               showMsgs(roomId)
             })
+
             item.textContent = element.room;
             chats.appendChild(item)
             console.log(chats);
             window.scrollTo(0, document.body.scrollHeight);
 
           })
-          //allRooms = response.data
-          console.log(allRooms);
-       
         })
           socket.emit('join crm');
         })
@@ -124,6 +152,36 @@
             }
         });
 
+
+        socket.on('disco', function (room) {
+          console.log(room);
+          const index = onlineRooms.indexOf(room);
+          if (index > -1) {
+            onlineRooms.splice(index, 1);
+          }
+         
+          changeOnlineRooms(room, ""); 
+        });
+      
+        socket.on('lead come back', function (room) {
+          console.log(room);
+          onlineRooms.push(room)
+          changeOnlineRooms(room, "green"); 
+        });
+      
+
+        function changeOnlineRooms(room, color) {
+          const allLi = document.getElementsByClassName('lead');
+          console.log(allLi);
+          for (const element of allLi) { 
+            if (element.innerHTML === room) {
+              element.style.backgroundColor = color
+            }
+        }
+      }
+
+
+
         socket.on('admin message', function (room, msg) {
           console.log(room);
           console.log(msg);
@@ -133,7 +191,6 @@
               messages.appendChild(item);
               item.style.marginRight = '50vh'
               item.style.backgroundColor = 'pink'
-              item.style.textAlign = 'center'
               item.style.borderRadius = '10px'
               item.style.marginBottom = '1vh'
               window.scrollTo(0, document.body.scrollHeight);
@@ -142,11 +199,9 @@
             axios.put(`http://localhost:9090/Beautiz/${room}`, {
              msg,
              type: 'admin', 
-             date: Date.now()
-            }) .then(function (response) {
-              //console.log(response);
-            })
-            allRooms[room].push({msg, type: 'admin', date: Date.now()})
+             date: new Date()
+            });
+            allRooms[room].push({msg, type: 'admin', date: new Date()})
 
         });
 
@@ -157,7 +212,6 @@
               item.textContent = room+': ' + msg;
               item.style.marginLeft = '50vh'
               item.style.backgroundColor = 'yellow'
-              item.style.textAlign = 'center'
               item.style.borderRadius = '10px'
               item.style.marginBottom = '1vh'
 
@@ -166,14 +220,14 @@
             
             }
 
-            axios.put(`http://localhost:9090/Beautiz/${room}`, {
-             msg,
-             type: 'lead', 
-             date: Date.now()
-            }) .then(function (response) {
-              //console.log(response);
-            })
-            allRooms[room].push({msg, type: 'lead', date: Date.now()})
+          if (msg !== room) {
+              axios.put(`http://localhost:9090/Beautiz/${room}`, {
+              msg,
+              type: 'lead', 
+              date: new Date()
+              }) 
+              allRooms[room].push({msg, type: 'lead', date: new Date()})
+          }
             
           
         });
@@ -189,12 +243,10 @@
 
 
         socket.on('new message', function (leadId, msg, flag) {
-            // const ifExist = ifLeadExist(room)
-            // if (ifExist) {
-
-            // }
             socket.emit('new lead', leadId, msg)
             if (!flag) {
+              onlineRooms.push(leadId)
+
               allRooms[leadId] = []
               axios.post('http://localhost:9090/Beautiz', {
               room: leadId,
@@ -209,21 +261,25 @@
                 activeRoom = roomId;
                 showMsgs(roomId)
               })
-              item.textContent = leadId;
-              chats.appendChild(item)
-              console.log(chats);
-              window.scrollTo(0, document.body.scrollHeight);
+                item.textContent = leadId;
+                item.setAttribute("class", "lead");
+                item.setAttribute("tabindex", "1");
+                item.style.backgroundColor = "green"
+                chats.appendChild(item)
+                console.log(chats);
+                window.scrollTo(0, document.body.scrollHeight);
           }
         });
 
 
         function showMsgs(leadId) {
-          // axios.get('http://localhost:9090/Beautiz') .then(function (response) {
-          // response.data.forEach(element => {
-          //   allRooms[element.room] = element.messages
-          //   console.log(allRooms);
-          //   
-          // })
+          console.log(onlineRooms);
+          let form1 = document.getElementById('form');
+          form1.style.display = "none"
+          if (onlineRooms.includes(leadId)) {
+            form1.style.display = "flex"
+          } 
+        
           messages.innerHTML = ''
           console.log(allRooms);
           allRooms[leadId].forEach(element => {
@@ -233,7 +289,6 @@
               item.textContent = leadId+': ' + element.msg;
               item.style.marginLeft = '50vh'
               item.style.backgroundColor = 'yellow'
-              item.style.textAlign = 'center'
               item.style.borderRadius = '10px'
               item.style.marginBottom = '1vh'
             }
@@ -242,7 +297,6 @@
               item.textContent = 'you: '+ element.msg;
               item.style.backgroundColor = 'pink'
               item.style.marginRight = '50vh'
-              item.style.textAlign = 'center'
               item.style.borderRadius = '10px'
               item.style.marginBottom = '1vh'
             }
@@ -250,7 +304,7 @@
             messages.appendChild(item);
             window.scrollTo(0, document.body.scrollHeight)
           });   
-        // })
+      
         }
 
 
