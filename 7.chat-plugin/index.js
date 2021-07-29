@@ -58,16 +58,25 @@ io.on('connection', (socket) => {
         io.in(room).emit('admin message',room,  msg) 
     });
 
-    socket.on('lead message', (room, msg, isFirstMsg, flag) => {
-        //lead is already exist
-        if (flag) {
-            currentRoomId = room;
-            socket.join(room)
-            io.emit('lead come back', currentRoomId)
-            io.in('crm').emit('new message', room, msg, flag);
-        }
+    socket.on('lead back', (room) => {
+        console.log('sdfsdsdf');
+        currentRoomId = room;
+        socket.join(room)
+        io.emit('lead come back', currentRoomId)
+        io.in('crm').emit('new message', room, "", true);
+        
+    });
 
-        else {
+    socket.on('lead message', (room, msg, isFirstMsg) => {
+        //lead is already exist
+        // if (flag) {
+        //     currentRoomId = room;
+        //     socket.join(room)
+        //     io.emit('lead come back', currentRoomId)
+        //     io.in('crm').emit('new message', room, msg, flag);
+        // }
+
+        // else {
             currentRoomId = room;
             //first msg of lead
             if (isFirstMsg) {
@@ -77,14 +86,26 @@ io.on('connection', (socket) => {
             else {
                 io.in(room).emit('lead message', room, msg) 
             }
+        // }
+    });
+
+
+    socket.on('new lead', (leadId, msg, flag) => {
+        socket.join(leadId)
+        if (!flag) {
+            io.in(leadId).emit('lead message',leadId, msg)
         }
     });
 
+    socket.on('lead typing', (room)=> {
+        io.emit('lead typing', room);
+    })
+    
+    socket.on('admin typing', ()=> {
+      
+    })
 
-    socket.on('new lead', (leadId, msg) => {
-        socket.join(leadId)
-        io.in(leadId).emit('lead message',leadId, msg)
-    });
+
 
     socket.on('disconnect', function() {
        io.emit('disco', currentRoomId)

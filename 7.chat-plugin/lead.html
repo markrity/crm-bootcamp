@@ -73,12 +73,36 @@
         var isFirstMsg = true;
         let person;
         var isExist = false; 
+        var email;
         
+        input.addEventListener('keyup',()=>{
+           socket.emit('lead typing', email);
+        })
 
-        window.addEventListener('load', function (e) {
-          const roomId = Math.random()
-          console.log(roomId);
-          socket.emit('welcome message', { msg: "enter your email address" , room: roomId});
+
+        window.addEventListener('load', async function (e) {
+          const room_lc = localStorage.getItem('my user');
+          if (await ifLeadExist(room_lc)) {
+            isExist = true;
+            isFirstMsg = false; 
+            email = room_lc
+            const result = await axios.get('http://localhost:9090/Beautiz');
+            if (result) {
+                result.data.forEach(element => {
+                  if (room_lc === element.room) {
+                    showMsgs(element.messages)
+                    socket.emit('lead back', room_lc);
+                 // console.log(element.messages);
+                  }
+                })
+              }
+          }
+          else {
+            const roomId = Math.random()
+            console.log(roomId);
+            socket.emit('welcome message', { msg: "enter your email address" , room: roomId});
+          }
+          
         })
      
 
@@ -99,19 +123,20 @@
         form.addEventListener('submit', async function (e) {
             e.preventDefault();
 
-            if (await ifLeadExist(input.value)) {
-              console.log('not first!!!!!');
-              isFirstMsg = false; 
-              email = input.value
-              isExist = true; 
-            }
+            // if (await ifLeadExist(input.value)) {
+            //   console.log('not first!!!!!');
+            //   isFirstMsg = false; 
+            //   email = input.value
+            //   isExist = true; 
+            // }
           
             if (input.value) {
                 if (isFirstMsg) {
-                email = input.value
+                  email = input.value
+                  localStorage.setItem('my user', email);
                 }
-               
-                socket.emit('lead message', email, input.value, isFirstMsg, isExist);
+                
+                socket.emit('lead message', email, input.value, isFirstMsg);
                 isFirstMsg = false;
                 input.value = '';
             }
@@ -120,7 +145,7 @@
         socket.on('admin message', function (room, msg) {
             var item = document.createElement('li');
             item.textContent = 'Admin: ' + msg
-            item.style.backgroundColor = 'yellow'
+            item.style.backgroundColor = '#e8e8e4'
             item.style.marginLeft = '40vh'
             item.style.borderRadius = '15px'
             item.style.marginBottom = '1vh'
@@ -144,14 +169,60 @@
             else {
               var item = document.createElement('li');
               item.textContent = 'you: ' + msg
-              item.style.backgroundColor = 'pink'
+              item.style.backgroundColor = '#f8edeb'
               item.style.borderRadius = '15px'
               item.style.marginRight = '40vh'
-              item.style.marginBottom = '1vh'
+              item.style.marginTop = '1vh'
               messages.appendChild(item);
               window.scrollTo(0, document.body.scrollHeight);
             }
         });
+
+
+        function showMsgs(msgs) {
+          // console.log(onlineRooms);
+          // let form1 = document.getElementById('form');
+          // form1.style.display = "none"
+          // if (onlineRooms.includes(leadId)) {
+          //   form1.style.display = "flex"
+          // } 
+        
+          messages.innerHTML = ''
+         
+          // console.log(allRooms);
+          console.log(msgs);
+          msgs.forEach(element => {
+            console.log(element.msg);
+            console.log(element.type);
+            var item = document.createElement('li');
+            // var date_time = document.createElement('li');
+            //lead 
+            if (element.type==='admin') {
+              item.textContent = 'admin: ' + element.msg;
+              // date_time.textContent = element.date;
+              // date_time.style.marginLeft ='50vh'
+              item.style.marginLeft = '50vh'
+              item.style.backgroundColor = '#e8e8e4'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+            }
+            //admin
+            if (element.type==='lead') {
+              item.textContent = 'you: '+ element.msg;
+              // date_time.textContent = element.date;
+              // date_time.style.marginRight ='50vh'
+              item.style.backgroundColor = '#f8edeb'
+              item.style.marginRight = '50vh'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+            }
+            // date_time.style.fontSize = "12px"
+            messages.appendChild(item);
+            // messages.appendChild(date_time)
+            window.scrollTo(0, document.body.scrollHeight)
+          });   
+      
+        }
 
         socket.on('welcome message', function (msg) {
             var item = document.createElement('li');

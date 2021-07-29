@@ -69,10 +69,28 @@
 
         .msg_div {
           display: flex;
-          margin-left: 50vh;
-          padding: 5px;
-          background-color: aliceblue;
+          margin-left: 40vh;
+          padding: 25px;
+          background: #f8f9fa;
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
           height: 85vh;
+        }
+
+        .chat_div {
+          padding: 25px;
+          background: #f8f9fa;
+          display: flex;
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
+          width: 30vh;
+        }
+
+
+        h1 {
+          margin-top: 1vh;
         }
         /* #chats > li{
           border: #333 2px solid;
@@ -83,20 +101,23 @@
 </head>
 <body>
   <div class="all_div">
-
+    <div class="chat_div">
     <div class="chatlist">
       <h1>Chats</h1>
       <ul tabindex="1" id="chats"></ul>
     </div>
+  </div>
 
   <div class="msg_div">
   <div class="crm_msg">
 
     <ul id="messages"></ul>
+    <div class="form_div"> 
     <form id="form" action="">
-        <div id="typing"></div>
+      <div id="typing"></div>
         <input id="input" autocomplete="off" /><button>Send</button>
     </form>
+    </div>
   </div>
   </div>
 </div>
@@ -169,8 +190,17 @@
         socket.on('lead come back', function (room) {
           console.log(room);
           onlineRooms.push(room)
-          changeOnlineRooms(room, "green"); 
+          changeOnlineRooms(room, "#caffbf"); 
         });
+
+        socket.on('lead typing', function (room) {
+          typingMsg.textContent=""
+          console.log(room);
+          typingMsg.textContent=room + 'is typing...'
+          setTimeout(function(){ typingMsg.textContent="" }, 2000);
+        
+        });
+      
       
 
         function changeOnlineRooms(room, color) {
@@ -186,50 +216,69 @@
 
 
         socket.on('admin message', function (room, msg) {
-          console.log(room);
-          console.log(msg);
+          var date_time = getDate()
             if (room === activeRoom) {
               var item = document.createElement('li');
+              var date = document.createElement('li');
               item.textContent = 'you: ' + msg;
-              messages.appendChild(item);
+              date.textContent = date_time;
+              date.style.fontSize = '12px'
               item.style.marginRight = '50vh'
-              item.style.backgroundColor = 'pink'
+              date.style.marginRight ='50vh'
+              item.style.backgroundColor = '#f8edeb'
               item.style.borderRadius = '10px'
-              item.style.marginBottom = '1vh'
+              item.style.marginTop = '1vh'
+              messages.appendChild(item);
+              messages.appendChild(date)
               window.scrollTo(0, document.body.scrollHeight);
             }
 
             axios.put(`http://localhost:9090/Beautiz/${room}`, {
              msg,
              type: 'admin', 
-             date: new Date()
+             date: date_time
             });
-            allRooms[room].push({msg, type: 'admin', date: new Date()})
+            allRooms[room].push({msg, type: 'admin', date:date_time})
 
         });
 
+
+        function getDate() {
+          var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/" 
+            + currentdate.getFullYear() + "  "  
+            + currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
+            return datetime;
+        }
+
         socket.on('lead message', function (room, msg) {
-         
+          var date_time = getDate()
           if (room === activeRoom) {
               const item = document.createElement('li');
+              var date = document.createElement('li');
+              date.textContent = date_time;
+              date.style.fontSize = '12px'
+              date.style.marginLeft ='50vh'
               item.textContent = room+': ' + msg;
               item.style.marginLeft = '50vh'
-              item.style.backgroundColor = 'yellow'
+              item.style.backgroundColor = '#e8e8e4'
               item.style.borderRadius = '10px'
-              item.style.marginBottom = '1vh'
-
+              item.style.marginTop = '1vh'
               messages.appendChild(item);
+              messages.appendChild(date)
               window.scrollTo(0, document.body.scrollHeight);
             
             }
-
           if (msg !== room) {
               axios.put(`http://localhost:9090/Beautiz/${room}`, {
               msg,
               type: 'lead', 
-              date: new Date()
+              date: date_time
               }) 
-              allRooms[room].push({msg, type: 'lead', date: new Date()})
+              allRooms[room].push({msg, type: 'lead', date: date_time})
           }
             
           
@@ -246,7 +295,8 @@
 
 
         socket.on('new message', function (leadId, msg, flag) {
-            socket.emit('new lead', leadId, msg)
+            socket.emit('new lead', leadId, msg, flag)
+            console.log(flag);
             if (!flag) {
               onlineRooms.push(leadId)
 
@@ -294,7 +344,7 @@
               date_time.textContent = element.date;
               date_time.style.marginLeft ='50vh'
               item.style.marginLeft = '50vh'
-              item.style.backgroundColor = 'yellow'
+              item.style.backgroundColor = '#e8e8e4'
               item.style.borderRadius = '10px'
               item.style.marginTop = '1vh'
             }
@@ -303,8 +353,7 @@
               item.textContent = 'you: '+ element.msg;
               date_time.textContent = element.date;
               date_time.style.marginRight ='50vh'
-             
-              item.style.backgroundColor = 'pink'
+              item.style.backgroundColor = '#f8edeb'
               item.style.marginRight = '50vh'
               item.style.borderRadius = '10px'
               item.style.marginTop = '1vh'
