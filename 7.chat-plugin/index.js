@@ -33,11 +33,25 @@ io.on('connection', (socket) => {
     socket.on('join crm', () => {
         socket.join('crm')
     });
+
     socket.on('welcome message', (data) => {
         console.log(data.room);
         console.log(data.msg);
         socket.join(data.room)
         io.in(data.room).emit('welcome message', data.msg)
+    });
+
+    socket.on('connect crm to all rooms', ( data ) => {
+        data.forEach(element => {
+            socket.join(element.room)
+            const clients = io.sockets.adapter.rooms.get(element.room);
+            if (clients.size > 1) {
+                io.emit('lead come back', element.room)
+            }
+            else {
+                socket.leave(element.room)
+            }
+        });
     });
 
     socket.on('admin message', ( room, msg ) => {
@@ -51,7 +65,6 @@ io.on('connection', (socket) => {
             socket.join(room)
             io.emit('lead come back', currentRoomId)
             io.in('crm').emit('new message', room, msg, flag);
-
         }
 
         else {

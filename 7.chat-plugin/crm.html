@@ -69,11 +69,15 @@
 
         .msg_div {
           display: flex;
-          /* background-color: antiquewhite;
-          height: 100vh; */
           margin-left: 50vh;
-          padding: 30px;
+          padding: 5px;
+          background-color: aliceblue;
+          height: 85vh;
         }
+        /* #chats > li{
+          border: #333 2px solid;
+          padding: 30px
+        } */
   
     </style>
 </head>
@@ -120,9 +124,8 @@
         var onlineRooms = []
 
         window.addEventListener('load', function (e){
-          console.log('*****');
           axios.get('http://localhost:9090/Beautiz') .then(function (response) {
-          //console.log(response.data);
+          socket.emit('connect crm to all rooms', response.data)
           response.data.forEach(element => {
             allRooms[element.room] = element.messages
             var item = document.createElement('li');
@@ -284,24 +287,31 @@
           console.log(allRooms);
           allRooms[leadId].forEach(element => {
             var item = document.createElement('li');
+            var date_time = document.createElement('li');
             //lead 
             if (element.type==='lead') {
               item.textContent = leadId+': ' + element.msg;
+              date_time.textContent = element.date;
+              date_time.style.marginLeft ='50vh'
               item.style.marginLeft = '50vh'
               item.style.backgroundColor = 'yellow'
               item.style.borderRadius = '10px'
-              item.style.marginBottom = '1vh'
+              item.style.marginTop = '1vh'
             }
             //admin
             if (element.type==='admin') {
               item.textContent = 'you: '+ element.msg;
+              date_time.textContent = element.date;
+              date_time.style.marginRight ='50vh'
+             
               item.style.backgroundColor = 'pink'
               item.style.marginRight = '50vh'
               item.style.borderRadius = '10px'
-              item.style.marginBottom = '1vh'
+              item.style.marginTop = '1vh'
             }
-
+            date_time.style.fontSize = "12px"
             messages.appendChild(item);
+            messages.appendChild(date_time)
             window.scrollTo(0, document.body.scrollHeight)
           });   
       
