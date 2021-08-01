@@ -1,0 +1,234 @@
+.dataPage {
+   display: flex;
+   flex-wrap: wrap;
+   margin-top: 10vh;
+  }
+
+
+
+.client_tags {
+    /* width: 20%;
+    height: 30%; */
+    /* margin-right: 15vh; 
+     margin-top: -9%; */
+     padding: 5vh;
+     /* margin-top: 10vh; */
+  }
+  
+  
+.client_details {
+    /* text-align: start; */
+    font-size: 22px;
+    /* margin-top: 10vh; */
+    /* margin-left: 10vh; */
+    padding: 5vh;
+    
+    /* background-color: #ffe5d9; */
+    /* width: 50%; */
+    /* border-radius: 10px; */
+   
+} 
+  
+.detail {
+    font-weight: bold;
+    letter-spacing: 1px;
+    margin-bottom: 5%;
+} 
+.data_about_client {
+    width: 50%;
+}
+
+
+.pics {
+    /* width: 50%; */
+    display: flex;
+    flex-wrap: wrap;
+    /* align-content: center;  */
+    /* justify-content: space-around; */
+    flex-direction: column;
+    /* margin-top: 10vh; */
+    padding: 5vh;
+}
+
+
+.table_and_select {
+    margin-top: 1vh;
+}
+
+.inside_pics {
+    /* width: 70%; */
+}
+
+.inside_tags {
+    width: 70%;
+}
+
+
+.show_tags {
+    width: 100%;
+}
+
+.div_tags {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add_tags_inside {
+    display: flex;
+    flex-direction: row;
+}
+
+.label_tags {
+      width: 60%;
+}
+
+
+.add_button_tags {
+    margin-top: 1vh;
+    height: 4vh;
+    margin-left: 2vh;
+    cursor: pointer;
+    text-align: center;
+    font-size: larger;
+    width: 8vh;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.inside_show_pic {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 3vh;
+    justify-content: space-between;
+}
+
+
+
+.tagsDiv {
+    width: 100%;
+    background-color: #ffe5d9;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 1px;
+    /* margin-left: 23%; */
+    border-radius: 5px;
+   
+   
+  }
+  
+#tag_delete { 
+    margin-top: 2vh;
+    /* margin-right: 15px; */
+    width: 30%;
+    display: flex;
+}
+
+
+ 
+ #add_pic_input{
+     width: 100%;
+ }
+
+input[type=file]::file-selector-button {
+    height: 4vh;
+    cursor: pointer;
+    text-align: end;
+    font-size: larger;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
+    font-weight: bold;
+    border-radius: 10px;
+}
+  
+input[type=file]::file-selector-button:hover {
+    /* background-color: #81ecec; */
+    border: 2px solid 
+}
+
+
+.add_pic {
+    display: flex;
+    /* justify-content: center; */
+    width: 100%;
+    /* margin-left: 5%; */
+}
+
+.upload_button {
+    /* margin-top: 6vh; */
+    /* margin-right: 5px; */
+    /* margin-left: 5px; */
+    height: 4vh;
+    /* margin-left: 3vh; */
+    cursor: pointer;
+    text-align: center;
+    font-size: larger;
+    width: 10vh;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+
+.deleteimg {
+    margin-bottom: 7vh;
+}
+
+
+.input_pic {
+    height: 100%;
+    background-color: white;
+    width: 27vh;
+}
+
+.border_pics {
+   width: 35%;
+   /* border-style: inset; */
+   margin-left: 3%;
+   box-sizing: border-box;
+   background: #f8f9fa;
+   box-shadow: 4px 4px 10px rgb(222, 217, 217),
+   -4px -4px 10px rgb(222, 217, 217);
+}
+
+
+.border_tags {
+    /* border-style: inset; */
+    margin-left: 20vh;
+    margin-top: 3%;
+    width: 35%;
+    box-sizing: border-box;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+      -4px -4px 10px rgb(222, 217, 217);
+}
+
+
+.border_details {
+    box-sizing: border-box;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+      -4px -4px 10px rgb(222, 217, 217);
+    width: 73.5vh;
+    margin-left: 20vh;
+}
+
+
+.border_table {
+    box-sizing: border-box;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+    -4px -4px 10px rgb(222, 217, 217);
+    width: 73.5vh;
+    margin-left: 18vh;
+    height: 30vh;
+    margin-top: 5vh;
+}

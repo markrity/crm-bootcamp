@@ -1,0 +1,99 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="style.css">
+      <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+        <h2>Leads Table</h2>
+        <ul class="responsive-table">
+          <li class="table-header">
+            <div class="col col-1">ID </div>
+            <div class="col_sort"> First Name
+            <div class="buttons">
+              <button id="sort_inc" onclick="sort('increase','first')"></button>
+              <button id="sort_dec" onclick="sort('decrease','first')"></button>
+            </div>
+            </div>
+            <div class="col_sort">Last Name
+            <div class="buttons">
+              <button id="sort_inc" onclick="sort('increase','last')"></button>
+              <button id="sort_dec" onclick="sort('decrease','last')"></button>
+            </div>
+            </div>
+            <div class="col col-4">Phone</div>
+            <div class="col col-4"></div>
+          </li>
+          {{#leads}}
+          <li class="table-row">
+            <div class="col col-1" data-label={{lead_id}}>{{lead_id}}</div>
+            <div class="col col-2" data-label={{first_name}}>{{first_name}}</div>
+            <div class="col col-3" data-label={{last_name}}>{{last_name}}</div>
+            <div class="col col-4" data-label={{name}}>{{phone}}</div>
+            <button id="delete" onclick="delete_row('{{lead_id}}')">delete</button>
+          </li>
+          {{/leads}}
+        </ul>
+      </div>
+  </body>
+
+<script>
+
+  var leads=[]
+  const lead_table = document.querySelectorAll('.table-row');
+
+  function getdata() {
+    for (lead of lead_table) {
+      var id = lead.children[0].innerHTML;
+      var first = lead.children[1].innerHTML;
+      var last = lead.children[2].innerHTML;
+      var phone = lead.children[3].innerHTML;
+      leads.push({id,first,last,phone})
+    }
+  }
+  
+  function sort(sort_type, sort_col) {
+    leads=[]
+    getdata();
+    leads.sort((a, b) => (a[sort_col] > b[sort_col]) ? 1 : -1);
+    if(sort_type ==='decrease') {
+      leads.reverse()
+    }
+    drawTable();
+  }
+
+  function drawTable(){
+    for (i=0; i<leads.length; i++) {
+      lead_table[i].children[0].innerHTML = leads[i].id;
+      lead_table[i].children[1].innerHTML = leads[i].first;
+      lead_table[i].children[2].innerHTML = leads[i].last;
+      lead_table[i].children[3].innerHTML = leads[i].phone;
+    } 
+   }
+
+  function delete_row(id) {
+  var result = confirm("Are you sure?");
+  if (result) {
+  axios.post("http://kerenadiv.com:8004/delete", {lead_id:id}).
+  then(function (response) {  
+    if (response.data.status===true) {
+      window.location.reload();
+    }
+  })
+}
+}
+
+</script>
+
+
+ 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" 
+integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" 
+crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
+
+</html>

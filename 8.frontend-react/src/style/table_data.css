@@ -1,0 +1,48 @@
+#clientData {
+  border-collapse: collapse;
+  /* margin-bottom: 50px; */
+  /* margin-top: -10%; */
+  width: 65vh;
+  /* margin-left: 18vh; */
+  margin-top: 5vh;
+  margin-left: 4vh;
+  /* margin-top: 10vh; */
+  }
+  
+  #clientData td, #clientData th {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+  }
+  
+  #clientData tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #clientData tr:hover {background-color: #ddd;}
+  
+  #clientData th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #ffe5d9;
+    color: black;
+  }
+
+  .table_container {
+      /* display: flex; */
+      margin-top: 10%;
+  }
+
+  .manImg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+  }
+
+  .add_button {
+    background-color: none;
+  }
+
+  .action {
+    display: flex;
+    justify-content: space-around;
+  }

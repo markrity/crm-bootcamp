@@ -1,0 +1,53 @@
+#tre {
+   
+    border-collapse: collapse;
+    width: 140vh;
+    margin-left: 60%;
+    margin-top: 2%;
+  }
+  
+  #tre td, #tre th {
+    /* border: 1px solid #ddd; */
+    padding: 8px;
+  }
+  
+  #tre tr:nth-child(even){background-color: #f2f2f2;}
+  
+  #tre tr:hover {background-color: #ddd;}
+  
+  #tre th {
+    font-size: large;
+    /* text-align: left; */
+    background-color: #ffe5d9;
+    color: black;
+  
+  }
+
+  .table_container {
+      /* display: flex; */
+      margin-top: 10%;
+  }
+
+  .manImg {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+
+  }
+
+  .deleteimg{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    
+
+  }
+
+  .add_button {
+    background-color: none;
+  }
+
+  .action {
+    display: flex;
+    justify-content: space-around;
+  }
