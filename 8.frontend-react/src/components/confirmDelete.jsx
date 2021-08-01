@@ -1,5 +1,5 @@
 import React from "react";
-import Button from '../components/button'
+import Button from './button'
 
 import Modal from 'react-modal';
 function ConfirmDelete(props) {

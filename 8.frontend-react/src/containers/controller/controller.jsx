@@ -1,7 +1,7 @@
 import React from "react";
 import DivController from "../../components/divController";
-import Register from '../../containers/register/registerPage'
-import Login from '../../containers/login/loginPage'
+import Register from '../register/registerPage'
+import Login from '../login/loginPage'
 import TopNav from '../../components/topNav'
 
 import '../../style/controllerStyle.css';

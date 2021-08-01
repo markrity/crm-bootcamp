@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import {basicURL, basicURLPHP} from '../constans/constants.js'
-import {addToLS} from '../helpers/local_storage_helper.js'
+import {addToLS} from './local_storage_helper.js'
 
 
 

@@ -4,8 +4,8 @@ import Modal from 'react-modal';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
 import  {useState, useEffect, useMemo} from "react";
-import Button from '../components/button'
-import FormInput from '../components/formInput'
+import Button from './button'
+import FormInput from './formInput'
 import { connectToServerPhpAdd, connectToServerPhpEdit} from "../helpers/api_helpers";
 import AddKinds from './addKinds';
 import Users from '../containers/users/users';

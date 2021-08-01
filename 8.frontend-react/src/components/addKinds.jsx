@@ -1,6 +1,6 @@
 import React, {useState} from "react";
-import Button from '../components/button'
-import FormInput from '../components/formInput'
+import Button from './button'
+import FormInput from './formInput'
 import axios from 'axios';
 import Modal from 'react-modal';
 import '../style/button.css'
