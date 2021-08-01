@@ -38,6 +38,12 @@
     background-color: pink;
 }
 
+.img_chat {
+    width: 60%;
+    margin-left: 14px;
+    margin-top: 14px;
+}
+
 
 .chat_div {
     display: flex;

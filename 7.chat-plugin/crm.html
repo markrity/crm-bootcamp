@@ -13,15 +13,14 @@
             background: rgba(0, 0, 0, 0.15);
             padding: 0.25rem;
             position: absolute;
-            bottom: 0;
-            /* left: 0;
-            right: 0; */
+            bottom: 10vh;
             display: none;
             height: 3rem;
             width: 100vh;
             box-sizing: border-box;
             backdrop-filter: blur(10px);
         }
+
         #input {
             border: none;
             padding: 0 1rem;
@@ -69,7 +68,7 @@
 
         .msg_div {
           display: flex;
-          margin-left: 40vh;
+          margin-left: 30vh;
           padding: 25px;
           background: #f8f9fa;
           border-style: solid;
@@ -317,7 +316,7 @@
                 item.textContent = leadId;
                 item.setAttribute("class", "lead");
                 item.setAttribute("tabindex", "1");
-                item.style.backgroundColor = "green"
+                item.style.backgroundColor =  "#caffbf"
                 chats.appendChild(item)
                 console.log(chats);
                 window.scrollTo(0, document.body.scrollHeight);
@@ -365,11 +364,6 @@
           });   
       
         }
-
-
-     
-
-
 
     </script>
 
