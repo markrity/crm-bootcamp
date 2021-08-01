@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+    <title>{{title}}</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Gruppo&family=Montserrat&family=Yusei+Magic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/leads.css">
+</head>
+<body>
+    <header class="header">
+        <div id="logo">{{logo}}</div>
+        <div id=Business-logo>{{business}}</div>
+    </header>
+    <div class=main-content>
+        <div class="title_search">
+          <h1>{{title}}</h1>
+          <div class="options">
+                <div class="sort">
+                    {{#sort}}
+                    <label for="sorting">{{order}}</label>
+                    <select name="sorting" id="sorting" onchange="return changeOrder(this);"> 
+                        <!-- <option value="" disabled selected hidden>{{placeholderOrder}}</option> -->
+                        {{#options}}
+                        <option value="{{.}}">{{.}}</option>
+                        {{/options}}
+                    </select>
+                    {{/sort}}
+                </div>
+                <form class="search_lead" id="search" action="">
+                    <input type="text" placeholder="Search" name="search_field" id="search_field">
+                    <button type="submit"  id="search_button" name="search_button"><i class="material-icons">search</i></button>
+                </form>
+          </div>
+          
+        </div>
+        <table class="leads_table" id="leads_table">  
+            <tr class="title">
+                {{#headers}}
+                <th>{{.}}</th>
+                {{/headers}}
+              </tr>
+        </table>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="scripts/leads.js"></script>
+</html>

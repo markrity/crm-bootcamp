@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed&amp;family=Six+Caps&amp;family=Montserrat&amp;display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/landing.css">
+    <link rel="stylesheet" href="css/animation.css">
+
+    <title>{{logo}}</title>
+</head>
+
+<body>
+    <header class="landing-header">
+        <div id="logo">{{logo}}</div>
+        <nav class="nav-menu">
+            <ul>
+                {{#navigation}}
+                <li><a href="#">{{title}}</a></li>
+                {{/navigation}}
+            </ul>
+        </nav>
+    </header>
+    <div class="full-body">
+        <div class="area">
+            <ul class="circles">
+                {{#circles}}
+                <li>{{}}</li>
+                {{/circles}}
+            </ul>
+        </div>
+
+        <div class="content-container">
+            <div class="main-content">
+                <h1>
+                {{#maintitle}}
+                <div>{{text}}</div>
+                {{/maintitle}}
+                </h1>
+                <h2>{{subtitle}}</h2>
+            </div>
+            <div class="form-box">
+                {{#form}}
+                {{#details.name}}
+                <img class="from-tick" src="assets/tick.png" alt="">
+                <h4 class="leave-heading">{{details.name}}</h4>
+                {{/details.name}}
+                {{^details.name}}
+                <h4 class="leave-heading">{{title}}</h4>
+                <!-- <form id="form" action="" onsubmit="return(validation());"> -->
+                <form id="form" action="">
+                    {{#inputs}}
+                    <div>
+                        <input type="{{type}}" id="{{id}}" placeholder="{{placeholder}}" name="{{id}}" onfocus="cancelError(this)">
+                    </div>
+                    <span id="{{error_id}}"></span>
+                    {{/inputs}}
+                    {{#button}}
+                    <div class="button-container">
+                        <input class="submit-button" type="{{type}}" value="{{text}}">
+                    </div>
+                    {{/button}}
+                </form>
+                <span id="error-server"></span>
+                {{/details.name}}
+                {{/form}}
+            </div>
+        </div>
+        <div class="under-content">
+            {{#footer}}
+            <h3 class="why-heading">{{title}}</h3>
+            <div class="answers">
+                {{#answers}}
+                <div class="outsider" >
+                    <div class="answer">
+                        {{#title}}
+                        <div>
+                            {{part}}
+                        </div>
+                        {{/title}}
+                        {{#img}}
+                        <img class="icon" src="{{img}}" alt="hi">
+                        {{/img}}
+                        {{^img}}
+                        <span class="answer-deco">{{text}}</span>
+                        {{/img}}
+                    </div>
+                </div>
+                {{/answers}}
+            </div>
+            {{/footer}}
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script type="text/javascript" src="scripts/landing-page.js"></script>
+<script>
+    // const form = document.querySelector('#form');
+    // form.addEventListener('submit', function(e){
+    //     e.preventDefault();
+    //     const name = form.elements.name.value;
+    //     const mail = form.elements.mail.value;
+    //     const phone = form.elements.phone.value;
+
+    //     axios.post('http://rgb.com:8004', {
+    //     fullName: name,
+    //     email: mail,
+    //     phone: phone
+    //     },)
+    //     .then(function (response) {
+    //         console.log(response);
+    //         console.log("success");
+    //     })
+    //     .catch(function (error) {
+    //         console.log(error);
+    //     });
+    // });
+
+</script>
+</html>
+
+<!-- {
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+} -->
