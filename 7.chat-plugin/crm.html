@@ -1,0 +1,378 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Socket.IO chat</title>
+    <style>
+        body {
+            margin: 0;
+            padding-bottom: 3rem;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        #form {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 0.25rem;
+            position: absolute;
+            bottom: 0;
+            /* left: 0;
+            right: 0; */
+            display: none;
+            height: 3rem;
+            width: 100vh;
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+        }
+        #input {
+            border: none;
+            padding: 0 1rem;
+            flex-grow: 1;
+            border-radius: 2rem;
+            margin: 0.25rem;
+        }
+        #input:focus {
+            outline: none;
+        }
+        #form>button {
+            background: #333;
+            border: none;
+            padding: 0 1rem;
+            margin: 0.25rem;
+            border-radius: 3px;
+            outline: none;
+            color: #fff;
+        }
+        #messages {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            width: 100vh;
+        }
+        #messages>li {
+            padding: 0.5rem 1rem;
+        }
+       
+        .crm_msg {
+         /* margin-left: 50vh; */
+        }
+
+        .lead:focus {
+          font-weight: bold;
+        }
+
+        .lead {
+          margin-bottom: 2vh;
+        }
+
+        .all_div {
+          display: flex;
+        }
+
+        .msg_div {
+          display: flex;
+          margin-left: 40vh;
+          padding: 25px;
+          background: #f8f9fa;
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
+          height: 85vh;
+        }
+
+        .chat_div {
+          padding: 25px;
+          background: #f8f9fa;
+          display: flex;
+          border-style: solid;
+          border-color: black;
+          border-width: 1px;
+          width: 30vh;
+        }
+
+
+        h1 {
+          margin-top: 1vh;
+        }
+        /* #chats > li{
+          border: #333 2px solid;
+          padding: 30px
+        } */
+  
+    </style>
+</head>
+<body>
+  <div class="all_div">
+    <div class="chat_div">
+    <div class="chatlist">
+      <h1>Chats</h1>
+      <ul tabindex="1" id="chats"></ul>
+    </div>
+  </div>
+
+  <div class="msg_div">
+  <div class="crm_msg">
+
+    <ul id="messages"></ul>
+    <div class="form_div"> 
+    <form id="form" action="">
+      <div id="typing"></div>
+        <input id="input" autocomplete="off" /><button>Send</button>
+    </form>
+    </div>
+  </div>
+  </div>
+</div>
+
+  
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        var socket = io();
+        var typing = false;
+        var timeout = undefined;
+        var user;
+        var messages = document.getElementById('messages');
+        var chats = document.getElementById('chats');
+   
+     //   let li_chat = document.getElementById('chats').getElementsByTagName('li');
+
+        var form = document.getElementById('form');
+        var input = document.getElementById('input');
+        var typingMsg = document.getElementById('typing');
+        var room;
+        var activeRoom;
+        var allRooms = {}
+        var onlineRooms = []
+
+        window.addEventListener('load', function (e){
+          axios.get('http://localhost:9090/Beautiz') .then(function (response) {
+          socket.emit('connect crm to all rooms', response.data)
+          response.data.forEach(element => {
+            allRooms[element.room] = element.messages
+            var item = document.createElement('li');
+            item.setAttribute("class", "lead");
+            item.setAttribute("tabindex", "1");
+            item.addEventListener('click',function (e) {
+              const roomId = element.room;
+              activeRoom = roomId;
+              showMsgs(roomId)
+            })
+
+            item.textContent = element.room;
+            chats.appendChild(item)
+            console.log(chats);
+            window.scrollTo(0, document.body.scrollHeight);
+
+          })
+        })
+          socket.emit('join crm');
+        })
+       
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            if (input.value) {
+                socket.emit('admin message', activeRoom, input.value );
+                input.value = '';
+            }
+        });
+
+
+        socket.on('disco', function (room) {
+          console.log(room);
+          const index = onlineRooms.indexOf(room);
+          if (index > -1) {
+            onlineRooms.splice(index, 1);
+          }
+         
+          changeOnlineRooms(room, ""); 
+        });
+      
+        socket.on('lead come back', function (room) {
+          console.log(room);
+          onlineRooms.push(room)
+          changeOnlineRooms(room, "#caffbf"); 
+        });
+
+        socket.on('lead typing', function (room) {
+          typingMsg.textContent=""
+          console.log(room);
+          typingMsg.textContent=room + 'is typing...'
+          setTimeout(function(){ typingMsg.textContent="" }, 2000);
+        
+        });
+      
+      
+
+        function changeOnlineRooms(room, color) {
+          const allLi = document.getElementsByClassName('lead');
+          console.log(allLi);
+          for (const element of allLi) { 
+            if (element.innerHTML === room) {
+              element.style.backgroundColor = color
+            }
+        }
+      }
+
+
+
+        socket.on('admin message', function (room, msg) {
+          var date_time = getDate()
+            if (room === activeRoom) {
+              var item = document.createElement('li');
+              var date = document.createElement('li');
+              item.textContent = 'you: ' + msg;
+              date.textContent = date_time;
+              date.style.fontSize = '12px'
+              item.style.marginRight = '50vh'
+              date.style.marginRight ='50vh'
+              item.style.backgroundColor = '#f8edeb'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+              messages.appendChild(item);
+              messages.appendChild(date)
+              window.scrollTo(0, document.body.scrollHeight);
+            }
+
+            axios.put(`http://localhost:9090/Beautiz/${room}`, {
+             msg,
+             type: 'admin', 
+             date: date_time
+            });
+            allRooms[room].push({msg, type: 'admin', date:date_time})
+
+        });
+
+
+        function getDate() {
+          var currentdate = new Date(); 
+            var datetime = currentdate.getDate() + "/"
+            + (currentdate.getMonth()+1)  + "/" 
+            + currentdate.getFullYear() + "  "  
+            + currentdate.getHours() + ":"  
+            + currentdate.getMinutes() + ":" 
+            + currentdate.getSeconds();
+            return datetime;
+        }
+
+        socket.on('lead message', function (room, msg) {
+          var date_time = getDate()
+          if (room === activeRoom) {
+              const item = document.createElement('li');
+              var date = document.createElement('li');
+              date.textContent = date_time;
+              date.style.fontSize = '12px'
+              date.style.marginLeft ='50vh'
+              item.textContent = room+': ' + msg;
+              item.style.marginLeft = '50vh'
+              item.style.backgroundColor = '#e8e8e4'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+              messages.appendChild(item);
+              messages.appendChild(date)
+              window.scrollTo(0, document.body.scrollHeight);
+            
+            }
+          if (msg !== room) {
+              axios.put(`http://localhost:9090/Beautiz/${room}`, {
+              msg,
+              type: 'lead', 
+              date: date_time
+              }) 
+              allRooms[room].push({msg, type: 'lead', date: date_time})
+          }
+            
+          
+        });
+
+        function ifLeadExist(room) {
+          allRooms.forEach(element=>{
+            if (room===element.room) {
+              return true; 
+            }
+          })
+          return false; 
+        }
+
+
+        socket.on('new message', function (leadId, msg, flag) {
+            socket.emit('new lead', leadId, msg, flag)
+            console.log(flag);
+            if (!flag) {
+              onlineRooms.push(leadId)
+
+              allRooms[leadId] = []
+              axios.post('http://localhost:9090/Beautiz', {
+              room: leadId,
+              messages: []
+              }) .then(function (response) {
+                console.log(response);
+              })
+
+              var item = document.createElement('li');
+              item.addEventListener('click',function (e) {
+                const roomId = e.target.innerText;
+                activeRoom = roomId;
+                showMsgs(roomId)
+              })
+                item.textContent = leadId;
+                item.setAttribute("class", "lead");
+                item.setAttribute("tabindex", "1");
+                item.style.backgroundColor = "green"
+                chats.appendChild(item)
+                console.log(chats);
+                window.scrollTo(0, document.body.scrollHeight);
+          }
+        });
+
+
+        function showMsgs(leadId) {
+          console.log(onlineRooms);
+          let form1 = document.getElementById('form');
+          form1.style.display = "none"
+          if (onlineRooms.includes(leadId)) {
+            form1.style.display = "flex"
+          } 
+        
+          messages.innerHTML = ''
+          console.log(allRooms);
+          allRooms[leadId].forEach(element => {
+            var item = document.createElement('li');
+            var date_time = document.createElement('li');
+            //lead 
+            if (element.type==='lead') {
+              item.textContent = leadId+': ' + element.msg;
+              date_time.textContent = element.date;
+              date_time.style.marginLeft ='50vh'
+              item.style.marginLeft = '50vh'
+              item.style.backgroundColor = '#e8e8e4'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+            }
+            //admin
+            if (element.type==='admin') {
+              item.textContent = 'you: '+ element.msg;
+              date_time.textContent = element.date;
+              date_time.style.marginRight ='50vh'
+              item.style.backgroundColor = '#f8edeb'
+              item.style.marginRight = '50vh'
+              item.style.borderRadius = '10px'
+              item.style.marginTop = '1vh'
+            }
+            date_time.style.fontSize = "12px"
+            messages.appendChild(item);
+            messages.appendChild(date_time)
+            window.scrollTo(0, document.body.scrollHeight)
+          });   
+      
+        }
+
+
+     
+
+
+
+    </script>
+
+
+</body>
+</html>

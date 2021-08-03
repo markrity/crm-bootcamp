@@ -1,0 +1,90 @@
+.mySlides img{
+    border-radius: 20px;
+    margin-bottom: 10px;
+}
+
+.column1 img {
+    border-radius: 20px;
+    width: 80%;
+
+} 
+li::before {
+    margin-left: 0.3cm;
+    position: absolute;
+    left: 5px;
+    content: "\2713";
+    color: #666;
+}
+
+#pict {
+    margin-left: 5px;
+}
+
+.image-gallery{
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
+}
+
+.img1 {
+    width: 40px;
+    height: 40px;
+    margin-left: 0.3cm;
+    margin-right: 0.3cm;
+    flex-direction: row;
+    
+}
+
+img{
+    max-width: 100%;
+    max-height: 100%;
+    vertical-align: middle;
+
+}
+
+.upper-img{
+flex: 4;
+}
+
+.lower-img{
+    flex: 1;
+
+}
+
+@media (max-width: 600px) {
+    .row {
+      -webkit-flex-direction: column;
+      flex-direction: column;
+    }
+}
+
+.middle-container {
+position: relative;
+}
+
+/* Hide the images by default */
+.mySlides {
+display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+cursor: pointer;
+}
+
+
+/* Six columns side by side */
+.column1 {
+    display: flex;
+    flex:1;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+opacity: 1;
+}

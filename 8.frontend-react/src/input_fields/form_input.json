@@ -1,0 +1,76 @@
+{
+  "register_page": [
+    {
+      "key": "full_name",
+      "err": "name_validate",
+      "label": "Full Name",
+      "className": "input",
+      "type": "text",
+      "placeholder": "full name"
+    },
+    {
+      "key": "business_name",
+      "label": "Business Name",
+      "className": "input",
+      "type": "text",
+      "placeholder": "business name"
+    },
+    {
+      "key": "email",
+      "err": "email_validate",
+      "label": "Email",
+      "className": "input",
+      "type": "text",
+      "placeholder": "example@text.com"
+     
+    },
+    {
+      "key": "phone",
+      "err": "phone_validate",
+      "label": "Phone",
+      "className": "input",
+      "type": "text",
+      "placeholder": "phone"
+  
+    },
+    {
+      "key": "password",
+      "err": "password_validate",
+      "label": "Password",
+      "className": "input",
+      "type": "password",
+      "placeholder": "must be at least eight characters"
+    
+    }
+  ],
+  "register_pageNew": [
+    {
+      "key": "full_name",
+      "err": "name_validate",
+      "label": "Full Name",
+      "className": "input",
+      "type": "text",
+      "placeholder": "full name"
+      
+    },
+
+    {
+      "key": "phone",
+      "err": "phone_validate",
+      "label": "Phone",
+      "className": "input",
+      "type": "text",
+      "placeholder": "phone"
+      
+    },
+    {
+      "key": "password",
+      "err": "password_validate",
+      "label": "Password",
+      "className": "input",
+      "type": "password",
+      "placeholder": "must be at least eight characters"
+
+    }
+  ]
+}

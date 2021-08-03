@@ -1,0 +1,72 @@
+.graph1 {
+    width: 70vh;
+    height: 35vh;
+    /* margin-top: 5vh; */
+    margin-left: 30vh;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+    -4px -4px 10px rgb(222, 217, 217);
+}
+
+
+.graph2 {
+    width: 70vh;
+    height: 35vh;
+    /* margin-top: 5vh; */
+    margin-left: 10vh;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+    -4px -4px 10px rgb(222, 217, 217);
+}
+
+.graph3 {
+    width: 70vh;
+    height: 35vh;
+    /* margin-top: 2vh; */
+    margin-bottom: 1vh;
+    margin-left: 30vh;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+    -4px -4px 10px rgb(222, 217, 217);
+    
+}
+.graph4 {
+    width: 70vh;
+    height: 35vh;
+    /* margin-top: 2vh; */
+    margin-bottom: 1vh;
+    margin-left: 10vh;
+    background: #f8f9fa;
+    box-shadow: 4px 4px 10px rgb(222, 217, 217),
+    -4px -4px 10px rgb(222, 217, 217);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.all_graphs {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+
+#p_gra1 {
+    margin-left: 50vh;
+    margin-top: 2vh;
+}
+
+#p_gra2 {
+    margin-left: 30vh;
+    margin-top: 2vh;
+}
+
+#p_gra3 {
+    margin-left: 49vh;
+    margin-top: 3vh;
+}
+
+#p_gra4 {
+    margin-left: 30vh;
+    margin-top: 3vh;
+}

@@ -1,6 +1,6 @@
 <?php 
 
-    class Model_test 
+    class Model_test
     {
        
         public function __construct()

@@ -1,0 +1,74 @@
+input {
+    background: #ecf0f3;
+    padding: 10px;
+    padding-left: 20px;
+    height: 40px;
+    font-size: 14px;
+    outline-color: #fcd5ce;
+    }
+
+.header {
+    margin-top: 10px;
+    font-weight: 600;
+    font-size: 1.8rem;
+    color: black;
+    letter-spacing: 1px;
+    text-align: center;
+}
+
+.error {
+    color: red;
+}
+
+
+label, input {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+}
+
+
+
+
+.p_link {
+    cursor: pointer;
+}
+
+
+.divController {
+margin-top: 20px;
+text-align: center;
+}
+
+
+.input {
+background-color: #ffffff;;
+margin-top: 25px;
+border: 1px solid #e2e2e2;
+font-size: medium;
+padding-left: 15px;
+}
+    
+.label {
+color: #000000;
+position: relative;
+top: 20px;
+font-size: smaller;
+}
+
+.para {
+    margin-bottom: 3%; 
+}
+
+
+h1 {
+    font-size: 35px;
+    margin-left: 1vh;
+    
+}
+
+.input {
+    margin-bottom: 0.5vh;
+}

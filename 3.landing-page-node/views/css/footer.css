@@ -1,0 +1,59 @@
+
+  .footer {
+    background-color: #e8e8e4;
+    display: flex;
+    flex-direction: row;
+   
+    justify-content: space-between;
+    padding: 15px;  
+    flex: 1;
+}
+
+.footer-text {
+   display: flex;
+   flex-direction: column;
+   font-size: smaller;
+   justify-content: right;
+}
+
+#footer-phone {
+    margin-top:-0.0008px;
+}
+
+#footer-adress {
+    margin-top: -2mm;
+}
+
+#chat {
+    display: none;
+    height: 40vh;
+}
+.visible {
+ 
+}
+.chat_button {
+    width: 7vh;
+    height: 7vh;
+    border-radius: 30px;
+    background-color: pink;
+}
+
+
+.chat_div {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.footer_data {
+    display: flex;
+}
+
+.frame_div {
+    z-index: 1;
+    position: absolute;
+    background-color: white;
+    margin-left: 164vh;
+    margin-top: 71vh;
+}
