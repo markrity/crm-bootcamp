@@ -7,7 +7,6 @@ app.use('/static', express.static('public'))
 
 //var cors = require('cors')
 app.use(cors());
-
 app.use(express.json());
 app.use(express.urlencoded());
 
@@ -21,6 +20,11 @@ app.get('/', function(req, res) {
 });
 
 import elasticsearch from 'elasticsearch';
+// var redis = require("redis");
+
+import redis from "redis"
+var publisher = redis.createClient();
+
 
 const client = new elasticsearch.Client({
     host: 'http://localhost:9200',
@@ -40,6 +44,11 @@ client.ping({
 
 
 app.post('/click', function(req, res) {
+   
+    publisher.publish("events", "test", function(){
+     process.exit(0);
+    });
+
     const body = req.body.doc.flatMap(doc => [{ index: { _index: 'events' } }, doc])
     console.log(body);
     client.bulk({
