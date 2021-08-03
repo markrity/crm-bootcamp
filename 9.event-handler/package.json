@@ -1,0 +1,20 @@
+{
+  "name": "event-handler",
+  "version": "1.0.0",
+  "description": "Web application with server-side rendering (SSR) dynamic templates using Jade. ## Getting Started ### Install **yarn** (If Not Installed Already) ``` npm i -g yarn ```",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "export PORT=9000 && nodemon index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "dependencies": {
+    "axios": "^0.21.1",
+    "cors": "^2.8.5"
+  },
+  "type": "module"
+}

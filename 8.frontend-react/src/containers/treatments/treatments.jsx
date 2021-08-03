@@ -118,7 +118,7 @@ function Treatments(props) {
                             setConfirmOpen(true)
                             setTreId(row.cell.row.original.id);      
                           }}>
-                        <FontAwesomeIcon  icon={faTrashAlt} size={"1x"}/>
+                        <FontAwesomeIcon className="delete" icon={faTrashAlt} size={"1x"}/>
 
                    </span> 
 
@@ -136,7 +136,7 @@ function Treatments(props) {
                             setIsOpen(true)  
                           }}>
                               
-                              <FontAwesomeIcon  icon={faEdit} size={"1x"}/>
+                              <FontAwesomeIcon className="edit"  icon={faEdit} size={"1x"}/>
                             {/* <img class="manImg" src="https://w7.pngwing.com/pngs/613/900/png-transparent-computer-icons-editing-delete-button-miscellaneous-angle-logo.png"></img> */}
                    </span> 
 

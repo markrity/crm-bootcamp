@@ -150,7 +150,7 @@ app.post('/login', function(req, res) {
       }
       const accessToken = jwt.sign(bodyJWT, secret)
       console.log(accessToken);
-      res.json({accessToken, status:true,account_id:result[0].account_id});
+      res.json({accessToken, status:true,account_id:result[0].account_id, user_id:result[0].user_id});
     }
   });
 });

@@ -10,6 +10,7 @@ export async function connectToServerLogin(params) {
    if(res.data.status) {
         localStorage.setItem("my_user", res.data.accessToken);
         localStorage.setItem("account_id", res.data.account_id);
+        localStorage.setItem("user_id",res.data.user_id)
         window.location.href = "http://localhost:3000/home";
         return true;
     }
