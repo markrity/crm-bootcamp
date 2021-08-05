@@ -46,8 +46,8 @@ class Login extends React.Component {
         {this.props.isExist && <Redirect to="/home" />}
 
         <Header className="header" header_text = "Sign in"/>
-        <FormInput label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
-        <FormInput label = "Password" type = "password" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
+        <FormInput label_class="label" label = "Email" type = "text" className ="input" placeholder= "example@text.com" onChange={this.handleChange_email} />
+        <FormInput label_class="label" label = "Password" type = "password" className ="input" placeholder= "Password" onChange={this.handleChange_password} />
         <PLink   linkTo="reset" link_text="forget password?"/>
         <Button className="button" button_text="Login" onClick={() => this.handleClick()} />
         

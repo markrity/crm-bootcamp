@@ -155,11 +155,11 @@ function NextAddTreatment(props) {
             <Button className="add_kind" button_text="add new kind" onClick={()=> setAddOpen(true)} />
             {addOpen && <AddKinds  button_text='add' modalIsOpen={() =>  setAddOpen(true)} closeModal={()=> setAddOpen(false)}/>}
           
-            <FormInput label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> getAvailableUsersByDate(e.target.value)}/>
+            <FormInput label_class="label"  label="date and time" defaultValue = {date_time} type = "datetime-local" className ="input" placeholder= "choose date and time" onChange={e=> getAvailableUsersByDate(e.target.value)}/>
           
              <Select options={options} defaultValue = {{label: props.user_name}} onChange={e => getUserId(e.label)} /> 
              {errDate}  
-            <FormInput label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
+            <FormInput label_class="label" label="Price" defaultValue = {props.price} type = "text" className ="input" placeholder= "Enter price" onChange={e=> setPrice(e.target.value)}/>
         
             <Button className="button" button_text={props.button_text} onClick={handleClick} />
         </div>

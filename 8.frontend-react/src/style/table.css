@@ -1,9 +1,8 @@
 #users {
    
-    /* border-collapse: collapse; */
-    
-    width: 140vh;
-    margin-left: 10%;
+       /* border-collapse: collapse; */
+       width: 140vh;
+       margin-left: 21vh;
   }
   
   #users td, #users th {

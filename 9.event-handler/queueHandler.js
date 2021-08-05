@@ -1,9 +1,22 @@
 import redis from "redis"
 
 
-var subscriber = redis.createClient();
+const subscriber = redis.createClient();
+const client = redis.createClient();
+let count = 0;
+
+
 subscriber.on("message", function (channel, message) {
- console.log("Message: " + message + " on channel: " + channel + " is arrive!");
+  client.set(count, message, function(err, reply) {
+    console.log(count);
+    count++
+    console.log(reply); // OK
+  });
+
+  client.get(count, function(err, reply) {
+    console.log(reply); // ReactJS
+  });
+
 });
 
 subscriber.subscribe('events')

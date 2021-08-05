@@ -31,17 +31,20 @@ body {
 
 .up_table_treatment {
   display: flex;
-  align-items: flex-start;
+ 
   /* align-content: flex-end; */
-  margin-right: 35%;
-  margin-top: 5vh;
+  margin-left: 25vh;
+  /* margin-right: 35%; */
+   /* margin-top: 5vh; */
 }
 
 .link {
   color: black;
 }
 
-
+.link {
+  text-decoration: none;
+}
 .link:hover {
   color: white;
 }
@@ -54,9 +57,21 @@ body {
   color: black;
 }
 
-#header_tre { 
-  /* margin-right: 50vh; */
+.header_tre { 
 
+    /* left: 39vh; */
+    margin-top: 9.5vh;
+    margin-right: 52vh;
+    font-size: xx-large;
+}
+
+
+.header_client{
+  position: fixed;
+  /* left: 38vh; */
+  margin-right: 109vh;
+  margin-top: 10.3vh;
+  font-size: xx-large;
 }
 
 

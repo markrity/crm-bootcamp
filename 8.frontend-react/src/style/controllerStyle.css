@@ -28,7 +28,7 @@
   height: 12vh;
   display: flex;
   align-items: baseline;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .topnav_text {

@@ -70,9 +70,9 @@ function AddClients(props) {
         style={customStyles}
     >
         <Button className="close" button_text="X" onClick={props.closeModal} />
-        <FormInput label="Full name" defaultValue = {props.fullname} type = "text" className ="input" placeholder= "Enter client's full name" onChange={e=> setName(e.target.value)}/>
-        <FormInput label="Phone" defaultValue = {props.phone} type = "text" className ="input" placeholder= "Enter client's phone" onChange={e=> setPhone(e.target.value)}/>
-        <FormInput label="Email" defaultValue = {props.email} type = "text" className ="input" placeholder= "Enter client's mail" onChange={e=> setEmail(e.target.value)}/>
+        <FormInput label_class="label" label="Full name" defaultValue = {props.fullname} type = "text" className ="input" placeholder= "Enter client's full name" onChange={e=> setName(e.target.value)}/>
+        <FormInput label_class="label" label="Phone" defaultValue = {props.phone} type = "text" className ="input" placeholder= "Enter client's phone" onChange={e=> setPhone(e.target.value)}/>
+        <FormInput label_class="label" label="Email" defaultValue = {props.email} type = "text" className ="input" placeholder= "Enter client's mail" onChange={e=> setEmail(e.target.value)}/>
         <Button className="button" button_text={props.button_text} onClick={handleClick} />
      
       </Modal>

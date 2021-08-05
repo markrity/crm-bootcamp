@@ -174,7 +174,6 @@ function Treatments(props) {
             end_date: endDate
             }).then(response => {
                 console.log(response.data.treatment);
-
                 //console.log(response.data.clients);
                 setData(response.data.treatment);
                 });
@@ -191,16 +190,18 @@ function Treatments(props) {
     <body>
     {!(props.isExist)&& <Redirect to="/login" />}
     <div className="test">
-   
+
     {confirmIsOpen && <ConfirmDelete onclickConfirm={()=>deleteTreatment()} modalIsOpen={() =>  setConfirmOpen(true)} closeModal={()=> setConfirmOpen(false)}/>}
 
     {modalIsOpen && <AddTreatment user_id = {userId} treatment_id = {treatmentId} whichModal = {whichModal} user_name= {userName} client_name = {clientName} button_text = {whichModal} date= {date} kind={kind} price={price} data = {data} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
+    <div className="all_tre_div">
    
-    <Table class_name="table_container" tableID="tre" columns={columns} data={data} /> 
     <div className= "up_table_treatment"> 
+
+    <div className="header_tre"> Treatments </div>
    
-    <FormInput label="choose start date"  type = "datetime-local" className ="input"  onChange={e=> setStartDate(e.target.value)}/>
-    <FormInput label="choose end date"  type = "datetime-local" className ="input"  onChange={e=> setEndDate(e.target.value)}/>
+    <FormInput label_class="label_tre"label="choose start date"  type = "datetime-local" className = "input1"  onChange={e=> setStartDate(e.target.value)}/>
+    <FormInput label_class="label_tre" label="choose end date"  type = "datetime-local" className = "input1"  onChange={e=> setEndDate(e.target.value)}/>
 
     <button className="filter_button"  onClick={() => onClickFilter()}>
     filter
@@ -210,11 +211,15 @@ function Treatments(props) {
     <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
     <div className="text_add_button">
      Add 
-     </div>
+    </div>
     </button>
     </div>
-    
+
+    <Table class_name="table_container_tre" tableID="tre" columns={columns} data={data} /> 
     </div>
+    </div>
+    
+ 
     {/* <p id="header_tre"> Treatments</p> */}
     </body>
     );

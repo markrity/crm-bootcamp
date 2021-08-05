@@ -68,7 +68,7 @@ class Register extends React.Component {
     isNew ? jsx_array1 = (form_fields.register_pageNew) :  jsx_array1 = (form_fields.register_page)
     let jsx_array = jsx_array1.map(field => { 
         return <div>
-          <FormInput key = {field.key} label = {field.label} type = {field.type} className = {field.className} placeholder= {field.placeholder}  onChange={(e)=>this.handleChange(e,field.key, field.err)} /> 
+          <FormInput label_class="label" key = {field.key} label = {field.label} type = {field.type} className = {field.className} placeholder= {field.placeholder}  onChange={(e)=>this.handleChange(e,field.key, field.err)} /> 
           <ErrorMessage err = {this.state.err[field.err]}/>
         </div>
     })

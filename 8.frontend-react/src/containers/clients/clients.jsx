@@ -123,6 +123,14 @@ function Clients(props) {
       localStorage.setItem("client_id", client.original.id);
       setOpenClientData(true)
     }
+
+    function sendSms() {
+      axios.post('http://localhost:9000/sendSms', {
+        neta: 'hi'
+          }).then(response => {
+         console.log('hi!!!');
+        })
+    }
     
     return (
     <body>
@@ -135,13 +143,16 @@ function Clients(props) {
 
     {modalIsOpen && <AddClients fullname= {fullname} email= {email} phone ={phone} id={clientId} button_text={whichModal} modalIsOpen={() =>  setIsOpen(true)} closeModal={()=> setIsOpen(false)}/>}
     <Table  class_name="table_container" onClick = {onclickRow} tableID="users" columns={columns} data={data}  /> 
-
-    <button className="add_button_tre"  onClick={() => onClickAdd()}> 
+    <div className="header_client">Clients </div>
+    <button className="add_button_client"  onClick={() => onClickAdd()}> 
     <FontAwesomeIcon icon={faPlusSquare} size={"2x"}/>
     <div className="text_add_button">
      Add 
      </div>
     </button>
+
+    {/* <button className="send_sms" onClick={()=>sendSms()} > Send SMS</button> */}
+
 
     </div>
     

@@ -55,7 +55,7 @@ function AddKinds(props) {
         style={customStyles}
     >
         <Button className="close" button_text="X" onClick={props.closeModal} />
-        <FormInput label="kind name" defaultValue = {props.name} type = "text" className ="input" placeholder= "Enter kind's name" onChange={e=> setName(e.target.value)}/>
+        <FormInput label_class="label" label="kind name" defaultValue = {props.name} type = "text" className ="input" placeholder= "Enter kind's name" onChange={e=> setName(e.target.value)}/>
         <Button className="button" button_text={props.button_text} onClick={handleClick} />
      
       </Modal>

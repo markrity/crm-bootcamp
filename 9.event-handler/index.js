@@ -1,6 +1,9 @@
 //const express = require('express');
+
 import express from 'express'
 import cors from 'cors'
+import twilio from 'twilio'
+
 const app = express();
 
 app.use('/static', express.static('public'))
@@ -42,25 +45,44 @@ client.ping({
     }
 });
 
+app.post('/saveInRedis', function(req,res) {
+    console.log(req.body);
+    // publisher.publish("events", JSON.stringify(req.body));
+
+});
+
+
+// app.post('/sendSms', function(req,res) {
+//     client.messages
+//     .create({
+//         body: 'Hello from Node',
+//         to: '+972524700457', 
+//         from: '1 818 572 9816', 
+//     })
+//     .then((message) => console.log(message.sid));
+// });
+
+
 
 app.post('/click', function(req, res) {
-   
-    publisher.publish("events", "test", function(){
-     process.exit(0);
-    });
+    // const user = {
+    //     id : "123456",
+    //     name : "Davis"
+    // }
+    // publisher.publish("events", JSON.stringify(user));
 
     const body = req.body.doc.flatMap(doc => [{ index: { _index: 'events' } }, doc])
     console.log(body);
-    client.bulk({
-        refresh: true,
-        body,
-        type: "external"
-        }).then(response => {
-            console.log("Indexing successful");
-        })
-        .catch(err => {
-            console.log(err);
-        })
+    // client.bulk({
+    //     refresh: true,
+    //     body,
+    //     type: "external"
+    //     }).then(response => {
+    //         console.log("Indexing successful");
+    //     })
+    //     .catch(err => {
+    //         console.log(err);
+    //     })
     
     console.log('click here!!!');
     res.json({status:true});

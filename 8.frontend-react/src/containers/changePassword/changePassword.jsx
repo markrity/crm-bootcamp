@@ -51,12 +51,14 @@ function ChangePassword(props) {
         <div className="controller">
           {errorMessage}
           <FormInput
+            label_class="label"
             type="password"
             className="input"
             placeholder="Enter new password"
             onChange={handleChange}
           />
           <FormInput
+            label_class="label"
             type="password"
             className="input"
             placeholder="Confirm new password"

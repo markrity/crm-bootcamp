@@ -44,11 +44,20 @@ text-align: center;
 
 
 .input {
-background-color: #ffffff;;
-margin-top: 25px;
-border: 1px solid #e2e2e2;
-font-size: medium;
-padding-left: 15px;
+    background-color: #ffffff;;
+    margin-top: 25px;
+    border: 1px solid #e2e2e2;
+    font-size: medium;
+    padding-left: 15px;
+}
+
+
+.input1 {
+    background-color: #ffffff;
+    margin-top: 8vh;
+    border: 1px solid #e2e2e2;
+    font-size: medium;
+    padding-left: 15px;
 }
     
 .label {
@@ -57,7 +66,13 @@ position: relative;
 top: 20px;
 font-size: smaller;
 }
-
+.label_tre {
+    color: #000000;
+    position: relative;
+    top: 8vh;
+    margin-left: 0.5vh;
+    font-size: smaller;
+}
 .para {
     margin-bottom: 3%; 
 }

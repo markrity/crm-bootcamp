@@ -4,7 +4,7 @@ function FormInput(props) {
 
     return (
     <div >
-        <label className="label" >{props.label}</label>
+        <label className={props.label_class} >{props.label}</label>
         <input
         type={props.type}
         className={props.className}

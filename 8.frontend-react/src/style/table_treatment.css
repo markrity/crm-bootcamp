@@ -1,9 +1,9 @@
 #tre {
    
-    border-collapse: collapse;
-    width: 140vh;
-    margin-left: 60%;
-    margin-top: 2%;
+  border-collapse: collapse;
+  width: 140vh;
+  margin-left: 25vh;
+   /* margin-top: 2%; */
   }
   
   #tre td, #tre th {
@@ -23,9 +23,9 @@
   
   }
 
-  .table_container {
+  .table_container_tre {
       /* display: flex; */
-      margin-top: 10%;
+      margin-top: 1%;
   }
 
   .manImg {

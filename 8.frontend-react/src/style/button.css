@@ -36,7 +36,8 @@ button:hover {
     border-color: #F8EDEB;
     border-radius: 5vh;
     font-weight: 700;
-    margin-right: 2%;
+    /* margin-right: 2%; */
+    margin-left: 65vh;
   
     /* box-shadow: 6px 6px 6px rgb(222, 217, 217), -6px -6px 6px F9DCC4; */
 }
@@ -145,10 +146,10 @@ button:hover {
 }
 
 .add_button_tre {
-    margin-top: 6vh;
+    margin-top: 10.3vh;
     /* margin-left: 3vh; */
     cursor: pointer;
-    width: 13vh;
+    width: 11vh;
     text-align: end;
     font-size: larger;
     display: flex;
@@ -158,14 +159,36 @@ button:hover {
     border-color: #b392ac;
     font-weight: bold;
     border-radius: 10px;
+    margin-left: 1vh;
    
 }
 
+
+.add_button_client {
+    margin-top: 10.3vh;
+    /* margin-left: 3vh; */
+    cursor: pointer;
+    width: 11vh;
+    text-align: end;
+    font-size: larger;
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    color: #b392ac;
+    border-color: #b392ac;
+    font-weight: bold;
+    border-radius: 10px;
+    margin-left: 1vh;
+    position: fixed;
+    margin-left: 150vh;
+}
+
 .filter_button {
-    margin-top: 6vh;
-    margin-right: 5px;
-    margin-left: 5px;
-    height: 40px;
+    margin-top: 10.3vh;
+    /* margin-left: 5px; */
+    margin-left: 1vh;
+    height: 4.5vh;
+    display: flex;
     /* margin-left: 3vh; */
     cursor: pointer;
     text-align: center;
@@ -176,6 +199,8 @@ button:hover {
     border-color: #b392ac;
     font-weight: bold;
     border-radius: 10px;
+    justify-content: space-around;
+    align-items: center;
 }
 
 
