@@ -1,23 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta name="description" content="Webpage description goes here" />
-        <meta charset="utf-8">
-        <title>Change_me</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8">
+    <title>Study Group</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="">
-
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-    
-    </head>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
 
-    <body>
-    
-        <div class="container">
-            <h1>Hello Workiz Academy</h1>
-            <button onclick='testfunction()'>Test Script</button>
+<body>
+    <nav>
+        <div id="logo">The Wedding Planner</div>
+        <ul>
+            <li>About</li>
+            <li>Our Latest Events</li>
+            <li>Reviews</li>
+        </ul>
+    </nav>
+    <div class="container">
+
+        <div class="row">
+
+            <div class="left-column">
+                <form id="lead-form">
+                    <h1>Let Us Set Your Perfect Day</h1>
+                    <input type="text" id="fullName" placeholder="Enter Name">
+                    <input type="text" id="email" placeholder="Enter Email">
+                    <input type="text" id="phone" placeholder="Enter PhoneNumber">
+                    <div id="form-err"></div>
+                    <button onclick='onSubmit(event)'>Contact Me</button>
+                </form>
+            </div>
+            <div class="right-column">
+            </div>
         </div>
+    </div>
+</body>
+<script src="scripts/formSubmit.js"></script>
 
-    </body>
-    <script src="scripts/test.js"></script>
 </html>

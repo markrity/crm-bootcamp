@@ -1,0 +1,17 @@
+.edit-button{
+    position: absolute;
+    top: -10%;
+    border-radius: 20px;
+    background-color: wheat;
+    right: -9px;
+    z-index: 9;
+}
+
+.edit-button:hover{
+    cursor: pointer;
+}
+
+
+.clicked{
+    background-color: rgb(116, 92, 112);
+}

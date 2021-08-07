@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Admin Page</title>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+
+<body>
+    <div class="centered">
+        <div class="col">
+            <h3>Leads</h3>
+            <div class="row-container">
+                <input type="radio" id="Descend" name="sortBy" value="DESC">
+                <label for="Descend">Descend</label>
+                <input type="radio" id="Ascend" name="sortBy" value="ASC" checked>
+                <label for="Ascend">Ascend</label>
+                <button onclick="fetchLeads(event)">Submit</button>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        {{#tableHeaders}}
+                            <th>{{.}}</th>
+                        {{/tableHeaders}}
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#sortedTable}}
+                        <tr>
+                            <td>
+                                {{lead_id}}
+                            </td>
+                            <td>
+                                {{lead_name}}
+                            </td>
+                            <td>
+                                {{lead_email}}
+                            </td>
+                            <td>
+                                {{lead_phone}}
+                            </td>
+                            <td>
+                                {{created}}
+                            </td>
+                        </tr>
+                    {{/sortedTable}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+<script src="scripts/fetchLeads.js"></script>
+
+</html>

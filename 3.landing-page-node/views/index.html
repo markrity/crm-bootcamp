@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8">
+    <title>The Wedding Planners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="path/to/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <nav>
+        <div id="logo">{{logo}}</div>
+        <ul>
+            {{#nav}}
+                <li>{{title}}</li>
+            {{/nav}}
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="left-column">
+                <form id="lead-form">
+                    <h1>{{form.initHeader}}</h1>
+                    {{#form.formFields}}
+                        <input type="{{type}}" id="{{id}}" placeholder="{{placeholder}}">
+                    {{/form.formFields}}
+                    <div id="form-err"></div>
+                    <button onclick='onSubmit(event)'>{{form.btnText}}</button>
+                </form>
+            </div>
+            <div class="right-column">
+                <div class="chat-container">
+                    <div class="upper-border">
+                        <i class="icon-camera-retro icon-large"></i>
+                    </div>
+                    <div id="messages-container">
+                        <p>adasdas</p>
+                    </div>
+                    <form id="send-container">
+                        <input type="text" id="message-input">
+                        <button onclick='onSend(event)' type="submit" id="send-button">Send</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="scripts/formSubmit.js"></script>
+<script src="scripts/chat.js"></script>
+
+</html>

@@ -1,0 +1,30 @@
+.card-outer-container{
+    height: 370px;
+    width: 365px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+
+// .card-outer-container:hover{
+//     height: 380px;
+//     width: 375px;
+// }
+
+
+#modal{
+    position: absolute!important;
+    inset: 50% auto auto 50%!important;
+    border: 1px solid rgb(204, 204, 204);
+    background: black;
+    overflow: auto;
+    border-radius: 4px;
+    outline: none;
+    padding: 20px;
+    transform: translate(-50%, -50%);
+    width: 50%;
+    height: fit-content;
+    z-index: 999;
+  }

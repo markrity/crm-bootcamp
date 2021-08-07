@@ -1,0 +1,22 @@
+.Ex-Button{
+    top: -10%;
+    position: absolute;
+    left: -20px;
+    border-radius: 20px;
+    background: white;
+    z-index: 9;
+}
+
+
+.wrap{
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+}
+
+#plus{
+    width: 60px;
+    height: 60px;
+    border-radius: 10px
+}

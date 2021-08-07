@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="description" content="Webpage description goes here" />
+    <meta charset="utf-8">
+    <title>The Wedding Planners</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Viaoda+Libre&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"
+        integrity="sha512-oFOCo2/3DtjrJG4N27BjSLQWoiBv171sK6a+JiWjp/7agxC2nCUP358AqzxkBUb5jX8g6CYLPdSKQTbC0weCwA=="
+        crossorigin="anonymous"></script>
+    <script src="scripts/chat.js"></script>
+    <script src="scripts/formSubmit.js"></script>
+</head>
+
+
+<body onload='restoreConv()'>
+    <div class="background">
+        <nav>
+            <div id="logo">{{logo}}</div>
+            <ul>
+                {{#nav}}
+                    <li>{{title}}</li>
+                {{/nav}}
+            </ul>
+        </nav>
+        <div class="container">
+            <div class="row">
+
+                <div class="left-column">
+                    <form id="lead-form">
+                        <h1>{{form.initHeader}}</h1>
+                        {{#form.formFields}}
+                            <input type="{{type}}" class="lead-form" id="{{id}}" placeholder="{{placeholder}}">
+                        {{/form.formFields}}
+                        <div id="form-err"></div>
+                        <button onclick='onSubmit(event)'>{{form.btnText}}</button>
+                    </form>
+                </div>
+                <div class="right-column">
+                    <div class="right-column">
+                        <div class="chat-container">
+                            <div id="upper-border">
+
+                            </div>
+                            <div id="messages-container">
+
+                            </div>
+                            <form id="send-container">
+                                <input type="text" id="message-input" oninput='onTyping()'>
+                                <button id="send-button" onclick='verify(event)'>
+                                    Send
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+
+
+</html>

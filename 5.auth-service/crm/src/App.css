@@ -1,0 +1,408 @@
+
+body{
+  min-height: 100vh;
+  overflow: hidden;
+  background-color: whitesmoke;
+}
+
+.event-button{
+  width: 100px;
+  height: 100px;
+  background-color: yellowgreen;
+}
+
+#approved{
+    color: green;
+    font-size: 13px;
+}
+
+.centered{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.full-height{
+  height: 100%;
+}
+
+#init-form{
+  margin-top: 20px;
+        display:flex;
+        align-self: center;
+        flex-direction: column;
+        width: 100%;
+        height: fit-content;
+        border-radius: 5px;
+        align-content: center;
+        align-items: center;
+}
+
+#change-padding-undo-margin-bottom{
+  margin-bottom: unset;
+  padding: 10px 10px;
+}
+
+#undo-margin{
+  margin-left: unset;
+}
+
+
+.scrollable{
+  overflow-x: scroll;
+  border:1px solid red;
+  width:500px;
+  height: fit-content;
+  float: left;
+  position:relative;
+}
+
+.card{
+  height: fit-content;
+}
+.left-side{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width:85%;
+
+}
+.nav-bar-bg{
+  background-color: darkblue;
+}
+
+h1{
+  margin: unset;
+  font-family: 'Dancing Script', cursive;
+}
+
+.clickable{
+  color:rgb(10, 10, 170);
+  margin-left: 0.5em;
+  font-weight: 500;
+}
+
+.clickable:hover{
+   color: rgb(155, 105, 105);
+    cursor: pointer;
+}
+
+.custom-input{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+input{
+  /* padding: 7px;
+  border-radius: 25px;
+  border:none;
+  border-bottom: 1px solid lightgray; */
+
+  border: 0;
+  outline: 0;
+  background: transparent;
+  border-bottom: 1px solid black;
+  width: 100%;
+  font-weight: bold;
+}
+
+#icon{
+  margin-right: 50%;
+  position: absolute;
+}
+
+.init-form-input-length{
+  width: 65%;
+}
+
+thead{
+  background-color: #77CFC9;
+}
+tr{
+  margin-bottom: 25px;
+}
+
+th{
+  padding: 20px 15px;
+  text-align: left;
+  font-weight: 500;
+  font-size: 12px;
+  text-transform: uppercase;
+  background-color: rgba(255,255,255,0.3);
+}
+
+.table-row{
+  background-color: #ffffff;
+  box-shadow: 0px 0px 9px 0px rgb(0 0 0 / 10%);
+  height: 80px;
+}
+
+td{
+  padding: 15px;
+  text-align: left;
+  vertical-align:middle;
+  font-weight: 500;
+  font-size: 12px;
+
+  border-bottom: solid 1px rgba(255,255,255,0.1);
+}
+
+table{
+  width:70%;
+  table-layout: fixed;
+  padding-right: 6px;
+  border: 0;
+  border-collapse: collapse;
+}
+
+
+h2{
+  margin-block-end: 4px;
+}
+
+#root{
+  min-height: 100vh;
+}
+
+#header-bar{
+  overflow: hidden;
+  background-color: wheat;
+  display: flex;
+  height: 70px;
+  font-weight: 300;
+  -webkit-box-shadow: 1px 1px 15px 5px rgb(0 0 0 / 17%); 
+  box-shadow: 1px 1px 15px 5px rgb(0 0 0 / 17%);
+  position: sticky;
+  position: -webkit-sticky; 
+  top: 0;
+}
+
+
+#logo{
+  font-size: large;
+  font-weight: bold;
+  align-content: space-between;
+  align-self: center;
+  padding-left: 1em;
+  padding-right: 1em;
+  justify-self: center;
+  font-family: 'Viaoda Libre', cursive;
+  font-size: 30px;
+  }
+
+ #full-length{
+   width: 100%;
+ }
+
+  .card{
+    -webkit-box-shadow: 1px ​-1px 29px 2px #000000;
+    box-shadow: 1px 1px 15px 5px #000000;
+    padding: 0px;
+    width: 784px;
+    height: 535px;
+    display: flex;
+    border-radius: 12px;
+    position: absolute;
+    top: 18%;
+  }
+
+  .card-left-col{
+    background: white;
+    flex:2
+  }
+
+  .card-right-col{
+    flex: 1;
+    background-image: url('./assets/card-left-grid.jpeg');
+    opacity: 40%;
+    background-size: cover;
+  }
+
+  .flex-row{
+    display: flex;
+  }
+
+
+  .flex-col{
+    display: flex;
+    flex-direction: column;
+  }
+
+  #divider{
+    background-image: url('./assets/divider.png');
+    background-size: contain;
+    min-height: 53px;
+    width: 100%;
+    background-repeat: round;
+  }
+
+
+  nav{
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    width: 65px;
+    background-color: rgb(41,48,76)
+  }
+  
+  #side-bar-ul{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  #side-bar-li{
+    padding-inline-end:initial;
+  }
+
+.upper-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 40px;
+    flex: 3;
+}
+
+
+span:hover{
+  opacity: 20%;
+}
+
+.tooltip{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 13px;
+  height: 30px;
+}
+
+.MuiButton-root{
+  min-width: 66px;
+}
+
+.view-tooltip{
+  width: 0;
+  height: 0;
+  bottom: 50%;
+  border-style: solid;
+  border-width: 8px 6px 8px 0;
+  border-color: transparent whitesmoke transparent transparent;
+  border-color: transparent '#181b3' transparent transparent;
+  position: absolute;
+  right: 0;
+  transition: opacity .1s ease-in-out;
+  opacity: 0;
+}
+
+.selected-view-indicator{
+  opacity: 1;
+}
+
+.lower-sidebar{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 3;
+    margin-bottom: 18px;
+}
+
+#mg-btm{
+  margin-bottom: 1em;
+}
+
+
+ #sided-hr{
+    flex:2;
+  }
+
+  #twp{
+    flex:1;
+    text-align: center;
+    font-family: 'Yellowtail', cursive;
+    font-size: larger;
+  }
+
+
+
+  .center-screen{
+    align-self: center;
+    justify-content: center;
+  }
+
+  #err{
+  color: red;
+    font-size: 13px;
+  }
+
+  .nav-list{
+
+    display: flex;
+    align-self: center;
+
+  }
+
+  ul
+{
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: black 1px;
+    align-self: center;
+}
+
+li{
+  font-size: medium;
+    padding-inline-end: 4em;
+    font-size: 16px;
+    letter-spacing: 1px;
+}
+
+#clickable:hover{
+  cursor: pointer;
+  color: rgb(155, 105, 105);
+}
+.space-between{
+display:flex;
+flex-direction: row;
+}
+
+
+
+.spaced-between{
+  justify-content: space-around;
+}
+
+.flex-start{
+  justify-content: flex-start;
+}
+
+.flex-end{
+  justify-content: flex-end;
+}
+
+.spaced{
+  justify-content: space-between;
+}
+
+
+.align-items-center{
+  align-items: center;
+}
+
+.mg-horizontal{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.mg-bottom{
+  margin-bottom: 50px;
+}
+
+.mg-top{
+  margin-top: 30px;
+}
+
+.spaced-evenly{
+  justify-content: space-evenly!important;
+}
