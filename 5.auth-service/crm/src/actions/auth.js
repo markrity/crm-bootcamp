@@ -43,18 +43,17 @@ export const login = (formData) => async dispatch => {
     const email = formData.email.value
     const password = formData.password.value
     const body = { email, password }
-    console.log('body', body)
     try {
         const { data } = await axios.post(`http://localhost:8000/auth/login`, body, { withCredentials: true });
 
-        const { userInfo, buisnessID } = data
+        const { userInfo, buisness } = data
         dispatch({
             type: LOGIN_SUCCESS,
             payload: userInfo
         });
         dispatch({
             type: SET_BUISNESS,
-            payload: buisnessID
+            payload: buisness
         })
     } catch (err) {
         dispatch({
@@ -68,11 +67,10 @@ export const login = (formData) => async dispatch => {
 export const checkAuth = () => async dispatch => {
     try {
         const { data } = await axios.get('http://localhost:8000/me', {}, { withCredentials: true })
-        console.log(data)
-        const { userInfo, buisnessID } = data
+        const { userInfo, buisness } = data
         dispatch({
             type: SET_BUISNESS,
-            payload: buisnessID
+            payload: buisness
         })
         dispatch({
             type: LOGIN_SUCCESS,

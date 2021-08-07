@@ -16,7 +16,7 @@ const WorkSpace = () => {
         )
     }
     return (
-        <>
+        <div className="flex-col">
             <Header />
             <div className="flex-row">
                 <SideNavBar selected="My WorkSpace" />
@@ -27,7 +27,7 @@ const WorkSpace = () => {
                     </div>
                 </div>
             </div>
-        </>
+        </div>
     )
 
 }

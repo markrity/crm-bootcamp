@@ -73,7 +73,6 @@ body{
 
 h1{
   margin: unset;
-  margin-left: 1em;
   font-family: 'Dancing Script', cursive;
 }
 
@@ -374,7 +373,36 @@ flex-direction: row;
   justify-content: space-around;
 }
 
+.flex-start{
+  justify-content: flex-start;
+}
+
+.flex-end{
+  justify-content: flex-end;
+}
+
+.spaced{
+  justify-content: space-between;
+}
+
 
 .align-items-center{
   align-items: center;
+}
+
+.mg-horizontal{
+  margin-left: 30px;
+  margin-right: 30px;
+}
+
+.mg-bottom{
+  margin-bottom: 50px;
+}
+
+.mg-top{
+  margin-top: 30px;
+}
+
+.spaced-evenly{
+  justify-content: space-evenly!important;
 }

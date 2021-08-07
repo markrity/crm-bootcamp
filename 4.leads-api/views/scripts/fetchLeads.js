@@ -10,9 +10,5 @@ const fetchLeads = async (event) => {
         window.location.replace(`http://localhost:8082/admin?sortBy=${sortBy}`)
     }
     catch (err) {
-
     }
-
-
-
 }

@@ -39,6 +39,21 @@ export const toggleMain = (hallID, buisnessID, imgID) => async dispatch => {
 }
 
 
+export const broadcastEmail = (receivers, header, body) => async dispatch => {
+    try {
+        console.log("In Broadcast")
+        const res = await axios.post(`http://localhost:8000/broadcast/${receivers}/`,
+            { header, body }, { withCredentials: true })
+    }
+    catch {
+        dispatch({
+            type: SET_ERR.length,
+            payload: SERVER_ERR
+        })
+    }
+}
+
+
 
 export const removeHall = (hallID, buisnessID) => async dispatch => {
     try {

@@ -19,18 +19,21 @@ export default function (state = initialState, action) {
         case SET_BUISNESS:
             return {
                 ...state,
-                buisnessID: payload
+                buisnessID: payload.buisnessID,
+                buisnessName: payload.buisnessName
             }
         case ADD_BUISNESS:
             return {
                 ...state,
-                buisnessID: payload.buisnessID
+                buisnessID: payload.buisnessID,
+                buisnessName: payload.buisnessName
             }
         case GET_EMPLOYEES:
             return {
                 ...state,
                 employees: payload.employees,
-                buisnessID: payload.buisnessID
+                buisnessID: payload.buisnessID,
+                buisnessName: payload.buisnessName
             }
         case UPDATE_EMPLOYEES:
             return {

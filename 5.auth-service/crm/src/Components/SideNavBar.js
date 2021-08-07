@@ -8,12 +8,18 @@ import { BiCalendarEvent, BiCalendar } from "react-icons/bi";
 import CustomTooltip from './CustomTooltip';
 import { useHistory } from 'react-router';
 
-
 const SideNavBar = ({ selected, setSelected }) => {
     const history = useHistory()
-    const upperButtons = [{ logo: AiOutlineAppstore, onHoverTxt: "My WorkSpace", func: () => history.push('/workSpace') },
-    { logo: AiOutlinePlusSquare, onHoverTxt: "Create Event", func: () => history.push('/createEvent') },
-    { logo: AiOutlineBell, onHoverTxt: "Leads" }]
+    const upperButtons = [{
+        logo: AiOutlineAppstore, onHoverTxt: "My WorkSpace",
+        func: () => history.push('/workSpace')
+    },
+    {
+        logo: AiOutlinePlusSquare,
+        onHoverTxt: "Create Event",
+        func: () => history.push('/createEvent')
+    },
+    { logo: AiOutlineBell, onHoverTxt: "Broadcast", func: () => history.push('/broadcast') }]
 
     const lowerButtons = [{ logo: BiCalendarEvent, onHoverTxt: "My Week" },
     { logo: BiCalendar, onHoverTxt: "Calender" },

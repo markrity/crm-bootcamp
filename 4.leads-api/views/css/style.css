@@ -10,6 +10,40 @@ body {
     background-size:cover;
 }
 
+.chat-container{
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+
+#upper-border{
+    display: flex;
+    flex-direction: row;
+    min-height: 1;
+    height: 70px;
+    border-top-left-radius: 20px;
+    width: 100%;
+    background-color: #97e4dc;
+    align-items: center;
+    justify-content: center;
+}
+
+#send-container{
+    display: flex;
+    flex-direction: row;
+    margin-top: unset;
+    height: unset;
+}
+
+#messages-container{
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    min-height: 1px;
+    height: 300px;
+    background-color: #FFFF;
+}
+
 #container{
     display: flex;
     flex-direction: column;
@@ -164,9 +198,35 @@ flex:3;
         height: 300px;
         border-radius: 3px;
         align-content: center;
-        margin-bottom: 200px;
         justify-content: space-around;
         
+  }
+
+  .my-msg{
+    background-color: rgb(7,96,98);
+    width: fit-content;
+    height: fit-content;
+    max-width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: rgb(231,231,232);
+    align-self: flex-end;
+  }
+
+  span{
+    overflow-wrap: anywhere;
+  }
+
+  .others-msg{
+    background-color: rgb(37,46,49);
+    width: fit-content;
+    padding: 10px;
+    max-width: 200px;
+    margin: 10px;
+    border-radius: 10px;
+    color: rgb(231,231,232);
+
   }
 
   th {
@@ -230,3 +290,38 @@ button{
     display: flex;
     flex-direction: column;
 }
+
+
+.my-date{
+    background-color: #095F62;
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 200px;
+    margin-inline: 10px;
+    margin-bottom: 0;
+    margin-left: 15px;
+    padding-inline: 10px;
+    padding-top: 1px;
+    color: #e7e7e8;
+    padding-bottom: 0;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    align-self: flex-end;
+
+    
+  }
+
+  .others-date{
+    background-color: rgb(37,47,49);
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 200px;
+    margin: 10px;
+    padding-inline: 10px;
+    padding-top: 1px;
+    color: #e7e7e8;
+    padding-bottom: 0;
+    border-top-left-radius: 3px;
+    
+
+  }

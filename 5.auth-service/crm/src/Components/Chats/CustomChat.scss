@@ -1,0 +1,117 @@
+.chat{
+flex:3;
+display: flex;
+flex-direction: column;
+height: 100vh;
+}
+.contacts{
+flex:1;
+border-left-style: outset; 
+border-bottom-style: outset;
+}
+.flex-divider{
+    flex:4
+}
+
+
+.contact-header{
+    color: white;
+    margin-top: 8px;
+}
+
+.chat-header{
+    width: 100%;
+    height: 70px;
+    max-height: 60px;
+    border-radius: 10px 10px 0 0 ;
+    background-color: rgb(41,49,76);
+    flex:0.5
+}
+
+.my-msg{
+    background-color: #076062;
+    width: -moz-fit-content;
+    width: fit-content;
+    height: -moz-fit-content;
+    height: fit-content;
+    max-width: 200px;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 10px;
+    color: #e7e7e8;
+    align-self: flex-end;
+  }
+
+  .others-msg{
+    background-color: #252e31;
+    width: -moz-fit-content;
+    width: fit-content;
+    padding: 10px;
+    max-width: 200px;
+    margin-left: 10px;
+    border-radius: 10px;
+    color: #e7e7e8;
+
+  }
+
+
+.chat-container{
+    display: flex;
+    flex-direction: column;
+    width: 85%;
+    height: 75%;
+    background-color: white;
+    border-radius: 10px;
+    margin-bottom: 10%;
+    
+}
+
+.chat-footer form{
+    height: 70px;
+    width: 100%;
+    border: 1px solid whitesmoke;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex:0.5
+}
+
+.chat-body{
+    flex:3;
+    display: flex;
+    flex-direction: column;
+    background-image: url('https://external-preview.redd.it/rEwFriCkfAtjOb5b-23b4tGGVcuvfaBqamYNJrgxnLM.png?auto=webp&s=f3bf0b5c90e4c5fda12ff2139781c854554fd198');
+    overflow-y: scroll;
+}
+
+span{
+    overflow-wrap: anywhere;
+  }
+  
+#message-input{
+    overflow-wrap: anywhere;
+}
+#send-button{
+    margin-bottom: unset;
+}
+
+.contacts-header{
+    width: 100%;
+    height: 100px;
+    min-height: 1px;
+    background-color: #2a324c;
+    color: white;
+}
+
+.contacts-list{
+    display: flex;
+    flex-direction: column;
+    border-left-style: outset;
+    border-bottom-style: outset;
+}
+
+.selected-contact{
+    border-left-style: inset!important; 
+    border-bottom-style: inset!important;
+}

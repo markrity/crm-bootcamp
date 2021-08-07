@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mustacheExpress = require('mustache-express');
+require('dotenv').config();
 
 app.engine('html', mustacheExpress());
 app.use(express.static('views'));
@@ -20,7 +21,7 @@ app.get('/index', function (req, res) {
 
 
 app.listen(process.env.PORT || 8080, () => {
-  console.log(`Server running at http://localhost:${process.env.PORT}/`);
+  console.log(`Server running at http://localhost:${process.env.PORT}/index`);
 });
 
 const createNav = () => {

@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux'
 import AddNewBuisness from './Screens/Auth/addNewBuisness';
+// import { listenToEvents } from './listenToEvents'
+import Broadcast from './Screens/broadcastEmail'
 import AdditionInfo from './Screens/Auth/additionalInfo';
 import ResetPassword from './Screens/Auth/resetPassword';
 import SetNewPassword from './Screens/Auth/setNewPassword'
@@ -11,6 +13,7 @@ import WorkSpace from './Screens/WorkSpace/workSpace';
 import CreateEvent from './Screens/createEvent';
 import { checkAuth } from './actions/auth'
 import HomePage from './Screens/homePage';
+import Chats from './Screens/Chats/chats';
 import Verification from './Screens/Auth/verification';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AuthRoute from './Components/AuthRoute';
@@ -18,9 +21,15 @@ import './App.css';
 
 const App = () => {
   const dispatch = useDispatch()
+  const user = useSelector(state => state.auth.user)
   useEffect(() => {
     dispatch(checkAuth())
   }, [])
+
+  // useEffect(() => {
+  //   if (user)
+  //     listenToEvents(window, user)
+  // }, [user])
   return (
     <Router>
       <Switch>
@@ -35,6 +44,8 @@ const App = () => {
         <AuthRoute path='/verification/valid' type="guest" component={Verification} />
         <AuthRoute path='/createEvent' type="private" component={CreateEvent} />
         <AuthRoute path='/workSpace' type="private" component={WorkSpace} />
+        <AuthRoute path='/chat' type="private" component={Chats} />
+        <AuthRoute path='/broadcast' type="private" component={Broadcast} />
         {/* <Route path="/" component={history.push('/home')} /> */}
         <Route>
           <h1>NOT FOUND!</h1>

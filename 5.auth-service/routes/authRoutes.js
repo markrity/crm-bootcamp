@@ -5,14 +5,12 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 require('dotenv').config();
 const db = require('../db');
-const con = require('../db');
 const router = express.Router();
 const RESET_PASSWORD_EMAIL = "Reset Password"
 const RESET_PASSWORD_SUBJECT = "Reset Your Password"
 const VERIFICATION_EMAIL_SUBJECT = "Verification Email"
 
 router.post('/resetPassword', function (req, res) {
-
     let sql = `SELECT * FROM users WHERE email='${req.body.email}'`;
     db.query(sql, async (err, data) => {
         if (err)
@@ -22,7 +20,6 @@ router.post('/resetPassword', function (req, res) {
         generateEmail(RESET_PASSWORD_SUBJECT, RESET_PASSWORD_EMAIL, { token })
     });
 })
-
 
 router.post('/checkBuisnessName', async (req, res) => {
     const { buisnessName } = req.body
@@ -90,19 +87,21 @@ router.post("/login", async (req, res) => {
     console.log(hash)
     console.log("In Login")
     if (hash) {
-        let sql = `SELECT users.id,users.password ,users.firstName, users.lastName, users.email, users.phoneNumber, users.isAdmin, Buisnesses.id as buisnessID 
+        let sql = `SELECT users.id,users.password ,users.firstName, users.lastName, users.email, users.phoneNumber, users.isAdmin, Buisnesses.id as buisnessID,
+        Buisnesses.name as buisnessName 
         FROM users INNER JOIN Buisnesses ON users.buisnessID = Buisnesses.id WHERE users.email='${email}'`;
         db.query(sql, async (err, result) => {
             if (err)
                 return res.sendStatus(500)
+            console.log(result)
             user = result[0]
-            const { buisnessID, firstName, lastName, id, email, phoneNumber, isAdmin } = user
+            const { buisnessID, firstName, lastName, id, email, phoneNumber, isAdmin, buisnessName } = user
             const userInfo = { firstName, lastName, id, email, phoneNumber, isAdmin }
             if (user && user.password) {
                 const isMatch = await bcrypt.compare(password, user.password)
                 if (isMatch) {
                     const token = generateToken(res, userInfo.id, userInfo, false)
-                    return res.cookie('token', token).status(200).json({ userInfo, buisnessID })
+                    return res.cookie('token', token).status(200).json({ userInfo, buisness: { buisnessID, buisnessName } })
                 }
                 else
                     return res.sendStatus(401)

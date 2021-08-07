@@ -14,7 +14,9 @@ const Header = () => {
     const adminNavButtons =
         [{ title: 'Home', func: () => history.push('/home') },
         { title: 'Employees', func: () => history.push('/employees') },
-        { title: "Logout", func: () => dispatch(logout()) }]
+        { title: "Logout", func: () => dispatch(logout()) },
+        { title: "Chat", func: () => history.push('/chat') }
+        ]
 
     const guestNavButtons =
         [{ title: 'Login', func: () => history.push('/auth/login') },

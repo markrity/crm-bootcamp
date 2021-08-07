@@ -53,3 +53,4 @@ const validatePhone = (phoneNumber) => {
     var regex = /^[0-9]{10}$/;
     return phoneNumber.match(regex)
 }
+
